@@ -1,7 +1,7 @@
 SYNOPSIS
 =========
 
-Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are check against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
+Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
 
 LICENSE
 =======
@@ -21,10 +21,10 @@ INSTALL
 ```
 ./configure
 make
-make install
 ```
 
-This will place the program in `/usr/local/bin` and a configure file called `.sommelier.apps` in the user's home directory. If you want to make the configuration file available to all users, then copy it to `/etc/sommelier.apps`
+You should then place the program `sommelier` somewhere in your PATH and copy `sommelier.apps` to `.sommelier.apps` in your home directory (note the leading '.' to make it a hidden file). If you want to make the configuration file available to all users, then copy it to `/etc/sommelier.apps` (no leading '.'). You can set an install prefix using './configure --prefix' and run 'make install'. However, you will normally need to be root to install into, say, '/usr/local/bin' and then the 'sommelier.apps' config file will go into root's home directory. You normally would not want to run sommelier and the apps it installs, as root. If you've got a 'bin' directory that's writable by your normal user then the 'make install' method can work for you, otherwise you'll have to do it by hand.
+
 
 USAGE
 =====

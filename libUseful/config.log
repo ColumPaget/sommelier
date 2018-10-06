@@ -293,7 +293,7 @@ configure:4334: $? = 0
 configure:4343: result: yes
 configure:4361: checking for OpenSSL_add_all_algorithms
 configure:4361: gcc -o conftest -g -O2   conftest.c -lcrypto -lssl -lc -lc -lc -lc -lc -lc -lc  >&5
-/tmp/ccS2ipUh.o: In function `main':
+/tmp/ccAYNkG4.o: In function `main':
 /tmp/Sommelier/libUseful/conftest.c:61: undefined reference to `OpenSSL_add_all_algorithms'
 collect2: error: ld returned 1 exit status
 configure:4361: $? = 1
@@ -377,7 +377,7 @@ configure:4361: $? = 0
 configure:4361: result: yes
 configure:4361: checking for EVP_rc5_32_12_16_cbc
 configure:4361: gcc -o conftest -g -O2   conftest.c -lcrypto -lssl -lc -lc -lc -lc -lc -lc -lc  >&5
-/tmp/cc2uqD6U.o: In function `main':
+/tmp/ccMNwNNK.o: In function `main':
 /tmp/Sommelier/libUseful/conftest.c:64: undefined reference to `EVP_rc5_32_12_16_cbc'
 collect2: error: ld returned 1 exit status
 configure:4361: $? = 1
@@ -480,7 +480,7 @@ configure:4361: $? = 0
 configure:4361: result: yes
 configure:4361: checking for SSL_set_tlsext_host_name
 configure:4361: gcc -o conftest -g -O2   conftest.c -lcrypto -lssl -lc -lc -lc -lc -lc -lc -lc  >&5
-/tmp/cc6WZ2SZ.o: In function `main':
+/tmp/ccmAtlzP.o: In function `main':
 /tmp/Sommelier/libUseful/conftest.c:71: undefined reference to `SSL_set_tlsext_host_name'
 collect2: error: ld returned 1 exit status
 configure:4361: $? = 1
