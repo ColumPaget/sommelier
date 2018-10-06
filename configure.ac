@@ -28,7 +28,7 @@ fi
 
 STATIC_LIBS="libUseful-3/libUseful.a"
 AC_SUBST(STATIC_LIBS)
-AC_CONFIG_SUBDIRS([libUseful-3])
+AC_CONFIG_SUBDIRS([libUseful])
 
 
 if test "$cf_have_libssl" = "yes"

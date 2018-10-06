@@ -131,7 +131,7 @@ then
 fi
 
 
-AC_ARG_ENABLE(zlib, [  --enable-zlib       use ZLib Compression], cf_use_zlib=$enableval )
+AC_ARG_ENABLE(zlib, [  --enable-zlib       use ZLib Compression], cf_use_zlib=$enableval)
 
 if test "$cf_use_zlib" = "yes" -o "$cf_use_ssl" = "yes"
 then
@@ -140,7 +140,7 @@ cf_have_libz=$ac_cv_lib_z_deflate
 fi
 
 
-AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval )
+AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval, cf_use_ssl=yes )
 
 if test "$cf_use_ssl" = "yes"
 then

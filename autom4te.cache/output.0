@@ -583,6 +583,7 @@ PACKAGE_BUGREPORT=
 PACKAGE_URL=
 
 ac_unique_file="main.c"
+enable_option_checking=no
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -619,11 +620,10 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-enable_option_checking=no
 ac_subst_vars='LTLIBOBJS
 LIB@&t@OBJS
-subdirs
 STATIC_LIBS
+subdirs
 EGREP
 GREP
 CPP
@@ -691,7 +691,7 @@ LDFLAGS
 LIBS
 CPPFLAGS
 CPP'
-ac_subdirs_all='libUseful-3'
+ac_subdirs_all='libUseful'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -3556,6 +3556,10 @@ fi
 
 
 
+
+
+subdirs="$subdirs libUseful"
+
 @%:@ Check whether --enable-ssl was given.
 if test "${enable_ssl+set}" = set; then :
   enableval=$enable_ssl; cf_use_ssl=$enableval
@@ -3694,10 +3698,6 @@ fi
 
 
 STATIC_LIBS="libUseful-3/libUseful.a"
-
-
-
-subdirs="$subdirs libUseful-3"
 
 
 

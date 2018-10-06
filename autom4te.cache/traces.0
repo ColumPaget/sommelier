@@ -229,39 +229,39 @@ m4trace:configure.ac:10: -1- AH_OUTPUT([_DARWIN_USE_64_BIT_INODE], [/* Enable la
 #ifndef _DARWIN_USE_64_BIT_INODE
 # define _DARWIN_USE_64_BIT_INODE 1
 #endif])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_SYS_TYPES_H], [/* Define to 1 if you have the <sys/types.h> header file. */
+m4trace:configure.ac:13: -1- AC_CONFIG_SUBDIRS([libUseful])
+m4trace:configure.ac:13: -1- AC_SUBST([subdirs], ["$subdirs m4_normalize([libUseful])"])
+m4trace:configure.ac:13: -1- AC_SUBST_TRACE([subdirs])
+m4trace:configure.ac:13: -1- m4_pattern_allow([^subdirs$])
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_SYS_TYPES_H], [/* Define to 1 if you have the <sys/types.h> header file. */
 @%:@undef HAVE_SYS_TYPES_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_SYS_STAT_H], [/* Define to 1 if you have the <sys/stat.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_SYS_STAT_H], [/* Define to 1 if you have the <sys/stat.h> header file. */
 @%:@undef HAVE_SYS_STAT_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_STDLIB_H], [/* Define to 1 if you have the <stdlib.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_STDLIB_H], [/* Define to 1 if you have the <stdlib.h> header file. */
 @%:@undef HAVE_STDLIB_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_STRING_H], [/* Define to 1 if you have the <string.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_STRING_H], [/* Define to 1 if you have the <string.h> header file. */
 @%:@undef HAVE_STRING_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_MEMORY_H], [/* Define to 1 if you have the <memory.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_MEMORY_H], [/* Define to 1 if you have the <memory.h> header file. */
 @%:@undef HAVE_MEMORY_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_STRINGS_H], [/* Define to 1 if you have the <strings.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_STRINGS_H], [/* Define to 1 if you have the <strings.h> header file. */
 @%:@undef HAVE_STRINGS_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_INTTYPES_H], [/* Define to 1 if you have the <inttypes.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_INTTYPES_H], [/* Define to 1 if you have the <inttypes.h> header file. */
 @%:@undef HAVE_INTTYPES_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_STDINT_H], [/* Define to 1 if you have the <stdint.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_STDINT_H], [/* Define to 1 if you have the <stdint.h> header file. */
 @%:@undef HAVE_STDINT_H])
-m4trace:configure.ac:18: -1- AH_OUTPUT([HAVE_UNISTD_H], [/* Define to 1 if you have the <unistd.h> header file. */
+m4trace:configure.ac:19: -1- AH_OUTPUT([HAVE_UNISTD_H], [/* Define to 1 if you have the <unistd.h> header file. */
 @%:@undef HAVE_UNISTD_H])
-m4trace:configure.ac:21: -1- AH_OUTPUT([HAVE_LIBSSL], [/* Define to 1 if you have the `ssl\' library (-lssl). */
+m4trace:configure.ac:22: -1- AH_OUTPUT([HAVE_LIBSSL], [/* Define to 1 if you have the `ssl\' library (-lssl). */
 @%:@undef HAVE_LIBSSL])
-m4trace:configure.ac:21: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBSSL])
-m4trace:configure.ac:21: -1- m4_pattern_allow([^HAVE_LIBSSL$])
-m4trace:configure.ac:24: -1- AH_OUTPUT([HAVE_LIBCRYPTO], [/* Define to 1 if you have the `crypto\' library (-lcrypto). */
+m4trace:configure.ac:22: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBSSL])
+m4trace:configure.ac:22: -1- m4_pattern_allow([^HAVE_LIBSSL$])
+m4trace:configure.ac:25: -1- AH_OUTPUT([HAVE_LIBCRYPTO], [/* Define to 1 if you have the `crypto\' library (-lcrypto). */
 @%:@undef HAVE_LIBCRYPTO])
-m4trace:configure.ac:24: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBCRYPTO])
-m4trace:configure.ac:24: -1- m4_pattern_allow([^HAVE_LIBCRYPTO$])
-m4trace:configure.ac:30: -1- AC_SUBST([STATIC_LIBS])
-m4trace:configure.ac:30: -1- AC_SUBST_TRACE([STATIC_LIBS])
-m4trace:configure.ac:30: -1- m4_pattern_allow([^STATIC_LIBS$])
-m4trace:configure.ac:31: -1- AC_CONFIG_SUBDIRS([libUseful-3])
-m4trace:configure.ac:31: -1- AC_SUBST([subdirs], ["$subdirs m4_normalize([libUseful-3])"])
-m4trace:configure.ac:31: -1- AC_SUBST_TRACE([subdirs])
-m4trace:configure.ac:31: -1- m4_pattern_allow([^subdirs$])
+m4trace:configure.ac:25: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBCRYPTO])
+m4trace:configure.ac:25: -1- m4_pattern_allow([^HAVE_LIBCRYPTO$])
+m4trace:configure.ac:31: -1- AC_SUBST([STATIC_LIBS])
+m4trace:configure.ac:31: -1- AC_SUBST_TRACE([STATIC_LIBS])
+m4trace:configure.ac:31: -1- m4_pattern_allow([^STATIC_LIBS$])
 m4trace:configure.ac:43: -1- AC_CONFIG_FILES([Makefile])
 m4trace:configure.ac:43: -1- _m4_warn([obsolete], [AC_OUTPUT should be used without arguments.
 You should run autoupdate.], [])
