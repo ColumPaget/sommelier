@@ -374,6 +374,7 @@ TAction *Act;
 char *Tempstr=NULL;
 
 Act=ActionCreate(ACT_INSTALL, "StandardDependancies");
+Act->Platform=CopyStr(Act->Platform, "windows");
 Tempstr=AppFormatPath(Tempstr,  Act);
 if (access(Tempstr, F_OK) !=0)
 {
