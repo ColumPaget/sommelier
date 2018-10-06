@@ -1,0 +1,45 @@
+OBJ=common.o apps.o command-line.o desktopfiles.o regedit.o download.o install.o uninstall.o
+LIBUSEFUL=libUseful/libUseful.a
+LIBS=@LIBS@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+all: $(OBJ) main.c $(LIBUSEFUL)
+	gcc -g -osommelier $(OBJ) $(LIBS) $(LIBUSEFUL) main.c 
+
+$(LIBUSEFUL):
+	@cd libUseful; $(MAKE)
+
+common.o: common.h common.c
+	gcc -g -c common.c -DVERSION=1.0
+
+apps.o: apps.h apps.c
+	gcc -g -c apps.c
+
+command-line.o: command-line.h command-line.c
+	gcc -g -c command-line.c
+
+desktopfiles.o: desktopfiles.h desktopfiles.c
+	gcc -g -c desktopfiles.c
+
+download.o: download.h download.c
+	gcc -g -c download.c
+
+install.o: install.h install.c
+	gcc -g -c install.c
+
+uninstall.o: uninstall.h uninstall.c
+	gcc -g -c uninstall.c
+
+
+regedit.o: regedit.h regedit.c
+	gcc -g -c regedit.c
+
+
+clean:
+	rm -f sommelier *.o libUseful/*.o libUseful/*.so libUseful/*.a
+
+install:
+	mkdir -p $(exec_prefix)/bin
+	cp sommelier $(exec_prefix)/bin
+	cp sommelier.apps ~/.sommelier.apps
