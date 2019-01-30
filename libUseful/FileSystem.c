@@ -114,7 +114,7 @@ int FileChangeExtension(const char *FilePath, const char *NewExt)
     if (!ptr) ptr=Tempstr;
     ptr=strrchr(ptr,'.');
     if (! ptr) ptr=Tempstr+StrLen(Tempstr);
-    *ptr='\0';
+    StrTrunc(Tempstr, ptr-Tempstr);
 
     if (*NewExt=='.') Tempstr=CatStr(Tempstr,NewExt);
     else Tempstr=MCatStr(Tempstr,".",NewExt,NULL);

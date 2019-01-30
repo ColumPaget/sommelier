@@ -1,12 +1,11 @@
 #include "Terminal.h"
 #include "Unicode.h"
 #include "Pty.h"
+#include "String.h"
 #include <sys/ioctl.h>
 #include <termios.h>
 
-const char *ANSIColorStrings[]= {"none","black","red","green","yellow","blue","magenta","cyan","white",NULL};
-
-
+static const char *ANSIColorStrings[]= {"none","black","red","green","yellow","blue","magenta","cyan","white",NULL};
 
 
 int TerminalStrLen(const char *Str)
@@ -367,9 +366,61 @@ const char *TerminalTranslateKeyCode(int key)
     KeyStr[0]='?';
     KeyStr[1]='\0';
     if ((key > 31) && (key < 127)) KeyStr[0]=key & 0xFF;
+    else if ((key=='\n') || (key=='\r')) KeyStr[0]=key & 0xFF;
     return(KeyStr);
 }
 
+
+
+
+int TerminalTranslateKeyStr(const char *str)
+{
+
+switch (*str)
+{
+case 'e':
+case 'E':
+	if (strcasecmp(str, "ESC")==0) return(ESCAPE);
+break;
+
+case 'l':
+case 'L':
+	if (strcasecmp(str, "LEFT")==0) return(KEY_LEFT);
+break;
+
+case 'r':
+case 'R':
+	if (strcasecmp(str, "RIGHT")==0) return(KEY_RIGHT);
+break;
+
+case 'u':
+case 'U':
+	if (strcasecmp(str, "UP")==0) return(KEY_UP);
+break;
+
+case 'd':
+case 'D':
+	if (strcasecmp(str, "DOWN")==0) return(KEY_DOWN);
+break;
+
+case 'f':
+case 'F':
+	if (strcasecmp(str, "F1")==0) return(KEY_F1);
+	if (strcasecmp(str, "F2")==0) return(KEY_F2);
+	if (strcasecmp(str, "F3")==0) return(KEY_F3);
+	if (strcasecmp(str, "F4")==0) return(KEY_F4);
+	if (strcasecmp(str, "F5")==0) return(KEY_F5);
+	if (strcasecmp(str, "F6")==0) return(KEY_F6);
+	if (strcasecmp(str, "F7")==0) return(KEY_F7);
+	if (strcasecmp(str, "F8")==0) return(KEY_F8);
+	if (strcasecmp(str, "F9")==0) return(KEY_F9);
+	if (strcasecmp(str, "F10")==0) return(KEY_F10);
+	if (strcasecmp(str, "F11")==0) return(KEY_F11);
+break;
+}
+
+return((int) *str);
+}
 
 
 void TerminalGeometry(STREAM *S, int *wid, int *len)
@@ -625,6 +676,9 @@ const char *TerminalFormatSubStr(const char *Str, char **RetStr, STREAM *Term)
                 break;
             case 'c':
                 *RetStr=TerminalCommandStr(*RetStr, TERM_COLOR, ANSI_CYAN, 0);
+                break;
+            case 'C':
+                *RetStr=TerminalCommandStr(*RetStr, TERM_COLOR, 0, ANSI_CYAN);
                 break;
             case 'e':
                 *RetStr=TerminalCommandStr(*RetStr, TERM_TEXT, ANSI_BOLD, 0);
@@ -1519,3 +1573,171 @@ char *TerminalBarMenu(char *RetStr, TERMBAR *TB, const char *ItemStr)
 }
 
 
+
+
+TERMMENU *TerminalMenuCreate(STREAM *Term, int x, int y, int wid, int high)
+{
+TERMMENU *Item;
+
+Item=(TERMMENU *) calloc(1,sizeof(TERMMENU));
+Item->Term=Term;
+Item->x=x;
+Item->y=y;
+Item->wid=wid;
+Item->high=high;
+Item->Options=ListCreate();
+Item->MenuAttribs=CopyStr(Item->MenuAttribs, "~C~n");
+Item->MenuCursorLeft=CopyStr(Item->MenuCursorLeft, "~W~n");
+
+return(Item);
+}
+
+
+void TerminalMenuDestroy(TERMMENU *Item)
+{
+Destroy(Item->MenuAttribs);
+Destroy(Item->MenuCursorLeft);
+Destroy(Item->MenuCursorRight);
+
+ListDestroy(Item->Options, NULL);
+free(Item);
+}
+
+
+
+void TerminalMenuDraw(TERMMENU *Menu)
+{
+		ListNode *Curr, *Prev;
+		char *p_Color=NULL, *Tempstr=NULL, *Output=NULL;
+		int y, yend, count;
+
+		y=Menu->y;
+		yend=y+Menu->high;
+
+    if (Menu->Options->Side)
+    {
+      Curr=Menu->Options->Side;
+      Prev=ListGetPrev(Curr);
+      count=0;
+      while (Prev)
+      {
+      Curr=Prev;
+      count++;
+      if (count >= Menu->high) break;
+      Prev=ListGetPrev(Curr);
+      }
+    }
+    else Curr=ListGetNext(Menu->Options);
+
+		while (Curr)
+		{
+					TerminalCursorMove(Menu->Term, Menu->x, y);
+					if (Menu->Options->Side==Curr) Tempstr=MCopyStr(Tempstr, Menu->MenuCursorLeft, "> ", Curr->Tag, NULL);
+					else Tempstr=MCopyStr(Tempstr, Menu->MenuAttribs, "  ", Curr->Tag, NULL);
+
+					Output=CopyStr(Output, "");
+					Output=TerminalFormatStr(Output, Tempstr, Menu->Term);
+					count=TerminalStrLen(Output);
+					while (count < (Menu->wid))
+					{
+							Output=CatStr(Output, " ");
+							count++;
+					}
+					STREAMWriteString(Output, Menu->Term);
+					STREAMWriteString(ANSI_NORM, Menu->Term);
+					y++;
+					if (y > yend) break;
+					Curr=ListGetNext(Curr);
+		}
+
+		Tempstr=CopyStr(Tempstr, "");
+		Tempstr=PadStrTo(Tempstr, ' ', Menu->wid -4);
+		while (y < yend)
+		{
+			STREAMWriteString(Tempstr, Menu->Term);
+			y++;
+		}
+
+		STREAMFlush(Menu->Term);
+		Destroy(Tempstr);
+		Destroy(Output);
+}
+
+
+ListNode *TerminalMenuOnKey(TERMMENU *Menu, int key)
+{
+	switch (key)
+	{
+		case KEY_UP:
+				if (Menu->Options->Side) 
+				{
+					if (Menu->Options->Side->Prev && (Menu->Options->Side->Prev != Menu->Options)) Menu->Options->Side=Menu->Options->Side->Prev;
+				}
+				else Menu->Options->Side=ListGetNext(Menu->Options);
+			 break;
+
+		case KEY_DOWN:
+				if (Menu->Options->Side) 
+				{
+					if (Menu->Options->Side->Next) Menu->Options->Side=Menu->Options->Side->Next;
+				}
+				else Menu->Options->Side=ListGetNext(Menu->Options);
+			 break;
+
+		case '\r':
+		case '\n':
+			 return(Menu->Options->Side);
+			 break;
+	}
+	TerminalMenuDraw(Menu);
+
+	return(NULL);
+}
+
+
+
+ListNode *TerminalMenuProcess(TERMMENU *Menu)
+{
+ListNode *Node;
+int key;
+
+TerminalMenuDraw(Menu);
+
+key=TerminalReadChar(Menu->Term);
+while (1)
+{
+	if (key == ESCAPE)
+	{
+		Node=NULL;
+		break;
+	}
+	Node=TerminalMenuOnKey(Menu, key);
+	if (Node) break;
+	key=TerminalReadChar(Menu->Term);
+}
+
+
+return(Node);
+}
+
+
+ListNode *TerminalMenu(STREAM *Term, ListNode *Options, int x, int y, int wid, int high)
+{
+TERMMENU *Menu;
+ListNode *Node;
+int key;
+
+Menu=TerminalMenuCreate(Term, x, y, wid, high);
+Node=ListGetNext(Options);
+while (Node)
+{
+	ListAddNamedItem(Menu->Options, Node->Tag, NULL);
+	Node=ListGetNext(Node);
+}
+Menu->Options->Side=ListGetNext(Menu->Options);
+
+Node=TerminalMenuProcess(Menu);
+
+TerminalMenuDestroy(Menu);
+return(Node);
+}

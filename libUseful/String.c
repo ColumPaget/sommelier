@@ -12,8 +12,8 @@ const char *Str;
 size_t len;
 } TStrLenCacheEntry;
 
-int StrLenCacheSize=0;
-TStrLenCacheEntry *StrLenCache=NULL;
+static int StrLenCacheSize=0;
+static TStrLenCacheEntry *StrLenCache=NULL;
 
 
 
@@ -156,6 +156,9 @@ int StrLenFromCache(const char *Str)
 uint64_t c, i;
 
 if (! Str) return(0);
+
+//apparently with a good compiler this gives a faster result than checking each byte
+//not sure I believe it but it doesn't cost much so...
 c=*(uint64_t *) Str;
 if ((c & 0xFF)==0) return(0);
 if ((c & 0xFF00)==0) return(1);
@@ -166,6 +169,7 @@ if ((c & 0xFF0000000000)==0) return(5);
 if ((c & 0xFF000000000000)==0) return(6);
 if ((c & 0xFF00000000000000)==0) return(7);
 
+//okay, it's not a short string, so is it in the cache?
 for (i=0; i < StrLenCacheSize; i++)
 {
 __builtin_prefetch (&StrLenCache[i].Str, 0, 3);
@@ -177,13 +181,14 @@ __builtin_prefetch (&StrLenCache[i+1].Str, 0, 3);
 	return(StrLenCache[i].len);
 }
 }
-
 //fprintf(stderr, "strlen cache miss: %d\n", StrLenCache[i].len);
+
+//okay, nothing worked, fall back to good old strlen
 return(strlen(Str));
 }
 
 
-//Use sstrlen cache
+//Use strlen cache
 void Destroy(void *Obj)
 {
 	StrLenCacheDel(Obj);
@@ -283,7 +288,7 @@ char *VCatStr(char *Dest, const char *Str1,  va_list args)
 
     if (! Str1) return(ptr);
 
-    for (sptr=Str1; sptr !=NULL; sptr=va_arg(args,const char *))
+    for (sptr=Str1; sptr !=NULL; sptr=va_arg(args, const char *))
     {
         ilen=StrLen(sptr);
         if (ilen > 0)
@@ -586,8 +591,9 @@ char *StripLeadingWhitespace(char *Str)
         }
 
         if (!start) start=ptr;
-				len=ptr+1-start;
-        memmove(Str,start,len);
+				len=ptr-start;
+				//+1 to get the '\0' character at the end of the line
+        memmove(Str,start,len+1);
 				StrLenCacheAdd(Str, len);
     }
     return(Str);

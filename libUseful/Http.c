@@ -26,8 +26,8 @@
 
 
 const char *HTTP_AUTH_BY_TOKEN="AuthTokenType";
-ListNode *Cookies=NULL;
-int g_HTTPFlags=0;
+static ListNode *Cookies=NULL;
+static int g_HTTPFlags=0;
 
 
 
@@ -389,7 +389,7 @@ void HTTPInfoPOSTSetContent(HTTPInfoStruct *Info, const char *ContentType, const
 
 void HTTPInfoSetURL(HTTPInfoStruct *Info, const char *Method, const char *iURL)
 {
-    char *URL=NULL, *Proto=NULL, *User=NULL, *Pass=NULL, *Token=NULL, *Args=NULL;
+    char *URL=NULL, *Proto=NULL, *User=NULL, *Pass=NULL, *Token=NULL, *Args=NULL, *Value=NULL;
     const char *p_URL, *ptr;
 
     ptr=GetToken(iURL, "\\S", &URL, 0);
@@ -410,31 +410,34 @@ void HTTPInfoSetURL(HTTPInfoStruct *Info, const char *Method, const char *iURL)
 
     if (StrValid(Proto) && (strcmp(Proto,"https")==0)) Info->Flags |= HTTP_SSL;
 
-    HTTPInfoPOSTSetContent(Info, "", Args, 0, 0);
 
-    ptr=GetNameValuePair(ptr,"\\S","=",&Token, &Args);
+    ptr=GetNameValuePair(ptr,"\\S","=",&Token, &Value);
     while (ptr)
     {
         if (strcasecmp(Token, "oauth")==0)
         {
             Info->AuthFlags |= HTTP_AUTH_OAUTH;
-            Info->Credentials=CopyStr(Info->Credentials, Args);
+            Info->Credentials=CopyStr(Info->Credentials, Value);
         }
         else if (strcasecmp(Token, "hostauth")==0) Info->AuthFlags |= HTTP_AUTH_HOST;
-        else if (strcasecmp(Token, "content-type")==0)   Info->PostContentType=CopyStr(Info->PostContentType, Args);
-        else if (strcasecmp(Token, "content-length")==0) Info->PostContentLength=atoi(Args);
-        else if (strcasecmp(Token, "user")==0) Info->UserName=CopyStr(Info->UserName, Args);
-        else if (strcasecmp(Token, "useragent")==0) Info->UserAgent=CopyStr(Info->UserAgent, Args);
-        else if (strcasecmp(Token, "user-agent")==0) Info->UserAgent=CopyStr(Info->UserAgent, Args);
-        else SetVar(Info->CustomSendHeaders, Token, Args);
-        ptr=GetNameValuePair(ptr,"\\S","=",&Token, &Args);
+        else if (strcasecmp(Token, "content-type")==0)   Info->PostContentType=CopyStr(Info->PostContentType, Value);
+        else if (strcasecmp(Token, "content-length")==0) Info->PostContentLength=atoi(Value);
+        else if (strcasecmp(Token, "user")==0) Info->UserName=CopyStr(Info->UserName, Value);
+        else if (strcasecmp(Token, "useragent")==0) Info->UserAgent=CopyStr(Info->UserAgent, Value);
+        else if (strcasecmp(Token, "user-agent")==0) Info->UserAgent=CopyStr(Info->UserAgent, Value);
+        else SetVar(Info->CustomSendHeaders, Token, Value);
+        ptr=GetNameValuePair(ptr,"\\S","=",&Token, &Value);
     }
+
+		if (Info->PostContentLength > 0) Info->Doc=MCatStr(Info->Doc, "?", Args, NULL);
+		else HTTPInfoPOSTSetContent(Info, "", Args, 0, 0);
 
     if (StrValid(Pass)) CredsStoreAdd(Info->Host, User, Pass);
 
     DestroyString(User);
     DestroyString(Pass);
     DestroyString(Token);
+    DestroyString(Value);
     DestroyString(Proto);
     DestroyString(Args);
     DestroyString(URL);

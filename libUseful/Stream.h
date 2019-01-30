@@ -135,7 +135,7 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 #define SF_SORTED  1048576      //file is sorted, this is a hint to 'STREAMFind'
 #define STREAM_IMMUTABLE  2097152   //file is immutable (if supported by fs)
 #define STREAM_APPENDONLY  4194304  //file is append-only (if supported by fs)
-#define SF_COMPRESSED  8388608  //enable compression
+#define SF_COMPRESSED  8388608  //enable compression, this requests compression
 #define SF_TMPNAME  16777216    //file path is a template to create a temporary file name (must end in 'XXXXXX')
 
 
@@ -148,6 +148,9 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 #define SS_EMBARGOED 64
 #define SS_SSL  4096
 #define SS_AUTH 8192
+#define SS_COMPRESSED 16384 //compression enabled, specifies compression active on a stream
+
+//state values available for programmer use
 #define SS_USER1 268435456
 #define SS_USER2 536870912
 #define SS_USER3 1073741824

@@ -1,9 +1,6 @@
 #AC_INIT(libUseful,colums.projects@googlemail.com,,http://sites.google.com/site/columscode) 
 AC_INIT(defines.h)
 
-VERSION="0.0.1" 
-AC_SUBST(VERSION) 
-
 AC_PROG_CC
 AC_LANG_C
 AC_PROG_MAKE_SET
@@ -140,7 +137,7 @@ cf_have_libz=$ac_cv_lib_z_deflate
 fi
 
 
-AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval, cf_use_ssl=yes )
+AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval )
 
 if test "$cf_use_ssl" = "yes"
 then
