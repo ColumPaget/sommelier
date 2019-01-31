@@ -583,7 +583,6 @@ PACKAGE_BUGREPORT=
 PACKAGE_URL=
 
 ac_unique_file="main.c"
-enable_option_checking=no
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -620,10 +619,11 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
+enable_option_checking=no
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-STATIC_LIBS
 subdirs
+STATIC_LIBS
 EGREP
 GREP
 CPP
@@ -681,6 +681,7 @@ ac_user_opts='
 enable_option_checking
 enable_largefile
 enable_ssl
+with_system_libuseful
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1299,7 +1300,12 @@ Optional Features:
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-largefile     omit support for large files
-  --enable-ssl       use Secure Sockets Layer
+  --enable-ssl       use Secure Sockets Layer (default='yes')
+
+Optional Packages:
+  --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
+  --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
+  --with-system-libuseful       use libUseful already installed on host (default='no')
 
 Some influential environment variables:
   CC          C compiler command
@@ -3555,17 +3561,21 @@ rm -rf conftest*
 fi
 
 
-
-
-
-subdirs="$subdirs libUseful"
-
 # Check whether --enable-ssl was given.
 if test "${enable_ssl+set}" = set; then :
   enableval=$enable_ssl; cf_use_ssl=$enableval
 else
   cf_use_ssl=yes
 fi
+
+
+# Check whether --with-system-libuseful was given.
+if test "${with_system_libuseful+set}" = set; then :
+  withval=$with_system_libuseful; cf_use_system_libuseful=$enableval
+else
+  cf_use_system_libuseful=no
+fi
+
 
 
 echo "use: $cf_use_ssl"
@@ -3697,7 +3707,11 @@ cf_have_libcrypto=$ac_cv_lib_crypto_EVP_CIPHER_CTX_init
 fi
 
 
-STATIC_LIBS="libUseful-3/libUseful.a"
+STATIC_LIBS="libUseful/libUseful.a"
+
+
+
+subdirs="$subdirs libUseful"
 
 
 

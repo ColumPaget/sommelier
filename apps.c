@@ -17,6 +17,7 @@ if (strcmp(Name,"url")==0)
 	//SetVar(Act->Vars, "exec", Tempstr);
 }
 else if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
 else if (strcmp(Name,"platform")==0) Act->Platform=CopyStr(Act->Platform, Value);
 else if (strcmp(Name,"install-type")==0) 
 {

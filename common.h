@@ -40,6 +40,7 @@ char *ConfigPath;
 char *Name;
 char *URL;
 char *Root;
+char *DownName;
 char *InstallPath;
 char *Exec;
 char *Args;

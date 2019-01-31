@@ -209,6 +209,8 @@ if (geteuid()==0) seteuid(getuid());
 
 //LibUsefulSetValue("HTTP:UserAgent","Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko");
 LibUsefulSetValue("HTTP:UserAgent","Wget/1.19.2");
+//LibUsefulSetValue("HTTP:Debug", "Y");
+
 
 
 Acts=ParseCommandLine(argc, argv);

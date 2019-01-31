@@ -39,6 +39,7 @@ void ActionDestroy(TAction *Act)
 {
 Destroy(Act->Name);
 Destroy(Act->URL);
+Destroy(Act->DownName);
 Destroy(Act->InstallPath);
 Destroy(Act->Exec);
 
@@ -83,11 +84,12 @@ char *Hash=NULL, *Tempstr=NULL;
 const char *p_ExpectedHash;
 int result=FALSE;
 
+Tempstr=URLBasename(Tempstr, Act->URL);
+HashFile(&Hash, "sha256", Tempstr, ENCODE_HEX);
+
 p_ExpectedHash=GetVar(Act->Vars, "sha256");
 if (StrValid(p_ExpectedHash))
 {
-	Tempstr=URLBasename(Tempstr, Act->URL);
-	HashFile(&Hash, "sha256", Tempstr, ENCODE_HEX);
 	if (strcmp(Hash, p_ExpectedHash)==0) result=TRUE;
 	Tempstr=CopyStr(Tempstr, "");
 	Tempstr=TerminalFormatStr(Tempstr, "~eChecking Download integrity...~0",NULL);
@@ -99,7 +101,12 @@ if (StrValid(p_ExpectedHash))
 	else Tempstr=TerminalFormatStr(Tempstr, "~rERROR:~0 Downloaded file does not match expected hash\n",NULL);
 	printf("%s\n",Tempstr);
 }
-else result=TRUE;
+else 
+{
+	printf("No expected hash value is configured for this download\n");
+	printf("    actual   sha256: [%s]\n",Hash);	
+	result=TRUE;
+}
 
 Destroy(Tempstr);
 Destroy(Hash);
