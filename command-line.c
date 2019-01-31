@@ -165,6 +165,9 @@ else
 	else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, "", CmdLine);
 	else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, "", CmdLine);
 	else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, "", CmdLine);
+	else if (strcmp(arg, "version")==0) printf("sommelier version %s\n", VERSION);
+	else if (strcmp(arg, "-version")==0) printf("sommelier version %s\n", VERSION);
+	else if (strcmp(arg, "--version")==0) printf("sommelier version %s\n", VERSION);
 	else PrintUsage();
 }
 }
