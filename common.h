@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "2.0"
+#define VERSION "3.0"
 
 
 #define INSTALL_RUN 0
