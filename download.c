@@ -7,11 +7,12 @@ static void DownloadCallback(const char *URL, int bytes, int total)
     char *ProgBar=NULL;
     int len=0;
 
-    perc=(float) bytes * 100.0 / (float) total;
     if (bytes==0) last_perc=0;
+
     if ( total > 0)
     {
-        if ((bytes==total) || 	((perc - last_perc) > 0.01))
+    		perc=(float) bytes * 100.0 / (float) total;
+        if ((bytes==total) || ((perc - last_perc) > 0.01))
         {
             for (len=0; len < (int) (perc/5); len++) ProgBar=AddCharToBuffer(ProgBar, len, '*');
             for (; len < 20; len++) ProgBar=AddCharToBuffer(ProgBar, len, ' ');
@@ -20,10 +21,15 @@ static void DownloadCallback(const char *URL, int bytes, int total)
             printf("(%s/", ToMetric((double) bytes, 2));
             printf("%s)               \r", ToMetric((double) total, 2));
             fflush(NULL);
+    				last_perc=perc;
         }
     }
-
-    last_perc=perc;
+		else if ((perc-last_perc) > 10)
+		{
+			printf("%s                   \r", ToMetric((double) bytes, 2));
+			perc=0;
+		}				
+	  else perc++;	
 
     Destroy(ProgBar);
 }

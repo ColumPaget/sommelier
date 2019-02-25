@@ -150,8 +150,8 @@ int RegFlags=0;
 		else 
 		{
 			ptr=strrchr(ptr, '.');
-			if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine msiexec /i '$(install-dir)/$(installer)' $(installer-args)", Act->Vars, 0);
-			else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(install-dir)/$(installer)' $(installer-args)", Act->Vars, 0);
+			if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine msiexec /i '$(install-dir)/$(installer)' $(installer-args)", Act->Vars, 0);
+			else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine '$(install-dir)/$(installer)' $(installer-args)", Act->Vars, 0);
 		}
 
 		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
@@ -162,7 +162,6 @@ int RegFlags=0;
 	if (StrValid(ptr)) 
 	{
 		Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(install-dir)/$(install_stage2)'", Act->Vars, 0);
-		//printf("STAGE2: [%s]\n",Tempstr);
 		RunProgramAndConsumeOutput(Tempstr, Act->Flags);
 	}
 

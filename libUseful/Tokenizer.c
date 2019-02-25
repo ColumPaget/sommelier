@@ -13,6 +13,15 @@ const char *ptr;
 	{
 	case '\0': return(Str); break;
 
+	case '\\':
+  	if (! (Flags & GETTOKEN_BACKSLASH))
+		{
+			//if we got a backslash, then skip past it and the character it quotes,
+			//unless it's quoting a NULL character (which just ain't allowed)
+			if ( *(Str+1) != '\0' ) return(Str+2);
+		}
+	break;
+
 	case '"':
 	case '\'':
   	if (Flags & GETTOKEN_HONOR_QUOTES) 
@@ -221,31 +230,31 @@ int GetTokenMultiSepMatch(char **Separators, const char **start_ptr, const char 
     sptr=*start_ptr;
     eptr=*end_ptr;
 
-		while (*sptr !='\0')
-		{
+    while (*sptr !='\0')
+    {
     sep_ptr=Separators;
 
     while (*sep_ptr !=NULL)
     {
-				//we have to protect sptr just like start_ptr, or else GetTokenSepMatch will change it
-				tptr=sptr;
+        //we have to protect sptr just like start_ptr, or else GetTokenSepMatch will change it
+        tptr=sptr;
         if (GetTokenSepMatch(*sep_ptr, &tptr, &eptr, Flags))
         {
             *start_ptr=tptr;
             *end_ptr=eptr;
             return(TRUE);
         }
+
         sep_ptr++;
     }
 
-		sptr=GetTokenStepThru(sptr, Flags);
-		}
+    sptr=GetTokenStepThru(sptr, Flags);
+    }
 
     *start_ptr=*end_ptr;
 
     return(FALSE);
 }
-
 
 
 

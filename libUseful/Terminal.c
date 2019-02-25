@@ -1189,6 +1189,12 @@ char *TerminalReadText(char *RetStr, int Flags, STREAM *S)
     char outchar;
     KEY_CALLBACK_FUNC Func;
 
+    len=StrLen(RetStr);
+		if (len > 0) 
+		{
+			STREAMWriteLine(RetStr, S);
+			STREAMFlush(S);
+		}	
     inchar=TerminalReadChar(S);
     while (inchar != EOF)
     {
@@ -1423,6 +1429,11 @@ void TerminalBarUpdate(TERMBAR *TB, const char *Text)
 }
 
 
+
+
+
+
+
 char *TerminalBarReadText(char *RetStr, TERMBAR *TB, int Flags, const char *Prompt)
 {
     int inchar, PromptLen;
@@ -1637,8 +1648,11 @@ void TerminalMenuDraw(TERMMENU *Menu)
 
 					Output=CopyStr(Output, "");
 					Output=TerminalFormatStr(Output, Tempstr, Menu->Term);
-					count=TerminalStrLen(Output);
-					while (count < (Menu->wid))
+
+					//length has two added for the leading space for the cursor
+					count=TerminalStrLen(Curr->Tag) +2;
+
+					while (count < Menu->wid)
 					{
 							Output=CatStr(Output, " ");
 							count++;
@@ -1651,7 +1665,7 @@ void TerminalMenuDraw(TERMMENU *Menu)
 		}
 
 		Tempstr=CopyStr(Tempstr, "");
-		Tempstr=PadStrTo(Tempstr, ' ', Menu->wid -4);
+		Tempstr=PadStrTo(Tempstr, ' ', Menu->wid);
 		while (y < yend)
 		{
 			STREAMWriteString(Tempstr, Menu->Term);
