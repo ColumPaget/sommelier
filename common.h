@@ -46,6 +46,7 @@ char *InstallPath;
 char *Exec;
 char *Args;
 char *Platform;
+char *OSVersion;
 ListNode *Vars;
 } TAction;
 

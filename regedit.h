@@ -11,7 +11,7 @@
 #define REG_FONT_SMOOTH 32 
 #define REG_NO_FONT_SMOOTH 64
 
-void RegEdit(TAction *Act, int Flags);
+void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *Resolution);
 void RegeditApplySettings(TAction *Act);
 
 

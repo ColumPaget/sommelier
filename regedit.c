@@ -1,10 +1,14 @@
 #include "regedit.h"
 #include "apps.h"
 
-void RegEdit(TAction *Act, int Flags)
+void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolution)
 {
-char *Tempstr=NULL, *Path=NULL;
+char *Tempstr=NULL, *Path=NULL, *Resolution=NULL;
 STREAM *S;
+
+
+if (StrValid(iResolution)) Resolution=CopyStr(Resolution, iResolution);
+else Resolution=CopyStr(Resolution, "800x600");
 
 //Create a windows registry file to change wine settings in the
 //registry
@@ -46,9 +50,11 @@ if (Flags & REG_VDESK)
 {
 	STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine\\Explorer]\r\n", S);
 	STREAMWriteLine("\"Desktop\"=\"Default\"\r\n", S);
+
 	STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops]\r\n", S);
-	STREAMWriteLine("\"Default\"=\"800x600\"\r\n", S);
-	if (Act->Flags & FLAG_DEBUG) printf("Configure: Use virtual desktop\n");
+	Tempstr=MCopyStr(Tempstr, "\"Default\"=\"", Resolution, "\"\r\n", S);
+	STREAMWriteLine(Tempstr, S);
+	if (Act->Flags & FLAG_DEBUG) printf("Configure: Use virtual desktop, resolution %s\n", Resolution);
 }
 
 if (Flags & REG_NO_VDESK)
@@ -78,6 +84,15 @@ if (Flags & REG_NO_FONT_SMOOTH)
 	if (Act->Flags & FLAG_DEBUG) printf("Configure: DON'T use smooth fonts\n");
 }
 
+
+if (StrValid(OSVersion))
+{
+	STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine]\r\n", S);
+
+	Tempstr=MCopyStr(Tempstr, "\"Version\"=\"", OSVersion, "\"\r\n", NULL);
+	STREAMWriteLine(Tempstr, S);
+	if (Act->Flags & FLAG_DEBUG) printf("Configure: OSVersion: %s\n", OSVersion);
+}
 STREAMClose(S);
 
 Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine regedit ", Act->Vars, 0);
@@ -89,6 +104,7 @@ RunProgramAndConsumeOutput(Tempstr, Act->Flags);
 unlink(Path);
 
 Destroy(Tempstr);
+Destroy(Resolution);
 Destroy(Path);
 }
 
@@ -96,36 +112,47 @@ Destroy(Path);
 
 void RegeditApplySettings(TAction *Act)
 {
-char *Name=NULL, *Value=NULL;
-const char *ptr;
+char *OSVersion=NULL, *Resolution=NULL, *Tempstr=NULL;
+ListNode *Curr;
+const char *p_Value;
+int Flags=0;
 
 //don't need the path, just need some vars set in Act->Vars
-Value=AppFormatPath(Value, Act);
+Tempstr=AppFormatPath(Tempstr, Act);
 
-ptr=GetVar(Act->Vars, "settings");
-ptr=GetNameValuePair(ptr, ",", "=", &Name, &Value);
-while (ptr)
+Curr=ListGetNext(Act->Vars);
+while (Curr)
 {
-printf("APPLY: '%s' set to '%s'\n", Name, Value);
-if (strcmp(Name, "vdesk")==0) 
+printf("configure: '%s' set to '%s'\n", Curr->Tag, (const char *) Curr->Item);
+p_Value=(const char *) Curr->Item;
+if (strcmp(Curr->Tag, "vdesk")==0) 
 {
-	if (strcasecmp(Value, "y")==0) RegEdit(Act, REG_VDESK);
-	if (strcasecmp(Value, "n")==0) RegEdit(Act, REG_NO_VDESK);
+	if (strcasecmp(p_Value, "y")==0) Flags |= REG_VDESK;
+	else if (strcasecmp(p_Value, "n")==0) Flags |= REG_NO_VDESK;
+	else if (isdigit(*p_Value)) 
+	{
+		Flags |= REG_VDESK;
+		Resolution=CopyStr(Resolution, p_Value);
+	}
 }
-else if (strcmp(Name, "smoothfonts")==0) 
+else if (strcmp(Curr->Tag, "smoothfonts")==0) 
 {
-	if (strcasecmp(Value, "y")==0) RegEdit(Act, REG_FONT_SMOOTH);
-	if (strcasecmp(Value, "n")==0) RegEdit(Act, REG_NO_FONT_SMOOTH);
+	if (strcasecmp(p_Value, "y")==0) Flags |= REG_FONT_SMOOTH;
+	else if (strcasecmp(p_Value, "n")==0) Flags |= REG_NO_FONT_SMOOTH;
 }
-else if (strcmp(Name, "winmanage")==0)
+else if (strcmp(Curr->Tag, "winmanage")==0)
 {
-	if (strcasecmp(Value, "y")==0) RegEdit(Act, REG_WINMANAGER);
-	if (strcasecmp(Value, "n")==0) RegEdit(Act, REG_NO_WINMANAGER);
+	if (strcasecmp(p_Value, "y")==0) Flags |= REG_WINMANAGER;
+	if (strcasecmp(p_Value, "n")==0) Flags |= REG_NO_WINMANAGER;
+}
+else if (strcmp(Curr->Tag, "os-version")==0) OSVersion=CopyStr(OSVersion, p_Value);
+
+Curr=ListGetNext(Curr);
 }
 
-ptr=GetNameValuePair(ptr, ",", "=", &Name, &Value);
-}
+RegEdit(Act, Flags, OSVersion, Resolution);
 
-Destroy(Name);
-Destroy(Value);
+Destroy(OSVersion);
+Destroy(Resolution);
+Destroy(Tempstr);
 }

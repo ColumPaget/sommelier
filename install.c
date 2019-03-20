@@ -141,7 +141,7 @@ int RegFlags=0;
 		RegFlags |= REG_VDESK;
 	}
 
-	if (RegFlags)	RegEdit(Act, RegFlags);
+	if (RegFlags)	RegEdit(Act, RegFlags, NULL, NULL);
 
 	ptr=GetVar(Act->Vars, "installer");
 	if (StrValid(ptr)) 
@@ -173,7 +173,7 @@ int RegFlags=0;
 		RegFlags |= REG_NO_VDESK;
 	}
 	RegFlags |= REG_FONT_SMOOTH;
-	RegEdit(Act, RegFlags);
+	RegEdit(Act, RegFlags, NULL, NULL);
 	}
 
 	Destroy(Tempstr);
@@ -259,7 +259,7 @@ if (StrValid(ptr))
 }
 
 ptr=GetVar(Act->Vars, "winmanager");
-if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER);
+if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL);
 
 }
 

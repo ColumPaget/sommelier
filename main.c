@@ -225,6 +225,7 @@ if (Act)
 	{
 	case ACT_INSTALL:
 		InstallApp(Act);
+		RegeditApplySettings(Act);
 	break;
 
 	case ACT_UNINSTALL:

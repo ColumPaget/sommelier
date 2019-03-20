@@ -153,7 +153,7 @@ else if (strcmp(arg, "set")==0)
 		Act=ActionCreate(ACT_SET, arg);
 		if (Act)
 		{
-		SetVar(Act->Vars, "settings", SettingsStr);
+		LoadAppConfigToAct(Act, SettingsStr);
 		ListAddItem(Acts, Act);
 		}
 		arg=CommandLineNext(CmdLine);

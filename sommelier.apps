@@ -162,3 +162,5 @@ CloneInvader platform=dos url=https://image.dosgamesarchive.com/games/cloneinv.z
 SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256=57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3 cagetory=BoardGame
 DigiClock platform=dos url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip  exec='DIGITAL.EXE' category='Utility' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 
 
+
+DungeonKeeper platform=windows os-version=winxp vdesk=y url=/home/colum/setup_dungeon_keeper_2_1.7_(22280).exe exec=DKII.EXE
