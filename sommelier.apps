@@ -32,6 +32,7 @@ Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' category='Email' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' category='Email' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
 iScribe platform=windows url=http://www.memecode.com/scribe/data/iscribe-win32-v2.1.53.exe  category='Email' requires='OpenSSL' comment='Email client' sha256='3a5eb42b11472db8157d37edc809eaf5d9842321d58866eca161ba10f7020c10' 
+Mulberry platform=windows url=http://www.mulberrymail.com/downloads/Mulberry/v4_0_8/Mulberry.exe category='Email' exec="Mulberry.exe" dlname="Mulberry-install.exe" sha256=bce97f483056ebf66de8e6845352aca5afc58dced8ed5ab4d1657a088bf504b1
 Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB  category='Email' comment='Mozilla's email client' sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
 FeedNotifier platform=windows url=https://www.feednotifier.com/files/feed-notifier-2.6.exe  comment='RSS feed notifications/popups' category='Feed' sha256='3793bd506084fd81d6a385222ffe1f55fb6b5a8a2acb8a275376675e456c1239' 
 FeedRoller platform=windows url=http://www.sector-seven.net/assets/software/feedroller/FeedRoller_Setup.exe  comment='RSS/News Desktop Ticker' category='Feed' sha256='7e42e0e5933fbfd7fb1e1eb25ce32c20193b9cf94342a24f9d4f032f53e22e05' 
@@ -161,6 +162,3 @@ CloneInvader platform=dos url=https://image.dosgamesarchive.com/games/cloneinv.z
 4DPrinceOfPersia platform=dos url=http://www.completelyfreesoftware.com/software/4dprince.zip  exec='4D_PRIN.EXE' category='Game' sha256='9a85556ff68a01902914e7b395bee658107198c5ff2c6378d7be8ef943de67f0' 
 SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256=57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3 cagetory=BoardGame
 DigiClock platform=dos url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip  exec='DIGITAL.EXE' category='Utility' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 
-
-
-DungeonKeeper platform=windows os-version=winxp vdesk=y url=/home/colum/setup_dungeon_keeper_2_1.7_(22280).exe exec=DKII.EXE

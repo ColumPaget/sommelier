@@ -45,20 +45,19 @@ int Download(TAction *Act)
         Tempstr=TerminalFormatStr(Tempstr, "~eDownloading:~0  ",NULL);
         printf("%s %s\n",Tempstr, Act->URL);
 
-				if (StrValid(Act->DownName)) Tempstr=CopyStr(Tempstr, Act->DownName);
-        else Tempstr=URLBasename(Tempstr, Act->URL);
+				if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, Act->URL);
 
-        if (StrValid(Tempstr))
+        if (StrValid(Act->DownName))
         {
-            result=FileCopyWithProgress(Act->URL, Tempstr, DownloadCallback);
+            result=FileCopyWithProgress(Act->URL, Act->DownName, DownloadCallback);
 
-            SetVar(Act->Vars, "dlfile", Tempstr);
+            SetVar(Act->Vars, "dlfile", Act->DownName);
             printf("\n");
         }
         else
         {
-            Tempstr=TerminalFormatStr(Tempstr, "~rERROR: failed to extract basename from: ~0  ",NULL);
-            printf("%s %s\n", Tempstr, Act->URL);
+            Act->DownName=TerminalFormatStr(Act->DownName, "~rERROR: failed to extract basename from: ~0  ",NULL);
+            printf("%s %s\n", Act->DownName, Act->URL);
         }
     }
     else

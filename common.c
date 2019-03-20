@@ -84,8 +84,7 @@ char *Hash=NULL, *Tempstr=NULL;
 const char *p_ExpectedHash;
 int result=FALSE;
 
-Tempstr=URLBasename(Tempstr, Act->URL);
-HashFile(&Hash, "sha256", Tempstr, ENCODE_HEX);
+HashFile(&Hash, "sha256", Act->DownName, ENCODE_HEX);
 
 p_ExpectedHash=GetVar(Act->Vars, "sha256");
 if (StrValid(p_ExpectedHash))

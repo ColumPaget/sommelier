@@ -340,11 +340,7 @@ printf("%s\n",Tempstr);
 				printf("ERROR: Download Hash mismatch!\n");
 				printf("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n");
 			}
-			else
-			{
-			Tempstr=URLBasename(Tempstr, Act->URL);
-			InstallResult=InstallAppFromFile(Act, Tempstr);
-			}
+			else InstallResult=InstallAppFromFile(Act, Act->DownName);
 		}
 		//else InstallResult=InstallAppFromFile(Act, Act->URL);
 
