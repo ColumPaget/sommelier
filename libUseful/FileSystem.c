@@ -242,7 +242,7 @@ unsigned long FileCopyWithProgress(const char *SrcPath, const char *DestPath, DA
     STREAM *Src;
     unsigned long result;
 
-    Src=STREAMOpen(SrcPath,"r");
+    Src=STREAMOpen(SrcPath, "r");
     if (! Src) return(0);
 
     if (Callback) STREAMAddProgressCallback(Src,Callback);

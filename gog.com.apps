@@ -1,0 +1,67 @@
+#Things available through gog.com
+
+#native linux
+Convoy platform=gog:linux category='Game' exec="Convoy.x86"
+Cayne platform=gog:linux category='Game'
+DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86"
+FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
+Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+KingdomRush platform=gog:linux category='Game' exec="Kingdom\ Rush.x86" 
+PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
+SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="x86/superhexagon.x86" exec-vars="LD_LIBRARY_PATH=./x86/"
+
+
+#SCUMMVM platform
+LureOfTheTemptress platform=gog:scummvm category='Game' 
+TheDig platform=gog:scummvm category='Game' 
+
+# windows via wine
+99LevelsToHell platform=gog:windows category='Game'
+AgeOfWonders platform=gog:windows category='Game' exec=AoW.exe rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled."
+AnomalyWarzoneEarth platform=gog:windows category='Game' 
+AnomalyDefenders platform=gog:windows category='Game' 
+DarkestDungeon platform=gog:windows category='Game' 
+DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
+DivineDivinity platform=gog:windows category='Game' exec=div.exe
+ChaosReborn platform=gog:windows category='Game' 
+CrusaderKings platform=gog:windows category='Game'
+FantasyWars platform=gog:windows category='Game' exec=fw.exe
+FreedomForce platform=gog:windows category='Game' exec="$(drive_c)/GOG Games/Freedom Force/fforce.exe"
+Flatout platform=gog:windows Category='Game'
+FTL platform=gog:windows category='Game'
+GalacticAssault platform=gog:windows category='Game'
+HaegemoniaLegionsOfIron platform=gog:windows category='Game'
+HaegemoniaSolonHeritage platform=gog:windows category='Game'
+HeroesOfMightAndMagic3 platform=gog:windows category='Game'
+HitmanCodename47 platform=gog:windows category='Game'
+KingdomRush platform=gog:windows category='Game'
+KingsBounty platform=gog:windows category='Game'
+MoonbaseCommander platform=gog:windows category='Game' exec=moonbase.exe
+Parkan2 platform=gog:windows category='Game'
+Patrician3 platform=gog:windows category='Game' exec=Patrician3.exe
+Perimeter platform=gog:windows category='Game'
+PortRoyale platform=gog:windows category='Game' exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
+RaceTheSun platform=gog:windows category='Game'
+RageOfMages platform=gog:windows category='Game' exec=rom.exe
+Reigns platform=gog:windows category='Game'
+SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"
+Spellforce platform=gog:windows category='Game' warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
+StarfleetCommand platform=gog:windows category='Game' vdesk=y os-version=winxp exec="sfc.exe"
+StarWolves platform=gog:windows category='Game' 
+StreetFighterAlpha platform=gog:windows category='Game'
+SwordOfTheStars platform=gog:windows category='Game' exec="Sword\ of\ the\ Stars.exe"
+SystemShock2 platform=gog:windows category='Game' os-version=winxp vdesk=y warn="This app installs in a virtual desktop because it has issues with fullscreen mode"
+TachyonFringe platform=gog:windows category='Game' exec=Tachyon.exe
+Tempest platform=gog:windows category='Game'
+TheGuild platform=gog:windows category='Game'
+Thief platform=gog:windows category='Game' exec="THIEF.EXE" vdesk=y warn="This app installs in a virtual desktop because it has issues with fullscreen mode"
+Thief2 platform=gog:windows category='Game'
+Thief3 platform=gog:windows category='Game'
+ThisIsThePolice platform=gog:windows category='Game' 
+Torchlight platform=gog:windows category='Game' os-version=winxp
+Torchlight2 platform=gog:windows category='Game' os-version=winxp exec=Torchlight2.exe
+Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
+TheWitcherAdventureGame platform=gog:windows category='Game' 
+
+
+

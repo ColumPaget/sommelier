@@ -4227,8 +4227,9 @@ fi
 # Check whether --enable-ssl was given.
 if test "${enable_ssl+set}" = set; then :
   enableval=$enable_ssl; cf_use_ssl=$enableval
+else
+  cf_use_ssl=yes
 fi
-
 
 if test "$cf_use_ssl" = "yes"
 then

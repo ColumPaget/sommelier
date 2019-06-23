@@ -649,7 +649,15 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
 #endif
         p_Path=NewPath;
     }
-    else
+		//if path starts with a tilde, then it's the user's home directory
+    else if (strncmp(Path, "~/", 2) ==0)
+		{
+			//Path+1 so we get the / to make sure there is one after HomeDir
+			NewPath=MCopyStr(NewPath, GetCurrUserHomeDir(), Path+1, NULL);
+      fd=open(NewPath, Mode, 0600);
+      p_Path=NewPath;
+		}
+		else
     {
         fd=open(Path, Mode, 0600);
         p_Path=Path;
@@ -870,18 +878,29 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     case 't':
     case 's':
     case 'u':
-        if (strcasecmp(Proto,"ssh")==0) S=SSHConnect(Host, Port, User, Pass, Path);
-        else if (strcasecmp(Proto,"tty")==0)
-        {
+			if (strcasecmp(Proto,"ssh")==0) 
+			{
+				//if SF_RDONLY is set, then we treat this as a 'file get', otherwise we treat it as
+				//a remote command
+				if (Flags & SF_RDONLY)
+				{
+					Token=QuoteCharsInStr(Token, Path, "    ()");
+					Path=MCopyStr(Path, "cat ", Token, "; exit", NULL);
+				}
+				printf("SSHCONN: %s\n", Path);
+				S=SSHConnect(Host, Port, User, Pass, Path);
+			}
+      else if (strcasecmp(Proto,"tty")==0)
+      {
             S=STREAMFromFD(TTYConfigOpen(URL+4, Config));
             if (S)
             {
                 S->Path=CopyStr(S->Path,URL);
                 S->Type=STREAM_TYPE_TTY;
             }
-        }
-        else
-        {
+      }
+      else
+      {
             S=STREAMCreate();
             S->Path=CopyStr(S->Path,URL);
             if (! STREAMConnect(S, URL, Config))
@@ -889,8 +908,8 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
                 STREAMClose(S);
                 S=NULL;
             }
-        }
-        break;
+      }
+      break;
 
     default:
         if (strcmp(URL,"-")==0) S=STREAMFromDualFD(0,1);

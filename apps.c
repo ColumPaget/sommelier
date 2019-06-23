@@ -1,4 +1,7 @@
 #include "apps.h"
+#include "config.h"
+
+ListNode *Apps=NULL;
 
 void LoadAppConfigToAct(TAction *Act, const char *Config)
 {
@@ -29,10 +32,8 @@ else if (strcmp(Name,"sha256")==0)
 	strlwr(Value);
 	SetVar(Act->Vars, Name, Value);
 }
-else 
-{
-	SetVar(Act->Vars, Name, Value);
-}
+else if (StrValid(Name)) SetVar(Act->Vars, Name, Value);
+
 ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
 }
 
@@ -40,6 +41,7 @@ Destroy(Tempstr);
 Destroy(Value);
 Destroy(Name);
 }
+
 
 
 void LoadAppsFromFile(const char *Path, ListNode *Apps)
@@ -60,13 +62,8 @@ StripTrailingWhitespace(Tempstr);
 if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
 {
 	ptr=GetToken(Tempstr, "\\S", &Token, GETTOKEN_QUOTES);
-	Node=ListFindNamedItem(Apps, Token);
-	if (Node) Act=(TAction *) Node->Item;
-	else 
-	{
-		Act=ActionCreate(ACT_NONE, Token);
-		ListAddNamedItem(Apps, Token, Act);
-	}
+	Act=ActionCreate(ACT_NONE, Token);
+	ListAddNamedItem(Apps, Token, Act);
 	LoadAppConfigToAct(Act, ptr);
 	}
 Tempstr=STREAMReadLine(Tempstr, S);
@@ -84,18 +81,22 @@ ListNode *LoadApps(const char *ConfigFiles)
 {
 char *Tempstr=NULL, *Token=NULL;
 const char *ptr;
-ListNode *Apps, *Vars;
+ListNode *Vars;
+glob_t Glob;
+int i;
 
-Apps=ListCreate();
+if (! Apps) Apps=ListCreate();
 Vars=ListCreate();
 SetVar(Vars, "homedir", GetCurrUserHomeDir());
 
 ptr=GetToken(ConfigFiles, ",", &Token, 0);
 while (ptr)
 {
-Tempstr=SubstituteVarsInString(Tempstr, Token, Vars, 0);
-LoadAppsFromFile(Tempstr, Apps);
-ptr=GetToken(ptr, ",", &Token, 0);
+	Tempstr=SubstituteVarsInString(Tempstr, Token, Vars, 0);
+	glob(Tempstr, 0, 0, &Glob);
+	for (i=0; i < Glob.gl_pathc; i++) LoadAppsFromFile(Glob.gl_pathv[i], Apps);
+	globfree(&Glob);
+	ptr=GetToken(ptr, ",", &Token, 0);
 }
 
 ListDestroy(Vars, Destroy);
@@ -106,30 +107,12 @@ return(Apps);
 }
 
 
-TAction *AppActionCreate(int Action, const char *AppName, const char *ConfigPath)
-{
-TAction *Act=NULL;
-ListNode *Apps, *Node;
-
-Apps=LoadApps(ConfigPath);
-Node=ListFindNamedItem(Apps, AppName);
-if (Node) 
-{
-	Act=(TAction *) Node->Item;
-	Act->Type=Action;
-}
-else printf("ERROR: sorry, app '%s' is unknown\n", AppName);
-
-return(Act);
-}
-
 
 char *AppFormatPath(char *Path, TAction *Act)
 {
 char *Tempstr=NULL;
 
 //first generate wine prefix
-
 Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root_template"));
 Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
 Path=SlashTerminateDirectoryPath(Path);
@@ -142,13 +125,7 @@ SetVar(Act->Vars, "prefix",Path);
 
 //for dos and golang/go path==prefix
 //for wine path is more complex
-if (
-    (! StrValid(Act->Platform)) ||
-    (strcasecmp(Act->Platform, "win64")==0) ||
-    (strcasecmp(Act->Platform, "win32")==0) ||
-    (strcasecmp(Act->Platform, "win16")==0) ||
-    (strcasecmp(Act->Platform, "windows")==0)
-   )
+if (PlatformType(Act->Platform)==PLATFORM_WINDOWS)
 {
 	Path=CatStr(Path,"drive_c/");
 	SetVar(Act->Vars, "drive_c",Path);
@@ -156,8 +133,8 @@ if (
   if (StrValid(Act->InstallPath)) Path=SubstituteVarsInString(Path, Act->InstallPath, Act->Vars, 0);
   else Path=SubstituteVarsInString(Path, "$(drive_c)/Program Files/$(name)", Act->Vars, 0);
 
-  Tempstr=SubstituteVarsInString(Tempstr, "/Program Files/$(name)", Act->Vars, 0);
-  SetVar(Act->Vars, "exec-dir", Tempstr);
+//  Tempstr=SubstituteVarsInString(Tempstr, "/Program Files/$(name)", Act->Vars, 0);
+//  SetVar(Act->Vars, "exec-dir", Tempstr);
 }
 else 
 {
@@ -174,13 +151,66 @@ return(Path);
 
 
 
-int AppsOutputList(const char *ConfigPath)
+int AppFindConfig(TAction *App, const char *Platforms)
 {
-ListNode *Apps, *Curr;
+TAction *AppConfig;
+ListNode *Curr;
+int result=FALSE;
+
+
+Curr=ListGetNext(Apps);
+while (Curr) 
+{
+	if (StrValid(Curr->Tag) && (strcmp(App->Name, Curr->Tag)==0))
+	{
+	AppConfig=(TAction *) Curr->Item;
+
+	//if no platform requested, or app platform matches requested
+	//then we've found the right one
+
+	if ( StrEnd(Platforms) || InList(AppConfig->Platform, Platforms) )
+	{
+		App->Flags = AppConfig->Flags;
+		App->Platform=CopyStr(App->Platform, AppConfig->Platform);
+		if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
+		CopyVars(App->Vars, AppConfig->Vars);
+		result=TRUE;
+		break;
+	}
+	}
+
+	Curr=ListGetNext(Curr);
+}
+
+return(result);
+}
+
+
+
+int AppLoadConfig(TAction *App)
+{
+int result=FALSE;
+char *Platform=NULL;
+
+if (StrValid(App->Platform)) return(AppFindConfig(App, App->Platform));
+
+Platform=PlatformSelectForURL(Platform, App->URL);
+printf("Selected Platforms: %s\n", Platform);
+
+result=AppFindConfig(App, Platform);
+if (! result) result=AppFindConfig(App, "");
+
+Destroy(Platform);
+
+return(result);
+}
+
+
+int AppsOutputList()
+{
+ListNode *Curr;
 int result=FALSE;
 TAction *App;
-
-Apps=LoadApps(ConfigPath);
 
 Curr=ListGetNext(Apps);
 while (Curr)
@@ -194,3 +224,6 @@ while (Curr)
 
 return(result);
 }
+
+
+

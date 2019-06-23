@@ -1,0 +1,11 @@
+BeneathASteelSky platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Beneath%20a%20Steel%20Sky/bass-cd-1.2.zip' movefiles-from='bass-cd-1.2/*' 
+BrokenSword2.5 platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Broken%20Sword%202.5/sword25-v1.0.zip'
+Dreamweb platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Dreamweb/dreamweb-cd-uk-1.1.zip' 
+Drascula platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Drascula_%20The%20Vampire%20Strikes%20Back/drascula-1.0.zip' 
+FlightOfTheAmazonQueen platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Flight%20of%20the%20Amazon%20Queen/FOTAQ_Talkie-1.1.zip'
+MysteryHouse platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Mystery%20House/MYSTHOUS.zip'
+LureOfTheTemptress platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Lure%20of%20the%20Temptress/lure-1.1.zip' movefiles-from='lure/*'
+ReturnToZork platform=scummvm category='Game' url=https://archive.org/download/msdos_Return_to_Zork/msdos_Return_to_Zork.zip
+Sfinx platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Sfinx/sfinx-en-v1.1.zip' movefiles=from='sfinx-en-v1.1/*'
+Soltys platform=scummvm category='Game' url='https://www.scummvm.org/frs/extras/Soltys/soltys-en-v1.0.zip'
+

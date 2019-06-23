@@ -1,39 +1,46 @@
-OBJ=common.o apps.o command-line.o desktopfiles.o regedit.o download.o install.o uninstall.o
+OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o download.o install.o uninstall.o
 LIBUSEFUL=libUseful/libUseful.a
 LIBS=@LIBS@
+CFLAGS=@CFLAGS@ @DEFS@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 
 all: $(OBJ) main.c $(LIBUSEFUL)
-	gcc -g -osommelier $(OBJ) $(LIBS) $(LIBUSEFUL) main.c 
+	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBS) $(LIBUSEFUL) main.c 
 
 $(LIBUSEFUL):
 	@cd libUseful; $(MAKE)
 
 common.o: common.h common.c
-	gcc -g -c common.c -DVERSION=1.0
+	gcc $(CFLAGS) -c common.c
+
+config.o: config.h config.c
+	gcc $(CFLAGS) -c config.c
 
 apps.o: apps.h apps.c
-	gcc -g -c apps.c
+	gcc $(CFLAGS) -c apps.c
+
+platforms.o: platforms.h platforms.c
+	gcc $(CFLAGS) -c platforms.c
 
 command-line.o: command-line.h command-line.c
-	gcc -g -c command-line.c
+	gcc $(CFLAGS) -c command-line.c
 
 desktopfiles.o: desktopfiles.h desktopfiles.c
-	gcc -g -c desktopfiles.c
+	gcc $(CFLAGS) -c desktopfiles.c
 
 download.o: download.h download.c
-	gcc -g -c download.c
+	gcc $(CFLAGS) -c download.c
 
 install.o: install.h install.c
-	gcc -g -c install.c
+	gcc $(CFLAGS) -c install.c
 
 uninstall.o: uninstall.h uninstall.c
-	gcc -g -c uninstall.c
+	gcc $(CFLAGS) -c uninstall.c
 
 
 regedit.o: regedit.h regedit.c
-	gcc -g -c regedit.c
+	gcc $(CFLAGS) -c regedit.c
 
 
 clean:
@@ -42,4 +49,3 @@ clean:
 install:
 	mkdir -p $(exec_prefix)/bin
 	cp sommelier $(exec_prefix)/bin
-	cp sommelier.apps ~/.sommelier.apps

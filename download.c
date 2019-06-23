@@ -1,4 +1,5 @@
 #include "download.h"
+#include "config.h"
 
 static void DownloadCallback(const char *URL, int bytes, int total)
 {
@@ -35,30 +36,75 @@ static void DownloadCallback(const char *URL, int bytes, int total)
 }
 
 
+int DownloadCopyFile(TAction *Act)
+{
+    char *Tempstr=NULL, *cwd=NULL;
+		const char *ptr;
+		STREAM *S;
+    int bytes=0, result;
+
+    Tempstr=TerminalFormatStr(Tempstr, "~eDownloading:~0  ",NULL);
+    printf("%s %s\n",Tempstr, Act->URL);
+
+    if (StrValid(Act->DownName))
+    {
+			ptr=GetVar(Act->Vars, "referer");
+			if (StrValid(ptr))
+			{
+				S=STREAMOpen(ptr, "r");
+				Tempstr=STREAMReadDocument(Tempstr, S);
+				STREAMClose(S);
+
+				Tempstr=MCopyStr(Tempstr, "r Referer=", ptr, NULL);
+				S=STREAMOpen(Act->URL, Tempstr);
+			}
+			else S=STREAMOpen(Act->URL, "r");
+
+    	STREAMAddProgressCallback(S, DownloadCallback);
+    	result=STREAMCopy(S,  Act->DownName);
+    	STREAMClose(S);
+
+
+			//this function allocs memory
+			cwd=get_current_dir_name();
+			Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
+
+      printf("\n");
+     }
+     else
+     {
+       Tempstr=TerminalFormatStr(Tempstr, "~rERROR: failed to extract basename from: ~0  ",NULL);
+       printf("%s %s\n", Tempstr, Act->URL);
+     }
+
+    DestroyString(Tempstr);
+    DestroyString(cwd);
+		
+		return(bytes);
+}
+
+
 int Download(TAction *Act)
 {
-    char *Tempstr=NULL;
-    int result=0;
+    char *Tempstr=NULL, *cwd=NULL;
+		struct stat Stat;
+    size_t bytes=0;
+
 
     if (StrValid(Act->URL))
     {
-        Tempstr=TerminalFormatStr(Tempstr, "~eDownloading:~0  ",NULL);
-        printf("%s %s\n",Tempstr, Act->URL);
+			//must do this even if url proves to be a file on disk, as we will want to ignore it
+			//if it's an .exe file, so that we don't mistake it for and installed exectuable
+			if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, Act->URL);
+      if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
 
-				if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, Act->URL);
-
-        if (StrValid(Act->DownName))
-        {
-            result=FileCopyWithProgress(Act->URL, Act->DownName, DownloadCallback);
-
-            SetVar(Act->Vars, "dlfile", Act->DownName);
-            printf("\n");
-        }
-        else
-        {
-            Act->DownName=TerminalFormatStr(Act->DownName, "~rERROR: failed to extract basename from: ~0  ",NULL);
-            printf("%s %s\n", Act->DownName, Act->URL);
-        }
+			if (stat(Act->URL, &Stat)==0)
+			{
+				printf("source path is an existing file on disk, skipping download\n");
+				Act->SrcPath=CopyStr(Act->SrcPath, Act->URL);
+				bytes=Stat.st_size;
+			}
+			else bytes=DownloadCopyFile(Act);
     }
     else
     {
@@ -67,7 +113,7 @@ int Download(TAction *Act)
     }
     DestroyString(Tempstr);
 
-    return(result);
+    return(bytes);
 }
 
 

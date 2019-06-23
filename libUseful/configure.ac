@@ -137,8 +137,7 @@ cf_have_libz=$ac_cv_lib_z_deflate
 fi
 
 
-AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval )
-
+AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval, cf_use_ssl=yes )
 if test "$cf_use_ssl" = "yes"
 then
 

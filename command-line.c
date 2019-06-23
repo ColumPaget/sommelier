@@ -1,5 +1,6 @@
 #include "command-line.h"
 #include "apps.h"
+#include "config.h"
 
 static void PrintUsage()
 {
@@ -44,18 +45,19 @@ const char *p_Opt;
 
 	p_Opt=CommandLineCurr(CmdLine);
 
-	if (strcmp(p_Opt, "-c")==0) Act->ConfigPath=CopyStr(Act->ConfigPath, CommandLineNext(CmdLine));
+	if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
 	else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
 	else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
 	else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
 	else if (strcmp(p_Opt, "-net")==0) Act->Flags &= ~FLAG_NET;
 	else if (strcmp(p_Opt, "-url")==0) Act->URL=CopyStr(Act->URL, CommandLineNext(CmdLine));
+	else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-d")==0) 
 	{
 		LibUsefulSetValue("HTTP:Debug","Y");
-		Act->Flags |= FLAG_DEBUG;
+		Config->Flags |= FLAG_DEBUG;
 	}
 	else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
 }
@@ -97,6 +99,7 @@ const char *arg;
 	return(Act);
 }
 
+
 ListNode *ParseCommandLine(int argc, char *argv[])
 {
 CMDLINE *CmdLine;
@@ -105,11 +108,17 @@ TAction *Act=NULL, *Options=NULL;
 char *StdDepsPath=NULL, *SettingsStr=NULL;
 int Flags;
 const char *arg;
+ListNode *Curr;
 
 Acts=ListCreate();
 CmdLine=CommandLineParserCreate(argc, argv);
 
+//do an options run so that options like -c can be used anywhere on command-line
+//this makes things very messy, 'cos we have to reparse them when examinging the
+//command-line proper
 Options=CommandLineParseOptions(CmdLine);
+
+
 arg=CommandLineFirst(CmdLine);
 if (arg)
 {
@@ -119,10 +128,10 @@ if (strcmp(arg, "install")==0)
 	if (! arg) printf("Error: No applications given as targets for 'install' command\n");
 	while (arg)
 	{
-	if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
+	if (*arg == '-') ParseCommandLineOption(Options, CmdLine);
 	else	
 	{
-		Act=AppActionCreate(ACT_INSTALL, arg, Options->ConfigPath);
+		Act=ActionCreate(ACT_INSTALL, arg);
 		if (Act) ListAddItem(Acts, Act);
 	}
 	arg=CommandLineNext(CmdLine);
@@ -134,7 +143,7 @@ else if (strcmp(arg, "uninstall")==0)
 	if (! arg) printf("Error: No applications given as targets for 'uninstall' command\n");
 	while (arg)
 	{
-	if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
+	if (*arg=='-') ParseCommandLineOption(Options, CmdLine);
 	else 
 	{
 		Act=ActionCreate(ACT_UNINSTALL, arg);
@@ -172,6 +181,17 @@ else
 }
 }
 else PrintUsage();
+
+Curr=ListGetNext(Acts);
+while (Curr)
+{
+	Act=(TAction *) Curr->Item;
+	Act->Flags |= Options->Flags;
+	if (StrValid(Options->URL)) Act->URL=CopyStr(Act->URL, Options->URL);
+	if (StrValid(Options->Platform)) Act->Platform=CopyStr(Act->Platform, Options->Platform);
+	Curr=ListGetNext(Curr);
+}
+
 
 DestroyString(SettingsStr);
 DestroyString(StdDepsPath);

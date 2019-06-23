@@ -3,6 +3,7 @@
 #include <glob.h>
 
 #include "common.h"
+#include "config.h"
 #include "desktopfiles.h"
 #include "install.h"
 #include "uninstall.h"
@@ -60,7 +61,7 @@ if (StrValid(Act->Exec))
 		*/
 
 		Tempstr=CopyStr(Tempstr, Act->Exec);
-		if (! (Act->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
+		if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
 		Spawn(Tempstr, SpawnConfig);
 	}
 	else 
@@ -76,7 +77,7 @@ if (StrValid(Act->Exec))
 	SetVar(Act->Vars, "exec", Act->Exec);
 	SetVar(Act->Vars, "exec-args", Act->Args);
 	Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) $(exec) $(exec-args)" ,Act->Vars, 0);
-	if (! (Act->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
+	if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
 
 	Spawn(Tempstr, SpawnConfig);
 	}
@@ -157,7 +158,7 @@ ListNode *Curr;
 TAction *Act;
 
 Out=STREAMFromFD(1);
-In=STREAMOpen(RebuildAct->ConfigPath, "r");
+In=STREAMOpen(Config->AppConfigPath, "r");
 if (In)
 {
 	Tempstr=STREAMReadLine(Tempstr, In);
@@ -211,9 +212,11 @@ if (geteuid()==0) seteuid(getuid());
 LibUsefulSetValue("HTTP:UserAgent","Wget/1.19.2");
 //LibUsefulSetValue("HTTP:Debug", "Y");
 
-
+ConfigInit();
+PlatformsInit();
 
 Acts=ParseCommandLine(argc, argv);
+LoadApps(Config->AppConfigPath);
 
 Curr=ListGetNext(Acts);
 while (Curr)
@@ -224,8 +227,8 @@ if (Act)
 	switch (Act->Type)
 	{
 	case ACT_INSTALL:
-		InstallApp(Act);
-		RegeditApplySettings(Act);
+		if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
+		else InstallApp(Act);
 	break;
 
 	case ACT_UNINSTALL:
@@ -233,7 +236,7 @@ if (Act)
 	break;
 
 	case ACT_SET:
-		RegeditApplySettings(Act);
+		RegEditApplySettings(Act);
 	break;
 
 	case ACT_RUN:
@@ -249,7 +252,7 @@ if (Act)
 	break;
 
 	case ACT_LIST:
-		AppsOutputList(Act->ConfigPath);
+		AppsOutputList();
 	break;
 	}
 }

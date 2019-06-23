@@ -1,4 +1,6 @@
 #include "desktopfiles.h"
+#include "platforms.h"
+#include "config.h"
 
 #define DESKTOP_PATH "$(homedir)/.local//share/applications/"
 
@@ -51,6 +53,11 @@ if (S)
 			Act->Exec=CopyStr(Act->Exec, ptr);	
 			StripQuotes(Act->Exec);
 		}
+		if (strcasecmp(Token,"exec64")==0) 
+		{
+			Act->Exec64=CopyStr(Act->Exec64, ptr);	
+			StripQuotes(Act->Exec64);
+		}
 		if (strcasecmp(Token,"icon")==0) 
 		{
 			Token=CopyStr(Token, ptr);
@@ -90,7 +97,8 @@ return(result);
 void DesktopFileGenerate(TAction *Act, const char *Path)
 {
 STREAM *S;
-char *Tempstr=NULL, *Hash=NULL;
+char *Tempstr=NULL, *EmuInvoke=NULL, *Hash=NULL;
+const char *ptr;
 
 printf("Generating desktop File.\n");
 
@@ -101,33 +109,60 @@ if (S)
 {
 fchmod(S->out_fd, 0744);
 
-if (
-    (strcasecmp(Act->Platform, "win64")==0) ||
-    (strcasecmp(Act->Platform, "win32")==0) ||
-    (strcasecmp(Act->Platform, "win16")==0) ||
-    (strcasecmp(Act->Platform, "windows")==0)
-	) 
+switch (PlatformType(Act->Platform))
 {
-				Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
-				SetVar(Act->Vars, "working-dir", Tempstr);
+	case PLATFORM_WINDOWS:
+		Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
+		SetVar(Act->Vars, "working-dir", Tempstr);
 
-				Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
-				strrep(Tempstr, '/', '\\');
+		//for windows we must override the found exec-path to be in windows format
+		Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
+		strrep(Tempstr, '/', '\\');
+		SetVar(Act->Vars,"exec-path",Tempstr);
+
+		if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
+		else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
+		else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
+
+		SetVar(Act->Vars, "invocation", Tempstr);
+	break;
+
+
+	case PLATFORM_DOS:
+	case PLATFORM_SCUMMVM:
+	case PLATFORM_GOGSCUMMVM:
+	case PLATFORM_GOGDOS:
+	case PLATFORM_GOGWINDOS:
+	case PLATFORM_DOOM:
+		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
+		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
+		SetVar(Act->Vars, "invocation", Tempstr);
+	break;
+
+
+	default:
+		ptr=GetVar(Act->Vars, "exec");
+		if (StrValid(ptr))
+		{
+		//Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
+		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec)", Act->Vars, 0);
+		SetVar(Act->Vars, "invocation", Tempstr);
+		}
+
+		ptr=GetVar(Act->Vars, "exec64");
+		if (StrValid(ptr))
+		{
+		Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec64)", Act->Vars, 0);
+		SetVar(Act->Vars, "invocation64", Tempstr);
+		}
+	break;
 }
-else Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
 
-SetVar(Act->Vars,"exec-path",Tempstr);
-
-if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
-else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
-else if (strcmp(Act->Platform, "dos")==0) Tempstr=SubstituteVarsInString(Tempstr, "dosbox -exit '$(exec-path)'", Act->Vars, 0);
-else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
-SetVar(Act->Vars, "invocation", Tempstr);
 
 HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
 SetVar(Act->Vars, "exec-sha256", Hash);
 
-Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(working-dir)\"\nExec=\"$(invocation)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
+Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(working-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
@@ -135,5 +170,6 @@ STREAMClose(S);
 }
 
 DestroyString(Tempstr);
+DestroyString(EmuInvoke);
 DestroyString(Hash);
 }

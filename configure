@@ -623,7 +623,6 @@ enable_option_checking=no
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 subdirs
-STATIC_LIBS
 EGREP
 GREP
 CPP
@@ -3578,7 +3577,6 @@ fi
 
 
 
-echo "use: $cf_use_ssl"
 if test "$cf_use_ssl" = "yes"
 then
 # On IRIX 5.3, sys/types and inttypes.h are conflicting.
@@ -3710,17 +3708,15 @@ fi
 STATIC_LIBS="libUseful/libUseful.a"
 
 
-
 subdirs="$subdirs libUseful"
-
 
 
 if test "$cf_have_libssl" = "yes"
 then
-				echo ""
+	echo ""
 else
-				echo "$cf_have_libssl"
-				echo "WARNING: SSL/TLS NOT enabled. Likely sommelier will not be able to download many applications."
+	echo "$cf_have_libssl"
+	echo "WARNING: SSL/TLS NOT enabled. Likely sommelier will not be able to download many applications."
 fi
 
 ac_config_files="$ac_config_files Makefile"

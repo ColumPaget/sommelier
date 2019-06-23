@@ -449,6 +449,7 @@ void TerminalInternalConfig(const char *Config, int *ForeColor, int *BackColor, 
         case 'F':
             if (
                 (strcasecmp(Name,"forecolor")==0) ||
+                (strcasecmp(Name,"fgcolor")==0) ||
                 (strcasecmp(Name,"fcolor")==0)
             )
             {
@@ -460,6 +461,7 @@ void TerminalInternalConfig(const char *Config, int *ForeColor, int *BackColor, 
         case 'B':
             if (
                 (strcasecmp(Name,"backcolor") ==0) ||
+                (strcasecmp(Name,"bgcolor") ==0) ||
                 (strcasecmp(Name,"bcolor") ==0)
             )
             {
@@ -1211,6 +1213,7 @@ char *TerminalReadText(char *RetStr, int Flags, STREAM *S)
         //'backspace' key on keyboard will send the 'del' character in some cases!
         case 0x7f: //this is 'del'
         case 0x08: //this is backspace
+				outchar=0;
             //backspace over previous character and erase it with whitespace!
             if (len > 0)
             {
@@ -1238,7 +1241,7 @@ char *TerminalReadText(char *RetStr, int Flags, STREAM *S)
             break;
         }
 
-        if (! (Flags & TERM_HIDETEXT))
+        if ( (! (Flags & TERM_HIDETEXT)) && (outchar > 0) )
         {
             STREAMWriteBytes(S, &outchar,1);
             STREAMFlush(S);
@@ -1345,6 +1348,7 @@ void TerminalBarSetConfig(TERMBAR *TB, const char *Config)
     char *Name=NULL, *Value=NULL;
     const char *ptr;
 
+		//first check for options only used in terminal bars
     ptr=GetNameValuePair(Config, " ","=",&Name,&Value);
     while (ptr)
     {
@@ -1361,7 +1365,9 @@ void TerminalBarSetConfig(TERMBAR *TB, const char *Config)
         ptr=GetNameValuePair(ptr, " ","=",&Name,&Value);
     }
 
-    TerminalInternalConfig(Config, &(TB->ForeColor), &(TB->BackColor), &(TB->Flags));
+		//then check for default options, backcolor and forecolor reversed because terminal bars
+		//are inverse text
+    TerminalInternalConfig(Config, &(TB->BackColor), &(TB->ForeColor), &(TB->Flags));
 
     DestroyString(Name);
     DestroyString(Value);
@@ -1643,14 +1649,21 @@ void TerminalMenuDraw(TERMMENU *Menu)
 		while (Curr)
 		{
 					TerminalCursorMove(Menu->Term, Menu->x, y);
-					if (Menu->Options->Side==Curr) Tempstr=MCopyStr(Tempstr, Menu->MenuCursorLeft, "> ", Curr->Tag, NULL);
-					else Tempstr=MCopyStr(Tempstr, Menu->MenuAttribs, "  ", Curr->Tag, NULL);
+					if (Menu->Options->Side==Curr) Tempstr=MCopyStr(Tempstr, Menu->MenuCursorLeft, "> ", NULL);
+					else Tempstr=MCopyStr(Tempstr, Menu->MenuAttribs, "  ", NULL);
+
+
+					count=TerminalStrLen(Curr->Tag);
+					if (count > Menu->wid-2) count=Menu->wid-2;
+					Tempstr=CatStrLen(Tempstr, Curr->Tag, count);
+
+
 
 					Output=CopyStr(Output, "");
 					Output=TerminalFormatStr(Output, Tempstr, Menu->Term);
 
 					//length has two added for the leading space for the cursor
-					count=TerminalStrLen(Curr->Tag) +2;
+					count+=2;
 
 					while (count < Menu->wid)
 					{
@@ -1680,6 +1693,8 @@ void TerminalMenuDraw(TERMMENU *Menu)
 
 ListNode *TerminalMenuOnKey(TERMMENU *Menu, int key)
 {
+int i;
+
 	switch (key)
 	{
 		case KEY_UP:
@@ -1697,6 +1712,29 @@ ListNode *TerminalMenuOnKey(TERMMENU *Menu, int key)
 				}
 				else Menu->Options->Side=ListGetNext(Menu->Options);
 			 break;
+
+		case KEY_PGUP:
+			 for (i=0; i < Menu->high; i++)
+			 {
+				if (Menu->Options->Side) 
+				{
+					if (Menu->Options->Side->Next) Menu->Options->Side=Menu->Options->Side->Next;
+				}
+				else Menu->Options->Side=ListGetNext(Menu->Options);
+			 }
+			 break;	
+
+
+		case KEY_PGDN:
+			 for (i=0; i < Menu->high; i++)
+			 {
+				if (Menu->Options->Side) 
+				{
+					if (Menu->Options->Side->Next) Menu->Options->Side=Menu->Options->Side->Next;
+				}
+				else Menu->Options->Side=ListGetNext(Menu->Options);
+			 }	 
+			 break;	
 
 		case '\r':
 		case '\n':

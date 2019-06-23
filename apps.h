@@ -2,10 +2,12 @@
 #define SOMMELIER_APPS_H
 
 #include "common.h"
+#include "platforms.h"
 
-int AppsOutputList(const char *ConfigPath);
+ListNode *LoadApps(const char *ConfigFiles);
+int AppsOutputList();
 void LoadAppConfigToAct(TAction *Act, const char *Config);
-TAction *AppActionCreate(int Action, const char *AppName, const char *ConfigPath);
+TAction *AppActionCreate(int Action, const char *AppName, const char *Platform);
 char *AppFormatPath(char *Path, TAction *Act);
 
 #endif

@@ -1,7 +1,10 @@
 SYNOPSIS
 =========
 
-Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
+Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications, and since version 4.0 some doom wads, scummvm games and gog.com applications. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
+
+Sommelier can install some gog.com games, that either run under wine, native linux or scummvm. If a game is in the list it means I've had it install and run successfully. For some reason I find fewer native games work for me than emulated games under wine. Unfortuantely you currently have to download all the files for a gog game with your browser and then install them with './sommelier install <game name> -url <path to installer>'.
+
 
 LICENSE
 =======
@@ -23,7 +26,10 @@ INSTALL
 make
 ```
 
-You should then place the program `sommelier` somewhere in your PATH and copy `sommelier.apps` to `.sommelier.apps` in your home directory (note the leading '.' to make it a hidden file). If you want to make the configuration file available to all users, then copy it to `/etc/sommelier.apps` (no leading '.'). You can set an install prefix using './configure --prefix' and run 'make install'. However, you will normally need to be root to install into, say, '/usr/local/bin' and then the 'sommelier.apps' config file will go into root's home directory. You normally would not want to run sommelier and the apps it installs, as root. If you've got a 'bin' directory that's writable by your normal user then the 'make install' method can work for you, otherwise you'll have to do it by hand.
+You should then place the program `sommelier` somewhere in your PATH. You can set an install prefix using './configure --prefix' and run 'make install'. 
+
+Applications are configured in the various '.apps' files (wine.apps, msdos.apps, scummvm.apps, gog.com.apps) that come with the source code. These should be copied to a '.sommelier' sub-directory of your home directory. This '~/.sommelier' directory is also where the applications are stored, with as subdirectory for each one.
+
 
 
 USAGE
@@ -69,6 +75,7 @@ options are:
 Proxy urls have the form: 
      <protocol>:<user>:<password>@<host>:<protocol>. 
 'protocol' can be 'socks4', 'socks5' 'https' or 'sshtunnel'. For 'sshtunnel' the names defined in the ~/.ssh/config file can be used, so that  most of the information can be ommited.
+
 examples:
    https:bill:secret@proxy.com
    socks4:proxy.com:1080
@@ -86,8 +93,6 @@ TO DO
 =====
 
 * Application Sandboxing
-* More flexible configure system (/etc/sommelier.d directory in addition to /etc/sommelier.apps)
 * Commands to add to application list
 * Set default audio device with 'sommelier set'
-* More apps/emulators
 

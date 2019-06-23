@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "3.1"
+#define VERSION "4.0"
 
 
 #define INSTALL_RUN 0
@@ -37,30 +37,36 @@ typedef struct
 int Type;
 int Flags;
 int InstallType;
-char *ConfigPath;
 char *Name;
 char *URL;
 char *Root;
 char *DownName;
 char *InstallPath;
+char *SrcPath;
 char *Exec;
+char *Exec64;
 char *Args;
 char *Platform;
 char *OSVersion;
 ListNode *Vars;
 } TAction;
 
+
+
 char *URLBasename(char *RetStr, const char *URL);
+int InList(const char *Item, const char *List);
 TAction *ActionCreate(int Type, const char *Name);
 void ActionDestroy(TAction *Act);
-int IdentifyFileType(const char *Path);
 int CompareSha256(TAction *Act);
+
+int IdentifyFileType(const char *Path, int ForcedFileType);
 
 //Some installers fork into background, perhaps calling 'setsid', which means we
 //will no longer consider them child processes and will no longer wait for them.
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
 void RunProgramAndConsumeOutput(const char *Cmd, int Flags);
+
 
 
 #endif

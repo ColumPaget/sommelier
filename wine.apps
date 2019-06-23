@@ -2,7 +2,9 @@ OpenSSL platform=windows url=https://indy.fulgan.com/SSL/openssl-1.0.2o-i386-win
 MFC platform=windows url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe  installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe' category='library' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
 VB5 platform=windows url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe  category='library' sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
 VB6 platform=windows url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe  installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' category='library' 
-
+DirectX platform=windows url=http://download.microsoft.com/download/E/E/1/EE17FF74-6C45-4575-9CF4-7FC2597ACD18/directx_feb2010_redist.exe category='library' dll-overrides="d3dim,d3drm,d3dx8,d3dx9_24,d3dx9_25,d3dx9_26,d3dx9_27,d3dx9_28,d3dx9_29,d3dx9_30,d3dx9_31,d3dx9_32,d3dx9_33,d3dx9_34,d3dx9_35,d3dx9_36,d3dx9_37,d3dx9_38,d3dx9_39,d3dx9_40,d3dx9_41,d3dx9_42,d3dx9_43,d3dxof,dciman32,ddrawex,devenum,dmband,dmcompos,dmime,dmloader,dmscript,dmstyle,dmsynth,dmusic,dmusic32,dnsapi,dplay,dplayx,dpnaddr,dpnet,dpnhpast,dpnlobby,dswave,dxdiagn,msdmo,qcap,quartz,streamci" installer=directx_feb2010_redist.exe installer-args='/T:"C:\\$(exec-dir)" /q' install_stage2="DXSETUP.exe /silent"
+MSXML3 platform=windows url=http://repository.playonlinux.com/divers/msxml3.msi dll-overrides=msxml3
+MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi category='library'
 
 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download  version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' category='WebBrowser' comment='lightweight web browser' 
@@ -22,6 +24,7 @@ AniTuner platform=windows url=http://www.torry.net/tools/graph/cursor/anisetup.e
 CollageMaker platform=windows url=http://www.galleriasoftware.com/downloads/CollageMaker3.8.msi  version='3.8' exec='CollageMaker3.exe' sha256='14a21161dac5ef7a5c82f80db0bffed43ec0cd1e763bb5986703455977a342a9' category='Graphics' 
 BrickAtelier platform=windows url=http://koti.mbnet.fi/paulkp/brick/brickatelier085.zip  version='0.85' exec='brickatelier.exe' type='graphics' rating='platinum' sha256='cccbda19ef115a8b5b5d28c21fa2ddccc48548a6218af3a56f86cf2efc03fbf5' category='Graphics' 
 GraphicsGale platform=windows url=https://graphicsgale.com/files/setgaleus20801.exe  version='2.08.01' exec='setgaleus20801.exe' type='graphics' rating='platinum' sha256='5480944860c82f7b2fbd6af574119a4e46a27aadc32fe71681af3a656df15b10' category='Graphics' 
+MedibangPaint platform=windows category='Graphics' url=https://medibangpaint.com/static/installer/MediBangPaintPro/MediBangPaintProSetup-24.1-32bit.exe
 RealworldPaint platform=windows url=http://download.rw-designer.com/2013.1/RWPaint32.msi  type='graphics' rating='platinum' category='Graphics' sha256=7eff64a9a33b8e340470d7a84033bd318a715eea2041f6e3be4fd410db2a1ce5
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip category='graphics' sha256=a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5
 IconFX platform=windows url=http://icofx.ro/files/icofxsetup.exe  exec='icofxsetup.exe' sha256='cb068346dfa2d5e2e851659948f0b7fc6ef100590ce8359a4c545d7f56f42152' alt='http://www.tucows.com/download/windows/files6/icofxsetup.zip' category='Graphics' 
@@ -123,6 +126,7 @@ Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256=48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965 category=Audio comment="Edit MP3 files"
 AudioLab platform=windows url=http://www.completelyfreesoftware.com/software/alab11d.zip  type='WAV editor' category='Audio' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' 
 BRELS platform=windows url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip  title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' category='Audio'
+Caustic platform=windows category='Audio' url=http://www.singlecellsoftware.com/download/Caustic_3.2.0_installer.exe referer=http://www.singlecellsoftware.com/caustic
 FLStudio platform=windows url=https://support.image-line.com/redirect/FLStudio_Installer?_ga=2.160548221.1563864817.1524342160-1720700824.1524342160  exec='FLStudio_Installer' sha256='9af49763ae3d70211377fc59694d731c94ef928dd308cc5405c0fea39fe60fda' category='Audio' 
 MadTracker platform=windows url=http://www.tucows.com/download/windows/files/mt261_full.exe  version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' category='Audio' 
 Mixxx platform=windows url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe  version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' category='Audio' 
@@ -143,7 +147,6 @@ FontPage platform=windows url=https://bluefive.pairsite.com/FontPage.zip  instal
 AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/install_bmfont_1.14_beta.exe category='Utility' comment="Bitmap Font Generator" sha256=084486e6ca6e090edd46b8958346183fc0bd3746bd9ef0cf892898a202808d37
 
 WOLSender platform=windows url=http://www.tucows.com/download/windows/files2/wakeonlansender.exe  category='Utility' comment='Send Wake On LAN packets' sha256='1abc509019689464bf3f66d1a24213a8531e21df66dd3e7fbbf8b3481ca9a21f' exec=WakeOnLan.exe 
-LabelVista platform=windows url=http://www.barcodedatalink.com/media/zip/LabelVista350.zip  exec='Vista.exe' installer-vdesk=Y category='Labels' comment='Label design software for Zebra printers' sha256='ae07a9797532180251fdb25b925e89002f450008f9923f86e7f6a706a8c9dbf7' 
 ScreenRuler platform=windows url=http://www.tucows.com/download/windows/files3/Screen-Ruler.exe  category='Utility' comment='Measure distances in pixels on screen' install-type=executable sha256='781093ca61b550a1cf3a8503c223f00802eb6672130c9bf265e31a5e69e43e82' 
 DSClock platform=windows url=http://www.dualitysoft.com/download/dsc302r-x86.exe  category='Clock' comment='Desktop clock with alarm' sha256='bd9caa38b8f780e03381c66ca0c300485ec461dace6058c88f219667df2502f5' 
 DesktopStopwatch platform=windows url=http://www.tucows.com/download/windows/files7/stopwatch.exe install-type=executable category='Clock' comment='Simple stopwatch' sha256='490d833205f9dfe4f1950d40c845489aa2d2039a77ab10473384986f8442ea6f' 
@@ -151,7 +154,9 @@ ImageBurn platform=windows url=http://download.imgburn.com/SetupImgBurn_2.5.8.0.
 GetRight platform=windows url=http://download.getright.com/getright-download.exe  sha256='77f08faacf8433dd9912e49c80d0e0668a0f451036a5a9ab4abf15220c17f2e5' category=Utility comment="Download manager"
 IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip  installer='setup.exe' requires='VB6' category='Utility' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
 SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256=57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3 category=BoardGame warn="15 day trial"
-EmClient platform=windows url=http://www.emclient.com/dist/latest/setup.msi
-Rainlender platform=windows url=http://www.rainlendar.net/download/Rainlendar-Lite-2.14.2-64bit.exe
-SimpleCal platform=windows url=/home/colum/SimpleCalSetupBuild14/SimpleCalSetup.msi
+EmClient platform=windows url=http://www.emclient.com/dist/latest/setup.msi category='Calendar'
+Rainlender platform=windows url=http://www.rainlendar.net/download/Rainlendar-Lite-2.14.2-64bit.exe category='Calendar'
+SimpleCal platform=windows url=/home/colum/SimpleCalSetupBuild14/SimpleCalSetup.msi category='Calendar'
+
+
 

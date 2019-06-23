@@ -1,6 +1,7 @@
 #include "uninstall.h"
 #include "desktopfiles.h"
 #include "apps.h"
+#include "config.h"
 
 int UninstallDir(TAction *Act, const char *Dir)
 {
@@ -27,14 +28,14 @@ for (i=0; i < Glob.gl_pathc; i++)
 	else 
 	{
 					unlink(p_Path);
-					if (Act->Flags & FLAG_DEBUG) printf("Deleted file: [%s]\n", p_Path);
+					if (Config->Flags & FLAG_DEBUG) printf("Deleted file: [%s]\n", p_Path);
 	}
 	}
 }
 
 if (rmdir(Dir)==0) 
 {
-	if (Act->Flags & FLAG_DEBUG) printf("Deleted directory: [%s]\n",Dir);
+	if (Config->Flags & FLAG_DEBUG) printf("Deleted directory: [%s]\n",Dir);
 	Destroy(Tempstr);
 	return(TRUE);
 }

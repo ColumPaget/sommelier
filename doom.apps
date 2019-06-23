@@ -1,0 +1,17 @@
+FreeDoomDeathmatch platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedm-0.11.3.zip exec=freedm.wad category='Game'
+FreeDoomPhase1 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec=freedoom1.wad category='Game'
+FreeDoomPhase2 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec=freedoom2.wad category='Game'
+Doom:AlienVendetta platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/av.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge AV.WAD"  category='Game'
+Doom:MementoMori platform=doom url=https://www.quaddicted.com/files/idgames/themes/mm/mm_allup.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge MM.WAD"  category='Game'
+Doom:Requiem platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/requiem.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge REQUIEM.WAD"  category='Game'
+Doom:Scythe platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/scythe.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge SCYTHE.WAD"  category='Game'
+Doom:Odyssey2002 platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom/Ports/megawads/2002ado.zip requires=FreeDoomPhase1 movefiles-from='*/*.wad' wads="-iwad freedoom1.wad -merge 2002ado.wad"  category='Game'
+Doom:BaseGanymede platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom/megawads/bgcomp.zip requires=FreeDoomPhase1 movefiles-from='*/*.wad' wads="-iwad freedoom1.wad -merge BGComp.wad"  category='Game'
+Doom:Dtwid platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom/megawads/dtwid.zip requires=FreeDoomPhase1 movefiles-from='*/*.wad' wads="-iwad freedoom1.wad -merge DTWID.WAD"  category='Game'
+
+
+Doom:TheAbyss platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/abyss24a.zip requires=FreeDoomDeathmatch movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge ABYSS.WAD"  category='Game'
+Doom:Diabolos platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/d-f/diabolos.zip requires=FreeDoomDeathmatch movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge DIABOLOS.WAD"  category='Game'
+Doom:DoomRaider platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/Ports/d-f/dr1-lite.zip requires=FreeDoomDeathmatch movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge dr1-lite.wad"  category='Game'
+Doom:BatmanDoom platform=doom url=https://www.quaddicted.com/files/idgames/themes/batman/batman.zip requires=FreeDoomDeathmatch movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge batman.wad"  category='Game'
+

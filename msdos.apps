@@ -1,0 +1,22 @@
+
+AstroFire platform=dos url=https://image.dosgamesarchive.com/games/af_full.zip  exec='astro.exe' category='Game' sha256='f8ac309042795350053ee973600a6d7cb19ff010fef279d32e49843ccb39f96a' 
+AmuletsAndArmor platform=dos url=http://lutris.net/files/games/amulets-and-armor/AAClassicV1.04_DOS.zip category='Game'
+Tube platform=dos url=https://image.dosgamesarchive.com/games/tube.zip  exec='MAIN.EXE' category='Game' sha256='f3a5b3c415be76be803791472ebbe291df95e0dc989d6687953e344bc27c54ab' 
+MrBoom platform=dos url=https://image.dosgamesarchive.com/games/mrboom30.zip  exec='MRBOOM30.EXE' category='Game' sha256='0d8d13ba7f9e62bb3360b3c1f542219f10b131a8afb04202fefd783d7c2a156c' 
+Heroes platform=dos url=https://image.dosgamesarchive.com/games/heroes_rt.zip  exec='heroes.exe' category='Game' sha256='f1fb5f17a90f3fccdb0d25ff8727ac8558a027fd10a042d675740deed751e72b' 
+OperationSpacehog platform=dos url=https://image.dosgamesarchive.com/games/spacehog.zip  exec='SH.EXE' category='Game' sha256='a620d38f6e75e8e85baa41f5b5693423e14f3b5d6013aeb0323989ef63f7398d' 
+OperationCarnage platform=dos url=https://image.dosgamesarchive.com/games/ocfull.zip  exec='CARNAGE.EXE' category='Game' sha256='60e551235fa3ab58ed72ebfe61b3e51bf196fdc942ce25dcf5b28cfef9974cfc' 
+CommandAndConquer platform=dos url=https://archive.org/download/msdos_Command__Conquer_1995/Command__Conquer_1995.zip exec="C&C.EXE" category='Game'
+Dune2 platform=dos url=http://www.completelyfreesoftware.com/software/dune2.zip  exec='DUNE2.EXE' category='Game' comment='Classic RTS' sha256='fa95ec0c5126b5bdad6a1f74c157e038107c7d296a2bc9f261379000be6c01fb' 
+PsionChess platform=dos url=https://image.dosgamesarchive.com/games/psionchs.zip  exec='Chess.exe' comment='Chess' category='BoardGame' sha256='f2c50e8d46f09c7434e8a26579483586ef92998a4b9ad632b05e367d3741b2d1' 
+CyrusChess platform=dos url=https://archive.org/download/msdos_shareware_fb_CHESS/CHESS.ZIP  exec='CYRUS.COM' comment='Early 3D chess' category='BoardGame' sha256='1142b0168d9385d3c6692dff9c4c972b0d5e9df0057b5e4b12532a13bc3e0215' 
+Kosmonaut platform=dos url=https://image.dosgamesarchive.com/games/kosmonaut.zip  exec='KOSMO.EXE' category='Game' sha256='5eb107023fd0ef8e6500e98eb30383b874be9ff35d33dd6508ea245c0377864c' 
+Pyromania platform=dos url=https://archive.org/download/download_20170418/download.zip exec='PYRO.EXE' category='Game' sha256=24b8f3f105a12b62c1d27215a0d380ee1b7c91e777cee7af0845ec50b72c14cf
+RebelDecadeChess platform=dos url=https://image.dosgamesarchive.com/games/rebdec30.zip  exec='START.BAT' category='BoardGame' sha256='5e26ff726236dd6d8476a6b08e0c79aaa86b9a035749439490967daea15acbfe' 
+Skyroads platform=dos url=http://www.completelyfreesoftware.com/software/skyroads.zip  exec='SKYROADS.EXE' category='Game' sha256='24762fe14196a642224288fe2063c9d0c0033be9c5b4b2f97fded09390803ee4' 
+Stargunner platform=dos url=http://lutris.net/files/games/stargunner/stargunner.tar.gz exec='SG.exe' category='Game'
+CloneInvader platform=dos url=https://image.dosgamesarchive.com/games/cloneinv.zip  exec='CLONINV.EXE' category='Game' sha256='2914412bd650b78c4b146b4589d14ea3a7478c0f612354127c8432314b60931f' warn="This game runs too fast in dosbox"
+4DPrinceOfPersia platform=dos url=http://www.completelyfreesoftware.com/software/4dprince.zip  exec='4D_PRIN.EXE' category='Game' sha256='9a85556ff68a01902914e7b395bee658107198c5ff2c6378d7be8ef943de67f0' 
+DigiClock platform=dos url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip  exec='DIGITAL.EXE' category='Utility' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 
+
+

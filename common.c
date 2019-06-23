@@ -1,6 +1,5 @@
 #include "common.h"
 
-#define DEFAULT_CONFIG_PATH "/etc/sommelier.apps,$(homedir)/.sommelier.apps"
 #define DEFAULT_SOMMELIER_ROOT "$(homedir)/.sommelier/"
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
 
@@ -17,6 +16,31 @@ return(RetStr);
 
 
 
+int InList(const char *Item, const char *List)
+{
+char *Match=NULL;
+const char *ptr;
+
+ptr=GetToken(List, ",", &Match, GETTOKEN_QUOTES);
+while (ptr)
+{
+strlwr(Match);
+if (fnmatch(Match, Item, 0)==0)
+{
+  Destroy(Match);
+  return(TRUE);
+}
+ptr=GetToken(ptr, ",", &Match, GETTOKEN_QUOTES);
+}
+
+Destroy(Match);
+
+return(FALSE);
+}
+
+
+
+
 TAction *ActionCreate(int Type, const char *Name)
 {
 TAction *Act;
@@ -25,7 +49,6 @@ Act=(TAction *) calloc(1, sizeof(TAction));
 Act->Type=Type;
 Act->Vars=ListCreate();
 Act->Name=CopyStr(Act->Name, Name);
-Act->ConfigPath=CopyStr(Act->ConfigPath, DEFAULT_CONFIG_PATH);
 SetVar(Act->Vars, "name", Name);
 SetVar(Act->Vars, "sommelier_root_template", DEFAULT_SOMMELIER_ROOT);
 SetVar(Act->Vars, "prefix_template", DEFAULT_WINEPREFIX);
@@ -49,11 +72,17 @@ free(Act);
 
 
 
-int IdentifyFileType(const char *Path)
+int IdentifyFileType(const char *Path, int ForcedFileType)
 {
 STREAM *S;
 char *Tempstr=NULL;
 int FT=FILETYPE_UNKNOWN;
+
+//this looks strange, calling this function just to return a passed in
+//value, but it lets you write tidy code like 
+//  switch(IdentifyFileType(Path, FILETYPE_UNKNOWN))
+//instead of having a lot of 'if this and that' clauses
+if (ForcedFileType != FILETYPE_UNKNOWN) return(ForcedFileType);
 
 S=STREAMOpen(Path, "r");
 if (S)
@@ -84,15 +113,13 @@ char *Hash=NULL, *Tempstr=NULL;
 const char *p_ExpectedHash;
 int result=FALSE;
 
-HashFile(&Hash, "sha256", Act->DownName, ENCODE_HEX);
+HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
 
 p_ExpectedHash=GetVar(Act->Vars, "sha256");
 if (StrValid(p_ExpectedHash))
 {
 	if (strcmp(Hash, p_ExpectedHash)==0) result=TRUE;
 	Tempstr=CopyStr(Tempstr, "");
-	Tempstr=TerminalFormatStr(Tempstr, "~eChecking Download integrity...~0",NULL);
-	printf("%s\n", Tempstr);
 	printf("    expected sha256: [%s]\n",p_ExpectedHash);	
 	printf("    actual   sha256: [%s]\n",Hash);	
 	Tempstr=CopyStr(Tempstr, "");
@@ -139,4 +166,5 @@ Destroy(Tempstr);
 
 while (wait(0) > 1);
 }
+
 
