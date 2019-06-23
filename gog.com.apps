@@ -26,7 +26,7 @@ DivineDivinity platform=gog:windows category='Game' exec=div.exe
 ChaosReborn platform=gog:windows category='Game' 
 CrusaderKings platform=gog:windows category='Game'
 FantasyWars platform=gog:windows category='Game' exec=fw.exe
-FreedomForce platform=gog:windows category='Game' exec="$(drive_c)/GOG Games/Freedom Force/fforce.exe"
+FreedomForce platform=gog:windows category='Game' exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
 FTL platform=gog:windows category='Game'
 GalacticAssault platform=gog:windows category='Game'
