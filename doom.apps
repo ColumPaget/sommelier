@@ -1,6 +1,7 @@
 FreeDoomDeathmatch platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedm-0.11.3.zip exec=freedm.wad category='Game'
 FreeDoomPhase1 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec=freedoom1.wad category='Game'
 FreeDoomPhase2 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec=freedoom2.wad category='Game'
+
 Doom:AlienVendetta platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/av.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge AV.WAD"  category='Game'
 Doom:MementoMori platform=doom url=https://www.quaddicted.com/files/idgames/themes/mm/mm_allup.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge MM.WAD"  category='Game'
 Doom:Requiem platform=doom url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/requiem.zip requires=FreeDoomDeathmatch  movefiles-from='*/*.wad' wads="-iwad freedm.wad -merge REQUIEM.WAD"  category='Game'
