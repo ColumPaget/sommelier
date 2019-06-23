@@ -6,7 +6,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 
 all: $(OBJ) main.c $(LIBUSEFUL)
-	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBS) $(LIBUSEFUL) main.c 
+	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
 $(LIBUSEFUL):
 	@cd libUseful; $(MAKE)
