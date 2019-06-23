@@ -49,3 +49,6 @@ clean:
 install:
 	mkdir -p $(exec_prefix)/bin
 	cp sommelier $(exec_prefix)/bin
+
+test:
+	echo "no tests"
