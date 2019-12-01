@@ -8,7 +8,7 @@ MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e0130
 
 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download  version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' category='WebBrowser' comment='lightweight web browser' 
-SeaMonkey platform=windows url=https://download-installer.cdn.mozilla.net/pub/seamonkey/releases/2.49.4/win32/en-US/SeaMonkey%20Setup%202.49.4.exe  version='2.49.2' exec='seamonkey.exe' category='WebBrowser' comment='Mozilla derived webbrowser' sha256='9a7822a019eb89c71a912c5ca5a08ce9dea9fc536a12c9ae861f528e5a6409c2' 
+SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.49.5/win32/en-US/seamonkey-2.49.5.installer.exe version='2.49.5' exec='seamonkey.exe' category='WebBrowser' comment='Mozilla derived webbrowser' 
 PaleMoon platform=windows url="https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer"  category='WebBrowser' comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' 
 Telegram platform=windows url=https://telegram.org/dl/desktop/win  winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.' category='Chat'
 uTox platform=windows url=https://downloads.utox.io/stable/uTox_win32.exe  winmanager='N' install-type=executable comment='uTox chat app' category='Chat' 
