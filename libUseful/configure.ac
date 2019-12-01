@@ -71,6 +71,12 @@ then
 AC_DEFINE([HAVE_MKOSTEMP])
 fi
 
+AC_CHECK_LIB(c,poll,,)
+cf_have_poll=$ac_cv_lib_c_poll
+if test "$cf_have_poll" = "yes"
+then
+AC_DEFINE([HAVE_POLL])
+fi
 
 
 AC_ARG_ENABLE(sendfile, [  --enable-sendfile       enable 'fastcopy' sendfile support], cf_use_sendfile=$enableval )
@@ -137,7 +143,8 @@ cf_have_libz=$ac_cv_lib_z_deflate
 fi
 
 
-AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval, cf_use_ssl=yes )
+AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer], cf_use_ssl=$enableval )
+
 if test "$cf_use_ssl" = "yes"
 then
 

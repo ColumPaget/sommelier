@@ -26,41 +26,156 @@
 #endif
 
 
+
 //A difficult function to fit in order
 int STREAMReadCharsToBuffer(STREAM *S);
 
 
+typedef struct
+{
+int size;
+int high;
+void *items;
+void *witems;
+} TSelectSet;
+
+#ifdef HAVE_POLL
+
+#include <poll.h>
+
+static void *SelectAddFD(TSelectSet *Set, int type, int fd)
+{
+struct pollfd *items;
+
+Set->size++;
+Set->items=realloc(Set->items, sizeof(struct pollfd) * Set->size);
+
+items=(struct pollfd *) Set->items;
+items[Set->size-1].fd=fd;
+items[Set->size-1].events=0;
+items[Set->size-1].revents=0;
+if (type & SELECT_READ) items[Set->size-1].events |= POLLIN;
+if (type & SELECT_WRITE) items[Set->size-1].events |= POLLOUT;
+}
+#include <math.h>
+
+static int SelectWait(TSelectSet *Set, struct timeval *tv)
+{
+long long timeout, next;
+double start, diff, val;
+int result;
+
+
+if (tv)
+{
+	//convert to millisecs
+	timeout=(tv->tv_sec * 1000) + (tv->tv_usec / 1000);
+	start=GetTime(TIME_MILLISECS);
+}
+else timeout=-1;
+
+result=poll((struct pollfd *) Set->items, Set->size, timeout);
+
+if (tv)
+{
+	diff=GetTime(TIME_MILLISECS) - start;
+	if (diff > 0)
+	{
+		timeout-=diff;
+		if (timeout > 0) 
+		{
+			tv->tv_sec=(int) (timeout / 1000.0);
+			tv->tv_usec=(timeout - (tv->tv_sec * 1000.0)) * 1000;
+		}
+		else
+		{
+			tv->tv_sec=0;
+			tv->tv_usec=0;
+		}
+	}
+}
+
+return(result);
+}
+
+static int SelectCheck(TSelectSet *Set, int fd)
+{
+int i, RetVal=0;
+struct pollfd *items;
+
+items=(struct pollfd *) Set->items;
+for (i=0; i < Set->size; i++)
+{
+	if (items[i].fd==fd)
+	{
+		if (items[i].revents & (POLLIN | POLLHUP)) RetVal |= SELECT_READ;
+		if (items[i].revents & POLLOUT) RetVal |= SELECT_WRITE;
+		break;
+	}
+}
+
+return(RetVal);
+}
+#else
+
+static void SelectAddFD(TSelectSet *Set, int type, int fd)
+{
+if (fd < FD_SETSIZE)
+{
+	if (! Set->items) Set->items=calloc(1, sizeof(fd_set));
+
+	if (type & SELECT_WRITE)
+	{
+	if (! Set->witems) Set->witems=calloc(1, sizeof(fd_set));
+	}
+
+  if (type & SELECT_READ) FD_SET(fd, (fd_set *) Set->items);
+  if (type & SELECT_WRITE) FD_SET(fd, (fd_set *) Set->witems);
+	Set->size++;
+	if (fd > Set->high) Set->high=fd;
+}
+else RaiseError(ERRFLAG_ERRNO, "SelectAddFD", "File Descriptor '%d' is higher than FD_SETSIZE limit. Cannot add to select.", fd);
+}
+
+static int SelectWait(TSelectSet *Set, struct timeval *tv)
+{
+return(select(Set->high+1, Set->items, Set->witems,NULL,tv));
+}
+
+static int SelectCheck(TSelectSet *Set, int fd)
+{
+int RetVal=0;
+
+ if (Set->items  && FD_ISSET(fd, (fd_set *) Set->items )) RetVal |= SELECT_READ;
+ if (Set->witems && FD_ISSET(fd, (fd_set *) Set->witems)) RetVal |= SELECT_WRITE;
+
+ return(RetVal);
+}
+
+#endif
+
+
+static void SelectSetDestroy(TSelectSet *Set)
+{
+		Destroy(Set->items);
+		Destroy(Set->witems);
+		Destroy(Set);
+}
+
+
 int FDSelect(int fd, int Flags, struct timeval *tv)
 {
-    fd_set *readset=NULL, *writeset=NULL;
+		TSelectSet *Set;
     int result, RetVal=0;
 
+		Set=(TSelectSet *) calloc(1,sizeof(TSelectSet));
+		SelectAddFD(Set, Flags, fd);
+		result=SelectWait(Set, tv);
 
-    if (Flags & SELECT_READ)
-    {
-        readset=(fd_set *) calloc(1,sizeof(fd_set));
-        FD_ZERO(readset);
-        FD_SET(fd, readset);
-    }
-
-    if (Flags & SELECT_WRITE)
-    {
-        writeset=(fd_set *) calloc(1,sizeof(fd_set));
-        FD_ZERO(writeset);
-        FD_SET(fd, writeset);
-    }
-
-
-    result=select(fd+1,readset,writeset,NULL,tv);
     if ((result==-1) && (errno==EBADF)) RetVal=0;
-    else if (result  > 0)
-    {
-        if (readset && FD_ISSET(fd, readset)) RetVal |= SELECT_READ;
-        if (writeset && FD_ISSET(fd, writeset)) RetVal |= SELECT_WRITE;
-    }
+    else if (result  > 0) RetVal=SelectCheck(Set, fd);
 
-    if (readset) free(readset);
-    if (writeset) free(writeset);
+		SelectSetDestroy(Set);
 
     return(RetVal);
 }
@@ -165,6 +280,7 @@ void STREAMSetFlushType(STREAM *S, int Type, int StartPoint, int BlockSize)
     S->BlockSize=BlockSize;
 }
 
+
 /* This reads chunks from a file and when if finds a newline it resets */
 /* the file pointer to that position */
 void STREAMReAllocBuffer(STREAM *S, int size, int Flags)
@@ -255,15 +371,19 @@ int STREAMCountWaitingBytes(STREAM *S)
     return(0);
 }
 
+
+
+
+
+
 STREAM *STREAMSelect(ListNode *Streams, struct timeval *tv)
 {
-    fd_set SelectSet;
+		TSelectSet *Set;
     STREAM *S;
     ListNode *Curr, *Last;
-    int highfd=0, result;
+    int result;
 
-    FD_ZERO(&SelectSet);
-
+		Set=(TSelectSet *) calloc(1,sizeof(TSelectSet));
     Curr=ListGetNext(Streams);
     while (Curr)
     {
@@ -273,14 +393,13 @@ STREAM *STREAMSelect(ListNode *Streams, struct timeval *tv)
             //Pump any data in the stream
             STREAMFlush(S);
             if (S->InEnd > S->InStart) return(S);
-            FD_SET(S->in_fd,&SelectSet);
-            if (S->in_fd > highfd) highfd=S->in_fd;
+						SelectAddFD(Set, SELECT_READ, S->in_fd);
         }
 
         Curr=ListGetNext(Curr);
     }
 
-    result=select(highfd+1,&SelectSet,NULL,NULL,tv);
+		result=SelectWait(Set, tv);
 
     if (result > 0)
     {
@@ -288,7 +407,7 @@ STREAM *STREAMSelect(ListNode *Streams, struct timeval *tv)
         while (Curr)
         {
             S=(STREAM *) Curr->Item;
-            if (S && FD_ISSET(S->in_fd,&SelectSet))
+            if (S && SelectCheck(Set, S->in_fd))
             {
                 //this stream has had it's turn, move it to the bottom of the list
                 //so it can't lock others out
@@ -299,15 +418,16 @@ STREAM *STREAMSelect(ListNode *Streams, struct timeval *tv)
                     if (! Last) Last=Streams;
                     ListThreadNode(Last, Curr);
                 }
+								SelectSetDestroy(Set);
                 return(S);
             }
             Curr=ListGetNext(Curr);
         }
     }
 
+		SelectSetDestroy(Set);
     return(NULL);
 }
-
 
 
 
@@ -622,7 +742,7 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
     STREAM *Stream;
     struct stat myStat;
     char *Tempstr=NULL, *NewPath=NULL;
-    const char *p_Path;
+    const char *p_Path, *ptr;
 
     p_Path=Path;
     if (Flags & SF_WRONLY) Mode=O_WRONLY;
@@ -724,7 +844,10 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
 
     //CREATE THE STREAM OBJECT !!
     Stream=STREAMFromFD(fd);
-    STREAMSetTimeout(Stream,0);
+
+		ptr=LibUsefulGetValue("STREAM:Timeout");
+    if (StrValid(ptr)) STREAMSetTimeout(Stream, atoi(ptr));
+
     STREAMSetFlushType(Stream,FLUSH_FULL,0,0);
     Tempstr=FormatStr(Tempstr,"%d",myStat.st_size);
     STREAMSetValue(Stream, "FileSize", Tempstr);
@@ -887,7 +1010,6 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
 					Token=QuoteCharsInStr(Token, Path, "    ()");
 					Path=MCopyStr(Path, "cat ", Token, "; exit", NULL);
 				}
-				printf("SSHCONN: %s\n", Path);
 				S=SSHConnect(Host, Port, User, Pass, Path);
 			}
       else if (strcasecmp(Proto,"tty")==0)
@@ -912,7 +1034,9 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
       break;
 
     default:
-        if (strcmp(URL,"-")==0) S=STREAMFromDualFD(0,1);
+        if ( (strcmp(URL,"-")==0) || (strcasecmp(URL,"stdio:")==0) ) S=STREAMFromDualFD(0,1);
+				else if (strcasecmp(URL,"stdin:")==0) S=STREAMFromFD(0);
+				else if (strcasecmp(URL,"stdout:")==0) S=STREAMFromFD(1);
         else S=STREAMFileOpen(URL, Flags);
         break;
     }
@@ -927,6 +1051,21 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
             if (Flags & SF_RDONLY) STREAMAddStandardDataProcessor(S, "decompress", "gzip", "");
             else if (Flags & SF_WRONLY) STREAMAddStandardDataProcessor(S, "compress", "gzip", "");
         }
+
+    		STREAMSetTimeout(S, LibUsefulGetInteger("STREAM:Timeout"));
+
+				switch (S->Type)
+				{
+					case STREAM_TYPE_TCP:
+					case STREAM_TYPE_UDP: 
+					case STREAM_TYPE_SSL:
+					case STREAM_TYPE_HTTP:
+					case STREAM_TYPE_CHUNKED_HTTP:
+						ptr=LibUsefulGetValue("Net:Timeout");
+    				if (StrValid(ptr)) STREAMSetTimeout(S, atoi(ptr));
+					break;
+				}
+
     }
 
     Destroy(Token);
@@ -971,6 +1110,10 @@ void STREAMDestroy(void *p_S)
 }
 
 
+void STREAMTruncate(STREAM *S, long size)
+{
+   ftruncate(S->out_fd,size);
+}
 
 void STREAMClose(STREAM *S)
 {

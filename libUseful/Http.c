@@ -423,6 +423,7 @@ void HTTPInfoSetURL(HTTPInfoStruct *Info, const char *Method, const char *iURL)
             Info->Credentials=CopyStr(Info->Credentials, Value);
         }
         else if (strcasecmp(Token, "hostauth")==0) Info->AuthFlags |= HTTP_AUTH_HOST;
+        else if (strcasecmp(Token, "http1.0")==0) Info->Flags |= HTTP_VER1_0;
         else if (strcasecmp(Token, "content-type")==0)   Info->PostContentType=CopyStr(Info->PostContentType, Value);
         else if (strcasecmp(Token, "content-length")==0) Info->PostContentLength=atoi(Value);
         else if (strcasecmp(Token, "user")==0) Info->UserName=CopyStr(Info->UserName, Value);
@@ -576,7 +577,35 @@ static int HTTPHandleWWWAuthenticate(const char *Line, int *Type, char **Config)
     return(*Type);
 }
 
+/* redirect headers can get complex. WE can have a 'full' header:
+ *    http://myhost/whatever
+ * or just the 'path' part
+ *    /whatever
+ * or even this
+ *    //myhost/whatever
+ */
 
+static void HTTPParseLocationHeader(HTTPInfoStruct *Info, const char *Header)
+{
+   if (
+         (strncasecmp(Header,"http:",5)==0) ||
+         (strncasecmp(Header,"https:",6)==0)
+      )
+      {
+         Info->RedirectPath=HTTPQuoteChars(Info->RedirectPath, Header, " ");
+      }
+	 		else if (strncmp(Header, "//",2)==0)
+			{
+        if (Info->Flags & HTTP_SSL) Info->RedirectPath=MCopyStr(Info->RedirectPath,"https:",Header,NULL);
+         else Info->RedirectPath=MCopyStr(Info->RedirectPath,"http:",Header,NULL);
+			}
+      else
+      {
+         if (Info->Flags & HTTP_SSL) Info->RedirectPath=FormatStr(Info->RedirectPath,"https://%s:%d%s",Info->Host,Info->Port,Header);
+         else Info->RedirectPath=FormatStr(Info->RedirectPath,"http://%s:%d%s",Info->Host,Info->Port,Header);
+      }
+
+}
 
 
 static void HTTPParseHeader(STREAM *S, HTTPInfoStruct *Info, char *Header)
@@ -638,21 +667,7 @@ static void HTTPParseHeader(STREAM *S, HTTPInfoStruct *Info, char *Header)
 
         case 'L':
         case 'l':
-            if (strcasecmp(Token,"Location")==0)
-            {
-                if (
-                    (strncasecmp(ptr,"http:",5)==0) ||
-                    (strncasecmp(ptr,"https:",6)==0)
-                )
-                {
-                    Info->RedirectPath=HTTPQuoteChars(Info->RedirectPath, ptr, " ");
-                }
-                else
-                {
-                    if (Info->Flags & HTTP_SSL) Info->RedirectPath=FormatStr(Info->RedirectPath,"https://%s:%d%s",Info->Host,Info->Port,ptr);
-                    else Info->RedirectPath=FormatStr(Info->RedirectPath,"http://%s:%d%s",Info->Host,Info->Port,ptr);
-                }
-            }
+            if (strcasecmp(Token,"Location")==0) HTTPParseLocationHeader(Info, ptr);
             break;
 
         case 'P':
@@ -712,24 +727,6 @@ char *HTTPDigest(char *RetStr, const char *Method, const char *Logon, const char
     Tempstr=FormatStr(Tempstr,"%s:%s",Method,Doc);
     len2=HashBytes(&HA2,"md5",Tempstr,StrLen(Tempstr),ENCODE_HEX);
 
-    /*
-    	Tempstr=SetStrLen(len1+len2+StrLen(Nonce)+20);
-    	ptr=Tempstr;
-    	memcpy(ptr,HA1,len1);
-    	ptr+=len1;
-    	*ptr=':';
-    	ptr++;
-
-    	len1=StrLen(Nonce);
-    	memcpy(ptr,Nonce,len1);
-    	ptr+=len1;
-    	*ptr=':';
-    	ptr++;
-
-    	memcpy(ptr,HA2,len2);
-    	ptr+=len2;
-    */
-
     Tempstr=MCopyStr(Tempstr,HA1,":",Nonce,":",HA2,NULL);
     len2=HashBytes(&Digest,"md5",Tempstr,StrLen(Tempstr),ENCODE_HEX);
     RetStr=MCopyStr(RetStr, "username=\"",Logon,"\", realm=\"",Realm,"\", nonce=\"",Nonce,"\", response=\"",Digest,"\", ","uri=\"",Doc,"\", algorithm=\"MD5\"", NULL);
@@ -751,6 +748,7 @@ char *HTTPDigest(char *RetStr, const char *Method, const char *Logon, const char
     DestroyString(HA1);
     DestroyString(HA2);
     DestroyString(Digest);
+    DestroyString(ClientNonce);
 
     return(RetStr);
 }
@@ -1032,6 +1030,7 @@ int HTTPProcessResponse(HTTPInfoStruct *HTTPInfo)
                 //As redirect check has been done, we can copy redirect path to previous
                 HTTPInfo->PreviousRedirect=CopyStr(HTTPInfo->PreviousRedirect,HTTPInfo->RedirectPath);
                 ParseURL(HTTPInfo->RedirectPath, &Proto, &HTTPInfo->Host, &Tempstr,NULL, NULL,&HTTPInfo->Doc,NULL);
+								fprintf(stderr, "REDIRECT: host=%s URL=%s\n", HTTPInfo->Host, HTTPInfo->RedirectPath);
                 HTTPInfo->Port=atoi(Tempstr);
 
                 //if HTTP_SSL_REWRITE is set, then all redirects get forced to https
@@ -1089,9 +1088,9 @@ STREAM *HTTPSetupConnection(HTTPInfoStruct *Info, int ForceHTTPS)
     int Port=0, Flags=0;
     STREAM *S;
 
-    Proto=CopyStr(Proto,"tcp");
 
-    S=STREAMCreate();
+		//proto in here will not be http/https but tcp/ssl/tls
+    Proto=CopyStr(Proto,"tcp");
     if (Info->Flags & HTTP_PROXY)
     {
         ParseURL(Info->Proxy, &Proto, &Host, &Tempstr, NULL, NULL, NULL,NULL);
@@ -1116,7 +1115,8 @@ STREAM *HTTPSetupConnection(HTTPInfoStruct *Info, int ForceHTTPS)
     if (StrValid(Info->ConnectionChain)) Tempstr=FormatStr(Tempstr,"%s|%s:%s:%d/",Info->ConnectionChain,Proto,Host,Port);
     else Tempstr=FormatStr(Tempstr,"%s:%s:%d/",Proto,Host,Port);
 
-    if (STREAMConnect(S,Tempstr,""))
+		S=STREAMOpen(Tempstr, "");
+    if (S)
     {
         S->Type=STREAM_TYPE_HTTP;
         HTTPSendHeaders(S,Info);
@@ -1304,11 +1304,14 @@ STREAM *HTTPWithConfig(const char *URL, const char *Config)
     {
         for (cptr=Token; *cptr !='\0'; cptr++)
         {
-            if (*cptr=='w') p_Method="POST";
-            else if (*cptr=='W') p_Method="PUT";
-            else if (*cptr=='P') p_Method="PATCH";
-            else if (*cptr=='D') p_Method="DELETE";
-            else if (*cptr=='H') p_Method="HEAD";
+						switch(*cptr)
+						{
+            case 'w': p_Method="POST"; break;
+            case 'W': p_Method="PUT"; break;
+            case 'P': p_Method="PATCH"; break;
+            case 'D': p_Method="DELETE"; break;
+            case 'H': p_Method="HEAD"; break;
+						}
         }
     }
 
