@@ -41,7 +41,7 @@ int DownloadCopyFile(TAction *Act)
     char *Tempstr=NULL, *cwd=NULL;
 		const char *ptr;
 		STREAM *S;
-    int bytes=0, result;
+    int bytes=0;
 
     Tempstr=TerminalFormatStr(Tempstr, "~eDownloading:~0  ",NULL);
     printf("%s %s\n",Tempstr, Act->URL);
@@ -61,7 +61,7 @@ int DownloadCopyFile(TAction *Act)
 			else S=STREAMOpen(Act->URL, "r");
 
     	STREAMAddProgressCallback(S, DownloadCallback);
-    	result=STREAMCopy(S,  Act->DownName);
+    	bytes=STREAMCopy(S,  Act->DownName);
     	STREAMClose(S);
 
 
