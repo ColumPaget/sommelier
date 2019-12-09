@@ -2,12 +2,12 @@
 #ifndef SOMMELIER_COMMON_H
 #define SOMMELIER_COMMON_H
 
-#include "libUseful/libUseful.h"
+#include "libUseful-4/libUseful.h"
 #include <wait.h>
 #include <glob.h>
 
 
-#define VERSION "4.0"
+#define VERSION "4.1"
 
 
 #define INSTALL_RUN 0

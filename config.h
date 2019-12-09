@@ -6,7 +6,7 @@
 typedef struct
 {
 int Flags;
-const char *AppConfigPath;
+char *AppConfigPath;
 } TConfig;
 
 extern TConfig *Config;

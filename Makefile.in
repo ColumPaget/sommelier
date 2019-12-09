@@ -1,15 +1,14 @@
 OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o download.o install.o uninstall.o
-LIBUSEFUL=libUseful/libUseful.a
-LIBS=@LIBS@
+LIBS=@LIBS@ @STATIC_LIBS@
 CFLAGS=@CFLAGS@ @DEFS@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 
-all: $(OBJ) main.c $(LIBUSEFUL)
+all: $(OBJ) main.c @STATIC_LIBS@
 	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
-$(LIBUSEFUL):
-	@cd libUseful; $(MAKE)
+libUseful-4/libUseful.a:
+	$(MAKE) -C libUseful-4
 
 common.o: common.h common.c
 	gcc $(CFLAGS) -c common.c
@@ -44,7 +43,7 @@ regedit.o: regedit.h regedit.c
 
 
 clean:
-	rm -f sommelier *.o libUseful/*.o libUseful/*.so libUseful/*.a
+	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a
 
 install:
 	mkdir -p $(exec_prefix)/bin

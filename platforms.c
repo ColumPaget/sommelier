@@ -6,8 +6,8 @@ ListNode *Platforms=NULL;
 
 int PlatformType(const char *Platform)
 {
-char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows", NULL};
-char *DosPlatforms[]={"dos","msdos", NULL};
+const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows", NULL};
+const char *DosPlatforms[]={"dos","msdos", NULL};
 
 
 if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
