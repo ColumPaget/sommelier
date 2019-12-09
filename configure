@@ -3809,6 +3809,8 @@ subdirs="$subdirs libUseful-4"
 
 fi
 
+
+
 if test "$cf_use_ssl" = "yes"
 then
 # On IRIX 5.3, sys/types and inttypes.h are conflicting.
@@ -3839,6 +3841,104 @@ if test "x$ac_cv_header_openssl_ssl_h" = xyes; then :
 
 fi
 
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for EVP_CIPHER_CTX_init in -lcrypto" >&5
+$as_echo_n "checking for EVP_CIPHER_CTX_init in -lcrypto... " >&6; }
+if ${ac_cv_lib_crypto_EVP_CIPHER_CTX_init+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lcrypto  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char EVP_CIPHER_CTX_init ();
+int
+main ()
+{
+return EVP_CIPHER_CTX_init ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=yes
+else
+  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&5
+$as_echo "$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&6; }
+if test "x$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBCRYPTO 1
+_ACEOF
+
+  LIBS="-lcrypto $LIBS"
+
+fi
+
+cf_have_libcrypto=$ac_cv_lib_crypto_EVP_CIPHER_CTX_init
+
+if test "$cf_have_libcrypto" != "yes"
+then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for EVP_CIPHER_CTX_new in -lcrypto" >&5
+$as_echo_n "checking for EVP_CIPHER_CTX_new in -lcrypto... " >&6; }
+if ${ac_cv_lib_crypto_EVP_CIPHER_CTX_new+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lcrypto  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char EVP_CIPHER_CTX_new ();
+int
+main ()
+{
+return EVP_CIPHER_CTX_new ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_crypto_EVP_CIPHER_CTX_new=yes
+else
+  ac_cv_lib_crypto_EVP_CIPHER_CTX_new=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_crypto_EVP_CIPHER_CTX_new" >&5
+$as_echo "$ac_cv_lib_crypto_EVP_CIPHER_CTX_new" >&6; }
+if test "x$ac_cv_lib_crypto_EVP_CIPHER_CTX_new" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBCRYPTO 1
+_ACEOF
+
+  LIBS="-lcrypto $LIBS"
+
+fi
+
+  cf_have_libcrypto=$ac_cv_lib_crypto_EVP_CIPHER_CTX_new
+fi
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SSL_library_init in -lssl" >&5
@@ -3888,13 +3988,15 @@ fi
 
 cf_have_libssl=$ac_cv_lib_ssl_SSL_library_init
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for EVP_CIPHER_CTX_init in -lcrypto" >&5
-$as_echo_n "checking for EVP_CIPHER_CTX_init in -lcrypto... " >&6; }
-if ${ac_cv_lib_crypto_EVP_CIPHER_CTX_init+:} false; then :
+if test "$cf_have_libssl" != "yes"
+then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for OPENSSL_init_ssl in -lssl" >&5
+$as_echo_n "checking for OPENSSL_init_ssl in -lssl... " >&6; }
+if ${ac_cv_lib_ssl_OPENSSL_init_ssl+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lcrypto  $LIBS"
+LIBS="-lssl  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -3904,36 +4006,39 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char EVP_CIPHER_CTX_init ();
+char OPENSSL_init_ssl ();
 int
 main ()
 {
-return EVP_CIPHER_CTX_init ();
+return OPENSSL_init_ssl ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=yes
+  ac_cv_lib_ssl_OPENSSL_init_ssl=yes
 else
-  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=no
+  ac_cv_lib_ssl_OPENSSL_init_ssl=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&5
-$as_echo "$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&6; }
-if test "x$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ssl_OPENSSL_init_ssl" >&5
+$as_echo "$ac_cv_lib_ssl_OPENSSL_init_ssl" >&6; }
+if test "x$ac_cv_lib_ssl_OPENSSL_init_ssl" = xyes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBCRYPTO 1
+#define HAVE_LIBSSL 1
 _ACEOF
 
-  LIBS="-lcrypto $LIBS"
+  LIBS="-lssl $LIBS"
 
 fi
 
-cf_have_libcrypto=$ac_cv_lib_crypto_EVP_CIPHER_CTX_init
+  cf_have_libssl=$ac_cv_lib_ssl_OPENSSL_init_ssl
+fi
+
+
 fi
 
 
