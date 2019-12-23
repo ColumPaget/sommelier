@@ -310,10 +310,12 @@ return(TRUE);
 static void PostProcessInstall(TAction *Act)
 {
 glob_t Glob;
-char *From=NULL, *To=NULL, *Tempstr=NULL;
+char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
 const char *ptr;
 int i, result;
 
+Tempstr=TerminalFormatStr(Tempstr, "~eFinalizing installation.~0", NULL);
+printf("%s\n", Tempstr);
 
 ptr=GetVar(Act->Vars, "delete");
 if (StrValid(ptr))
@@ -322,6 +324,7 @@ if (StrValid(ptr))
 	glob(Tempstr, 0, 0, &Glob);
 	for (i=0; i < Glob.gl_pathc; i++)
 	{
+		printf("DELETE: %s\n", Glob.gl_pathv[i]);
 		unlink(Glob.gl_pathv[i]);
 	}
 }
@@ -333,6 +336,7 @@ if (StrValid(ptr))
 	glob(Tempstr, 0, 0, &Glob);
 	for (i=0; i < Glob.gl_pathc; i++)
 	{
+		printf("MOVE: %s\n", Glob.gl_pathv[i]);
 		rename(Glob.gl_pathv[i], GetBasename(Glob.gl_pathv[i]));
 	}
 }
@@ -342,8 +346,12 @@ ptr=GetVar(Act->Vars, "rename");
 if (StrValid(ptr))
 {
 	Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-	ptr=GetToken(Tempstr, "\\S", &From, GETTOKEN_QUOTES);
-	ptr=GetToken(ptr, "\\S", &To, GETTOKEN_QUOTES);
+	ptr=GetToken(Tempstr, "\\S", &Value, GETTOKEN_QUOTES);
+	From=UnQuoteStr(From, Value);
+	ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
+	To=UnQuoteStr(To, Value);
+
+	printf("RENAME: '%s' -> '%s'\n", From, To);
 	result=rename(From, To);
 }
 
@@ -353,6 +361,7 @@ ptr=GetVar(Act->Vars, "winmanager");
 if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL, NULL);
 
 Destroy(Tempstr);
+Destroy(Value);
 Destroy(From);
 Destroy(To);
 }
@@ -371,14 +380,11 @@ const char *ptr;
 char *wptr;
 int len;
 
-Tempstr=TerminalFormatStr(Tempstr, "~eFinalizing installation.~0", NULL);
-printf("%s\n", Tempstr);
+	PostProcessInstall(Act);
 
-		PostProcessInstall(Act);
-		Path=FindProgram(Path, Act);
-
-		switch (PlatformType(Act->Platform))
-		{
+	Path=FindProgram(Path, Act);
+	switch (PlatformType(Act->Platform))
+	{
 		case PLATFORM_WINDOWS:
 
 		//reconfigure path to be from our wine 'drive_c' rather than from system root
@@ -425,12 +431,12 @@ printf("%s\n", Tempstr);
 
 		if (! StrValid(GetVar(Act->Vars, "exec-dir"))) SetVar(Act->Vars, "exec-dir", ".");
 		break;
-		}
+	}
 
 
-		Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
-		if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", Tempstr);
-		SetVar(Act->Vars, "exec-path", Path);
+	Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
+	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", Tempstr);
+	SetVar(Act->Vars, "exec-path", Path);
 
 Destroy(Path);
 Destroy(Tempstr);

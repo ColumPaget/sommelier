@@ -23,6 +23,7 @@
 #define ACT_SET 8
 #define ACT_REBUILD 13
 #define ACT_REBUILD_HASHES 14
+#define ACT_DOWNLOAD 15
 
 #define FLAG_DEBUG 1
 #define FLAG_FORCE 2

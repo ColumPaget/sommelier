@@ -4,11 +4,14 @@
 Convoy platform=gog:linux category='Game' exec="Convoy.x86"
 Cayne platform=gog:linux category='Game'
 DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86"
+#DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
+Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
 FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
 Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 KingdomRush platform=gog:linux category='Game' exec="Kingdom\ Rush.x86" 
 PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
 SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="x86/superhexagon.x86" exec-vars="LD_LIBRARY_PATH=./x86/"
+InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec-vars="LD_LIBRARY_PATH=./lib32/"
 
 
 #SCUMMVM platform
@@ -20,11 +23,18 @@ TheDig platform=gog:scummvm category='Game'
 AgeOfWonders platform=gog:windows category='Game' exec=AoW.exe rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled."
 AnomalyWarzoneEarth platform=gog:windows category='Game' 
 AnomalyDefenders platform=gog:windows category='Game' 
-DarkestDungeon platform=gog:windows category='Game' 
-DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
-DivineDivinity platform=gog:windows category='Game' exec=div.exe
+ArxFatalis platform=gog:windows category='Game' os-version=winxp
+Battlevoid platform=gog:windows category='Game' 
+Caravan platform=gog:windows category='Game' 
 ChaosReborn platform=gog:windows category='Game' 
 CrusaderKings platform=gog:windows category='Game'
+DarkestDungeon platform=gog:windows category='Game' 
+Darkstone platform=gog:windows category='Game' exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
+DinsCurse platform=gog:windows category='Game' rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
+DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
+DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
+DivineDivinity platform=gog:windows category='Game' exec=div.exe
+RiseOfTheMiddleKingdom platform=gog:windows category='Game'
 FantasyWars platform=gog:windows category='Game' exec=fw.exe
 FreedomForce platform=gog:windows category='Game' exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
@@ -36,15 +46,20 @@ HeroesOfMightAndMagic3 platform=gog:windows category='Game'
 HitmanCodename47 platform=gog:windows category='Game'
 KingdomRush platform=gog:windows category='Game'
 KingsBounty platform=gog:windows category='Game'
+MagicMaker platform=gog:windows category='Game' 
 MoonbaseCommander platform=gog:windows category='Game' exec=moonbase.exe
+Nexus platform=gog:windows category='Game' exec=nexus.exe
 Parkan2 platform=gog:windows category='Game'
 Patrician3 platform=gog:windows category='Game' exec=Patrician3.exe
 Perimeter platform=gog:windows category='Game'
 PortRoyale platform=gog:windows category='Game' exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
+PortRoyale2 platform=gog:windows category='Game' exec=PR2.exe
 RaceTheSun platform=gog:windows category='Game'
 RageOfMages platform=gog:windows category='Game' exec=rom.exe
 Reigns platform=gog:windows category='Game'
+SpaceCom platform=gog:windows category='Game' 
 SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"
+SpaceRun platform=gog:windows category='Game' exec="spacerun.exe"
 Spellforce platform=gog:windows category='Game' warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
 StarfleetCommand platform=gog:windows category='Game' vdesk=y os-version=winxp exec="sfc.exe"
 StarWolves platform=gog:windows category='Game' 
@@ -65,3 +80,7 @@ TheWitcherAdventureGame platform=gog:windows category='Game'
 
 
 
+
+
+WarlordsBattlecry platform=gog:windows category='Game'
+Sengoku platform=gog:windows category='Game'

@@ -9,6 +9,7 @@ printf("sommelier list [options]                           print list of apps av
 printf("sommelier install <name> [<name>] [options]        install an application by name\n");
 printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
 printf("sommelier run <name>                               run an application by name\n");
+printf("sommelier download <name>                          just download installer/package to current directory\n");
 printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");
 printf("\n");
 printf("options are:\n");
@@ -100,6 +101,29 @@ const char *arg;
 }
 
 
+
+TAction *ParseStandardCommand(CMDLINE *CmdLine, const char *Cmd, int ActID, ListNode *Acts, TAction *Options)
+{
+const char *arg;
+TAction *Act=NULL;
+
+arg=CommandLineNext(CmdLine);
+if (! arg) printf("Error: No applications given as targets for '%s' command\n", Cmd);
+while (arg)
+{
+	if (*arg == '-') ParseCommandLineOption(Options, CmdLine);
+	else	
+	{
+		Act=ActionCreate(ActID, arg);
+		if (Act) ListAddItem(Acts, Act);
+	}
+	arg=CommandLineNext(CmdLine);
+}
+
+return(Act);
+}
+
+
 ListNode *ParseCommandLine(int argc, char *argv[])
 {
 CMDLINE *CmdLine;
@@ -117,41 +141,12 @@ CmdLine=CommandLineParserCreate(argc, argv);
 //this makes things very messy, 'cos we have to reparse them when examinging the
 //command-line proper
 Options=CommandLineParseOptions(CmdLine);
-
-
 arg=CommandLineFirst(CmdLine);
 if (arg)
 {
-if (strcmp(arg, "install")==0) 
-{
-	arg=CommandLineNext(CmdLine);
-	if (! arg) printf("Error: No applications given as targets for 'install' command\n");
-	while (arg)
-	{
-	if (*arg == '-') ParseCommandLineOption(Options, CmdLine);
-	else	
-	{
-		Act=ActionCreate(ACT_INSTALL, arg);
-		if (Act) ListAddItem(Acts, Act);
-	}
-	arg=CommandLineNext(CmdLine);
-	}
-}
-else if (strcmp(arg, "uninstall")==0) 
-{
-	arg=CommandLineNext(CmdLine);
-	if (! arg) printf("Error: No applications given as targets for 'uninstall' command\n");
-	while (arg)
-	{
-	if (*arg=='-') ParseCommandLineOption(Options, CmdLine);
-	else 
-	{
-		Act=ActionCreate(ACT_UNINSTALL, arg);
-		if (Act) ListAddItem(Acts, Act);
-	}
-	arg=CommandLineNext(CmdLine);
-	}
-}
+if (strcmp(arg, "install")==0) Act=ParseStandardCommand(CmdLine, "install", ACT_INSTALL, Acts, Options);
+else if (strcmp(arg, "uninstall")==0) Act=ParseStandardCommand(CmdLine, "uninstall", ACT_UNINSTALL, Acts, Options);
+else if (strcmp(arg, "download")==0) Act=ParseStandardCommand(CmdLine, "download", ACT_DOWNLOAD, Acts, Options);
 else if (strcmp(arg, "set")==0) 
 {
 	SettingsStr=CopyStr(SettingsStr, CommandLineNext(CmdLine));

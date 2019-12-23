@@ -118,11 +118,11 @@ switch (PlatformType(Act->Platform))
 		//for windows we must override the found exec-path to be in windows format
 		Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
 		strrep(Tempstr, '/', '\\');
-		SetVar(Act->Vars,"exec-path",Tempstr);
+		SetVar(Act->Vars,"exec-path", Tempstr);
 
-		if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
-		else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
-		else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)'", Act->Vars, 0);
+		if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
+		else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
+		else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)' $(exec-args)", Act->Vars, 0);
 
 		SetVar(Act->Vars, "invocation", Tempstr);
 	break;
@@ -136,6 +136,8 @@ switch (PlatformType(Act->Platform))
 	case PLATFORM_DOOM:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
+		StripLeadingWhitespace(Tempstr);
+		StripTrailingWhitespace(Tempstr);
 		SetVar(Act->Vars, "invocation", Tempstr);
 	break;
 
@@ -145,7 +147,10 @@ switch (PlatformType(Act->Platform))
 		if (StrValid(ptr))
 		{
 		//Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
-		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec)", Act->Vars, 0);
+		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec) $(exec-args)", Act->Vars, 0);
+		StripLeadingWhitespace(Tempstr);
+		StripTrailingWhitespace(Tempstr);
+
 		SetVar(Act->Vars, "invocation", Tempstr);
 		}
 
@@ -153,6 +158,9 @@ switch (PlatformType(Act->Platform))
 		if (StrValid(ptr))
 		{
 		Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec64)", Act->Vars, 0);
+		StripLeadingWhitespace(Tempstr);
+		StripTrailingWhitespace(Tempstr);
+
 		SetVar(Act->Vars, "invocation64", Tempstr);
 		}
 	break;
@@ -162,7 +170,7 @@ switch (PlatformType(Act->Platform))
 HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
 SetVar(Act->Vars, "exec-sha256", Hash);
 
-Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(working-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
+Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=\"$(name)\"\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(working-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);

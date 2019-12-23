@@ -254,6 +254,11 @@ if (Act)
 	case ACT_LIST:
 		AppsOutputList();
 	break;
+
+	case ACT_DOWNLOAD:
+		if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
+		else Download(Act);
+	break;
 	}
 }
 

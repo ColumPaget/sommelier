@@ -157,6 +157,4 @@ SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256
 EmClient platform=windows url=http://www.emclient.com/dist/latest/setup.msi category='Calendar'
 Rainlender platform=windows url=http://www.rainlendar.net/download/Rainlendar-Lite-2.14.2-64bit.exe category='Calendar'
 SimpleCal platform=windows url=/home/colum/SimpleCalSetupBuild14/SimpleCalSetup.msi category='Calendar'
-
-
-
+Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn="Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work" exec=sync-taskbar.exe sha256="5415336819c6a2821466234229ab6389553abb996b52d25b5f807a1ec65e26e2"

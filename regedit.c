@@ -205,7 +205,6 @@ else if (strcasecmp(Curr->Tag, "direct3d")==0)
 	if (strcasecmp(p_Value, "opengl")==0) Flags |= REG_OPENGL3D;
 	if (strcasecmp(p_Value, "openglsl")==0) Flags |= REG_OPENGL3D | REG_OPENGLSL;
 	if (strcasecmp(p_Value, "glsl")==0) Flags |= REG_OPENGL3D | REG_OPENGLSL;
-printf("d3d: %d [%s]\n", Flags, p_Value);
 }
 else if (strcmp(Curr->Tag, "os-version")==0) OSVersion=CopyStr(OSVersion, p_Value);
 else if (strcmp(Curr->Tag, "dll-overrides")==0) DLLOverrides=CopyStr(DLLOverrides, p_Value);
