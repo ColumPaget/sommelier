@@ -138,7 +138,9 @@ switch (PlatformType(Act->Platform))
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
+		printf("EMU INVOKE: [%s] %s\n", Act->Platform, Tempstr);
 		SetVar(Act->Vars, "invocation", Tempstr);
+		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 
 
@@ -163,6 +165,7 @@ switch (PlatformType(Act->Platform))
 
 		SetVar(Act->Vars, "invocation64", Tempstr);
 		}
+		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 }
 
@@ -170,7 +173,7 @@ switch (PlatformType(Act->Platform))
 HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
 SetVar(Act->Vars, "exec-sha256", Hash);
 
-Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=\"$(name)\"\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(working-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
+Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=\"$(name)\"\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(invoke-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);

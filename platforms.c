@@ -18,8 +18,7 @@ if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
 if (strcasecmp(Platform, "gog:lin")==0) return(PLATFORM_GOGLINUX);
 if (strcasecmp(Platform, "gog:linux")==0) return(PLATFORM_GOGLINUX);
 if (strcasecmp(Platform, "gog:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
-if (strcasecmp(Platform, "gog:dos")==0) return(PLATFORM_GOGDOS);
-if (strcasecmp(Platform, "gog:msdos")==0) return(PLATFORM_GOGDOS);
+if (strcasecmp(Platform, "gog:lindos")==0) return(PLATFORM_GOGDOS);
 if (strcasecmp(Platform, "gog:windos")==0) return(PLATFORM_GOGWINDOS);
 if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
 
@@ -207,13 +206,15 @@ TPlatform *Plt;
 
 Platforms=ListCreate();
 
-Plt=PlatformsAdd("dos,msdos", PLATFORM_DOS, "dosbox -exit '$(exec-path)'", "", "*.exe","");
+Plt=PlatformsAdd("dos,msdos", PLATFORM_DOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
 
 Plt=PlatformsAdd("windows,win,win16,win32,win64", PLATFORM_WINDOWS, "wine", "", "*.exe","");
 
 
-Plt=PlatformsAdd("gog:dos,gog:msdos", PLATFORM_DOS, "dosbox -exit '$(exec-path)'", "", "*.exe","");
-Plt=PlatformsAdd("gog:windos", PLATFORM_GOGWINDOS, "dosbox -exit '$(exec-path)'", "", "*.exe","");
+Plt=PlatformsAdd("gog:lindos", PLATFORM_GOGDOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
+Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
+Plt=PlatformsAdd("gog:windos", PLATFORM_GOGWINDOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
+Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.exe");
 
 Plt=PlatformsAdd("gog:win,gog:windows", PLATFORM_WINDOWS, "wine", "", "*.exe","");
 Plt->InstallMessage=CopyStr(Plt->InstallMessage, "Some gog.com windows installers display error messages at the end of the install. Just click through these, the game should have installed okay.");

@@ -4,6 +4,7 @@
 Convoy platform=gog:linux category='Game' exec="Convoy.x86"
 Cayne platform=gog:linux category='Game'
 DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86"
+Defcon platform=gog:linux category='Game' exec="defcon.bin.x86"
 #DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
 Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
 FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
@@ -13,9 +14,37 @@ PapersPlease platform=gog:linux category='Game' exec=PapersPlease
 SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="x86/superhexagon.x86" exec-vars="LD_LIBRARY_PATH=./x86/"
 InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec-vars="LD_LIBRARY_PATH=./lib32/"
 
+#MSDOS platform 
+# 'lindos' means linux package, dos executable
+# 'windos' means windows installer, dos executable
+# for many of these either of the windows or linux packages can be used
+BattleChess  platform=gog:lindos category='Game' exec="CHESS.EXE"
+BattleChess  platform=gog:windos category='Game' exec="CHESS.EXE"
+ChineseChess platform=gog:lindos category='Game' exec="CHESSII.EXE"
+ChineseChess platform=gog:windos category='Game' exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab"
+Darklands platform=gog:lindos category='Game' exec="DARKLANDS.EXE"
+Darklands platform=gog:windos category='Game' exec="DARKLANDS.EXE"
+Battlespire platform=gog:windos category='Game' exec="SPIRE.BAT"
+DungeonKeeperGold platform=gog:windos category='Game' exec="KEEPER.EXE"
+HocusPocus platform=gog:lindos category='Game' exec="hocus.exe"
+HocusPocus platform=gog:windos category='Game' exec="hocus.exe"
+MasterOfMagic platform=gog:lindos category='Game' exec="MAGIC.EXE"
+MasterOfMagic platform=gog:windos category='Game' exec="MAGIC.EXE"
+MasterOfOrion platform=gog:lindos category='Game' exec="ORION.EXE"
+MasterOfOrion platform=gog:windos category='Game' exec="ORION.EXE"
+MasterOfOrion2 platform=gog:lindos category='Game' exec="Orion2.exe"
+MasterOfOrion2 platform=gog:windos category='Game' exec="Orion2.exe"
+RealmsOfChaos platform=gog:lindos category='Game' exec="ROC.EXE"
+RealmsOfChaos platform=gog:windos category='Game' exec="ROC.EXE"
+Stargunner platform=gog:lindos category='Game' exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
+Stargunner platform=gog:windos category='Game' exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
+SubWar2050 platform=gog:windos category='Game' exec="subwar.bat"
+Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 
 #SCUMMVM platform
 LureOfTheTemptress platform=gog:scummvm category='Game' 
+BeneathASteelSky platform=gog:scummvm category='Game' 
+TeenAgent platform=gog:scummvm category='Game' 
 TheDig platform=gog:scummvm category='Game' 
 
 # windows via wine
@@ -79,8 +108,3 @@ Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
 TheWitcherAdventureGame platform=gog:windows category='Game' 
 
 
-
-
-
-WarlordsBattlecry platform=gog:windows category='Game'
-Sengoku platform=gog:windows category='Game'

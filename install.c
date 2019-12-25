@@ -176,11 +176,10 @@ int RegFlags=0;
 		switch (PlatformType(Act->Platform))
 		{
 			case PLATFORM_DOS:
-				Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
+			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
 			printf("RUN INSTALLER: %s\n",Tempstr);
-		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-		RunProgramAndConsumeOutput(Cmd, Act->Flags);
-
+			Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
+			RunProgramAndConsumeOutput(Cmd, Act->Flags);
 			break;
 
 			case PLATFORM_WINDOWS:
@@ -240,13 +239,13 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 
 		case PLATFORM_GOGLINUX:
 			ForcedFileType=FILETYPE_ZIP;
-			FilesToExtract=CopyStr(FilesToExtract, "data/noarch/game/*");
+			FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* $(extra-files)", Act->Vars, 0);
 		break;
 
 		case PLATFORM_GOGSCUMMVM:
 		case PLATFORM_GOGDOS:
 			ForcedFileType=FILETYPE_ZIP;
-			FilesToExtract=CopyStr(FilesToExtract, "data/noarch/data/*");
+			FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* $(extra-files)", Act->Vars, 0);
 		break;
 
 	}
