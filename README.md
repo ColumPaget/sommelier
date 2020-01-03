@@ -61,7 +61,8 @@ DETAILED USAGE
 sommelier list [options]                           print list of apps available for install
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
-sommelier run <name>                               run an application by name
+sommelier download <name> [<name>]                 download installers/packages to the current directory
+sommelier run <name> [<options>]                   run an application by name
 sommelier set <setting string> <name> [<name>]     change settings of an installed application
 
 options are:
@@ -87,6 +88,13 @@ There are currently only three settings that can be configured with the 'set' co
 vdesk=y/n              run program within a virtual desktop
 winmanage=y/n          allow window manager to decorate and manage windows of this program
 smoothfonts=y/n        use font anti-aliasing
+
+```
+
+The 'run' command can take arguements that are passed to the program. For instance, to run Telegram desktop in 'start in systray' mode use:
+
+```
+	sommelier run Telegram -startintray
 ```
 
 TO DO
