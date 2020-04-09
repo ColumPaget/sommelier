@@ -36,15 +36,51 @@ static void DownloadCallback(const char *URL, int bytes, int total)
 }
 
 
-int DownloadCopyFile(TAction *Act)
+
+static void DownloadShowSSLStatus(STREAM *S)
 {
-    char *Tempstr=NULL, *cwd=NULL;
+char *Valid=NULL, *Tempstr=NULL, *Output=NULL;
+char *Issuer=NULL;
+const char *ptr;
+
+ptr=STREAMGetValue(S, "SSL:CertificateVerify");
+if (StrValid(ptr) && strcmp(ptr, "OK")==0) Valid=MCopyStr(Valid, "~g", ptr, "~0", NULL);
+else Valid=MCopyStr(Valid, "~r", ptr, "~0", NULL);
+
+Tempstr=MCopyStr(Tempstr, "~e~mSSL Connection:~0 for ~e", STREAMGetValue(S, "SSL:CertificateCommonName"), "~0  Certificate Verification: ", Valid, NULL); 
+Output=TerminalFormatStr(Output, Tempstr, NULL);
+printf("%s\n", Output);
+
+ptr=GetToken(STREAMGetValue(S, "SSL:CertificateIssuer"), "/", &Tempstr, 0);
+while (ptr)
+{
+if (strncmp(Tempstr, "CN=", 3)==0) Issuer=CopyStr(Issuer, Tempstr+3);
+ptr=GetToken(ptr, "/", &Tempstr, 0);
+}
+
+
+Tempstr=MCopyStr(Tempstr, "~e~mCertificate Issued by:~0 ~e", Issuer, "~0 for ", STREAMGetValue(S, "SSL:CertificateSubject"), NULL);
+Output=CopyStr(Output, "");
+Output=TerminalFormatStr(Output, Tempstr, NULL);
+printf("%s\n", Output);
+
+
+Destroy(Valid);
+Destroy(Tempstr);
+Destroy(Output);
+}
+
+
+static int DownloadCopyFile(TAction *Act)
+{
+    char *Tempstr=NULL, *Output=NULL, *cwd=NULL;
 		const char *ptr;
 		STREAM *S;
     int bytes=0;
 
-    Tempstr=TerminalFormatStr(Tempstr, "~eDownloading:~0  ",NULL);
-    printf("%s %s\n",Tempstr, Act->URL);
+    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", Act->URL, "~0", NULL);
+    Output=TerminalFormatStr(Output, Tempstr, NULL);
+    printf("%s\n",Output);
 
     if (StrValid(Act->DownName))
     {
@@ -60,24 +96,37 @@ int DownloadCopyFile(TAction *Act)
 			}
 			else S=STREAMOpen(Act->URL, "r");
 
+			if (strncasecmp(Act->URL, "https:", 6)==0) DownloadShowSSLStatus(S);
     	STREAMAddProgressCallback(S, DownloadCallback);
-    	bytes=STREAMCopy(S,  Act->DownName);
-    	STREAMClose(S);
 
-
+			if (StrValid(Config->InstallerCache))
+			{
+			Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
+			MakeDirPath(Act->SrcPath, 0770);
+			}
+			else
+			{
 			//this function allocs memory
 			cwd=get_current_dir_name();
 			Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
+			}
 
+    	bytes=STREAMCopy(S,  Act->SrcPath);
+    	STREAMClose(S);
+
+			Act->Flags |= FLAG_DOWNLOADED;
+
+			//terminate 'downloading' message
       printf("\n");
      }
      else
      {
-       Tempstr=TerminalFormatStr(Tempstr, "~rERROR: failed to extract basename from: ~0  ",NULL);
+       Tempstr=TerminalFormatStr(Tempstr, "~rERROR: failed to extract basename from:~0  ",NULL);
        printf("%s %s\n", Tempstr, Act->URL);
      }
 
     DestroyString(Tempstr);
+    DestroyString(Output);
     DestroyString(cwd);
 		
 		return(bytes);

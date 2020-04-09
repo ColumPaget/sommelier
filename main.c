@@ -138,6 +138,9 @@ DestroyString(Hash);
 return(result);
 }
 
+
+
+
 int RebuildApp(TAction *Act)
 {
 if (Act->Type==ACT_REBUILD_HASHES)
@@ -147,6 +150,7 @@ if (Act->Type==ACT_REBUILD_HASHES)
 
 return(CheckDownload(Act));
 }
+
 
 
 void RebuildAppList(TAction *RebuildAct)

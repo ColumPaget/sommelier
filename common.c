@@ -6,11 +6,15 @@
 
 char *URLBasename(char *RetStr, const char *URL)
 {
+char *Tempstr=NULL;
 char *ptr;
 
-RetStr=CopyStr(RetStr, GetBasename(URL));
-StrTruncChar(RetStr, '?');
+Tempstr=CopyStr(Tempstr, URL);
+StrTruncChar(Tempstr, '?');
+StripDirectorySlash(Tempstr);
+RetStr=CopyStr(RetStr, GetBasename(Tempstr));
 
+Destroy(Tempstr);
 return(RetStr);
 }
 
@@ -113,24 +117,28 @@ char *Hash=NULL, *Tempstr=NULL;
 const char *p_ExpectedHash;
 int result=FALSE;
 
-HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
 
 p_ExpectedHash=GetVar(Act->Vars, "sha256");
 if (StrValid(p_ExpectedHash))
 {
+	HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
 	if (strcmp(Hash, p_ExpectedHash)==0) result=TRUE;
 	Tempstr=CopyStr(Tempstr, "");
 	printf("    expected sha256: [%s]\n",p_ExpectedHash);	
 	printf("    actual   sha256: [%s]\n",Hash);	
 	Tempstr=CopyStr(Tempstr, "");
-	if (result) Tempstr=TerminalFormatStr(Tempstr, "~gOKAY:~0 Hashes match\n",NULL);
-	else Tempstr=TerminalFormatStr(Tempstr, "~rERROR:~0 Downloaded file does not match expected hash\n",NULL);
+	if (result) Tempstr=TerminalFormatStr(Tempstr, "~g~eOKAY:~w Hashes match~0",NULL);
+	else Tempstr=TerminalFormatStr(Tempstr, "~rERROR: Downloaded file does not match expected hash~0",NULL);
 	printf("%s\n",Tempstr);
 }
-else 
+else
 {
 	printf("No expected hash value is configured for this download\n");
-	printf("    actual   sha256: [%s]\n",Hash);	
+	if (Act->Flags & FLAG_HASH_DOWNLOAD) 
+	{
+		HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
+		printf("    actual   sha256: [%s]\n",Hash);	
+	}
 	result=TRUE;
 }
 

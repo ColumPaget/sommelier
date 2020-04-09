@@ -125,6 +125,7 @@ switch (PlatformType(Act->Platform))
 		else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)' $(exec-args)", Act->Vars, 0);
 
 		SetVar(Act->Vars, "invocation", Tempstr);
+		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 
 

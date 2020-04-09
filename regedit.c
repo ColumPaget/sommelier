@@ -148,7 +148,7 @@ Tempstr=CatStr(Tempstr,Path);
 RunProgramAndConsumeOutput(Tempstr, Act->Flags);
 }
 
-//unlink(Path);
+unlink(Path);
 
 Destroy(Tempstr);
 Destroy(Token);
@@ -174,7 +174,7 @@ Tempstr=AppFormatPath(Tempstr, Act);
 Curr=ListGetNext(Act->Vars);
 while (Curr)
 {
-printf("configure: '%s' set to '%s'\n", Curr->Tag, (const char *) Curr->Item);
+if (Config->Flags & FLAG_DEBUG) printf("configure: '%s' set to '%s'\n", Curr->Tag, (const char *) Curr->Item);
 p_Value=(const char *) Curr->Item;
 if (StrValid(Curr->Tag))
 {

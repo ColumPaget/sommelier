@@ -142,7 +142,9 @@ else Exec=FindProgramGoFishing(Exec, Act);
 
 RetStr=CopyStr(RetStr, Exec);
 
-printf("Found Program: %s\n", RetStr);
+Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0", NULL);
+Exec=TerminalFormatStr(Exec, Tempstr, NULL);
+printf("\n", Exec);
 
 Destroy(Tempstr);
 Destroy(Exec);
@@ -295,6 +297,8 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		break;
 	}
 
+
+
 Destroy(Tempstr);
 Destroy(FilesToExtract);
 
@@ -358,6 +362,7 @@ if (StrValid(ptr))
 
 ptr=GetVar(Act->Vars, "winmanager");
 if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL, NULL);
+
 
 Destroy(Tempstr);
 Destroy(Value);
@@ -448,13 +453,17 @@ static void InstallSingleItemPreProcessInstall(TAction *Act)
 char *Token=NULL, *Tempstr=NULL;
 const char *ptr;
 
+//dll-overrides creates a wine bottle with certain dlls missing, forcing the installer to install it's own
+//this is for sitations where the installer will supply a better choice of DLL for this app than wine's own
 ptr=GetVar(Act->Vars, "dll-overrides");
 if (StrValid(ptr))
 {
-	//run fake installer to ensure a wine bottle is created
+	//run fake installer to ensure a wine bottle is created, so that
+	//we can clear DLLs out of it before doing the install
 	SetVar(Act->Vars, "installer", "this-does-not-exist.exe");
 	RunInstallers(Act);
 
+	//go through list of DLLs, deleting them so that the real installer, when we run it, will install it's own
   ptr=GetToken(ptr, ",", &Token, 0);
   while (ptr)
   {
@@ -474,10 +483,12 @@ static void InstallSingleItem(TAction *Act)
 {
 char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
 const char *p_URL, *ptr;
-int InstallResult=FALSE;
+int InstallResult=FALSE, exitval;
+pid_t pid;
 
 //Fork so we don't chdir current app
-if (fork()==0)
+pid=fork();
+if (pid==0)
 {
 	InstallSingleItemPreProcessInstall(Act);
 
@@ -493,7 +504,7 @@ if (fork()==0)
 		Tempstr=MCopyStr(Tempstr, "export GOPATH=",InstallPath,"; go get ",p_URL, NULL);
 		chdir(InstallPath);
 		system(Tempstr);
-printf("%s\n",Tempstr);
+		printf("%s\n",Tempstr);
 		InstallResult=TRUE;
 	break;
 
@@ -507,28 +518,55 @@ printf("%s\n",Tempstr);
 		{
 			Tempstr=TerminalFormatStr(Tempstr, "~eValidating download~0", NULL);
 			printf("%s\n", Tempstr);
+
 			if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
 			else if (! CompareSha256(Act)) 
 			{
 					printf("ERROR: Download Hash mismatch!\n");
 					printf("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n");
+					Act->Flags |= FLAG_ABORT;
 			}
 		}
 
+		if (! (Act->Flags & FLAG_ABORT))
+		{
 		InstallResult=InstallAppFromFile(Act, Act->SrcPath);
 		if ( InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) ) FinalizeExeInstall(Act);
+		}
+
+
+		// clean up installer file. If we downloaded the item, and it's not just a case of running an executable
+		// then we want to delete the installer or .zip
+ 		//
+		if (
+			(Act->InstallType != INSTALL_EXECUTABLE) &&
+			(! (Act->Flags != FLAG_KEEP_INSTALLER)) &&
+			(Act->Flags & FLAG_DOWNLOADED)
+		) 
+		{
+			unlink(Path);
+		}
+
 	break;
 	}
 
-	if (InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) ) DesktopFileGenerate(Act, Path);
+	if (InstallResult)
+	{
+		if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act, Path);
+		RegEditApplySettings(Act);
+	}
 
-	RegEditApplySettings(Act);
-
+	if (Act->Flags |= FLAG_ABORT) _exit(1);
 	_exit(0);
-
 }
 
-wait(NULL);
+waitpid(pid, &exitval, 0);
+if (exitval==1)
+{
+	Act->Flags |= FLAG_ABORT;
+	Tempstr=TerminalFormatStr(Tempstr, "~r~eInstall Aborted for ~0", NULL);
+	printf("%s %s\n", Tempstr, Act->Name);
+}
 
 
 DestroyString(Tempstr);

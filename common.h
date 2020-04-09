@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "4.1"
+#define VERSION "4.2"
 
 
 #define INSTALL_RUN 0
@@ -30,6 +30,10 @@
 #define FLAG_DEPENDANCY 4
 #define FLAG_SANDBOX 64
 #define FLAG_NET 128
+#define FLAG_DOWNLOADED 256
+#define FLAG_KEEP_INSTALLER 512
+#define FLAG_HASH_DOWNLOAD 1024
+#define FLAG_ABORT 2048
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR} TEnumFileTypes;
 

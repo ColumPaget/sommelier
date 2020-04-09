@@ -170,7 +170,9 @@ while (Curr)
 
 	if ( StrEnd(Platforms) || InList(AppConfig->Platform, Platforms) )
 	{
-		App->Flags = AppConfig->Flags;
+		//flags can already have been set by the command-line, so 
+		//we have to | these
+		App->Flags |= AppConfig->Flags;
 		App->Platform=CopyStr(App->Platform, AppConfig->Platform);
 		if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
 		CopyVars(App->Vars, AppConfig->Vars);

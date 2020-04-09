@@ -7,6 +7,7 @@ typedef struct
 {
 int Flags;
 char *AppConfigPath;
+char *InstallerCache;
 } TConfig;
 
 extern TConfig *Config;

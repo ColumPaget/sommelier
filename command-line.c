@@ -15,10 +15,13 @@ printf("\n");
 printf("options are:\n");
 printf("  -d                            print debugging (there will be a lot!)\n");
 printf("  -c <config file>              specify a config (list of apps) file, rather than using the default\n");
-printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path\n");
+printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)\n");
 printf("  -f                            force install even if expected sha256 doesn't match the download\n");
 printf("  -force                        force install even if expected sha256 doesn't match the download\n");
 printf("  -proxy <url>                  use a proxy for downloading installs\n");
+printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
+printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
+printf("  -hash                         hash downloads even if they have no expected hash value\n");
 printf("\n");
 printf("Proxy urls have the form: \n");
 printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -30,10 +33,14 @@ printf("   socks5:bill:secret@proxy.com:1080\n");
 printf("   sshtunnel:bill:secret@ssh_host.com\n");
 printf("   sshtunnel:sshproxy\n");
 printf("\n");
-printf("There are currently only three settings that can be configured with the 'set' command. All of them take 'y' or 'n' for 'yes' or 'no':\n");
+printf("There are currently only three settings that can be configured with the 'set' command. They all relate to programs run with 'wine'. All of them take 'y' or 'n' for 'yes' or 'no':\n");
 printf("vdesk=y/n              run program within a virtual desktop\n");
 printf("winmanage=y/n          allow window manager to decorate and manage windows of this program\n");
 printf("smoothfonts=y/n        use font anti-aliasing\n");
+printf("\n");
+printf("Environment Variables\n");
+printf("Sommelier looks for the variables SOMMELIER_CA_BUNDLE, CURL_CA_BUNDLE and SSL_VERIFY_FILE, in that order, to discover the path of the Certificate Bundle for certificate verification.\n");
+printf("If SOMMELIER_INSTALLER_CACHE is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the -url option\n");
 }
 
 
@@ -49,6 +56,13 @@ const char *p_Opt;
 	if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
 	else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
+	else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
+	else if (strcmp(p_Opt, "-icache")==0) 
+	{
+		Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
+		Act->Flags |= FLAG_KEEP_INSTALLER;
+	}
+	else if (strcmp(p_Opt, "-hash")==0) Act->Flags |= FLAG_HASH_DOWNLOAD;
 	else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
 	else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
 	else if (strcmp(p_Opt, "-net")==0) Act->Flags &= ~FLAG_NET;
