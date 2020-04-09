@@ -72,6 +72,9 @@ options are:
   -f                            force install even if expected sha256 doesn't match the download
   -force                        force install even if expected sha256 doesn't match the download
   -proxy <url>                  use a proxy for downloading installs
+  -k                            keep installer or .zip file instead of deleting it after install
+  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
+  -hash                         hash downloads even if they have no expected hash value
 
 Proxy urls have the form: 
      <protocol>:<user>:<password>@<host>:<protocol>. 
@@ -84,7 +87,7 @@ examples:
    sshtunnel:bill:secret@ssh_host.com
    sshtunnel:sshproxy
 
-There are currently only three settings that can be configured with the 'set' command. All of them take 'y' or 'n' for 'yes' or 'no':
+There are currently only three settings that can be configured with the 'set' command. They all relate to programs run with 'wine'. All of them take 'y' or 'n' for 'yes' or 'no':
 vdesk=y/n              run program within a virtual desktop
 winmanage=y/n          allow window manager to decorate and manage windows of this program
 smoothfonts=y/n        use font anti-aliasing
@@ -96,6 +99,15 @@ The 'run' command can take arguements that are passed to the program. For instan
 ```
 	sommelier run Telegram -startintray
 ```
+
+
+
+ENVIRONMENT VARIABLES
+=====================
+
+Sommelier looks for the variables `SOMMELIER_CA_BUNDLE`, `CURL_CA_BUNDLE` and `SSL_VERIFY_FILE`, in that order, to discover the path of the Certificate Bundle for certificate verification.
+If `SOMMELIER_INSTALLER_CACHE` is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the `-url` option.
+
 
 TO DO
 =====

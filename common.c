@@ -133,7 +133,8 @@ if (StrValid(p_ExpectedHash))
 }
 else
 {
-	printf("No expected hash value is configured for this download\n");
+	Tempstr=TerminalFormatStr(Tempstr, "~mNo expected hash value is configured for this download~0. This probably means that the source link is updated when a new version is released, but this means sommelier cannot confirm your download's integrity or security.", NULL);
+	printf("%s\n", Tempstr);
 	if (Act->Flags & FLAG_HASH_DOWNLOAD) 
 	{
 		HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);

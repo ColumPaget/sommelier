@@ -197,8 +197,9 @@ char *Platform=NULL;
 if (StrValid(App->Platform)) return(AppFindConfig(App, App->Platform));
 
 Platform=PlatformSelectForURL(Platform, App->URL);
-printf("Selected Platforms: %s\n", Platform);
+if (StrValid(Platform)) printf("Selected Platforms: %s\n", Platform);
 
+//if no platform specified this will use the first matching app config it finds for any platform
 result=AppFindConfig(App, Platform);
 if (! result) result=AppFindConfig(App, "");
 
@@ -213,12 +214,15 @@ int AppsOutputList()
 ListNode *Curr;
 int result=FALSE;
 TAction *App;
+char *p_dl;
 
 Curr=ListGetNext(Apps);
 while (Curr)
 {
 	App=(TAction *) Curr->Item;
-	printf("%- 25s  %- 10s  %- 10s   ", App->Name, App->Platform, GetVar(App->Vars, "category"));
+	if (StrValid(App->URL)) p_dl="www";
+	else p_dl="";
+	printf("%- 25s  %- 12s  %- 12s %- 3s   ", App->Name, App->Platform, GetVar(App->Vars, "category"), p_dl);
 	printf("%s\n",GetVar(App->Vars, "comment"));
 	//GetVar(App->Vars, "platform"));
 	Curr=ListGetNext(Curr);

@@ -24,7 +24,6 @@ Tempstr=SlashTerminateDirectoryPath(Tempstr);
 Tempstr=CatStr(Tempstr, "*");
 
 glob(Tempstr, 0, 0, &Glob);
-
 for (i=0; i < Glob.gl_pathc; i++)
 {
 	lstat(Glob.gl_pathv[i], &FStat);
@@ -127,7 +126,7 @@ Try to find the actual executable that we'll run with 'sommelier'
 */
 static char *FindProgram(char *RetStr, TAction *Act)
 {
-char *Exec=NULL, *Tempstr=NULL;
+char *Exec=NULL, *Tempstr=NULL, *Output=NULL;
 const char *ptr;
 
 ptr=GetVar(Act->Vars, "exec");
@@ -143,10 +142,11 @@ else Exec=FindProgramGoFishing(Exec, Act);
 RetStr=CopyStr(RetStr, Exec);
 
 Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0", NULL);
-Exec=TerminalFormatStr(Exec, Tempstr, NULL);
-printf("\n", Exec);
+Output=TerminalFormatStr(Output, Tempstr, NULL);
+printf("%s\n", Output);
 
 Destroy(Tempstr);
+Destroy(Output);
 Destroy(Exec);
 
 return(RetStr);
@@ -327,7 +327,7 @@ if (StrValid(ptr))
 	glob(Tempstr, 0, 0, &Glob);
 	for (i=0; i < Glob.gl_pathc; i++)
 	{
-		printf("DELETE: %s\n", Glob.gl_pathv[i]);
+		if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
 		unlink(Glob.gl_pathv[i]);
 	}
 }
@@ -339,7 +339,7 @@ if (StrValid(ptr))
 	glob(Tempstr, 0, 0, &Glob);
 	for (i=0; i < Glob.gl_pathc; i++)
 	{
-		printf("MOVE: %s\n", Glob.gl_pathv[i]);
+		if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
 		rename(Glob.gl_pathv[i], GetBasename(Glob.gl_pathv[i]));
 	}
 }
@@ -354,7 +354,7 @@ if (StrValid(ptr))
 	ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
 	To=UnQuoteStr(To, Value);
 
-	printf("RENAME: '%s' -> '%s'\n", From, To);
+	if (Config->Flags & FLAG_DEBUG) printf("RENAME: '%s' -> '%s'\n", From, To);
 	result=rename(From, To);
 }
 
@@ -537,14 +537,15 @@ if (pid==0)
 
 		// clean up installer file. If we downloaded the item, and it's not just a case of running an executable
 		// then we want to delete the installer or .zip
- 		//
+
+
 		if (
 			(Act->InstallType != INSTALL_EXECUTABLE) &&
-			(! (Act->Flags != FLAG_KEEP_INSTALLER)) &&
+			(! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
 			(Act->Flags & FLAG_DOWNLOADED)
 		) 
 		{
-			unlink(Path);
+			unlink(Act->SrcPath);
 		}
 
 	break;
@@ -671,6 +672,13 @@ char *Name=NULL, *Path=NULL, *Tempstr=NULL;
 
 Name=MCopyStr(Name, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
 
+if (! StrValid(Act->Platform))
+{
+Tempstr=TerminalFormatStr(Tempstr, "~r~eERROR: no platform configured for this application~0 Cannot install\n.", NULL);
+printf("%s\n", Tempstr);
+}
+else
+{
 //is an emulator installed for this platform? NULL means one is required by can't be found,
 //empty string means none is required
 Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
@@ -701,6 +709,7 @@ if (PlatformType(Act->Platform)==PLATFORM_WINDOWS) InstallSetupWindowsDependanci
 InstallRequiredDependancies(Act);
 
 InstallSingleItem(Act);
+}
 
 Destroy(Tempstr);
 Destroy(Path);

@@ -110,11 +110,10 @@ static int DownloadCopyFile(TAction *Act)
 			cwd=get_current_dir_name();
 			Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
 			}
-
+			Act->Flags |= FLAG_DOWNLOADED;
     	bytes=STREAMCopy(S,  Act->SrcPath);
     	STREAMClose(S);
 
-			Act->Flags |= FLAG_DOWNLOADED;
 
 			//terminate 'downloading' message
       printf("\n");
