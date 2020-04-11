@@ -3,6 +3,11 @@
 
 ListNode *Apps=NULL;
 
+ListNode *AppsGetList()
+{
+return(Apps);
+}
+
 void LoadAppConfigToAct(TAction *Act, const char *Config)
 {
 char *Name=NULL, *Value=NULL, *Tempstr=NULL;
@@ -32,6 +37,13 @@ else if (strcmp(Name,"sha256")==0)
 	strlwr(Value);
 	SetVar(Act->Vars, Name, Value);
 }
+
+else if (strcmp(Name,"bundled")==0)
+{
+	//app is bundled with another app! Set the bundled flag, and set a variable
+	Act->Flags |= FLAG_BUNDLED;
+	SetVar(Act->Vars, "bundled-with", Value);
+}
 else if (StrValid(Name)) SetVar(Act->Vars, Name, Value);
 
 ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
@@ -44,7 +56,7 @@ Destroy(Name);
 
 
 
-void LoadAppsFromFile(const char *Path, ListNode *Apps)
+void AppsLoadFromFile(const char *Path, ListNode *Apps)
 {
 STREAM *S;
 ListNode *Node;
@@ -77,7 +89,48 @@ Destroy(Token);
 }
 
 
-ListNode *LoadApps(const char *ConfigFiles)
+//bundles are situations were more than one application is supplied in the same package
+void AppAddToBundle(ListNode *Apps, TAction *App, const char *ParentName)
+{
+ListNode *Curr;
+TAction *Parent;
+char *Tempstr=NULL;
+
+//find the parent app/install that this item is bundled with
+Curr=ListFindNamedItem(Apps, ParentName);
+while (Curr)
+{
+Parent=(TAction *) Curr->Item;
+Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
+Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
+SetVar(Parent->Vars, "bundles", Tempstr);
+Curr=ListFindNamedItem(Curr, ParentName);
+}
+
+Destroy(Tempstr);
+}
+
+void AppsProcessBundles(ListNode *Apps)
+{
+ListNode *Curr;
+TAction *App;
+const char *ptr;
+
+Curr=ListGetNext(Apps);
+while (Curr)
+{
+	App=(TAction *) Curr->Item;
+	if (App->Flags & FLAG_BUNDLED)
+	{
+		ptr=GetVar(App->Vars, "bundled-with");
+		if (StrValid(ptr)) AppAddToBundle(Apps, App, ptr);
+	}
+	Curr=ListGetNext(Curr);
+}
+
+}
+
+ListNode *AppsLoad(const char *ConfigFiles)
 {
 char *Tempstr=NULL, *Token=NULL;
 const char *ptr;
@@ -94,10 +147,12 @@ while (ptr)
 {
 	Tempstr=SubstituteVarsInString(Tempstr, Token, Vars, 0);
 	glob(Tempstr, 0, 0, &Glob);
-	for (i=0; i < Glob.gl_pathc; i++) LoadAppsFromFile(Glob.gl_pathv[i], Apps);
+	for (i=0; i < Glob.gl_pathc; i++) AppsLoadFromFile(Glob.gl_pathv[i], Apps);
 	globfree(&Glob);
 	ptr=GetToken(ptr, ",", &Token, 0);
 }
+
+AppsProcessBundles(Apps);
 
 ListDestroy(Vars, Destroy);
 Destroy(Tempstr);

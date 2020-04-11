@@ -34,6 +34,7 @@
 #define FLAG_KEEP_INSTALLER 512
 #define FLAG_HASH_DOWNLOAD 1024
 #define FLAG_ABORT 2048
+#define FLAG_BUNDLED 4096
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR} TEnumFileTypes;
 
@@ -71,7 +72,6 @@ int IdentifyFileType(const char *Path, int ForcedFileType);
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
 void RunProgramAndConsumeOutput(const char *Cmd, int Flags);
-
 
 
 #endif

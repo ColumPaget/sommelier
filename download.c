@@ -39,7 +39,7 @@ static void DownloadCallback(const char *URL, int bytes, int total)
 
 static void DownloadShowSSLStatus(STREAM *S)
 {
-char *Valid=NULL, *Tempstr=NULL, *Output=NULL;
+char *Valid=NULL, *Tempstr=NULL;
 char *Issuer=NULL;
 const char *ptr;
 
@@ -47,9 +47,8 @@ ptr=STREAMGetValue(S, "SSL:CertificateVerify");
 if (StrValid(ptr) && strcmp(ptr, "OK")==0) Valid=MCopyStr(Valid, "~g", ptr, "~0", NULL);
 else Valid=MCopyStr(Valid, "~r", ptr, "~0", NULL);
 
-Tempstr=MCopyStr(Tempstr, "~e~mSSL Connection:~0 for ~e", STREAMGetValue(S, "SSL:CertificateCommonName"), "~0  Certificate Verification: ", Valid, NULL); 
-Output=TerminalFormatStr(Output, Tempstr, NULL);
-printf("%s\n", Output);
+Tempstr=MCopyStr(Tempstr, "~e~mSSL Connection:~0 for ~e", STREAMGetValue(S, "SSL:CertificateCommonName"), "~0  Certificate Verification: ", Valid, "\n", NULL); 
+TerminalPutStr(Tempstr, NULL);
 
 ptr=GetToken(STREAMGetValue(S, "SSL:CertificateIssuer"), "/", &Tempstr, 0);
 while (ptr)
@@ -59,28 +58,24 @@ ptr=GetToken(ptr, "/", &Tempstr, 0);
 }
 
 
-Tempstr=MCopyStr(Tempstr, "~e~mCertificate Issued by:~0 ~e", Issuer, "~0 for ", STREAMGetValue(S, "SSL:CertificateSubject"), NULL);
-Output=CopyStr(Output, "");
-Output=TerminalFormatStr(Output, Tempstr, NULL);
-printf("%s\n", Output);
+Tempstr=MCopyStr(Tempstr, "~e~mCertificate Issued by:~0 ~e", Issuer, "~0 for ", STREAMGetValue(S, "SSL:CertificateSubject"), "\n", NULL);
+TerminalPutStr(Tempstr, NULL);
 
 
 Destroy(Valid);
 Destroy(Tempstr);
-Destroy(Output);
 }
 
 
 static int DownloadCopyFile(TAction *Act)
 {
-    char *Tempstr=NULL, *Output=NULL, *cwd=NULL;
+    char *Tempstr=NULL, *cwd=NULL;
 		const char *ptr;
 		STREAM *S;
     int bytes=0;
 
-    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", Act->URL, "~0", NULL);
-    Output=TerminalFormatStr(Output, Tempstr, NULL);
-    printf("%s\n",Output);
+    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", Act->URL, "~0\n", NULL);
+    TerminalPutStr(Tempstr, NULL);
 
     if (StrValid(Act->DownName))
     {
@@ -96,23 +91,31 @@ static int DownloadCopyFile(TAction *Act)
 			}
 			else S=STREAMOpen(Act->URL, "r");
 
-			if (strncasecmp(Act->URL, "https:", 6)==0) DownloadShowSSLStatus(S);
-    	STREAMAddProgressCallback(S, DownloadCallback);
+			if (S)
+			{
+				if (strncasecmp(Act->URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+ 	   		STREAMAddProgressCallback(S, DownloadCallback);
 
-			if (StrValid(Config->InstallerCache))
-			{
-			Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
-			MakeDirPath(Act->SrcPath, 0770);
+				if (StrValid(Config->InstallerCache))
+				{
+					Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
+					MakeDirPath(Act->SrcPath, 0770);
+				}
+				else
+				{
+					//this function allocs memory
+					cwd=get_current_dir_name();
+					Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
+				}
+				Act->Flags |= FLAG_DOWNLOADED;
+    		bytes=STREAMCopy(S,  Act->SrcPath);
+    		STREAMClose(S);
 			}
-			else
+			else 
 			{
-			//this function allocs memory
-			cwd=get_current_dir_name();
-			Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
+	     Tempstr=MCopyStr(Tempstr, "~rERROR: failed to download:~0  ", Act->URL, NULL);
+			 TerminalPutStr(Tempstr, NULL);
 			}
-			Act->Flags |= FLAG_DOWNLOADED;
-    	bytes=STREAMCopy(S,  Act->SrcPath);
-    	STREAMClose(S);
 
 
 			//terminate 'downloading' message
@@ -120,12 +123,11 @@ static int DownloadCopyFile(TAction *Act)
      }
      else
      {
-       Tempstr=TerminalFormatStr(Tempstr, "~rERROR: failed to extract basename from:~0  ",NULL);
-       printf("%s %s\n", Tempstr, Act->URL);
+       Tempstr=MCopyStr(Tempstr, "~rERROR: failed to extract basename from:~0  ", Act->URL, NULL);
+			 TerminalPutStr(Tempstr, NULL);
      }
 
     DestroyString(Tempstr);
-    DestroyString(Output);
     DestroyString(cwd);
 		
 		return(bytes);
@@ -156,8 +158,7 @@ int Download(TAction *Act)
     }
     else
     {
-        Tempstr=TerminalFormatStr(Tempstr, "~rERROR: no download URL configured~0  ",NULL);
-        printf("%s\n", Tempstr);
+        TerminalPutStr("~rERROR: no download URL configured~0\n",NULL);
     }
     DestroyString(Tempstr);
 

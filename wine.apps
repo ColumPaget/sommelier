@@ -166,4 +166,5 @@ IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip  inst
 SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256=57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3 category=BoardGame warn="15 day trial" comment="Go/wei-chi player. 15 day trial only"
 Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn="Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work" exec=sync-taskbar.exe comment="Desktop app for Sync.com storage service"
 
+KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk=y category=Games comment="Classic Roberta Williams adventure game" rename="$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/" os-version=winxp
 

@@ -220,7 +220,7 @@ ConfigInit();
 PlatformsInit();
 
 Acts=ParseCommandLine(argc, argv);
-LoadApps(Config->AppConfigPath);
+AppsLoad(Config->AppConfigPath);
 
 Curr=ListGetNext(Acts);
 while (Curr)

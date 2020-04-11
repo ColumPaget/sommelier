@@ -126,7 +126,7 @@ Try to find the actual executable that we'll run with 'sommelier'
 */
 static char *FindProgram(char *RetStr, TAction *Act)
 {
-char *Exec=NULL, *Tempstr=NULL, *Output=NULL;
+char *Exec=NULL, *Tempstr=NULL;
 const char *ptr;
 
 ptr=GetVar(Act->Vars, "exec");
@@ -141,12 +141,14 @@ else Exec=FindProgramGoFishing(Exec, Act);
 
 RetStr=CopyStr(RetStr, Exec);
 
-Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0", NULL);
-Output=TerminalFormatStr(Output, Tempstr, NULL);
-printf("%s\n", Output);
+if (StrValid(RetStr))
+{
+Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0\n", NULL);
+TerminalPutStr(Tempstr, NULL);
+}
+
 
 Destroy(Tempstr);
-Destroy(Output);
 Destroy(Exec);
 
 return(RetStr);
@@ -317,9 +319,6 @@ char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
 const char *ptr;
 int i, result;
 
-Tempstr=TerminalFormatStr(Tempstr, "~eFinalizing installation.~0", NULL);
-printf("%s\n", Tempstr);
-
 ptr=GetVar(Act->Vars, "delete");
 if (StrValid(ptr))
 {
@@ -438,13 +437,24 @@ int len;
 	}
 
 
+	if (StrValid(Path))
+	{
 	Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
 	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", Tempstr);
 	SetVar(Act->Vars, "exec-path", Path);
 
-Destroy(Path);
+	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act, Path);
+	RegEditApplySettings(Act);
+	}
+	else 
+	{
+		Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find exectuable for ", Act->Name, "~0\n", NULL);
+		TerminalPutStr(Tempstr, NULL);
+	}
+
 Destroy(Tempstr);
 Destroy(WorkDir);
+Destroy(Path);
 }
 
 
@@ -479,6 +489,32 @@ Destroy(Token);
 }
 
 
+
+static void InstallBundledItems(TAction *Parent)
+{
+char *Name=NULL;
+const char *ptr;
+ListNode *Node;
+TAction *Child;
+
+ptr=GetToken(GetVar(Parent->Vars, "bundles"), " ", &Name, 0);
+while (ptr)
+{
+Node=ListFindNamedItem(AppsGetList(), Name);
+if (Node)
+{
+	Child=(TAction *) Node->Item;
+	SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
+	SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
+	FinalizeExeInstall(Child);
+}
+ptr=GetToken(ptr, " ", &Name, 0);
+}
+
+Destroy(Name);
+}
+
+
 static void InstallSingleItem(TAction *Act)
 {
 char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
@@ -494,67 +530,40 @@ if (pid==0)
 
 	InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
 
-	switch (PlatformType(Act->Platform))
+	chdir(InstallPath);
+	if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
+	else 
 	{
-	case PLATFORM_GO:
-		p_URL=Act->URL;
-		if (strncmp(p_URL, "http:",5)==0)  p_URL+=5;
-		if (strncmp(p_URL, "https:",6)==0) p_URL+=6;
-		while (*p_URL=='/') p_URL++;
-		Tempstr=MCopyStr(Tempstr, "export GOPATH=",InstallPath,"; go get ",p_URL, NULL);
-		chdir(InstallPath);
-		system(Tempstr);
-		printf("%s\n",Tempstr);
-		InstallResult=TRUE;
-	break;
+		TerminalPutStr("~eValidating download~0\n", NULL);
 
-	default:
-		chdir(InstallPath);
-		if (Download(Act)==0)
+		if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
+		else if (! CompareSha256(Act)) 
 		{
-			printf("ERROR: Download Failed, '0' bytes received!\n");
+				TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
+				TerminalPutStr("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n", NULL);
+				Act->Flags |= FLAG_ABORT;
 		}
-		else 
-		{
-			Tempstr=TerminalFormatStr(Tempstr, "~eValidating download~0", NULL);
-			printf("%s\n", Tempstr);
-
-			if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
-			else if (! CompareSha256(Act)) 
-			{
-					printf("ERROR: Download Hash mismatch!\n");
-					printf("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n");
-					Act->Flags |= FLAG_ABORT;
-			}
-		}
-
-		if (! (Act->Flags & FLAG_ABORT))
-		{
-		InstallResult=InstallAppFromFile(Act, Act->SrcPath);
-		if ( InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) ) FinalizeExeInstall(Act);
-		}
-
-
-		// clean up installer file. If we downloaded the item, and it's not just a case of running an executable
-		// then we want to delete the installer or .zip
-
-
-		if (
-			(Act->InstallType != INSTALL_EXECUTABLE) &&
-			(! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
-			(Act->Flags & FLAG_DOWNLOADED)
-		) 
-		{
-			unlink(Act->SrcPath);
-		}
-
-	break;
 	}
 
-	if (InstallResult)
+	if (! (Act->Flags & FLAG_ABORT))
 	{
-		if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act, Path);
-		RegEditApplySettings(Act);
+	InstallResult=InstallAppFromFile(Act, Act->SrcPath);
+	if ( InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) ) 
+	{
+		TerminalPutStr("~eFinding executables~0\n", NULL);
+		FinalizeExeInstall(Act);
+		InstallBundledItems(Act);
+	}
+	}
+
+
+	if (
+		(Act->InstallType != INSTALL_EXECUTABLE) &&
+		(! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
+		(Act->Flags & FLAG_DOWNLOADED)
+	) 
+	{
+		unlink(Act->SrcPath);
 	}
 
 	if (Act->Flags |= FLAG_ABORT) _exit(1);
@@ -565,9 +574,10 @@ waitpid(pid, &exitval, 0);
 if (exitval==1)
 {
 	Act->Flags |= FLAG_ABORT;
-	Tempstr=TerminalFormatStr(Tempstr, "~r~eInstall Aborted for ~0", NULL);
-	printf("%s %s\n", Tempstr, Act->Name);
+	Tempstr=MCopyStr(Tempstr, "~r~eInstall Aborted for ~0", Act->Name, "\n", NULL);
+	TerminalPutStr(Tempstr, NULL);
 }
+
 
 
 DestroyString(Tempstr);
@@ -670,12 +680,17 @@ void InstallApp(TAction *Act)
 const char *ptr, *p_Requires;
 char *Name=NULL, *Path=NULL, *Tempstr=NULL;
 
-Name=MCopyStr(Name, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
+Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
+TerminalPutStr(Tempstr, NULL);
 
 if (! StrValid(Act->Platform))
 {
-Tempstr=TerminalFormatStr(Tempstr, "~r~eERROR: no platform configured for this application~0 Cannot install\n.", NULL);
-printf("%s\n", Tempstr);
+TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
+}
+else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
+{
+Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
+TerminalPutStr(Tempstr, NULL);
 }
 else
 {
@@ -692,14 +707,15 @@ else if (! Tempstr)
 	Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
 }
 
-Tempstr=PlatformGetInstallMessage(Tempstr, Act->Platform);
-if (StrValid(Tempstr)) Name=MCatStr(Name, "\n~r", Tempstr, "~0\n", NULL);
+
+Tempstr=CopyStr(Tempstr, "");
+Name=PlatformGetInstallMessage(Name, Act->Platform);
+if (StrValid(Name)) Name=MCatStr(Name, "\n~r", Name, "~0\n", NULL);
 
 ptr=GetVar(Act->Vars, "warn");
-if (StrValid(ptr)) Name=MCatStr(Name, "\n~rWARN: ", ptr, "~0\n", NULL);
+if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
 
-Tempstr=TerminalFormatStr(Tempstr, Name, NULL);
-printf("%s\n", Tempstr);
+TerminalPutStr(Tempstr, NULL);
 
 
 Path=AppFormatPath(Path, Act);
@@ -709,6 +725,7 @@ if (PlatformType(Act->Platform)==PLATFORM_WINDOWS) InstallSetupWindowsDependanci
 InstallRequiredDependancies(Act);
 
 InstallSingleItem(Act);
+printf("%s install complete\n", Act->Name);
 }
 
 Destroy(Tempstr);

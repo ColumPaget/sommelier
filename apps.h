@@ -4,7 +4,8 @@
 #include "common.h"
 #include "platforms.h"
 
-ListNode *LoadApps(const char *ConfigFiles);
+ListNode *AppsGetList();
+ListNode *AppsLoad(const char *ConfigFiles);
 int AppsOutputList();
 void LoadAppConfigToAct(TAction *Act, const char *Config);
 TAction *AppActionCreate(int Action, const char *AppName, const char *Platform);

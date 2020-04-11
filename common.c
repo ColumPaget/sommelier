@@ -127,14 +127,12 @@ if (StrValid(p_ExpectedHash))
 	printf("    expected sha256: [%s]\n",p_ExpectedHash);	
 	printf("    actual   sha256: [%s]\n",Hash);	
 	Tempstr=CopyStr(Tempstr, "");
-	if (result) Tempstr=TerminalFormatStr(Tempstr, "~g~eOKAY:~w Hashes match~0",NULL);
-	else Tempstr=TerminalFormatStr(Tempstr, "~rERROR: Downloaded file does not match expected hash~0",NULL);
-	printf("%s\n",Tempstr);
+	if (result) TerminalPutStr("~g~eOKAY:~w Hashes match~0\n",NULL);
+	else TerminalPutStr("~rERROR: Downloaded file does not match expected hash~0\n",NULL);
 }
 else
 {
-	Tempstr=TerminalFormatStr(Tempstr, "~mNo expected hash value is configured for this download~0. This probably means that the source link is updated when a new version is released, but this means sommelier cannot confirm your download's integrity or security.", NULL);
-	printf("%s\n", Tempstr);
+	TerminalPutStr("~mNo expected hash value is configured for this download~0. This probably means that the source link is updated when a new version is released, but this means sommelier cannot confirm your download's integrity or security.\n", NULL);
 	if (Act->Flags & FLAG_HASH_DOWNLOAD) 
 	{
 		HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);

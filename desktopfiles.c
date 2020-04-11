@@ -100,8 +100,8 @@ STREAM *S;
 char *Tempstr=NULL, *EmuInvoke=NULL, *Hash=NULL;
 const char *ptr;
 
-printf("Generating desktop File.\n");
 
+printf("Generating desktop File...");
 Tempstr=DesktopFileMakePath(Tempstr, Act);
 MakeDirPath(Tempstr, 0744);
 S=STREAMOpen(Tempstr, "w mode=0744");
@@ -139,7 +139,6 @@ switch (PlatformType(Act->Platform))
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
-		printf("EMU INVOKE: [%s] %s\n", Act->Platform, Tempstr);
 		SetVar(Act->Vars, "invocation", Tempstr);
 		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
@@ -179,6 +178,8 @@ STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 STREAMClose(S);
+
+printf(" program invoke: %s\n", GetVar(Act->Vars, "invocation"));
 }
 
 DestroyString(Tempstr);
