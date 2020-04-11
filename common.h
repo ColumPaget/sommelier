@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "4.2"
+#define VERSION "4.3"
 
 
 #define INSTALL_RUN 0
