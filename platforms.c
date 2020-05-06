@@ -13,7 +13,8 @@ const char *DosPlatforms[]={"dos","msdos", NULL};
 if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, DosPlatforms, 0) > -1) return(PLATFORM_DOS);
-if (strcasecmp(Platform, "go")==0) return(PLATFORM_GO);
+if (strcasecmp(Platform, "zx48")==0) return(PLATFORM_ZXSPECTRUM);
+if (strcasecmp(Platform, "spectrum")==0) return(PLATFORM_ZXSPECTRUM);
 if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
 if (strcasecmp(Platform, "gog:lin")==0) return(PLATFORM_GOGLINUX);
 if (strcasecmp(Platform, "gog:linux")==0) return(PLATFORM_GOGLINUX);
@@ -229,4 +230,5 @@ Plt=PlatformsAdd("gog:lin,gog:linux", PLATFORM_GOGLINUX, "", "", "*.x86","*.x86_
 Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
 
 Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(wads),chocolate-doom $(wads)", "",  "*.wad","");
+Plt=PlatformsAdd("spectrum,zx48", PLATFORM_ZXSPECTRUM, "fuse $(exec-path)", "",  "*.z80","");
 }

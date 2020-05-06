@@ -8,6 +8,7 @@
 #include "install.h"
 #include "uninstall.h"
 #include "command-line.h"
+#include "download.h"
 #include "regedit.h"
 #include "apps.h"
 
