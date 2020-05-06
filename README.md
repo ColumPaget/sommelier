@@ -72,6 +72,7 @@ options are:
   -f                            force install even if expected sha256 doesn't match the download
   -force                        force install even if expected sha256 doesn't match the download
   -proxy <url>                  use a proxy for downloading installs
+  -platform <platform>          specify platform to display when listing apps
   -k                            keep installer or .zip file instead of deleting it after install
   -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
   -hash                         hash downloads even if they have no expected hash value

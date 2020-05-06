@@ -257,7 +257,7 @@ if (Act)
 	break;
 
 	case ACT_LIST:
-		AppsOutputList();
+		AppsOutputList(Act);
 	break;
 
 	case ACT_DOWNLOAD:

@@ -8,6 +8,31 @@ ListNode *AppsGetList()
 return(Apps);
 }
 
+
+int AppMatches(TAction *Template, TAction *App)
+{
+int result=FALSE;
+char *Token=NULL;
+const char *ptr;
+
+	if (StrValid(Template->Platform) && (strcasecmp(App->Platform, Template->Platform)!=0) ) return(FALSE);
+
+	/* doesn't yet exist!
+	if (StrValid(Template->Category))
+	{
+		ptr=GetToken(App->Category, ";", &Token, 0)
+		while (ptr)
+		{
+			if (strcasecmp(Token, Template->Category)==0) result=TRUE;
+		ptr=GetToken(ptr, ";", &Token, 0)
+		}
+	}
+	*/
+
+	Destroy(Token);
+	return(TRUE);
+}
+
 void LoadAppConfigToAct(TAction *Act, const char *Config)
 {
 char *Name=NULL, *Value=NULL, *Tempstr=NULL;
@@ -62,6 +87,7 @@ STREAM *S;
 ListNode *Node;
 TAction *Act;
 char *Tempstr=NULL, *Token=NULL;
+char *GlobalSettings=NULL;
 const char *ptr;
 
 S=STREAMOpen(Path, "r");
@@ -73,10 +99,18 @@ while (Tempstr)
 StripTrailingWhitespace(Tempstr);
 if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
 {
+	if (StrValid(GlobalSettings)) Tempstr=MCatStr(Tempstr, " ", GlobalSettings, NULL);
 	ptr=GetToken(Tempstr, "\\S", &Token, GETTOKEN_QUOTES);
+
+	// '*' for the app name means this line applies to all apps
+	
+	if (strcmp(Token, "*")==0) GlobalSettings=CopyStr(GlobalSettings, ptr);
+	else
+	{
 	Act=ActionCreate(ACT_NONE, Token);
 	ListAddNamedItem(Apps, Token, Act);
 	LoadAppConfigToAct(Act, ptr);
+	}
 	}
 Tempstr=STREAMReadLine(Tempstr, S);
 }
@@ -84,6 +118,7 @@ Tempstr=STREAMReadLine(Tempstr, S);
 STREAMClose(S);
 }
 
+Destroy(GlobalSettings);
 Destroy(Tempstr);
 Destroy(Token);
 }
@@ -264,7 +299,7 @@ return(result);
 }
 
 
-int AppsOutputList()
+int AppsOutputList(TAction *Template)
 {
 ListNode *Curr;
 int result=FALSE;
@@ -275,11 +310,14 @@ Curr=ListGetNext(Apps);
 while (Curr)
 {
 	App=(TAction *) Curr->Item;
+	if (AppMatches(Template, App))
+	{
 	if (StrValid(App->URL)) p_dl="www";
 	else p_dl="";
 	printf("%- 25s  %- 12s  %- 12s %- 3s   ", App->Name, App->Platform, GetVar(App->Vars, "category"), p_dl);
 	printf("%s\n",GetVar(App->Vars, "comment"));
-	//GetVar(App->Vars, "platform"));
+	}
+
 	Curr=ListGetNext(Curr);
 }
 

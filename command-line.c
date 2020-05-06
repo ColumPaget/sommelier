@@ -5,7 +5,7 @@
 static void PrintUsage()
 {
 printf("\n");
-printf("sommelier list [options]                           print list of apps available for install\n");
+printf("sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform\n");
 printf("sommelier install <name> [<name>] [options]        install an application by name\n");
 printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
 printf("sommelier run <name>                               run an application by name\n");
@@ -19,6 +19,7 @@ printf("  -url                          supply an alternative url for an install
 printf("  -f                            force install even if expected sha256 doesn't match the download\n");
 printf("  -force                        force install even if expected sha256 doesn't match the download\n");
 printf("  -proxy <url>                  use a proxy for downloading installs\n");
+printf("  -platform <platform>          platform to use when displaying lists of apps\n");
 printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
 printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
 printf("  -hash                         hash downloads even if they have no expected hash value\n");
