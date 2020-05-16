@@ -4,5 +4,6 @@
 #include "common.h"
 
 void InstallApp(TAction *Act);
+void InstallReconfigure(TAction *Act);
 
 #endif

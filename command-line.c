@@ -59,6 +59,8 @@ const char *p_Opt;
 	if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
 	else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
+	else if (strcmp(p_Opt, "-s")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
+	else if (strcmp(p_Opt, "-set")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
 	else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
 	else if (strcmp(p_Opt, "-icache")==0) 
 	{
@@ -162,6 +164,7 @@ arg=CommandLineFirst(CmdLine);
 if (arg)
 {
 if (strcmp(arg, "install")==0) Act=ParseStandardCommand(CmdLine, "install", ACT_INSTALL, Acts, Options);
+else if (strncmp(arg, "reconf", 6)==0) Act=ParseStandardCommand(CmdLine, "reconfigure", ACT_RECONFIGURE, Acts, Options);
 else if (strcmp(arg, "uninstall")==0) Act=ParseStandardCommand(CmdLine, "uninstall", ACT_UNINSTALL, Acts, Options);
 else if (strcmp(arg, "download")==0) Act=ParseStandardCommand(CmdLine, "download", ACT_DOWNLOAD, Acts, Options);
 else if (strcmp(arg, "set")==0) 
@@ -201,6 +204,7 @@ while (Curr)
 	Act->Flags |= Options->Flags;
 	if (StrValid(Options->URL)) Act->URL=CopyStr(Act->URL, Options->URL);
 	if (StrValid(Options->Platform)) Act->Platform=CopyStr(Act->Platform, Options->Platform);
+	CopyVars(Act->Vars, Options->Vars);
 	Curr=ListGetNext(Curr);
 }
 

@@ -38,7 +38,7 @@ K-3d platform=windows url=https://downloads.sourceforge.net/project/k3d/K-3D%20W
 OpenFX platform=windows url=http://openfx.org/download/install.msi category="3DGraphics" exec="openfx.exe" sha256=446c7c63a3e940aaa1057e1a417995b4e28554a1b5ac938392782d5c8152d5cb
 Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip  version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' category='3DGraphics' 
 FireAlpaca platform=windows url=https://firealpaca.com/download/win category='Graphics' comment='Another paint program'
-
+Krita platform=windows url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec=krita.exe
 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' category='Email' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' category='Email' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
@@ -52,6 +52,10 @@ OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.m
 SumatraPDF platform=windows url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip  exec='SumatraPDF.exe' category='Office' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
 FoxitPDF platform=windows url=https://files.downloadnow.com/s/software/16/67/20/00/FoxitReader97_enu_Setup_Prom.exe  exec='FoxitReader.exe' category='Office' comment='PDF Viewer' sha256='8130970e6976a953e98f89fcf24783b67d1080f84b961ac2c1cee2051673ff9a' 
 PDF-Xchange platform=windows category='Office' comment='PDF Viewer' url=http://downloads.pdf-xchange.com/PXCViewer_x86.msi movefiles-from="$(drive_c)/Program Files/Tracker Software/*" exec=PDFXCview.exe
+
+IcecreamEbookReader platform=windows url=https://icecreamapps.com/download/ebook_reader_setup.exe category='Office'
+FBReader platform=windows url=https://fbreader.org/files/win32/FBReaderSetup-0.12.10.exe
+
 ICProg platform=windows url=http://www.ic-prog.com/icprog106C.zip  category='Electronics' sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
 PicPick platform=windows url=http://ngwin.com/download/latest/picpick_inst.exe  exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk=y category='Electronics' 
 ElectronicsAssistant platform=windows url=https://www.electronics2000.co.uk/assist/assist.exe  category='Electronics' sha256='c69620e62647f2868ae2e6ade93d93a320fd1307074d61e49fc928bab33c8d2d' 
@@ -84,7 +88,7 @@ QuickBackgammon platform=windows url=https://archive.org/download/QuickBackgammo
 Hexagon platform=windows url=https://archive.org/download/Hexagon_1020/hexagon.zip  Get from one side of the board to the other='' category='BoardGame' sha256='81ae40a7dc01923f584afd368b7ba535f6ceb20baf514bffe06428e504f02852' 
 XmSol platform=windows url=https://sourceforge.net/projects/xmsol/files/xmsol.zip/download exec='xmsol.exe' category='CardGame' comment='A great many solitaire card games, including freecell' 
 XCell platform=windows url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip  version='4.0a' exec='xcell.exe' comment='Freecell Clone' sha256='049615687199033dbab053d114213c37da6a3ac478de79b415b9fcc1ea4ebefe' category='CardGame' 
-Hearts platform=windows url=http://www.tucows.com/download/games/files2/thnoshearts.zip  installer-vdesk='Y' category='CardGame' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' 
+Hearts platform=windows url=http://www.tucows.com/download/games/files2/thnoshearts.zip  installer-vdesk='Y' category='CardGame' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe'
 Taipei platform=windows url=https://archive.org/download/Taipei_1020/TAIPEI50.zip  version='1.01' exec='TP.EXE' sha256='f502c9443501866bd873fa77c77cac7d99ccffe91a8feffdf2b10c3f1d439c90' category='Game' comment='Mahjong tile game for Windows 3.1' 
 SegaSwirl platform=windows url=http://web.archive.org/web/20040207155639/http://www.segaswirl.com:80/pc/sw_large.exe exec=swirl.exe category='Game' comment='Another color matching game' sha256='947c4c0a02ce90abbcaba476a1824a55a97f3088ea282da89c1e2c2c8caee3e9'
 Reflexion platform=windows url=https://archive.org/download/Reflexion_game/reflexion.zip  category='Game' sha256='76b5c0c7cd1c3de8ca7da6c279b97a7e4810cd12acb59dfa5db32fa1f9187707' 

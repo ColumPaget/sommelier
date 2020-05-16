@@ -9,7 +9,7 @@
 #include "uninstall.h"
 #include "command-line.h"
 #include "download.h"
-#include "regedit.h"
+#include "platforms.h"
 #include "apps.h"
 
 
@@ -204,6 +204,8 @@ Destroy(Tempstr);
 
 
 
+
+
 int main(int argc, char *argv[])
 {
 ListNode *Acts, *Curr;
@@ -236,12 +238,17 @@ if (Act)
 		else InstallApp(Act);
 	break;
 
+	case ACT_RECONFIGURE:
+		if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
+		else InstallReconfigure(Act);
+	break;
+		
 	case ACT_UNINSTALL:
 		UnInstallApp(Act);
 	break;
 
 	case ACT_SET:
-		RegEditApplySettings(Act);
+		PlatformApplySettings(Act);
 	break;
 
 	case ACT_RUN:

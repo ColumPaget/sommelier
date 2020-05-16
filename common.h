@@ -19,11 +19,11 @@
 #define ACT_UNINSTALL 2
 #define ACT_RUN 3
 #define ACT_LIST 5
-#define ACT_LIST 5
 #define ACT_SET 8
 #define ACT_REBUILD 13
 #define ACT_REBUILD_HASHES 14
 #define ACT_DOWNLOAD 15
+#define ACT_RECONFIGURE 16
 
 #define FLAG_DEBUG 1
 #define FLAG_FORCE 2

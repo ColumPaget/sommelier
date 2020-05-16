@@ -1,5 +1,7 @@
 #include "platforms.h"
 #include "config.h"
+#include "regedit.h"
+#include "doom.h"
 
 ListNode *Platforms=NULL;
 
@@ -201,6 +203,24 @@ return(RetStr);
 
 
 
+
+void PlatformApplySettings(TAction *Act)
+{
+switch (PlatformType(Act->Platform))
+{
+	case PLATFORM_WINDOWS:
+		RegEditApplySettings(Act);
+	break;
+
+	case PLATFORM_DOOM:
+		DoomApplySettings(Act);
+	break;
+}
+}
+
+
+
+
 void PlatformsInit()
 {
 TPlatform *Plt;
@@ -229,6 +249,6 @@ Plt=PlatformsAdd("gog:scummvm", PLATFORM_GOGSCUMMVM, "scummvm --path='$(working-
 Plt=PlatformsAdd("gog:lin,gog:linux", PLATFORM_GOGLINUX, "", "", "*.x86","*.x86_64");
 Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
 
-Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(wads),chocolate-doom $(wads)", "",  "*.wad","");
-Plt=PlatformsAdd("spectrum,zx48", PLATFORM_ZXSPECTRUM, "fuse $(exec-path)", "",  "*.z80","");
+Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(emulator-args) $(wads),chocolate-doom $(emulator-args) $(wads)", "",  "*.wad","");
+Plt=PlatformsAdd("spectrum,zx48", PLATFORM_ZXSPECTRUM, "fuse $(exec-path),zesarux $(exec-path)", "",  "*.z80","");
 }

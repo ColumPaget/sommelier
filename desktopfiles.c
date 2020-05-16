@@ -138,6 +138,7 @@ switch (PlatformType(Act->Platform))
 	case PLATFORM_ZXSPECTRUM:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
+		printf("INV: %s\n", Tempstr);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
 		SetVar(Act->Vars, "invocation", Tempstr);

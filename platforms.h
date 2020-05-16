@@ -43,6 +43,7 @@ char *PlatformFindEmulator(char *RetStr, char *Name);
 char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);
 char *PlatformSelectForURL(char *RetStr, const char *URL);
 
+void PlatformApplySettings(TAction *Act);
 void PlatformsInit();
 
 #endif

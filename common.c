@@ -53,7 +53,7 @@ Act=(TAction *) calloc(1, sizeof(TAction));
 Act->Type=Type;
 Act->Vars=ListCreate();
 Act->Name=CopyStr(Act->Name, Name);
-SetVar(Act->Vars, "name", Name);
+if (StrValid(Name)) SetVar(Act->Vars, "name", Name);
 SetVar(Act->Vars, "sommelier_root_template", DEFAULT_SOMMELIER_ROOT);
 SetVar(Act->Vars, "prefix_template", DEFAULT_WINEPREFIX);
 SetVar(Act->Vars, "homedir", GetCurrUserHomeDir());

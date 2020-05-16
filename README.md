@@ -47,6 +47,14 @@ to install one. Then:
 
 `sommelier run <application>`
 
+various settings for an installed application can be changed using:
+
+`sommelier set <setting> <application>`
+
+and an installed application can be reconfigured using:
+
+`sommelier reconfigure <application>`
+
 will run it. Finally
 
 `sommelier uninstall <application>`
@@ -61,9 +69,10 @@ DETAILED USAGE
 sommelier list [options]                           print list of apps available for install
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
+sommelier reconfigure <name> [<name>]              reconfigure an application by name
 sommelier download <name> [<name>]                 download installers/packages to the current directory
 sommelier run <name> [<options>]                   run an application by name
-sommelier set <setting string> <name> [<name>]     change settings of an installed application
+sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
 
 options are:
   -d                            print debugging (there will be a lot!)
@@ -76,31 +85,58 @@ options are:
   -k                            keep installer or .zip file instead of deleting it after install
   -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
   -hash                         hash downloads even if they have no expected hash value
-
-Proxy urls have the form: 
-     <protocol>:<user>:<password>@<host>:<protocol>. 
-'protocol' can be 'socks4', 'socks5' 'https' or 'sshtunnel'. For 'sshtunnel' the names defined in the ~/.ssh/config file can be used, so that  most of the information can be ommited.
-
-examples:
-   https:bill:secret@proxy.com
-   socks4:proxy.com:1080
-   socks5:bill:secret@proxy.com:1080
-   sshtunnel:bill:secret@ssh_host.com
-   sshtunnel:sshproxy
-
-There are currently only three settings that can be configured with the 'set' command. They all relate to programs run with 'wine'. All of them take 'y' or 'n' for 'yes' or 'no':
-vdesk=y/n              run program within a virtual desktop
-winmanage=y/n          allow window manager to decorate and manage windows of this program
-smoothfonts=y/n        use font anti-aliasing
+  -s                            set a value at install
+  -set                          set a value at install
 
 ```
 
-The 'run' command can take arguements that are passed to the program. For instance, to run Telegram desktop in 'start in systray' mode use:
+The 'set' command can change various settings of an installed application on a setting-by-setting bases (see 'SETTINGS' below). Settings are also used in the config files for installing apps. The 'reconfigure' command sets all the settings from the configuration file, and rebuilds the .desktop file that specifies how to run an application, allowing the whole setup of the installed application to be changed.
+
+The 'run' command can take arguments that are passed to the program. For instance, to run Telegram desktop in 'start in systray' mode use:
 
 ```
 	sommelier run Telegram -startintray
 ```
 
+
+PROXY URLS
+==========
+
+The `-proxy` command accepts proxy urls of the form:
+```
+     <protocol>:<user>:<password>@<host>:<protocol>. 
+```
+
+'protocol' can be 'socks4', 'socks5' 'https' or 'sshtunnel'. For 'sshtunnel' the names defined in the ~/.ssh/config file can be used, so that  most of the information can be ommited.
+
+examples:
+```
+   https:bill:secret@proxy.com
+   socks4:proxy.com:1080
+   socks5:bill:secret@proxy.com:1080
+   sshtunnel:bill:secret@ssh_host.com
+   sshtunnel:sshproxy
+```
+
+
+
+SETTINGS
+========
+
+There are a number of settings that can be lastingly configured with the 'set' command or using the `-set` option when installing an application. Currently these settings only relate to programs run under wine, or doom wads run under chocolate-doom or crispy-doom.
+
+```
+vdesk=y/n/<geometry>    run program within a window/virtual desktop
+fullscreen=y/n          run program at fullscreen, or else within a virtual desktop
+winmanage=y/n           Wine only: allow window manager to decorate and manage windows of this program
+smoothfonts=y/n         Wine only: use font anti-aliasing
+os-version=<version>    Wine only: set OS version to one of those supported by wine
+sound=y/n/sfx           DOOM only: sound on/off, or only effects (no music)
+mouse=y/n               DOOM only: use mouse in-game, or not
+grab=y/n                DOOM only: grab mouse, or not
+```
+
+For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style `vdesk=600x300`.
 
 
 ENVIRONMENT VARIABLES

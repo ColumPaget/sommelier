@@ -1,10 +1,10 @@
 OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o install.o uninstall.o
-LIBS=@LIBS@ @STATIC_LIBS@
-CFLAGS=@CFLAGS@ @DEFS@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
+LIBS=-lssl -lcrypto  libUseful-4/libUseful.a
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1
+prefix=/usr/local
+exec_prefix=${prefix}
 
-all: $(OBJ) main.c @STATIC_LIBS@
+all: $(OBJ) main.c libUseful-4/libUseful.a
 	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
 libUseful-4/libUseful.a:

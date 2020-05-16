@@ -188,6 +188,11 @@ if (strcmp(Curr->Tag, "vdesk")==0)
 		Resolution=CopyStr(Resolution, p_Value);
 	}
 }
+else if (strcmp(Curr->Tag, "fullscreen")==0) 
+{
+	if (strcasecmp(p_Value, "n")==0) Flags |= REG_VDESK;
+	else if (strcasecmp(p_Value, "y")==0) Flags |= REG_NO_VDESK;
+}
 else if (strcmp(Curr->Tag, "smoothfonts")==0) 
 {
 	if (strcasecmp(p_Value, "y")==0) Flags |= REG_FONT_SMOOTH;

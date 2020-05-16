@@ -227,7 +227,9 @@ int RegFlags=0;
 
 
 
-
+// This function installs from a downloaded file. This will either mean unzipping a downloaded .zip file
+// or running an installer .exe or .msi file.
+// Finding the resulting exe that we are going to run when we start the app is done in 'FinalizeExeInstall'
 static int InstallAppFromFile(TAction *Act, const char *Path)
 {
 char *Tempstr=NULL, *FilesToExtract=NULL;
@@ -443,8 +445,10 @@ int len;
 	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", Tempstr);
 	SetVar(Act->Vars, "exec-path", Path);
 
+	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
+	//desktop file as command-line args passed to the emulator
+	PlatformApplySettings(Act);
 	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act, Path);
-	RegEditApplySettings(Act);
 	}
 	else 
 	{
@@ -726,6 +730,60 @@ InstallRequiredDependancies(Act);
 
 InstallSingleItem(Act);
 printf("%s install complete\n", Act->Name);
+}
+
+Destroy(Tempstr);
+Destroy(Path);
+}
+
+
+
+void InstallReconfigure(TAction *Act)
+{
+const char *ptr, *p_Requires;
+char *Name=NULL, *Path=NULL, *Tempstr=NULL;
+
+Tempstr=MCopyStr(Tempstr, "\n~e##### Reconfigure ", Act->Name, " #########~0\n", NULL);
+TerminalPutStr(Tempstr, NULL);
+
+if (! StrValid(Act->Platform))
+{
+TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
+}
+else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
+{
+Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
+TerminalPutStr(Tempstr, NULL);
+}
+else
+{
+//is an emulator installed for this platform? NULL means one is required by can't be found,
+//empty string means none is required
+Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
+
+if (StrValid(Tempstr)) Name=MCatStr(Name, "Found suitable emulator '", Tempstr, "'\n", NULL);
+else if (! Tempstr) 
+{
+	Name=MCatStr(Name, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+	Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
+
+	Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
+}
+
+
+Path=AppFormatPath(Path, Act);
+MakeDirPath(Path, 0700);
+
+
+InstallSingleItemPreProcessInstall(Act);
+Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
+
+chdir(Path);
+TerminalPutStr("~eFinding executables~0\n", NULL);
+FinalizeExeInstall(Act);
+InstallBundledItems(Act);
+
+printf("%s reconfigure complete\n", Act->Name);
 }
 
 Destroy(Tempstr);
