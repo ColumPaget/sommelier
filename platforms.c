@@ -8,7 +8,7 @@ ListNode *Platforms=NULL;
 
 int PlatformType(const char *Platform)
 {
-const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows", NULL};
+const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows","wine", NULL};
 const char *DosPlatforms[]={"dos","msdos", NULL};
 
 
@@ -229,7 +229,7 @@ Platforms=ListCreate();
 
 Plt=PlatformsAdd("dos,msdos", PLATFORM_DOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
 
-Plt=PlatformsAdd("windows,win,win16,win32,win64", PLATFORM_WINDOWS, "wine", "", "*.exe","");
+Plt=PlatformsAdd("windows,win,win16,win32,win64,wine", PLATFORM_WINDOWS, "wine", "", "*.exe","");
 
 
 Plt=PlatformsAdd("gog:lindos", PLATFORM_GOGDOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");

@@ -39,6 +39,7 @@ OpenFX platform=windows url=http://openfx.org/download/install.msi category="3DG
 Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip  version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' category='3DGraphics' 
 FireAlpaca platform=windows url=https://firealpaca.com/download/win category='Graphics' comment='Another paint program'
 Krita platform=windows url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec=krita.exe
+Gimp platform=windows url=https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.18-setup-2.exe exec=gimp-2.10.exe 
 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' category='Email' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' category='Email' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 

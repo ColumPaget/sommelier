@@ -1,0 +1,190 @@
+.TH  sommelier  1 " 2020/05/17"
+.SH NAME
+
+.P
+sommelier - installer for apps that run under wine or other emulators
+.SH SYNOPSIS
+
+
+.nf
+
+sommelier list [options]                           print list of apps available for install
+sommelier install <name> [<name>] [options]        install an application by name
+sommelier uninstall <name> [<name>]                uninstall an application by name
+sommelier reconfigure <name> [<name>]              reconfigure an application by name
+sommelier download <name> [<name>]                 download installers/packages to the current directory
+sommelier run <name> [<options>]                   run an application by name
+sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
+.fi
+.ad b
+
+.SH DESCRIPTION
+
+.P
+Sommelier is an installer for downloadable applications that can be run under a number of emulators. The main focus is windows applications that can be run under the \(aqwine\(aq emulator, but currently it also supports ms-dos applications that can be run under \(aqdosbox\(aq; adventure games that can be run under the\(aqscummvm\(aq emulator; zx-spectrum apps that can be run under the \(aqfuse\(aq emulator; downloads from gog.com that can be run either under wine, dosbox, or natively on linux; and doom wads that can be run under \(aqchocolate-doom\(aq or \(aqcrispy-doom\(aq. 
+.P
+Installed applications are stored under a \(aq.sommelier\(aq directory in the user\(aqs home directory, each in a subdirectory of their own (what\(aqs known as a \(aqwine bottle\(aq for wine apps). Also in this directory are stored \(aq.apps\(aq configuration files that describe the list of installable apps.
+.SH OPTIONS
+
+
+.TP
+.B -c <config file>
+ specify a config (list of apps) file, rather than using the default search path
+.TP
+.B -f
+ force install even if expected sha256 doesn\(aqt match the download
+.TP
+.B -proxy <url>
+ use a proxy for downloading installs
+.TP
+.B -k
+ keep installer or .zip file instead of deleting it after install
+.TP
+.B -hash
+ hash downloads even if they have no expected hash value
+.TP
+.B -set
+ set a value at install
+
+.SH EXAMPLE USAGE
+
+
+.TP
+.B List installable applications for a given platform
+ sommelier list -platform doom
+.TP
+.B Install app from a predownloaded file
+ sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
+.TP
+.B Install app from a predownloaded file
+ sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
+.TP
+.B Uninstall application
+ sommelier uninstall PaleMoon
+.TP
+.B Run application and pass it arguments
+ sommelier run Telegram -startintray
+
+.P
+
+
+.SH PLATFORMS
+
+.P
+The following platforms are supported for use in the 
+.na
+\-platform
+.ad
+option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed.
+
+.TP
+.B windows
+ windows apps that run under wine (equivalent to win32)
+.TP
+.B win16
+ 16-bit windows apps that run under wine
+.TP
+.B win64
+ 64-bit windows apps that run under wine
+.TP
+.B spectrum
+ spectrum app that can be run under the fuse emulator
+.TP
+.B scummvm
+ adventure game that can run under the scummvm emulator
+.TP
+.B gog:windows
+ windows app from gog.com that runs under wine
+.TP
+.B gog:linux
+ linux app from gog.com that runs natively
+.TP
+.B gog:windos
+ msdos app from from gog.com that\(aqs packaged for windows
+
+.P
+
+
+.SH PROXY URLS
+
+.P
+The 
+.na
+\-proxy
+.ad
+option is used with the \(aqdownload\(aq or \(aqinstall\(aq commands and accepts proxy urls of the form:
+
+.nf
+
+     <protocol>:<user>:<password><host>:<protocol>. 
+.fi
+.ad b
+
+.P
+\(aqprotocol\(aq can be \(aqsocks4\(aq, \(aqsocks5\(aq \(aqhttps\(aq or \(aqsshtunnel\(aq. For \(aqsshtunnel\(aq the names defined in the \*(ti/.ssh/config file can be used, so that  most of the information can be ommited.
+.P
+examples:
+
+.nf
+
+   https:bill:secret@proxy.com
+   socks4:proxy.com:1080
+   socks5:bill:secret@proxy.com:1080
+   sshtunnel:bill:secret@ssh_host.com
+   sshtunnel:sshproxy
+.fi
+.ad b
+
+.SH SETTINGS
+
+.P
+There are a number of settings that can be lastingly configured with the \(aqset\(aq command or using the 
+.na
+\-set
+.ad
+option when installing an application. Currently these settings only relate to programs run under wine, or doom wads run under chocolate-doom or crispy-doom.
+
+.TP
+.B fullscreen=y/n
+ run program at fullscreen, or else within a virtual desktop
+.TP
+.B smoothfonts=y/n
+ wine only: use font anti-aliasing
+.TP
+.B sound=y/n/sfx
+ DOOM only: sound on/off, or only effects (no music)
+.TP
+.B grab=y/n
+ DOOM only: grab mouse, or not
+
+.P
+For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style 
+.na
+vdesk=600x300
+.ad
+.
+.SH ENVIRONMENT VARIABLES
+
+.P
+Sommelier looks for the variables 
+.na
+SOMMELIER_CA_BUNDLE
+.ad
+, 
+.na
+CURL_CA_BUNDLE
+.ad
+and 
+.na
+SSL_VERIFY_FILE
+.ad
+, in that order, to discover the path of the Certificate Bundle for certificate verification.
+If 
+.na
+SOMMELIER_INSTALLER_CACHE
+.ad
+is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the 
+.na
+\-url
+.ad
+option.

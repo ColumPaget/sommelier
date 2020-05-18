@@ -1,6 +1,6 @@
 #include "config.h"
 
-#define DEFAULT_APPCONFIG_PATH "/etc/sommelier.apps,/etc/sommelier/*.apps,$(homedir)/.sommelier.apps,$(homedir)/.sommelier/*.apps"
+#define DEFAULT_APPCONFIG_PATH "$(install_prefix)/etc/sommelier.apps,$(install_prefix)/etc/sommelier/*.apps,$(homedir)/.sommelier.apps,$(homedir)/.sommelier/*.apps"
 
 
 TConfig *Config=NULL;

@@ -21,15 +21,35 @@ Sommelier is written by Colum Paget. All patches/bugreports/requests should be s
 INSTALL
 =======
 
+The install consists of the main executable and a number of '.apps' files (wine.apps, msdos.apps, scummvm.apps, gog.com.apps) that configure installable applications. 
+
+The usual install process is:
+
 ```
-./configure
+./configure --enable-ssl
 make
+make install
 ```
 
-You should then place the program `sommelier` somewhere in your PATH. You can set an install prefix using './configure --prefix' and run 'make install'. 
+This will place the sommelier executable in `$(HOME)/bin` and the '.apps' configuration files in `$(HOME)/.sommelier`. If `$(HOME)/bin` is not in your path then you may with to move the executable to somewhere that is. Note '--enable-ssl' is generally required so that sommelier can download https:// links
 
-Applications are configured in the various '.apps' files (wine.apps, msdos.apps, scummvm.apps, gog.com.apps) that come with the source code. These should be copied to a '.sommelier' sub-directory of your home directory. This '~/.sommelier' directory is also where the applications are stored, with as subdirectory for each one.
+For a 'global' install that applies to all users do:
 
+```
+./configure --prefix=<prefix> --enable-ssl
+make
+make install_global
+```
+
+This will place the sommelier executable in `<prefix>/bin` and combine the '.apps' config files into `<prefix>/etc/sommelier`. This install method will also honor the `$DESTDIR` environment variable that is by package used creators to install under a specified 'root' directory so that everything under that directroy can be combined into a distributable package.
+
+If you want to install the executable at one prefix, and the configuration at another, say putting the executable in `/usr/local/bin` but the config files in `/etc/sommelier` then you can do:
+
+```
+./configure --prefix=/ --exec-prefix=/usr/local --enable-ssl
+make
+make install_global
+```
 
 
 USAGE

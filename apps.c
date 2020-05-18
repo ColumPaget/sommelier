@@ -15,7 +15,7 @@ int result=FALSE;
 char *Token=NULL;
 const char *ptr;
 
-	if (StrValid(Template->Platform) && (strcasecmp(App->Platform, Template->Platform)!=0) ) return(FALSE);
+	if (StrValid(Template->Platform) && (PlatformType(App->Platform) != PlatformType( Template->Platform)) ) return(FALSE);
 
 	/* doesn't yet exist!
 	if (StrValid(Template->Category))
@@ -145,6 +145,7 @@ Curr=ListFindNamedItem(Curr, ParentName);
 Destroy(Tempstr);
 }
 
+
 void AppsProcessBundles(ListNode *Apps)
 {
 ListNode *Curr;
@@ -165,6 +166,7 @@ while (Curr)
 
 }
 
+
 ListNode *AppsLoad(const char *ConfigFiles)
 {
 char *Tempstr=NULL, *Token=NULL;
@@ -176,6 +178,7 @@ int i;
 if (! Apps) Apps=ListCreate();
 Vars=ListCreate();
 SetVar(Vars, "homedir", GetCurrUserHomeDir());
+SetVar(Vars, "install_prefix", INSTALL_PREFIX);
 
 ptr=GetToken(ConfigFiles, ",", &Token, 0);
 while (ptr)

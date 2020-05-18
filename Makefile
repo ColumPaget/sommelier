@@ -1,8 +1,8 @@
 OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o install.o uninstall.o
 LIBS=-lssl -lcrypto  libUseful-4/libUseful.a
-CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1
 prefix=/usr/local
 exec_prefix=${prefix}
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
 
 all: $(OBJ) main.c libUseful-4/libUseful.a
 	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
@@ -49,8 +49,17 @@ clean:
 	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a
 
 install:
-	mkdir -p $(exec_prefix)/bin
-	cp sommelier $(exec_prefix)/bin
+	mkdir -p $(HOME)/bin
+	mkdir -p $(HOME)/.sommelier
+	cp sommelier $(HOME)/bin/
+	cp *.apps $(HOME)/.sommelier/
+
+install_global:
+	mkdir -p $(DESTDIR)$(exec_prefix)/bin
+	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
+	cp sommelier $(DESTDIR)$(exec_prefix)/bin/
+	cp *.apps $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 
 test:
 	echo "no tests"
