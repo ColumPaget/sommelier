@@ -24,6 +24,8 @@ if (strcasecmp(Platform, "gog:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
 if (strcasecmp(Platform, "gog:lindos")==0) return(PLATFORM_GOGDOS);
 if (strcasecmp(Platform, "gog:windos")==0) return(PLATFORM_GOGWINDOS);
 if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
+if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
+if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
 
 return(PLATFORM_UNKNOWN);
 }
@@ -108,23 +110,28 @@ char *PlatformLookupInfo(char *RetStr, const char *Name, int Info)
 
 
 
-char *PlatformFindEmulator(char *RetStr, char *Name)
+char *PlatformFindEmulator(char *RetStr, char *PlatformName)
 {
 char *Tempstr=NULL, *Emulators=NULL, *EmuInvoke=NULL, *EmuName=NULL;
 const char *ptr;
-TPlatform *Plt;
 
 //seems a bit strange, but the idea here is that we'll return NULL
 //if an emulator isn't found, but return empty string if one isn't needed
 Destroy(RetStr);
 RetStr=NULL;
 
-Emulators=PlatformLookupInfo(Emulators, Name, PLATFORM_INFO_EMULATORS);
+Emulators=PlatformLookupInfo(Emulators, PlatformName, PLATFORM_INFO_EMULATORS);
 if (Emulators)
 {
 	if (! StrValid(Emulators)) RetStr=CopyStr(RetStr, "");
-	else
+	else switch (PlatformType(PlatformName))
 	{
+		case PLATFORM_LINUX32:
+		case PLATFORM_LINUX64:
+				RetStr=CopyStr(RetStr, Emulators);
+		break;
+
+		default:
 		ptr=GetToken(Emulators, ",", &EmuInvoke, 0);
 		while (ptr)
 		{
@@ -138,6 +145,7 @@ if (Emulators)
 			}
 			ptr=GetToken(ptr, ",", &EmuInvoke, 0);
 		}
+		break;
 	}
 }
 
@@ -251,4 +259,6 @@ Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
 
 Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(emulator-args) $(wads),chocolate-doom $(emulator-args) $(wads)", "",  "*.wad","");
 Plt=PlatformsAdd("spectrum,zx48", PLATFORM_ZXSPECTRUM, "fuse $(exec-path),zesarux $(exec-path)", "",  "*.z80","");
+Plt=PlatformsAdd("linux32", PLATFORM_LINUX32, "$(exec-path)", "",  "","");
+Plt=PlatformsAdd("linux64", PLATFORM_LINUX64, "$(exec-path)", "",  "","");
 }

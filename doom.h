@@ -4,6 +4,7 @@
 
 #include "common.h"
 
+void DoomApplySettings(TAction *Act);
 int Doom(TAction *Act);
 
 

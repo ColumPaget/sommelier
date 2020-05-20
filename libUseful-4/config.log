@@ -315,7 +315,7 @@ configure:4443: $? = 0
 configure:4452: result: yes
 configure:4518: checking for OpenSSL_add_all_algorithms
 configure:4518: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccUU8HUR.o: in function `main':
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccGUxHGU.o: in function `main':
 /home/colum/work/Sommelier/libUseful-4/conftest.c:63: undefined reference to `OpenSSL_add_all_algorithms'
 collect2: error: ld returned 1 exit status
 configure:4518: $? = 1
@@ -401,7 +401,7 @@ configure:4518: $? = 0
 configure:4518: result: yes
 configure:4518: checking for EVP_rc5_32_12_16_cbc
 configure:4518: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccc6ziWp.o: in function `main':
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccEIbM2H.o: in function `main':
 /home/colum/work/Sommelier/libUseful-4/conftest.c:66: undefined reference to `EVP_rc5_32_12_16_cbc'
 collect2: error: ld returned 1 exit status
 configure:4518: $? = 1
@@ -506,7 +506,7 @@ configure:4518: $? = 0
 configure:4518: result: yes
 configure:4518: checking for SSL_set_tlsext_host_name
 configure:4518: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccGmVbw9.o: in function `main':
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /tmp/ccQY2cFZ.o: in function `main':
 /home/colum/work/Sommelier/libUseful-4/conftest.c:73: undefined reference to `SSL_set_tlsext_host_name'
 collect2: error: ld returned 1 exit status
 configure:4518: $? = 1

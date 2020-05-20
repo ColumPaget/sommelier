@@ -1,9 +1,9 @@
 SYNOPSIS
 =========
 
-Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications, and since version 4.0 some doom wads, scummvm games and gog.com applications. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
+Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the current target emulator is wine, though sommelier can also install some dosbox applications, a few linux native applications since version 4.7, and since version 4.0 some doom wads, scummvm games and gog.com games. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
 
-Sommelier can install some gog.com games, that either run under wine, native linux or scummvm. If a game is in the list it means I've had it install and run successfully. For some reason I find fewer native games work for me than emulated games under wine. Unfortuantely you currently have to download all the files for a gog game with your browser and then install them with './sommelier install <game name> -url <path to installer>'.
+Sommelier can install some gog.com games, that either run under wine, dosbox, native linux or scummvm. If a game is in the list it means I've had it install and run successfully. For some reason I find fewer native games work for me than emulated games under wine. Unfortuantely you currently have to download all the files for a gog game with your browser and then install them with './sommelier install <game name> -url <path to installer>'.
 
 
 LICENSE
@@ -63,9 +63,13 @@ to see a list of applications, and then:
 
 `sommelier install <application>`
 
-to install one. Then:
+to install one. Then the program can be run with:
 
 `sommelier run <application>`
+
+if sommelier installed a version of the application for the wrong platform use:
+
+`sommelier install <application> -platform <platform>`
 
 various settings for an installed application can be changed using:
 
@@ -75,7 +79,6 @@ and an installed application can be reconfigured using:
 
 `sommelier reconfigure <application>`
 
-will run it. Finally
 
 `sommelier uninstall <application>`
 
@@ -117,6 +120,51 @@ The 'run' command can take arguments that are passed to the program. For instanc
 ```
 	sommelier run Telegram -startintray
 ```
+
+
+PLATFORMS
+=========
+
+The following platforms are supported for use in the `-platform` option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed.
+
+win
+ : windows apps that run under wine (equivalent to win32)
+windows
+ : windows apps that run under wine (equivalent to win32)
+wine
+ : windows apps that run under wine (equivalent to win32)
+win16
+ : 16-bit windows apps that run under wine
+win32
+ : 32-bit windows apps that run under wine
+win64
+ : 64-bit windows apps that run under wine
+linux32
+ : 32-bit native linux application
+linux64
+ : 64-bit native linux application
+doom
+ : doom wad that can be run under a doom source port
+spectrum
+ : spectrum app that can be run under the fuse emulator
+zx48
+ : spectrum app that can be run under the fuse emulator
+scummvm
+ : adventure game that can run under the scummvm emulator
+gog:win
+ : windows app from gog.com that runs under wine
+gog:windows
+ : windows app from gog.com that runs under wine
+gog:lin
+ : linux app from gog.com that runs natively
+gog:linux
+ : linux app from gog.com that runs natively
+gog:lindos
+ : msdos app from from gog.com that's packaged for linux
+gog:windos
+ : msdos app from from gog.com that's packaged for windows
+gog:scummvm
+ : scummvm adventure game from from gog.com that's packaged for linux
 
 
 PROXY URLS

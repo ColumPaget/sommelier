@@ -1,0 +1,18 @@
+
+LazPaint platform=linux32 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux32_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics
+LazPaint platform=linux64 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux64_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics
+
+Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type=tar.xz exec=Telegram category=Chat
+Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux64 download-type=tar.xz exec=Telegram category=Chat
+
+Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type=tar.xz exec=teamviewer category='RemoteAccess'
+Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type=tar.xz exec=teamviewer category='RemoteAccess'
+
+TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type=tar.bz2 exec=t-engine ctegory=Game
+TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type=tar.bz2 exec=t-engine ctegory=Game
+
+DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager
+DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager
+
+Zoom platform=linux32 url=https://zoom.us/client/latest/zoom_i686.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat
+Zoom platform=linux64 url=https://zoom.us/client/latest/zoom_x86_64.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat

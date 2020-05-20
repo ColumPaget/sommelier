@@ -97,10 +97,8 @@ STREAMReadBytes(S, Tempstr, 4);
 if (strcmp(Tempstr, "\x50\x4b\x03\x04")==0) FT=FILETYPE_ZIP;
 else if (strcmp(Tempstr, "\xd0\xcf\x11\xe0")==0) FT=FILETYPE_MSI;
 else if (strncmp(Tempstr, "PE", 2)==0) FT=FILETYPE_PE;
-else if (strncmp(Tempstr, "MZ", 2)==0) 
-{
-	FT=FILETYPE_MZ;
-}
+else if (strncmp(Tempstr, "MZ", 2)==0) FT=FILETYPE_MZ;
+
 STREAMClose(S);
 }
 

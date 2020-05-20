@@ -104,6 +104,10 @@ win32
  : 32-bit windows apps that run under wine
 win64
  : 64-bit windows apps that run under wine
+linux32
+ : 32-bit native linux application
+linux64
+ : 64-bit native linux application
 doom
  : doom wad that can be run under a doom source port
 spectrum

@@ -253,8 +253,16 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 			ForcedFileType=FILETYPE_ZIP;
 			FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* $(extra-files)", Act->Vars, 0);
 		break;
-
 	}
+
+	ptr=GetVar(Act->Vars, "download-type");
+	if (StrValid(ptr))
+	{
+		if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
+		else if (strcasecmp(ptr, "tar.bz2")==0) ForcedFileType=FILETYPE_TBZ;
+		else if (strcasecmp(ptr, "tar.xz")==0) ForcedFileType=FILETYPE_TXZ;
+	}
+
 
 	switch (IdentifyFileType(Path, ForcedFileType))
 	{
@@ -278,6 +286,13 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		}
 		break;
 
+		case FILETYPE_TGZ:
+		case FILETYPE_TBZ:
+		case FILETYPE_TXZ:
+		Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
+		printf("unpacking: %s\n",GetBasename(Path));
+		RunProgramAndConsumeOutput(Tempstr, Act->Flags);
+		break;
 
 		case FILETYPE_PE:
 		case FILETYPE_MZ:
