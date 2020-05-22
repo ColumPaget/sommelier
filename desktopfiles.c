@@ -48,15 +48,10 @@ if (S)
 	{
 		StripTrailingWhitespace(Tempstr);
 		ptr=GetToken(Tempstr, "=", &Token, 0);
-		if (strcasecmp(Token,"exec")==0) 
+		if (strcasecmp(Token,"sommelierexec")==0) 
 		{
 			Act->Exec=CopyStr(Act->Exec, ptr);	
 			StripQuotes(Act->Exec);
-		}
-		if (strcasecmp(Token,"exec64")==0) 
-		{
-			Act->Exec64=CopyStr(Act->Exec64, ptr);	
-			StripQuotes(Act->Exec64);
 		}
 		if (strcasecmp(Token,"icon")==0) 
 		{
@@ -176,7 +171,7 @@ switch (PlatformType(Act->Platform))
 HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
 SetVar(Act->Vars, "exec-sha256", Hash);
 
-Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=\"$(name)\"\nType=Application\nTerminal=false\nComment=\"$(comment)\"\nSHA256=\"$(exec-sha256)\"\nPath=\"$(invoke-dir)\"\nExec=\"$(invocation)\"\nExec64=\"$(invocation64)\"\nIcon=\"$(Icon)\"\nRunsWith=\"$(runswith)\"\n",Act->Vars, 0);
+Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(Icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
