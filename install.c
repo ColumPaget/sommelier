@@ -463,7 +463,7 @@ int len;
 	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
 	//desktop file as command-line args passed to the emulator
 	PlatformApplySettings(Act);
-	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act, Path);
+	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
 	}
 	else 
 	{
@@ -611,11 +611,13 @@ static int InstallDependancy(TAction *Parent, const char *Name)
 TAction *Dependancy;
 
 		Dependancy=ActionCreate(ACT_INSTALL, Name);
-		if (Dependancy && AppLoadConfig(Dependancy))
+		if (Dependancy) 
 		{
 		Dependancy->Flags |= FLAG_DEPENDANCY;
 		CopyVars(Dependancy->Vars, Parent->Vars);
-		InstallSingleItem(Dependancy);
+		//do AppLoadConfig after copy vars, so vars set in dependancy config
+		//override those inherited from calling app
+		if (AppLoadConfig(Dependancy)) InstallSingleItem(Dependancy);
 		ActionDestroy(Dependancy);
 		}
 

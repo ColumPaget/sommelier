@@ -6,7 +6,7 @@
 
 int DesktopFileDelete(TAction *Act);
 int DesktopFileRead(TAction *Act);
-void DesktopFileGenerate(TAction *Act, const char *Path);
+void DesktopFileGenerate(TAction *Act);
 
 #endif
 

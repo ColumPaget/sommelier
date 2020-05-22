@@ -94,7 +94,7 @@ return(result);
 
 
 
-void DesktopFileGenerate(TAction *Act, const char *Path)
+void DesktopFileGenerate(TAction *Act)
 {
 STREAM *S;
 char *Tempstr=NULL, *EmuInvoke=NULL, *Hash=NULL;

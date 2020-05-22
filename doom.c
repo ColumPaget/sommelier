@@ -42,5 +42,11 @@ Curr=ListGetNext(Curr);
 
 SetVar(Act->Vars, "emulator-args", EmulatorArgs);
 
+//as doom settings are stored in the emulator args in the emulator args 
+//within the .desktop file, so we will have to reconfigure to rewrite 
+//everything, unless we are doing an install (in which case all this
+//gets done at the end of the install anyway)
+//if (Act->Type != ACT_INSTALL) InstallReconfigure(Act);
+
 Destroy(EmulatorArgs);
 }

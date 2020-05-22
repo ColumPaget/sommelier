@@ -248,7 +248,8 @@ if (Act)
 	break;
 
 	case ACT_SET:
-		PlatformApplySettings(Act);
+		if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
+		else PlatformApplySettings(Act);
 	break;
 
 	case ACT_RUN:
