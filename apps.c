@@ -1,5 +1,6 @@
 #include "apps.h"
 #include "config.h"
+#include <fnmatch.h>
 
 ListNode *Apps=NULL;
 
@@ -47,7 +48,11 @@ if (strcmp(Name,"url")==0)
 {
 	Act->URL=CopyStr(Act->URL, Value);
 	Tempstr=URLBasename(Tempstr, Act->URL);
-	//SetVar(Act->Vars, "exec", Tempstr);
+	SetVar(Act->Vars, "url-basename", Tempstr);
+	Tempstr=CopyStr(Tempstr, Act->URL);
+	StrRTruncChar(Tempstr, '?');
+	StrRTruncChar(Tempstr, '/');
+	SetVar(Act->Vars, "url-path", Tempstr);
 }
 else if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
 else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
@@ -80,16 +85,39 @@ Destroy(Name);
 }
 
 
+static TAction *AppConfigure(const char *Name, const char *Settings, ListNode *FileWideSettings)
+{
+ListNode *Curr;
+TAction *Act;
+char *Config=NULL;
+
+Act=ActionCreate(ACT_NONE, Name);
+LoadAppConfigToAct(Act, Settings);
+Curr=ListGetNext(FileWideSettings);
+while (Curr)
+{
+	if (strcmp(Curr->Tag, "*")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+	if ( (strncmp(Curr->Tag, "url=",4)==0) && (fnmatch(Curr->Tag+4, Act->URL, 0)==0) ) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+Curr=ListGetNext(Curr);
+}
+Config=CatStr(Config, Settings);
+
+LoadAppConfigToAct(Act, Config);
+Destroy(Config);
+
+return(Act);
+}
 
 void AppsLoadFromFile(const char *Path, ListNode *Apps)
 {
 STREAM *S;
 ListNode *Node;
 TAction *Act;
-char *Tempstr=NULL, *Token=NULL;
-char *GlobalSettings=NULL;
+char *Tempstr=NULL, *Token=NULL, *AppConfig=NULL;
+ListNode *FileWideSettings;
 const char *ptr;
 
+FileWideSettings=ListCreate();
 S=STREAMOpen(Path, "r");
 if (S)
 {
@@ -99,17 +127,16 @@ while (Tempstr)
 StripTrailingWhitespace(Tempstr);
 if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
 {
-	if (StrValid(GlobalSettings)) Tempstr=MCatStr(Tempstr, " ", GlobalSettings, NULL);
 	ptr=GetToken(Tempstr, "\\S", &Token, GETTOKEN_QUOTES);
-
-	// '*' for the app name means this line applies to all apps
-	
-	if (strcmp(Token, "*")==0) GlobalSettings=CopyStr(GlobalSettings, ptr);
+	// '*' for the app name means this line applies to all apps in this file
+	if (
+				(strcmp(Token, "*")==0) ||
+				(strncmp(Token, "url=", 4)==0)
+		) ListAddNamedItem(FileWideSettings, Token, CopyStr(NULL, ptr));
 	else
 	{
-	Act=ActionCreate(ACT_NONE, Token);
-	ListAddNamedItem(Apps, Token, Act);
-	LoadAppConfigToAct(Act, ptr);
+		Act=AppConfigure(Token, ptr, FileWideSettings);
+		ListAddNamedItem(Apps, Token, Act);
 	}
 	}
 Tempstr=STREAMReadLine(Tempstr, S);
@@ -118,7 +145,8 @@ Tempstr=STREAMReadLine(Tempstr, S);
 STREAMClose(S);
 }
 
-Destroy(GlobalSettings);
+ListDestroy(FileWideSettings, Destroy);
+Destroy(AppConfig);
 Destroy(Tempstr);
 Destroy(Token);
 }

@@ -136,7 +136,8 @@ static int DownloadCopyFile(TAction *Act)
 
 int Download(TAction *Act)
 {
-    char *Tempstr=NULL, *cwd=NULL;
+    char *Tempstr=NULL, *Dest=NULL, *cwd=NULL;
+		const char *ptr;
 		struct stat Stat;
     size_t bytes=0;
 
@@ -155,12 +156,29 @@ int Download(TAction *Act)
 				bytes=Stat.st_size;
 			}
 			else bytes=DownloadCopyFile(Act);
+
+			//having downloaded the app, we might also download an icon for it 
+			ptr=GetVar(Act->Vars, "icon");
+			if (StrValid(ptr))
+			{
+				Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+				if (access(Tempstr, F_OK) !=0)
+				{
+				FileCopy(Tempstr, GetBasename(Tempstr));
+				Dest=MCopyStr(Dest, GetVar(Act->Vars, "install-dir"), "/", GetBasename(Tempstr), NULL);
+				SetVar(Act->Vars, "app-icon", Dest); 
+				printf("APPICON: %s -> %s\n", Tempstr, Dest);
+				}
+			}
     }
     else
     {
         TerminalPutStr("~rERROR: no download URL configured~0\n",NULL);
     }
+
+
     DestroyString(Tempstr);
+    DestroyString(Dest);
 
     return(bytes);
 }

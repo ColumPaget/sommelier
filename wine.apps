@@ -1,3 +1,5 @@
+url=https://archive.org/download/* icon=$(url-path)/__ia_thumb.jpg
+
 MFC platform=windows url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe  installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe' category='library' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
 VB5 platform=windows url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe  category='library' sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
 VB6 platform=windows url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe  installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' category='library' 
@@ -75,7 +77,7 @@ Teamviewer platform=windows url=https://download.teamviewer.com/download/TeamVie
 
 
 ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' category='BoardGame' comment='Chess Frontend with several engines' sha256=b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e
-WinChess platform=windows url=https://archive.org/download/WinChess_1020/winchess.zip  version='1.01' exec='WINCHESS.EXE' sha256='a42b06d7fd1c76ec2526d763023b0de5dd1e756b159964fb66f5687f94b38929' comment='Chess for Windows 3.1' category='BoardGame'
+WinChess platform=windows url=https://archive.org/download/WinChess_1020/winchess.zip  version='1.01' exec='WINCHESS.EXE' sha256='a42b06d7fd1c76ec2526d763023b0de5dd1e756b159964fb66f5687f94b38929' comment='Chess for Windows 3.1' category='BoardGame' icon=https://archive.org/download/WinChess_1020/__ia_thumb.jpg
 Arasan platform=windows url=https://archive.org/download/ARASAN32/ARASAN32.zip  version='3.0' exec='ARASAN32.EXE' sha256='cf7742e7b0e3e00f063bb7b743dfbd4683f9ef40320a3e1e15fb0ad01fd365d7' installer='SETUP.EXE' installer-vdesk='Y' category='BoardGame' comment="Chess Program"
 WindowsRebelDecadeChess platform=windows url=https://image.dosgamesarchive.com/games/r10man_w.zip  category='BoardGame' sha256='2c2b6b1bb6f7bd2df6e5d9483ae70b2fad3b4bd1156fb4de3e19011c3cab8369' comment="Chess Program"
 XieXie platform=windows url=http://www.cc-xiexie.com/files/XXFreeware2.5.XInstaller.exe  version='2.5' sha256='c494843e850e122422d673f2004be3bc4b82732d0598ecb13c9e6655144c41a3' comment='Good Xianqi (Chinese Chess) playing program' category='BoardGame' 

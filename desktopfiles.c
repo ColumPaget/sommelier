@@ -171,7 +171,20 @@ switch (PlatformType(Act->Platform))
 HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
 SetVar(Act->Vars, "exec-sha256", Hash);
 
-Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(Icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+//did we download or otherwise obtain an application icon? If not, then consider the 'icon' setting
+//which may point to an icon for this app on local disk
+ptr=GetVar(Act->Vars, "app-icon");
+if (! StrValid(ptr))
+{
+	ptr=GetVar(Act->Vars, "icon");
+	if (StrValid(ptr))
+	{
+		Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+		if (StrValid(Tempstr) && (access(Tempstr, F_OK)==0)) SetVar(Act->Vars, "app-icon", Tempstr);
+	}
+}
+
+Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(app-icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);

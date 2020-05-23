@@ -37,6 +37,8 @@ DungeonKeeperGold platform=gog:windos category='Game' exec="KEEPER.EXE"
 DungeonKeeperDeeper platform=gog:windos category='Game' exec="DEEPER.EXE" bundled=DungeonKeeperGold
 HocusPocus platform=gog:lindos category='Game' exec="hocus.exe"
 HocusPocus platform=gog:windos category='Game' exec="hocus.exe"
+Ishar platform=gog:windos category='Game' exec="start.exe"
+Ishar2 platform=gog:windos category='Game' exec="start.exe"
 MasterOfMagic platform=gog:lindos category='Game' exec="MAGIC.EXE"
 MasterOfMagic platform=gog:windos category='Game' exec="MAGIC.EXE"
 MasterOfOrion platform=gog:lindos category='Game' exec="ORION.EXE"
@@ -80,6 +82,9 @@ Darkstone platform=gog:windows category='Game' exec=Darkstone.exe exec-args="-no
 Defcon platform=gog:windows category='Game' 
 DinsCurse platform=gog:windows category='Game' rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
 DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
+DungeonSiege platform=gog:windows category='Game' exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
+DungeonSiege2 platform=gog:windows category='Game' exec="DungeonSiege.exe"
+DungeonSiege3 platform=gog:windows category='Game' exec="DungeonSiege.exe"
 DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
 DivineDivinity platform=gog:windows category='Game' exec=div.exe
 FantasyWars platform=gog:windows category='Game' exec=fw.exe

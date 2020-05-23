@@ -1,9 +1,9 @@
-* platform=spectrum category=Games;Games/ZXspectrum
+* platform=spectrum category=Games;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
 3DChess  url=https://archive.org/compress/zx_3D_Chess_1986_Psion_Software
 3DCombatZone  url=https://archive.org/compress/zx_3D_Combat_Zone_1983_Artic_Computing
 3DSpaceWars url=https://archive.org/compress/zx_3D_Space_Wars_1983_Hewson_Consultants_16K
 3DSeddiabAttack url=https://archive.org/compress/zx_3D_Seiddab_Attack_1983_Hewson_Consultants_16K
-3DLunattack url=https://archive.org/details/zx_3D_Lunattack_1984_Hewson_Consultants
+3DLunattack url=https://archive.org/compress/zx_3D_Lunattack_1984_Hewson_Consultants
 3DStarstrike  url=https://archive.org/compress/zx_3D_Starstrike_1984_Realtime_Games_Software
 Alien8  url=https://archive.org/compress/zx_Alien_8_1985_Ultimate_Play_The_Game
 Arcadia url=https://archive.org/compress/zx_Arcadia_1982_Imagine_Software
@@ -11,7 +11,7 @@ Arkanoid  url=https://archive.org/compress/zx_Arkanoid_1987_Imagine_Software
 Arnhem url=https://archive.org/compress/zx_Arnhem_1985_CCS
 Armageddon  url=https://archive.org/compress/zx_Armageddon_1983_Ocean_16K
 Athena url=https://archive.org/compress/zx_Athena_1987_Imagine_Software_128K
-ATF url=https://archive.org/details/zx_ATF_Advanced_Tactical_Fighter_1988_Digital_Integration
+ATF url=https://archive.org/compress/zx_ATF_Advanced_Tactical_Fighter_1988_Digital_Integration
 AticAtac  url=https://archive.org/compress/zx_Atic_Atac_1983_Ultimate_Play_The_Game
 Chaos url=https://archive.org/compress/zx_Chaos_The_Battle_of_the_Wizards_1985_Games_Workshop
 HewsonBackgammon url=https://archive.org/compress/zx_Backgammon_1983_Hewson_Consultants

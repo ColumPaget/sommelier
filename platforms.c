@@ -227,6 +227,20 @@ switch (PlatformType(Act->Platform))
 }
 
 
+void PlatformFindIcon(TAction *Act)
+{
+char *Tempstr=NULL;
+
+switch (PlatformType(Act->Platform))
+{
+	case PLATFORM_ZXSPECTRUM:
+	break;
+}
+Destroy(Tempstr);
+}
+
+
+
 
 
 void PlatformsInit()
