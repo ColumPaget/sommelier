@@ -1,4 +1,4 @@
-* platform=spectrum category=Games;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+* platform=spectrum category=Game;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
 3DChess  url=https://archive.org/compress/zx_3D_Chess_1986_Psion_Software
 3DCombatZone  url=https://archive.org/compress/zx_3D_Combat_Zone_1983_Artic_Computing
 3DSpaceWars url=https://archive.org/compress/zx_3D_Space_Wars_1983_Hewson_Consultants_16K

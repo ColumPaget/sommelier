@@ -132,7 +132,7 @@ if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
 	if (
 				(strcmp(Token, "*")==0) ||
 				(strncmp(Token, "url=", 4)==0)
-		) ListAddNamedItem(FileWideSettings, Token, CopyStr(NULL, ptr));
+		) SetVar(FileWideSettings, Token, ptr);
 	else
 	{
 		Act=AppConfigure(Token, ptr, FileWideSettings);
