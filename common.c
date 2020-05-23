@@ -1,4 +1,6 @@
+
 #include "common.h"
+#include "config.h"
 
 #define DEFAULT_SOMMELIER_ROOT "$(homedir)/.sommelier/"
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
@@ -150,7 +152,7 @@ return(result);
 //will no longer consider them child processes and will no longer wait for them.
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
-void RunProgramAndConsumeOutput(const char *Cmd, int Flags)
+void RunProgramAndConsumeOutput(const char *Cmd)
 {
 STREAM *S;
 char *Tempstr=NULL;
@@ -162,8 +164,8 @@ if (S)
   Tempstr=STREAMReadLine(Tempstr, S);
   while (Tempstr)
   {
-	if (Flags & FLAG_DEBUG) printf("%s", Tempstr);
-  Tempstr=STREAMReadLine(Tempstr, S);
+	if (Config->Flags & FLAG_DEBUG) printf("%s", Tempstr);
+  	Tempstr=STREAMReadLine(Tempstr, S);
   }
   STREAMClose(S);
 }

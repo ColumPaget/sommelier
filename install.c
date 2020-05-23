@@ -183,7 +183,7 @@ int RegFlags=0;
 			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
 			printf("RUN INSTALLER: %s\n",Tempstr);
 			Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-			RunProgramAndConsumeOutput(Cmd, Act->Flags);
+			RunProgramAndConsumeOutput(Cmd);
 			break;
 
 			case PLATFORM_WINDOWS:
@@ -195,7 +195,7 @@ int RegFlags=0;
 
 		printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
 		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-		RunProgramAndConsumeOutput(Cmd, Act->Flags);
+		RunProgramAndConsumeOutput(Cmd);
 			break;
 		}
 	}
@@ -207,7 +207,7 @@ int RegFlags=0;
 		SetVar(Act->Vars, "installer-path", Tempstr);	
 		Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
 		printf("RUN INSTALL STAGE2: %s\n", Cmd);
-		RunProgramAndConsumeOutput(Cmd, Act->Flags);
+		RunProgramAndConsumeOutput(Cmd);
 	}
 
 	if (PlatformType(Act->Platform)==PLATFORM_WINDOWS)
@@ -269,7 +269,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_ZIP:
 		Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr, Act->Flags);
+		RunProgramAndConsumeOutput(Tempstr);
 
 		//for zipfiles and the like the installer has to be found. Either it's
 		//specified in the app config, as 'installer' 
@@ -291,7 +291,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_TXZ:
 		Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr, Act->Flags);
+		RunProgramAndConsumeOutput(Tempstr);
 		break;
 
 		case FILETYPE_PE:
@@ -312,7 +312,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_MSI:
 		//wine msiexec /i whatever.msi 
 		Tempstr=MCopyStr(Tempstr, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
-		RunProgramAndConsumeOutput(Tempstr, Act->Flags);
+		RunProgramAndConsumeOutput(Tempstr);
 		break;
 	}
 
@@ -699,7 +699,7 @@ Destroy(Name);
 void InstallApp(TAction *Act)
 {
 const char *ptr, *p_Requires;
-char *Name=NULL, *Path=NULL, *Tempstr=NULL;
+char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
 Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
 TerminalPutStr(Tempstr, NULL);
@@ -715,23 +715,22 @@ TerminalPutStr(Tempstr, NULL);
 }
 else
 {
-//is an emulator installed for this platform? NULL means one is required by can't be found,
-//empty string means none is required
-Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
+	//is an emulator installed for this platform? NULL means one is required by can't be found,
+	//empty string means none is required
+	Emulator=PlatformFindEmulator(Emulator, Act->Platform);
 
-if (StrValid(Tempstr)) Name=MCatStr(Name, "Found suitable emulator '", Tempstr, "'\n", NULL);
-else if (! Tempstr) 
+	if (StrValid(Emulator)) Tempstr=MCatStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+else if (! Emulator) 
 {
-	Name=MCatStr(Name, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-	Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
+	Tempstr=MCatStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+	Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
 
-	Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
+	Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
 }
 
 
-Tempstr=CopyStr(Tempstr, "");
 Name=PlatformGetInstallMessage(Name, Act->Platform);
-if (StrValid(Name)) Name=MCatStr(Name, "\n~r", Name, "~0\n", NULL);
+if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
 
 ptr=GetVar(Act->Vars, "warn");
 if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
@@ -749,8 +748,10 @@ InstallSingleItem(Act);
 printf("%s install complete\n", Act->Name);
 }
 
+Destroy(Emulator);
 Destroy(Tempstr);
 Destroy(Path);
+Destroy(Name);
 }
 
 

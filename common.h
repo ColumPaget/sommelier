@@ -71,7 +71,7 @@ int IdentifyFileType(const char *Path, int ForcedFileType);
 //will no longer consider them child processes and will no longer wait for them.
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
-void RunProgramAndConsumeOutput(const char *Cmd, int Flags);
+void RunProgramAndConsumeOutput(const char *Cmd);
 
 
 #endif
