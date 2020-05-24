@@ -27,9 +27,6 @@ SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/release
 GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type=tar.bz2 exec=icecat comment="GNU version of firefox" icon=default48.png
 GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2 download-type=tar.bz2 exec=icecat comment="GNU version of firefox" icon=default48.png
 
-FileZilla platform=linux32 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_i686-linux-gnu.tar.bz2?h=KayQi81p0mCOO6R_FIegNg&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
-FileZilla platform=linux64 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_x86_64-linux-gnu.tar.bz2?h=oJ8bq6m-ktw1yzn6U0UYVA&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
-
 Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball download-type=tar.gz exec=frostwire category='AudioVideo;Player;Audio' comment="Bittorrent media downloader/player"
 Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type=tar.gz category='Bittorrent;Network' comment='Bittorrent app' exec=tixati icon=tixati.png
 Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type=tar.gz category='Bittorrent;Network' comment='Bittorrent app' exec=tixati icon=tixati.png
@@ -37,5 +34,10 @@ Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.
 RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 exec=VNC-Viewer-6.20.113-Linux-x86 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
 RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 exec=VNC-Viewer-6.20.113-Linux-x64 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
 
+# These applications should install, but the websites have done things to prevent it
 #Arduino platform=linux32 url=https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-linux32.tar.xz download-type=tar.xz category=Electronics comment="Arduino Programming IDE"
 #Arduino platform=linux64 url=https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-linux64.tar.xz download-type=tar.xz category=Electronics comment="Arduino Programming IDE"
+#FileZilla platform=linux32 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_i686-linux-gnu.tar.bz2?h=KayQi81p0mCOO6R_FIegNg&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
+#FileZilla platform=linux64 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_x86_64-linux-gnu.tar.bz2?h=oJ8bq6m-ktw1yzn6U0UYVA&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
+
+

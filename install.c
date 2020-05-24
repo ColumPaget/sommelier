@@ -595,8 +595,9 @@ printf("ISI: %s\n", InstallPath);
 	}
 
 
-	if (
-		(Act->InstallType != INSTALL_EXECUTABLE) &&
+	//make sure executables are... executable
+	if (Act->InstallType == INSTALL_EXECUTABLE) chmod(Act->SrcPath, 0770);
+	else if (
 		(! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
 		(Act->Flags & FLAG_DOWNLOADED)
 	) 

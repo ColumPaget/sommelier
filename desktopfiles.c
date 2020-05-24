@@ -142,7 +142,6 @@ switch (PlatformType(Act->Platform))
 	case PLATFORM_LINUX32:
 	case PLATFORM_LINUX64:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
-printf("EMU: [%s] [%s]\n", EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
