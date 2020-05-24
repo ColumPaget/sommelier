@@ -26,3 +26,6 @@ SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/release
 
 GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type=tar.bz2 exec=icecat
 GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2 download-type=tar.bz2 exec=icecat
+
+FileZilla platform=linux32 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_i686-linux-gnu.tar.bz2?h=KayQi81p0mCOO6R_FIegNg&x=1590344247 download-type=tar.bz2 exec=filezilla
+FileZilla platform=linux64 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_x86_64-linux-gnu.tar.bz2?h=oJ8bq6m-ktw1yzn6U0UYVA&x=1590344247 download-type=tar.bz2 exec=filezilla

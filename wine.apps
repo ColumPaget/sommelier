@@ -75,7 +75,9 @@ Explorer++ platform=windows url=https://explorerplusplus.com/software/explorer++
 UnrealCommander platform=windows url=https://x-diesel.com/download/uncomsetup.exe?32  exec='Uncom.exe'
 NexusFile platform=windows url=http://www.xiles.net/download.php?file=NexusFileSetup5.3.3.exe&product=NexusFile5&ver=5.3.3.5532  sha256='4016244657b412ae0a17255ffec6bbc1c0e2ed3981144b82b19117a50585e63e' 
 XenonFM platform=windows url=https://sourceforge.net/projects/xenon-portable/files/Beta%20Releases/2.0%20Beta%204/Xenon_Portable_2.0_Beta_4.paf.exe/download  comment='Very Simple/Lightweight Filemanager' sha256='593efb99f593aefdcbf889558b22dfc1f189caccd5ca8c2f2b4882cea5999fab' 
-DoubleCommander platform=windows url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download  sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7' 
+DoubleCommander platform=windows url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download  sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7'
+FileZilla platform=windows url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_win32-setup.exe?h=GOJ3pUdHoul8LKTJwX-mFQ&x=1590344247
+
 * category='Office'
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe  exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
 OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite'
