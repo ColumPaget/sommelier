@@ -39,6 +39,7 @@ char *Exe64SearchPattern;
 char *InstallerPattern;
 } TPlatform;
 
+const char *PlatformDefault();
 int PlatformType(const char *Platform);
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);
 char *PlatformFindEmulator(char *RetStr, char *Name);

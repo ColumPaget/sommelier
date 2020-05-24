@@ -31,7 +31,18 @@ ptr=GetToken(List, ",", &Match, GETTOKEN_QUOTES);
 while (ptr)
 {
 strlwr(Match);
-if (fnmatch(Match, Item, 0)==0)
+
+//if match starts with ! this inverts the sense of the match, so anything
+//that *doesn't match* matches, and we have an exclusion
+if (*Match=='!')
+{
+	if (fnmatch(Match+1, Item, 0) != 0)
+	{
+	Destroy(Match);
+	return(TRUE);
+	}
+}
+else if (fnmatch(Match, Item, 0) == 0)
 {
   Destroy(Match);
   return(TRUE);

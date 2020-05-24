@@ -5,6 +5,22 @@
 
 ListNode *Platforms=NULL;
 
+//make an educated guess what platform we're running on, by checking compiler macros
+//that should be set on 64-bit linux. if we're on 64-bit linux we won't, by default
+//look for 32-bit linux apps, and vis-a-versa
+const char *PlatformDefault()
+{
+#ifdef __x86_64__
+return("!linux32");
+#endif
+
+#ifdef _____LP64_____
+return("!linux32");
+#endif
+
+return("!linux64");
+}
+
 
 int PlatformType(const char *Platform)
 {

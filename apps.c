@@ -277,6 +277,13 @@ return(Path);
 }
 
 
+int AppPlatformMatches(TAction *App, const char *Platforms)
+{
+if (! StrValid(Platforms)) return (TRUE);
+if (InList(App->Platform, Platforms)) return(TRUE);
+return(FALSE);
+}
+
 
 int AppFindConfig(TAction *App, const char *Platforms)
 {
@@ -295,7 +302,7 @@ while (Curr)
 	//if no platform requested, or app platform matches requested
 	//then we've found the right one
 
-	if ( StrEnd(Platforms) || InList(AppConfig->Platform, Platforms) )
+	if (AppPlatformMatches(AppConfig, Platforms))
 	{
 		//flags can already have been set by the command-line, so 
 		//we have to | these

@@ -205,6 +205,8 @@ while (Curr)
 	if (StrValid(Options->URL)) Act->URL=CopyStr(Act->URL, Options->URL);
 	if (StrValid(Options->Platform)) Act->Platform=CopyStr(Act->Platform, Options->Platform);
 	CopyVars(Act->Vars, Options->Vars);
+
+	if (! StrValid(Act->Platform)) Act->Platform=CopyStr(Act->Platform, PlatformDefault());
 	Curr=ListGetNext(Curr);
 }
 
