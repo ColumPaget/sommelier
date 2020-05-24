@@ -166,11 +166,14 @@ char *Tempstr=NULL;
 Curr=ListFindNamedItem(Apps, ParentName);
 while (Curr)
 {
+if (strcmp(Curr->Tag, ParentName)==0)
+{
 Parent=(TAction *) Curr->Item;
 Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
 Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
 SetVar(Parent->Vars, "bundles", Tempstr);
-Curr=ListFindNamedItem(Curr, ParentName);
+}
+Curr=ListGetNext(Curr);
 }
 
 Destroy(Tempstr);
