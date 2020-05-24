@@ -1,6 +1,7 @@
 #include "includes.h"
 #include "Tokenizer.h"
 #include "String.h"
+#include "Array.h"
 
 #define TOK_SPACE 1
 #define TOK_CODE  2
@@ -220,6 +221,7 @@ char **BuildMultiSeparators(const char *Pattern)
 
 
 
+
 int GetTokenMultiSepMatch(char **Separators, const char **start_ptr, const char **end_ptr, int Flags)
 {
     char **sep_ptr;
@@ -372,6 +374,7 @@ const char *GetToken(const char *SearchStr, const char *Separator, char **Token,
             separators=BuildMultiSeparators(Separator);
 						SepStart=SearchStr;
 						GetTokenMultiSepMatch(separators, &SepStart, &SepEnd, Flags);
+						StringArrayDestroy(separators);
         }
         else GetTokenFindSeparator(Separator, SearchStr, &SepStart, &SepEnd, Flags);
     }

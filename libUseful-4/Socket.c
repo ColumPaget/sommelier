@@ -793,19 +793,8 @@ STREAM *STREAMServerAccept(STREAM *Serv)
     S=STREAMFromSock(fd, type, Tempstr, DestIP, DestPort);
     if (type==STREAM_TYPE_TCP_ACCEPT)
     {
-        //if TLS autodetection enabled, perform it now
-        if (Serv->Flags & SF_TLS_AUTO)
-        {
-            Tempstr=SetStrLen(Tempstr,255);
-            result=recv(S->in_fd, Tempstr, 4, MSG_PEEK);
-            if (result >3)
-            {
-                if (memcmp(Tempstr, "\x16\x03\x01",3)==0)
-                {
-                    //it's SSL/TLS
-                }
-            }
-        }
+    	//if TLS autodetection enabled, perform it now
+    	if (Serv->Flags & SF_TLS_AUTO) OpenSSLAutoDetect(S);
     }
 
     DestroyString(Tempstr);
@@ -945,22 +934,24 @@ int IPReconnect(int sock, const char *Host, int Port, int Flags)
 
 int TCPConnectWithAttributes(const char *LocalHost, const char *Host, int Port, int Flags, int TTL, int ToS)
 {
-    int sock, result;
+const char *p_LocalHost=LocalHost;
+int sock, result;
 
-    sock=BindSock(SOCK_STREAM, LocalHost, 0, 0);
+if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
 
-    if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
-    if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
+sock=BindSock(SOCK_STREAM, p_LocalHost, 0, 0);
 
-    result=IPReconnect(sock,Host,Port,Flags);
-    if (result==-1)
-    {
-        close(sock);
-        return(-1);
-    }
+if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
+if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
 
+result=IPReconnect(sock,Host,Port,Flags);
+if (result==-1)
+{
+  close(sock);
+  return(-1);
+}
 
-    return(sock);
+return(sock);
 }
 
 
