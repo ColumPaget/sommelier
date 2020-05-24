@@ -319,6 +319,7 @@ while (Curr)
 		//flags can already have been set by the command-line, so 
 		//we have to | these
 		App->Flags |= AppConfig->Flags;
+		App->InstallType |= AppConfig->InstallType;
 		App->Platform=CopyStr(App->Platform, AppConfig->Platform);
 		if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
 		CopyVars(App->Vars, AppConfig->Vars);
