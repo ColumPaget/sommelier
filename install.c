@@ -38,9 +38,11 @@ for (i=0; i < Glob.gl_pathc; i++)
 		else 
 		{
 			Tempstr=CopyStr(Tempstr, p_Basename);
+			//must strlwr here, as InList will do so to Inclusions and Exclusions
 			strlwr(Tempstr);
 			if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) ) 
 			{
+				//can't use 'SetVar' here as multiple files might have the same basename, but different paths
 							ListAddNamedItem(Founds, p_Basename, CopyStr(NULL, Glob.gl_pathv[i]));
 			}
 		}
@@ -387,6 +389,22 @@ Destroy(To);
 }
 
 
+void InstallFindIcon(TAction *Act)
+{
+ListNode *Founds, *Curr;
+
+if (StrValid(GetVar(Act->Vars, "app-icon"))) return;
+
+Founds=ListCreate();
+FindFiles(GetVar(Act->Vars, "drive_c"), GetVar(Act->Vars, "icon"), "", Founds);
+Curr=ListGetNext(Founds);
+if (Curr)
+{
+SetVar(Act->Vars, "app-icon", Curr->Item);
+}
+ListDestroy(Founds, Destroy);
+}
+
 
 
 /*
@@ -462,6 +480,7 @@ int len;
 	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
 	//desktop file as command-line args passed to the emulator
 	PlatformApplySettings(Act);
+	InstallFindIcon(Act);
 	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
 	}
 	else 
@@ -548,6 +567,7 @@ if (pid==0)
 
 	InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
 
+printf("ISI: %s\n", InstallPath);
 	chdir(InstallPath);
 	if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
 	else 
@@ -718,14 +738,18 @@ else
 	//empty string means none is required
 	Emulator=PlatformFindEmulator(Emulator, Act->Platform);
 
-	if (StrValid(Emulator)) Tempstr=MCatStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
-else if (! Emulator) 
-{
+	if (StrValid(Emulator))
+	{ 
+	Tempstr=MCatStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+	SetVar(Act->Vars, "emulator", Emulator);
+	}
+	else if (! Emulator) 
+	{
 	Tempstr=MCatStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
 	Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
 
 	Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
-}
+	}
 
 
 Name=PlatformGetInstallMessage(Name, Act->Platform);

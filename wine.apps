@@ -18,7 +18,7 @@ OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
 Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB  comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
-SeaMonkeyMail platform=windows exec='seamonkey.exe' exec-args='-mail' comment='SeaMonkey Email App'  sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' bundled=SeaMonkey
+SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey
 
 * category='Chat;Internet;Network'
 Telegram platform=windows url=https://telegram.org/dl/desktop/win  winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.'
@@ -154,7 +154,7 @@ ImageBurn platform=windows url=http://download.imgburn.com/SetupImgBurn_2.5.8.0.
 GetRight platform=windows url=http://download.getright.com/getright-download.exe  sha256='77f08faacf8433dd9912e49c80d0e0668a0f451036a5a9ab4abf15220c17f2e5' comment="Download manager"
 IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip  installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
 Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn="Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work" exec=sync-taskbar.exe comment="Desktop app for Sync.com storage service"
-
+KeyPass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment="Password Manager"
 
 * category='Chess;BoardGame;Game'
 ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256=b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e
@@ -229,3 +229,5 @@ GeneRally platform=windows url=http://gene-rally.com/download/latest/ comment='l
 KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk=y comment="Classic Roberta Williams adventure game" rename="$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/" os-version=winxp
 Transcendance platform=windows url=http://kronosaur.com/downloads/Transcendence.zip
 Glest platform=windows url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec=glest.exe warn="Installer shows some errors while running, just select 'ignore'. Program seems to work okay"
+
+FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment="Bittorrent media downloader/player"

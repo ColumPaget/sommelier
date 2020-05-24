@@ -136,9 +136,9 @@ static int DownloadCopyFile(TAction *Act)
 
 int Download(TAction *Act)
 {
-    char *Tempstr=NULL, *Dest=NULL, *cwd=NULL;
-		const char *ptr;
-		struct stat Stat;
+    char *Tempstr=NULL, *Dest=NULL, *Token=NULL;
+	const char *ptr;
+	struct stat Stat;
     size_t bytes=0;
 
 
@@ -162,12 +162,16 @@ int Download(TAction *Act)
 			if (StrValid(ptr))
 			{
 				Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-				if (access(Tempstr, F_OK) !=0)
+				GetToken(Tempstr, ":", &Token, 0);
+				if (
+					(strcasecmp(Token, "https")==0) ||	
+					(strcasecmp(Token, "http")==0) ||	
+					(strcasecmp(Token, "ssh")==0)
+				)
 				{
 				FileCopy(Tempstr, GetBasename(Tempstr));
 				Dest=MCopyStr(Dest, GetVar(Act->Vars, "install-dir"), "/", GetBasename(Tempstr), NULL);
 				SetVar(Act->Vars, "app-icon", Dest); 
-				printf("APPICON: %s -> %s\n", Tempstr, Dest);
 				}
 			}
     }
@@ -178,6 +182,7 @@ int Download(TAction *Act)
 
 
     DestroyString(Tempstr);
+    DestroyString(Token);
     DestroyString(Dest);
 
     return(bytes);

@@ -40,6 +40,14 @@ else if (strcasecmp(Curr->Tag, "mouse")==0)
 Curr=ListGetNext(Curr);
 }
 
+//prboom-plus only supports dos/windows style '/' switches on the command line
+//not unix style '-' switches
+ptr=GetVar(Act->Vars, "emulator");
+if (StrValid(ptr) && (strcmp(ptr, "prboom-plus")==0) )
+{
+strrep(EmulatorArgs, '-', '/');
+}
+
 SetVar(Act->Vars, "emulator-args", EmulatorArgs);
 
 //as doom settings are stored in the emulator args in the emulator args 

@@ -238,17 +238,29 @@ return(Apps);
 char *AppFormatPath(char *Path, TAction *Act)
 {
 char *Tempstr=NULL;
+const char *ptr;
 
-//first generate wine prefix
+//first generate sommelier root (usually ~/.sommelier) if it doesn't exist
+ptr=GetVar(Act->Vars, "sommelier_root");
+if (! StrValid(ptr))
+{
 Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root_template"));
 Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
 Path=SlashTerminateDirectoryPath(Path);
 SetVar(Act->Vars, "sommelier_root",Path);
+}
 
+
+ptr=GetVar(Act->Vars, "prefix");
+if (! StrValid(ptr))
+{
 Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "prefix_template"));
 Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
 Path=SlashTerminateDirectoryPath(Path);
 SetVar(Act->Vars, "prefix",Path);
+}
+else Path=CopyStr(Path,ptr);
+
 
 //for dos and golang/go path==prefix
 //for wine path is more complex

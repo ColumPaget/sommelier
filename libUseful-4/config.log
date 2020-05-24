@@ -216,7 +216,7 @@ configure:4274: checking for openssl/ssl.h
 configure:4274: result: yes
 configure:4289: checking for EVP_CIPHER_CTX_init in -lcrypto
 configure:4314: gcc -o conftest -g -O2   conftest.c -lcrypto  -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/cca3vVWL.o: in function `main':
+/usr/bin/ld: /tmp/ccmnYJsH.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:37: undefined reference to `EVP_CIPHER_CTX_init'
 collect2: error: ld returned 1 exit status
 configure:4314: $? = 1
@@ -268,7 +268,7 @@ configure:4363: $? = 0
 configure:4372: result: yes
 configure:4387: checking for SSL_library_init in -lssl
 configure:4412: gcc -o conftest -g -O2   conftest.c -lssl  -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/ccaoobjY.o: in function `main':
+/usr/bin/ld: /tmp/cc9JkD7b.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:38: undefined reference to `SSL_library_init'
 collect2: error: ld returned 1 exit status
 configure:4412: $? = 1
@@ -321,7 +321,7 @@ configure:4460: $? = 0
 configure:4469: result: yes
 configure:4487: checking for OpenSSL_add_all_algorithms
 configure:4487: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/cctqPK03.o: in function `main':
+/usr/bin/ld: /tmp/cc3apVaN.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:62: undefined reference to `OpenSSL_add_all_algorithms'
 collect2: error: ld returned 1 exit status
 configure:4487: $? = 1
@@ -406,7 +406,7 @@ configure:4487: $? = 0
 configure:4487: result: yes
 configure:4487: checking for EVP_rc5_32_12_16_cbc
 configure:4487: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/ccpxJG8w.o: in function `main':
+/usr/bin/ld: /tmp/cc6817E1.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:65: undefined reference to `EVP_rc5_32_12_16_cbc'
 collect2: error: ld returned 1 exit status
 configure:4487: $? = 1
@@ -494,7 +494,7 @@ configure:4487: $? = 0
 configure:4487: result: yes
 configure:4487: checking for EVP_idea_cbc
 configure:4487: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/cc3rIOXX.o: in function `main':
+/usr/bin/ld: /tmp/ccN3Lfee.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:68: undefined reference to `EVP_idea_cbc'
 collect2: error: ld returned 1 exit status
 configure:4487: $? = 1
@@ -585,7 +585,7 @@ configure:4487: $? = 0
 configure:4487: result: yes
 configure:4487: checking for SSL_set_tlsext_host_name
 configure:4487: gcc -o conftest -g -O2   conftest.c -lssl -lcrypto -lc -lc -lc -lc -lc -lc -lc -lc  >&5
-/usr/bin/ld: /tmp/cc8uYR4j.o: in function `main':
+/usr/bin/ld: /tmp/ccAgKuer.o: in function `main':
 /home/colum/Sommelier/libUseful-4/conftest.c:71: undefined reference to `SSL_set_tlsext_host_name'
 collect2: error: ld returned 1 exit status
 configure:4487: $? = 1
