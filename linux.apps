@@ -16,3 +16,13 @@ DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublec
 
 Zoom platform=linux32 url=https://zoom.us/client/latest/zoom_i686.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat
 Zoom platform=linux64 url=https://zoom.us/client/latest/zoom_x86_64.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat
+
+* category=WebBrowser;Internet;Network 
+PaleMoon platform=linux32 url=http://linux.palemoon.org/datastore/release/palemoon-28.9.3.linux-i686.tar.xz exec=palemoon sha256=a9c6a5ba1439fe580555de4fc74bb579190aea42a5219df98a9deffc68a06e86 download-type=tar.xz
+PaleMoon platform=linux64 url=https://linux.palemoon.org/datastore/release/palemoon-28.9.3.linux-x86_64.tar.xz exec=palemoon sha256=47923024eafa5b5ad2fbfc3ab0992a116f51187ee1627a5233943623d45c003f download-type=tar.xz
+
+SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/en-US/seamonkey-2.53.2.en-US.linux-i686.tar.bz2 download-type=tar.xz
+SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/en-US/seamonkey-2.53.2.en-US.linux-x86_64.tar.bz2 download-type=tar.xz
+
+GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type=tar.bz2
+GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2 download-type=tar.bz2

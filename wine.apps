@@ -12,7 +12,13 @@ MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e0130
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download  version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
 SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/en-US/seamonkey-2.53.1.en-US.win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser'  sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8'
 PaleMoon platform=windows url="https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer" comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' 
+OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download
 
+* category='Email;Office;Network'
+ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
+Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
+Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB  comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
+SeaMonkeyMail platform=windows exec='seamonkey.exe' exec-args='-mail' comment='SeaMonkey Email App'  sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' bundled=SeaMonkey
 
 * category='Chat;Internet;Network'
 Telegram platform=windows url=https://telegram.org/dl/desktop/win  winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.'
@@ -70,12 +76,6 @@ UnrealCommander platform=windows url=https://x-diesel.com/download/uncomsetup.ex
 NexusFile platform=windows url=http://www.xiles.net/download.php?file=NexusFileSetup5.3.3.exe&product=NexusFile5&ver=5.3.3.5532  sha256='4016244657b412ae0a17255ffec6bbc1c0e2ed3981144b82b19117a50585e63e' 
 XenonFM platform=windows url=https://sourceforge.net/projects/xenon-portable/files/Beta%20Releases/2.0%20Beta%204/Xenon_Portable_2.0_Beta_4.paf.exe/download  comment='Very Simple/Lightweight Filemanager' sha256='593efb99f593aefdcbf889558b22dfc1f189caccd5ca8c2f2b4882cea5999fab' 
 DoubleCommander platform=windows url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download  sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7' 
-
-* category='Email;Office;Network'
-ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
-Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB  comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
-
 * category='Office'
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe  exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
 OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite'

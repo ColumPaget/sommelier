@@ -168,9 +168,6 @@ int Flags=0;
 //only do this for windows apps
 if (PlatformType(Act->Platform) != PLATFORM_WINDOWS) return;
 
-//don't need the path, just need some vars set in Act->Vars
-Tempstr=AppFormatPath(Tempstr, Act);
-
 Curr=ListGetNext(Act->Vars);
 while (Curr)
 {

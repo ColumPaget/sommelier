@@ -406,7 +406,6 @@ int len;
 	switch (PlatformType(Act->Platform))
 	{
 		case PLATFORM_WINDOWS:
-
 		//reconfigure path to be from our wine 'drive_c' rather than from system root
 		ptr=GetVar(Act->Vars, "drive_c");
 		len=StrLen(ptr);
@@ -421,12 +420,12 @@ int len;
 		{
 			Tempstr=CopyStr(Tempstr, Path);
 			StrRTruncChar(Tempstr, '/');
-//			Tempstr=SubstituteVarsInString(Tempstr, "/Program Files/$(name)", Act->Vars, 0);	
 			SetVar(Act->Vars, "exec-dir", Tempstr);
 		}
     Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
     SetVar(Act->Vars, "working-dir", Tempstr);
 		break;
+
 
 		default:
 		//is a working dir set in the app config?
@@ -467,7 +466,7 @@ int len;
 	}
 	else 
 	{
-		Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find exectuable for ", Act->Name, "~0\n", NULL);
+		Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find executable for ", Act->Name, "~0\n", NULL);
 		TerminalPutStr(Tempstr, NULL);
 	}
 

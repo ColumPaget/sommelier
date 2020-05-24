@@ -33,7 +33,7 @@ return(FALSE);
 
 int DesktopFileRead(TAction *Act)
 {
-char *Tempstr=NULL, *Token=NULL;
+char *Tempstr=NULL, *Token=NULL, *Exec=NULL;
 const char *ptr;
 int result=FALSE;
 STREAM *S;
@@ -48,18 +48,23 @@ if (S)
 	{
 		StripTrailingWhitespace(Tempstr);
 		ptr=GetToken(Tempstr, "=", &Token, 0);
-		if (strcasecmp(Token,"sommelierexec")==0) 
+		if (strcasecmp(Token,"SommelierExec")==0) 
 		{
 			Act->Exec=CopyStr(Act->Exec, ptr);	
 			StripQuotes(Act->Exec);
 		}
-		if (strcasecmp(Token,"icon")==0) 
+		else if (strcasecmp(Token,"Exec")==0) 
+		{
+			Exec=CopyStr(Exec, ptr);	
+			StripQuotes(Exec);
+		}
+		else if (strcasecmp(Token,"Icon")==0) 
 		{
 			Token=CopyStr(Token, ptr);
 			StripQuotes(Token);
 			SetVar(Act->Vars, "icon", Token);
 		}
-		if (strcasecmp(Token,"path")==0) 
+		else if (strcasecmp(Token,"Path")==0) 
 		{
 			Token=CopyStr(Token, ptr);
 			StripQuotes(Token);
@@ -71,6 +76,12 @@ if (S)
 }
 else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
 
+//if we didn't find a 'SommelierExec' entry then we must be dealing with
+//a setup that doesn't use sommelier to run the app. Thus the 'Exec' entry
+//is the thing that we run
+if (! StrValid(Act->Exec)) Act->Exec=CopyStr(Act->Exec, Exec);
+
+//now we rebuild the exec, extracting 'WINEPREFIX' from it if such exists
 Tempstr=CopyStr(Tempstr, Act->Exec);
 Act->Exec=CopyStr(Act->Exec, "");
 ptr=GetToken(Tempstr,"\\S",&Token,GETTOKEN_HONOR_QUOTES);
@@ -107,9 +118,6 @@ fchmod(S->out_fd, 0744);
 switch (PlatformType(Act->Platform))
 {
 	case PLATFORM_WINDOWS:
-		Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
-		SetVar(Act->Vars, "working-dir", Tempstr);
-
 		//for windows we must override the found exec-path to be in windows format
 		Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
 		strrep(Tempstr, '/', '\\');

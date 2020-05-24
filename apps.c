@@ -97,7 +97,10 @@ Curr=ListGetNext(FileWideSettings);
 while (Curr)
 {
 	if (strcmp(Curr->Tag, "*")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
-	if ( (strncmp(Curr->Tag, "url=",4)==0) && (fnmatch(Curr->Tag+4, Act->URL, 0)==0) ) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+
+	//it's possible for an app to not have a url if it comes bundled with something else, so be sure to
+	//check Act->URL exists before feeding to fnmatch
+	if (Act->URL &&  (strncmp(Curr->Tag, "url=",4)==0) && (fnmatch(Curr->Tag+4, Act->URL, 0)==0) ) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
 Curr=ListGetNext(Curr);
 }
 Config=CatStr(Config, Settings);
@@ -313,18 +316,21 @@ return(result);
 int AppLoadConfig(TAction *App)
 {
 int result=FALSE;
-char *Platform=NULL;
+char *Tempstr=NULL;
 
 if (StrValid(App->Platform)) return(AppFindConfig(App, App->Platform));
 
-Platform=PlatformSelectForURL(Platform, App->URL);
-if (StrValid(Platform)) printf("Selected Platforms: %s\n", Platform);
+Tempstr=PlatformSelectForURL(Tempstr, App->URL);
+if (StrValid(Tempstr)) printf("Selected Platforms: %s\n", Tempstr);
 
 //if no platform specified this will use the first matching app config it finds for any platform
-result=AppFindConfig(App, Platform);
+result=AppFindConfig(App, Tempstr);
 if (! result) result=AppFindConfig(App, "");
 
-Destroy(Platform);
+//we don't need the path that is returned here, but this function sets a lot of default variables and paths
+Tempstr=AppFormatPath(Tempstr, App);
+
+Destroy(Tempstr);
 
 return(result);
 }
