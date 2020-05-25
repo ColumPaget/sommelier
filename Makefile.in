@@ -1,5 +1,5 @@
 OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o install.o uninstall.o
-LIBS=@LIBS@ @STATIC_LIBS@
+LIBS=@STATIC_LIBS@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 CFLAGS=@CFLAGS@ @DEFS@ -DINSTALL_PREFIX=\"@prefix@\"
