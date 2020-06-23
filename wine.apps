@@ -103,12 +103,13 @@ ElectronicsAssistant platform=windows url=https://www.electronics2000.co.uk/assi
 
 
 * category='TextEditor;Utility'
-SublimeText platform=windows url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe  version='3143' xexec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6'
+SublimeText platform=windows url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe  version='3143' exec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6'
 Notepad++ platform=windows url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe  version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898'
 CherryTree platform=windows url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe  sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec=cherrytree.exe
 
 * category='RemoteAccess;Utility'
 TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip  version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
+TurboVNC platform=windows url=https://sourceforge.net/projects/turbovnc/files/2.2.5/TurboVNC-2.2.5-x86.exe/download exec='vncviewer.exe'
 Teamviewer platform=windows url=https://download.teamviewer.com/download/TeamViewer_Setup.exe comment='Official Teamviewer client'
 
 * comment='Player;Audio'

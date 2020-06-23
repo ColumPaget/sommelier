@@ -1,5 +1,6 @@
 #include "download.h"
 #include "config.h"
+#include <fnmatch.h>
 
 static void DownloadCallback(const char *URL, int bytes, int total)
 {
@@ -53,8 +54,8 @@ TerminalPutStr(Tempstr, NULL);
 ptr=GetToken(STREAMGetValue(S, "SSL:CertificateIssuer"), "/", &Tempstr, 0);
 while (ptr)
 {
-if (strncmp(Tempstr, "CN=", 3)==0) Issuer=CopyStr(Issuer, Tempstr+3);
-ptr=GetToken(ptr, "/", &Tempstr, 0);
+	if (strncmp(Tempstr, "CN=", 3)==0) Issuer=CopyStr(Issuer, Tempstr+3);
+	ptr=GetToken(ptr, "/", &Tempstr, 0);
 }
 
 
@@ -134,16 +135,95 @@ static int DownloadCopyFile(TAction *Act)
 }
 
 
+
+char *ExtractURLFromHRef(char *RetStr, const char *Data)
+{
+char *Key=NULL, *Value=NULL;
+const char *ptr;
+
+ptr=GetNameValuePair(Data, "\\S", "=", &Key, &Value);
+while (ptr)
+{
+	if (strcmp(Key, "href")==0)
+	{
+	RetStr=CopyStr(RetStr, Value);
+	break;
+	}
+	ptr=GetNameValuePair(ptr, "\\S", "=", &Key, &Value);
+}
+
+Destroy(Value);
+Destroy(Key);
+
+return(RetStr);
+}
+
+
+void ExtractURLFromWebsite(TAction *Act)
+{
+char *Tempstr=NULL, *SrcPage=NULL, *Template=NULL, *Tag=NULL, *Data=NULL, *URL=NULL;
+char *Proto=NULL, *Host=NULL, *Port=NULL;
+const char *ptr;
+STREAM *S;
+
+ptr=GetToken(Act->URL, ":", &Tempstr, 0);
+ptr=GetToken(ptr, ":", &Tempstr, GETTOKEN_QUOTES);
+SrcPage=UnQuoteStr(SrcPage, Tempstr);
+ptr=GetToken(ptr, ":", &Template, GETTOKEN_QUOTES);
+
+ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, NULL, NULL);
+
+printf("extracting download url from %s\n", SrcPage);
+
+S=STREAMOpen(SrcPage, "");
+if (S)
+{
+Tempstr=STREAMReadDocument(Tempstr, S);
+STREAMClose(S);
+}
+
+ptr=XMLGetTag(Tempstr, NULL, &Tag, &Data);
+while (ptr)
+{
+	if (strcmp(Tag, "a")==0) 
+	{
+		URL=ExtractURLFromHRef(URL, Data);
+		if (fnmatch(Template, URL, 0)==0)
+		{
+			if (*URL=='/') Act->URL=FormatStr(Act->URL, "%s://%s:%s/%s", Proto, Host, Port, URL);
+			else Act->URL=CopyStr(Act->URL, URL);
+			printf("download url found: %s\n", Act->URL);
+			break;
+		}
+	}
+	ptr=XMLGetTag(ptr, NULL, &Tag, &Data);
+}
+
+
+Destroy(Tempstr);
+Destroy(SrcPage);
+Destroy(Template);
+Destroy(Proto);
+Destroy(Host);
+Destroy(Data);
+Destroy(Tag);
+Destroy(URL);
+}
+
+
+
 int Download(TAction *Act)
 {
-    char *Tempstr=NULL, *Dest=NULL, *Token=NULL;
+  char *Tempstr=NULL, *Dest=NULL, *Token=NULL;
 	const char *ptr;
 	struct stat Stat;
-    size_t bytes=0;
+  size_t bytes=0;
 
 
     if (StrValid(Act->URL))
     {
+			if (strncmp(Act->URL, "extracted:", 10) ==0) ExtractURLFromWebsite(Act);
+
 			//must do this even if url proves to be a file on disk, as we will want to ignore it
 			//if it's an .exe file, so that we don't mistake it for and installed exectuable
 			if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, Act->URL);
