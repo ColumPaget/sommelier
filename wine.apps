@@ -9,6 +9,7 @@ MSXML3 platform=windows url=http://repository.playonlinux.com/divers/msxml3.msi 
 MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi 
 
 * category='WebBrowser;Internet;Network'
+Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec=basilisk.exe type='webrowser'
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download  version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
 SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/en-US/seamonkey-2.53.1.en-US.win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser'  sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8'
 PaleMoon platform=windows url="https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer" comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' 
