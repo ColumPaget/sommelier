@@ -1,12 +1,11 @@
 #Things available through gog.com
 
 #native linux. Very few gog games work for me in native linux. These commented-out ones all fail, mostly due to mono/c# errors
-#140 platform=gog:linux category='Game' exec="140Linux.x86"
-#DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
-#InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec-vars="LD_LIBRARY_PATH=./lib32/"
-#Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
-#Defcon platform=gog:linux category='Game' exec="defcon.bin.x86"
 #Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
+#DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
+#Defcon platform=gog:linux category='Game' exec="defcon.bin.x86"
+#Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
+#140 platform=gog:linux category='Game' exec="140Linux.x86"
 
 
 #these games have worked for me in native linux
@@ -18,8 +17,9 @@ Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64
 KingdomRush platform=gog:linux category='Game' exec="Kingdom\ Rush.x86" 
 PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
 SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="x86/superhexagon.x86" exec-vars="LD_LIBRARY_PATH=./x86/"
-
-
+Starcrawlers platform=gog:linux category='Game' exec='starcrawlers.x86'
+Jotun platform=gog:linux category='Game' exec='Jotun.x86'
+InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" 
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
@@ -60,6 +60,7 @@ Stargunner platform=gog:lindos category='Game' exec="STARGUN.EXE" extra-files="d
 Stargunner platform=gog:windos category='Game' exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
 SubWar2050 platform=gog:windos category='Game' exec="subwar.bat"
 Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+Timelapse platform=gog:windos category='Game'
 
 #SCUMMVM platform
 LureOfTheTemptress platform=gog:scummvm category='Game' 
@@ -87,12 +88,15 @@ DungeonSiege2 platform=gog:windows category='Game' exec="DungeonSiege.exe"
 DungeonSiege3 platform=gog:windows category='Game' exec="DungeonSiege.exe"
 DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
 DivineDivinity platform=gog:windows category='Game' exec=div.exe
+Duskers platform=gog:windows category='Game'
+
 FantasyWars platform=gog:windows category='Game' exec=fw.exe
 FreedomForce platform=gog:windows category='Game' exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
 FTL platform=gog:windows category='Game'
 Hexplore platform=gog:windows category='Game' exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)"
 Imperialism platform=gog:windows category='Game'
+ImperiumGalactica platform=gog:windows category='Game'
 GalacticAssault platform=gog:windows category='Game'
 HaegemoniaLegionsOfIron platform=gog:windows category='Game'
 HaegemoniaSolonHeritage platform=gog:windows category='Game'
@@ -119,10 +123,11 @@ ShadowrunReturns platform=gog:windows category='Game'
 SpaceCom platform=gog:windows category='Game' 
 SpaceEmpiresDeluxe4 platform=gog:windows category='Game' exec="Se4.exe"
 SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"
-SpaceRun platform=gog:windows category='Game' exec="spacerun.exe"
+SpaceRun platform=gog:windows category='Game' exec="oSpaceGame.exe"
 Spellforce platform=gog:windows category='Game' warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
 StarfleetCommand platform=gog:windows category='Game' vdesk=y os-version=winxp exec="sfc.exe"
 StarWolves platform=gog:windows category='Game' 
+StealthBastard platform=gog:windows category='Game' exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha platform=gog:windows category='Game'
 SwordOfTheStars platform=gog:windows category='Game' exec="Sword of the Stars.exe" 
 #rename="$(drive_c)/GOG\ Games/Sword\ of \ the\ Stars/Sword\ of\ the\ Stars.exe $(drive_c)/GOG\ Games/SwordoftheStars.exe"
@@ -140,3 +145,5 @@ Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
 TheWitcherAdventureGame platform=gog:windows category='Game' 
 Wizardry platform=gog:windows category='Game' exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 VtmBloodlines platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+VtmRedemption platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe

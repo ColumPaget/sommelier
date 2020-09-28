@@ -108,6 +108,7 @@ const char *ptr;
 
 
 printf("Generating desktop File...");
+printf("exec-path: %s\n", GetVar(Act->Vars, "exec"));
 Tempstr=DesktopFileMakePath(Tempstr, Act);
 MakeDirPath(Tempstr, 0744);
 S=STREAMOpen(Tempstr, "w mode=0744");
