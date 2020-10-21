@@ -101,7 +101,9 @@ if (Act->InstallType != INSTALL_EXECUTABLE )
 ptr=GetVar(Act->Vars, "exec");
 SearchPatterns=MCopyStr(SearchPatterns, ptr, ",", NULL);
 
-Tempstr=PlatformGetExeSearchPattern(Tempstr, Act->Platform);
+if (PlatformBitWidth(Act->Platform)==64) Tempstr=PlatformGetExe64SearchPattern(Tempstr, Act->Platform);
+else Tempstr=PlatformGetExeSearchPattern(Tempstr, Act->Platform);
+
 SearchPatterns=CatStr(SearchPatterns, Tempstr);
 
 FindFiles(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, Exes);
@@ -500,6 +502,19 @@ static void InstallSingleItemPreProcessInstall(TAction *Act)
 char *Token=NULL, *Tempstr=NULL;
 const char *ptr;
 
+//if package supports both 32 and 64 bit architectures (or only 64, but the package type could support 32-bit, as with GOG games) then if we are running on a 64bit architecture we want to use the
+//64bit version
+ptr=GetVar(Act->Vars, "exec64");
+if (StrValid(ptr))
+{
+	if (PlatformBitWidth(Act->Platform)==64)
+	{
+		SetVar(Act->Vars, "exec", ptr);
+		printf("EXEC64: %s\n", ptr);
+	}
+}
+
+
 //dll-overrides creates a wine bottle with certain dlls missing, forcing the installer to install it's own
 //this is for sitations where the installer will supply a better choice of DLL for this app than wine's own
 ptr=GetVar(Act->Vars, "dll-overrides");
@@ -567,7 +582,6 @@ if (pid==0)
 
 	InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
 
-printf("ISI: %s\n", InstallPath);
 	chdir(InstallPath);
 	if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
 	else 

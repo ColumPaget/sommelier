@@ -1,33 +1,39 @@
 #Things available through gog.com
 
 #native linux. Very few gog games work for me in native linux. These commented-out ones all fail, mostly due to mono/c# errors
-#DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
-#Defcon platform=gog:linux category='Game' exec="defcon.bin.x86"
-#Cayne platform=gog:linux category='Game' exec="cayne.x86"
-#Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
-#SerialCleaner platform=gog:linux category='Game'
+# DungeonSouls platform=gog:linux category='Game' exec=runner warn="linux version of this game requires libcrypto.1.0.0"
+Cayne platform=gog:linux category='Game'
+SerialCleaner platform=gog:linux category='Game'
 
 
 #these games have worked for me in native linux
 
-140 platform=gog:linux category='Game' exec="140Linux.x86"
+140 platform=gog:linux category='Game' exec="140Linux.x86" exec64="140Linux.x86_64"
 Spacechem platform=gog:linux category='Game' exec="spacechem-launcher.sh"
+ChaosReborn platform=gog:linux category='Game' warn="This game has been seen to have graphics issues on some linux platforms"
+Defcon platform=gog:linux category='Game' warn="This game has been seen to fail on some linux platforms"
 TIS100 platform=gog:linux category='Game' 
-Convoy platform=gog:linux category='Game' exec="Convoy.x86"
+Battlevoid platform=gog:linux category='Game' exec=harbinger
+Convoy platform=gog:linux category='Game' exec="Convoy.x86" exec64="Convoy.x86_64"
 CryptOfTheNecrodancer platform=gog:linux category='Game' exec="NecroDancer.sh"
-DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86"
-Deadnaut platform=gog:linux category='Game'
+DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
+Deadnaut platform=gog:linux category='Game' exec="Deadnaut.x86"
 DeepSkyDerelicts platform=gog:linux category='Game'
-Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
+Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
 FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
+Hacknet platform=gog:linux category='Game'
 Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
-KingdomRush platform=gog:linux category='Game' exec="Kingdom\ Rush.x86" 
+KingdomRush platform=gog:linux category='Game' exec="run.sh" 
 PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
-SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="x86/superhexagon.x86" exec-vars="LD_LIBRARY_PATH=./x86/"
-Starcrawlers platform=gog:linux category='Game' exec='starcrawlers.x86'
-Jotun platform=gog:linux category='Game' exec='Jotun.x86'
-InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" 
-Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
+RaceTheSun platform=gog:linux category='Game'
+ShadowrunReturns platform=gog:linux category='Game' exec="Shadowrun.sh"
+SlayTheSpire platform=gog:linux category='Game' exec="SlayTheSpire"
+SpaceCom platform=gog:linux category='Game' exec="SPACECOM.x86"
+Starcrawlers platform=gog:linux category='Game' exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
+SuperHexagon platform=gog:linux category='Game' exec="SuperHexagon"
+Jotun platform=gog:linux category='Game' exec='Jotun.x86' exec64="Jotun.x86_64"
+InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
+Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux category='Game' 
 MotherRussiaBleeds platform=gog:linux category='Game' 
 

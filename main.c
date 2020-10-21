@@ -27,7 +27,6 @@ char *SpawnConfig=NULL, *Tempstr=NULL;
 
 if (DesktopFileRead(Act)) 
 {
-//sleep(30);
 
 if (StrValid(Act->Exec)) 
 {
@@ -75,7 +74,12 @@ if (StrValid(Act->Exec))
 
 	printf("Running '%s' (%s)\n", Act->Name, Act->Exec);
 
-	SetVar(Act->Vars, "exec", Act->Exec);
+	if (*Act->Exec != '/')
+	{
+		Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "working-dir"), "/", Act->Exec, NULL);
+		SetVar(Act->Vars, "exec", Tempstr);
+	}
+	else SetVar(Act->Vars, "exec", Act->Exec);
 	SetVar(Act->Vars, "exec-args", Act->Args);
 	Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) $(exec) $(exec-args)" ,Act->Vars, 0);
 	if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");

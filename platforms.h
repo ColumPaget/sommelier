@@ -21,9 +21,11 @@
 #define PLATFORM_INFO_EXE_SEARCH_PATTERN 2
 #define PLATFORM_INFO_EMULATORS 3
 #define PLATFORM_INFO_WORKING_DIR 4
+#define PLATFORM_INFO_EXE64_SEARCH_PATTERN 64
 
 #define PlatformGetInstallMessage(RetStr, Name) (PlatformLookupInfo((RetStr), (Name), PLATFORM_INFO_INSTALL_MESSAGE))
 #define PlatformGetExeSearchPattern(RetStr, Name) (PlatformLookupInfo((RetStr), (Name), PLATFORM_INFO_EXE_SEARCH_PATTERN))
+#define PlatformGetExe64SearchPattern(RetStr, Name) (PlatformLookupInfo((RetStr), (Name), PLATFORM_INFO_EXE64_SEARCH_PATTERN))
 #define PlatformGetEmulators(RetStr, Name) (PlatformLookupInfo((RetStr), (Name), PLATFORM_INFO_EMULATORS))
 #define PlatformGetWorkingDir(RetStr, Name) (PlatformLookupInfo((RetStr), (Name), PLATFORM_INFO_WORKING_DIR))
 
@@ -41,6 +43,7 @@ char *InstallerPattern;
 
 const char *PlatformDefault();
 int PlatformType(const char *Platform);
+int PlatformBitWidth(const char *Platform);
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);
 char *PlatformFindEmulator(char *RetStr, char *Name);
 char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);

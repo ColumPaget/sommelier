@@ -46,6 +46,37 @@ if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
 return(PLATFORM_UNKNOWN);
 }
 
+int PlatformBitWidth(const char *Platform)
+{
+if (! StrValid(Platform)) return(0);
+if (strcasecmp(Platform, "linux32")==0) return(32);
+if (strcasecmp(Platform, "linux64")==0) return(64);
+if (strcasecmp(Platform, "win32")==0) return(32);
+if (strcasecmp(Platform, "win64")==0) return(64);
+
+//if we've been told NOT 32-bit linux, then this is a default platform type
+//and we assume 64 bit
+if (strcasecmp(Platform, "!linux32")==0) return(64);
+
+//if we've been told NOT 64-bit linux, then this is a default platform type
+//and we assume 32 bit
+if (strcasecmp(Platform, "!linux64")==0) return(32);
+
+if (strcasecmp(Platform, "gog:linux")==0)
+{
+#ifdef __x86_64__
+return(64);
+#endif
+
+#ifdef _____LP64_____
+return(64);
+#endif
+
+return(32);
+}
+
+return(0);
+}
 
 
 static TPlatform *PlatformsAdd(const char *Names, int IDnum, const char *Emulators, const char *WorkingDir, const char *ExeSearchPattern, const char *Exe64SearchPattern)
@@ -57,6 +88,7 @@ Plt->ID=IDnum;
 Plt->Emulators=CopyStr(Plt->Emulators, Emulators);
 Plt->WorkingDir=CopyStr(Plt->WorkingDir, WorkingDir);
 Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, ExeSearchPattern);
+Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Exe64SearchPattern);
 
 ListAddNamedItem(Platforms, Names, Plt);
 
@@ -107,6 +139,10 @@ char *PlatformLookupInfo(char *RetStr, const char *Name, int Info)
 
 			case PLATFORM_INFO_EXE_SEARCH_PATTERN:
 			RetStr=CopyStr(RetStr, Plt->ExeSearchPattern);
+			break;
+
+			case PLATFORM_INFO_EXE64_SEARCH_PATTERN:
+			RetStr=CopyStr(RetStr, Plt->Exe64SearchPattern);
 			break;
 
 			case PLATFORM_INFO_EMULATORS:
@@ -284,7 +320,7 @@ Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
 
 Plt=PlatformsAdd("gog:scummvm", PLATFORM_GOGSCUMMVM, "scummvm --path='$(working-dir)' --auto-detect", "$(install-dir)/data/noarch/data", "","");
 
-Plt=PlatformsAdd("gog:lin,gog:linux", PLATFORM_GOGLINUX, "", "", "*.x86","*.x86_64");
+Plt=PlatformsAdd("gog:lin,gog:linux", PLATFORM_GOGLINUX, "", "", "*.x86,*386","*.x86_64,.amd64");
 Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
 
 Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(emulator-args) $(wads),chocolate-doom $(emulator-args) $(wads),prboom-plus $(emulator-args) $(wads)", "",  "*.wad","");
