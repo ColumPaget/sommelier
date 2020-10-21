@@ -1,17 +1,24 @@
 #Things available through gog.com
 
 #native linux. Very few gog games work for me in native linux. These commented-out ones all fail, mostly due to mono/c# errors
-#Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
 #DungeonSouls platform=gog:linux category='Game' exec="dungeon.x86"
 #Defcon platform=gog:linux category='Game' exec="defcon.bin.x86"
+#Cayne platform=gog:linux category='Game' exec="cayne.x86"
 #Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
-#140 platform=gog:linux category='Game' exec="140Linux.x86"
+#SerialCleaner platform=gog:linux category='Game'
 
 
 #these games have worked for me in native linux
+
+140 platform=gog:linux category='Game' exec="140Linux.x86"
+Spacechem platform=gog:linux category='Game' exec="spacechem-launcher.sh"
+TIS100 platform=gog:linux category='Game' 
 Convoy platform=gog:linux category='Game' exec="Convoy.x86"
 CryptOfTheNecrodancer platform=gog:linux category='Game' exec="NecroDancer.sh"
 DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86"
+Deadnaut platform=gog:linux category='Game'
+DeepSkyDerelicts platform=gog:linux category='Game'
+Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86"
 FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
 Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 KingdomRush platform=gog:linux category='Game' exec="Kingdom\ Rush.x86" 
@@ -20,11 +27,15 @@ SuperHexagon platform=gog:linux category='Game' working-dir="$(install-dir)/data
 Starcrawlers platform=gog:linux category='Game' exec='starcrawlers.x86'
 Jotun platform=gog:linux category='Game' exec='Jotun.x86'
 InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" 
+Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" 
+HardWest platform=gog:linux category='Game' 
+MotherRussiaBleeds platform=gog:linux category='Game' 
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
+AnvilOfDawn platform=gog:windos category='Game' exec="ANVIL.EXE"
 BattleChess  platform=gog:lindos category='Game' exec="CHESS.EXE"
 BattleChess  platform=gog:windos category='Game' exec="CHESS.EXE"
 Castles  platform=gog:lindos category='Game' exec="CASTLES.BAT"
@@ -39,6 +50,7 @@ HocusPocus platform=gog:lindos category='Game' exec="hocus.exe"
 HocusPocus platform=gog:windos category='Game' exec="hocus.exe"
 Ishar platform=gog:windos category='Game' exec="start.exe"
 Ishar2 platform=gog:windos category='Game' exec="start.exe"
+ImperiumGalactica platform=gog:windos category='Game' exec="IMPERIUM.EXE"
 MasterOfMagic platform=gog:lindos category='Game' exec="MAGIC.EXE"
 MasterOfMagic platform=gog:windos category='Game' exec="MAGIC.EXE"
 MasterOfOrion platform=gog:lindos category='Game' exec="ORION.EXE"
@@ -96,7 +108,6 @@ Flatout platform=gog:windows Category='Game'
 FTL platform=gog:windows category='Game'
 Hexplore platform=gog:windows category='Game' exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)"
 Imperialism platform=gog:windows category='Game'
-ImperiumGalactica platform=gog:windows category='Game'
 GalacticAssault platform=gog:windows category='Game'
 HaegemoniaLegionsOfIron platform=gog:windows category='Game'
 HaegemoniaSolonHeritage platform=gog:windows category='Game'
