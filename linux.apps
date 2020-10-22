@@ -1,7 +1,8 @@
+LazPaint platform=linux32 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux32_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics comment="Paint Program"
+LazPaint platform=linux64 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux64_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics comment="Paint Program"
 
-* comment="Paint Program"
-LazPaint platform=linux32 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux32_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics
-LazPaint platform=linux64 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux64_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics
+Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type=tar.xz category=ebook comment="Ebook Management" exec="Calibre/calibre"
+Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type=tar.xz category=ebook comment="Ebook Management" exec="Calibre/calibre"
 
 Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type=tar.xz exec=Telegram category=Chat comment="Telegram Messenger"
 Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type=tar.xz exec=Telegram category=Chat comment="Telegram Messenger"
@@ -33,6 +34,9 @@ Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.
 
 RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 exec=VNC-Viewer-6.20.113-Linux-x86 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
 RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 exec=VNC-Viewer-6.20.113-Linux-x64 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
+
+TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec=vncviewer download-type=tar.gz
+TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec=vncviewer download-type=tar.gz
 
 # These applications should install, but the websites have done things to prevent it
 #Arduino platform=linux32 url=https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-linux32.tar.xz download-type=tar.xz category=Electronics comment="Arduino Programming IDE"
