@@ -755,14 +755,13 @@ else
 
 	if (StrValid(Emulator))
 	{ 
-	Tempstr=MCatStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+	Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
 	SetVar(Act->Vars, "emulator", Emulator);
 	}
 	else if (! Emulator) 
 	{
-	Tempstr=MCatStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
 	Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
-
+	Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
 	Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
 	}
 

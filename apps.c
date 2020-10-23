@@ -10,13 +10,23 @@ return(Apps);
 }
 
 
+
+int AppPlatformMatches(TAction *App, const char *Platforms)
+{
+if (! StrValid(Platforms)) return (TRUE);
+if (InList(App->Platform, Platforms)) return(TRUE);
+return(FALSE);
+}
+
+
+
 int AppMatches(TAction *Template, TAction *App)
 {
 int result=FALSE;
 char *Token=NULL;
 const char *ptr;
 
-	if (StrValid(Template->Platform) && (PlatformType(App->Platform) != PlatformType( Template->Platform)) ) return(FALSE);
+	if (! AppPlatformMatches(App, Template->Platform) ) return(FALSE);
 
 	/* doesn't yet exist!
 	if (StrValid(Template->Category))
@@ -286,14 +296,6 @@ SetVar(Act->Vars, "install-dir",Path);
 
 DestroyString(Tempstr);
 return(Path);
-}
-
-
-int AppPlatformMatches(TAction *App, const char *Platforms)
-{
-if (! StrValid(Platforms)) return (TRUE);
-if (InList(App->Platform, Platforms)) return(TRUE);
-return(FALSE);
 }
 
 
