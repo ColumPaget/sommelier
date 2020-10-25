@@ -107,9 +107,8 @@ char *Tempstr=NULL, *EmuInvoke=NULL, *Hash=NULL;
 const char *ptr;
 
 
-printf("Generating desktop File...");
-printf("exec-path: %s\n", GetVar(Act->Vars, "exec"));
 Tempstr=DesktopFileMakePath(Tempstr, Act);
+printf("Generating desktop File %s\n", Tempstr);
 MakeDirPath(Tempstr, 0744);
 S=STREAMOpen(Tempstr, "w mode=0744");
 if (S)
@@ -132,7 +131,7 @@ switch (PlatformType(Act->Platform))
 		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 
-
+	//emulated apps that aren't 'wine'
 	case PLATFORM_DOS:
 	case PLATFORM_SCUMMVM:
 	case PLATFORM_GOGSCUMMVM:
@@ -140,8 +139,6 @@ switch (PlatformType(Act->Platform))
 	case PLATFORM_GOGWINDOS:
 	case PLATFORM_DOOM:
 	case PLATFORM_ZXSPECTRUM:
-	case PLATFORM_LINUX32:
-	case PLATFORM_LINUX64:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
@@ -150,13 +147,14 @@ switch (PlatformType(Act->Platform))
 		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 
-
+	//native apps
 	default:
 		ptr=GetVar(Act->Vars, "exec");
+
 		if (StrValid(ptr))
 		{
 		//Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
-		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec) $(exec-args)", Act->Vars, 0);
+		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec-path) $(exec-args)", Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
 
@@ -193,13 +191,13 @@ if (! StrValid(ptr))
 	}
 }
 
+
 Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(app-icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
 STREAMWriteLine(Tempstr, S);
 STREAMClose(S);
 
-printf(" program invoke: %s\n", GetVar(Act->Vars, "invocation"));
 }
 
 DestroyString(Tempstr);

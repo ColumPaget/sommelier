@@ -35,7 +35,6 @@ if (StrValid(Act->Exec))
 		seteuid(0);
     SpawnConfig=FormatStr(SpawnConfig, "noshell container=/tmp/container/ uid=%d gid=%d dir='%s' ", getuid(), getgid(), GetVar(Act->Vars,"working-dir"));
 
-		printf("************** SPAWN: %s\n",SpawnConfig);
 	  if (Act->Flags & FLAG_NET) SpawnConfig=CatStr(SpawnConfig, "+net ");
  		else SpawnConfig=CatStr(SpawnConfig, "-net ");
 
@@ -74,12 +73,7 @@ if (StrValid(Act->Exec))
 
 	printf("Running '%s' (%s)\n", Act->Name, Act->Exec);
 
-	if (*Act->Exec != '/')
-	{
-		Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "working-dir"), "/", Act->Exec, NULL);
-		SetVar(Act->Vars, "exec", Tempstr);
-	}
-	else SetVar(Act->Vars, "exec", Act->Exec);
+	SetVar(Act->Vars, "exec", Act->Exec);
 	SetVar(Act->Vars, "exec-args", Act->Args);
 	Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) $(exec) $(exec-args)" ,Act->Vars, 0);
 	if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");

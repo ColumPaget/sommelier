@@ -482,7 +482,10 @@ int len;
 	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
 	//desktop file as command-line args passed to the emulator
 	PlatformApplySettings(Act);
+
 	InstallFindIcon(Act);
+
+
 	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
 	}
 	else 
@@ -737,6 +740,7 @@ char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
 Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
 TerminalPutStr(Tempstr, NULL);
+Tempstr=CopyStr(Tempstr, "");
 
 if (! StrValid(Act->Platform))
 {

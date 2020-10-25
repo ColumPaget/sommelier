@@ -19,7 +19,7 @@ OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip  exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
 Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB  comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
-SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey
+SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey exec='seamonkey.exe'
 
 * category='Chat;Internet;Network'
 Telegram platform=windows url=https://telegram.org/dl/desktop/win  winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.'
