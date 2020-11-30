@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "5.4"
+#define VERSION "6.1"
 
 
 #define INSTALL_RUN 0
