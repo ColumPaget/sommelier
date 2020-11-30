@@ -142,6 +142,7 @@ RageOfMages platform=gog:windows category='Game' exec=rom.exe
 Reigns platform=gog:windows category='Game'
 RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows category='Game'
+SlayTheSpire platform=gog:windows category='Game' exec="SlayTheSpire"
 SpaceCom platform=gog:windows category='Game' 
 SpaceEmpiresDeluxe4 platform=gog:windows category='Game' exec="Se4.exe"
 SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"

@@ -343,9 +343,7 @@ int AppLoadConfig(TAction *App)
 int result=FALSE;
 char *Tempstr=NULL;
 
-if (StrValid(App->Platform)) return(AppFindConfig(App, App->Platform));
-
-Tempstr=PlatformSelectForURL(Tempstr, App->URL);
+Tempstr=PlatformSelect(Tempstr, App);
 if (StrValid(Tempstr)) printf("Selected Platforms: %s\n", Tempstr);
 
 //if no platform specified this will use the first matching app config it finds for any platform

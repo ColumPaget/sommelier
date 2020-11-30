@@ -167,8 +167,6 @@ const char *ptr;
 char *Tempstr=NULL, *Cmd=NULL;
 int RegFlags=0;
 
-
-
 	ptr=GetVar(Act->Vars, "installer-vdesk");
 	if (StrValid(ptr)) 
 	{
@@ -179,6 +177,7 @@ int RegFlags=0;
 	if (RegFlags)	RegEdit(Act, RegFlags, NULL, NULL, NULL);
 
 	ptr=GetVar(Act->Vars, "installer-path");
+printf("INSTALLER PATH: %s\n", ptr);
 	if (StrValid(ptr)) 
 	{
 		switch (PlatformType(Act->Platform))
@@ -239,7 +238,6 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 char *Tempstr=NULL, *FilesToExtract=NULL;
 const char *ptr;
 int ForcedFileType=FILETYPE_UNKNOWN;
-
 
 	switch (PlatformType(Act->Platform))
 	{	
@@ -744,12 +742,12 @@ Tempstr=CopyStr(Tempstr, "");
 
 if (! StrValid(Act->Platform))
 {
-TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
+	TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
 }
 else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
 {
-Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
-TerminalPutStr(Tempstr, NULL);
+	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
+	TerminalPutStr(Tempstr, NULL);
 }
 else
 {
@@ -770,23 +768,23 @@ else
 	}
 
 
-Name=PlatformGetInstallMessage(Name, Act->Platform);
-if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
-
-ptr=GetVar(Act->Vars, "warn");
-if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
-
-TerminalPutStr(Tempstr, NULL);
-
-
-Path=AppFormatPath(Path, Act);
-MakeDirPath(Path, 0700);
-
-if (PlatformType(Act->Platform)==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
-InstallRequiredDependancies(Act);
-
-InstallSingleItem(Act);
-printf("%s install complete\n", Act->Name);
+	Name=PlatformGetInstallMessage(Name, Act->Platform);
+	if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
+	
+	ptr=GetVar(Act->Vars, "warn");
+	if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
+	
+	TerminalPutStr(Tempstr, NULL);
+	
+	
+	Path=AppFormatPath(Path, Act);
+	MakeDirPath(Path, 0700);
+	
+	if (PlatformType(Act->Platform)==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
+	InstallRequiredDependancies(Act);
+	
+	InstallSingleItem(Act);
+	printf("%s install complete\n", Act->Name);
 }
 
 Destroy(Emulator);
@@ -807,12 +805,12 @@ TerminalPutStr(Tempstr, NULL);
 
 if (! StrValid(Act->Platform))
 {
-TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
+	TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
 }
 else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
 {
-Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
-TerminalPutStr(Tempstr, NULL);
+	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
+	TerminalPutStr(Tempstr, NULL);
 }
 else
 {

@@ -47,7 +47,7 @@ int PlatformBitWidth(const char *Platform);
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);
 char *PlatformFindEmulator(char *RetStr, char *Name);
 char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);
-char *PlatformSelectForURL(char *RetStr, const char *URL);
+char *PlatformSelect(char *RetStr, TAction *Act);
 
 void PlatformApplySettings(TAction *Act);
 void PlatformsInit();

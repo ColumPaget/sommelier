@@ -27,7 +27,6 @@ int PlatformType(const char *Platform)
 const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows","wine", NULL};
 const char *DosPlatforms[]={"dos","msdos", NULL};
 
-
 if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, DosPlatforms, 0) > -1) return(PLATFORM_DOS);
@@ -39,12 +38,13 @@ if (strcasecmp(Platform, "gog:linux")==0) return(PLATFORM_GOGLINUX);
 if (strcasecmp(Platform, "gog:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
 if (strcasecmp(Platform, "gog:lindos")==0) return(PLATFORM_GOGDOS);
 if (strcasecmp(Platform, "gog:windos")==0) return(PLATFORM_GOGWINDOS);
-if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
 if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
 if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
+if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
 
 return(PLATFORM_UNKNOWN);
 }
+
 
 int PlatformBitWidth(const char *Platform)
 {
@@ -236,24 +236,34 @@ return(RetStr);
 
 
 
-char *PlatformSelectForURL(char *RetStr, const char *URL)
+char *PlatformSelect(char *RetStr, TAction *Act)
 {
 ListNode *Curr;
 TPlatform *Plt;
 const char *p_filename;
 
+if (StrValid(Act->Platform) && (Act->Platform[0] != '!') ) return(CopyStr(RetStr, Act->Platform));
+
 RetStr=CopyStr(RetStr, "");
-p_filename=GetBasename(URL);
+p_filename=GetBasename(Act->URL);
 if (! StrValid(p_filename)) return(RetStr);
 
 Curr=ListGetNext(Platforms);
 while (Curr)
 {
 	Plt=(TPlatform *) Curr->Item;
-	if (StrValid(Plt->InstallerPattern))
-	{
+	if (
+				StrValid(Act->Platform) && 
+				(*Act->Platform=='!') &&
+				(strcmp(Curr->Tag, Act->Platform+1)==0)
+		)
+		{
+			/*do nothing */
+		}
+		else if (StrValid(Plt->InstallerPattern))
+		{
 		if (InList(p_filename, Plt->InstallerPattern)) RetStr=MCatStr(RetStr, Curr->Tag, ",", NULL);
-	}
+		}
 
 	Curr=ListGetNext(Curr);
 }
