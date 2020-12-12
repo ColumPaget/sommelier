@@ -25,19 +25,20 @@ return("!linux64");
 int PlatformType(const char *Platform)
 {
 const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win","gog:windows","wine", NULL};
-const char *DosPlatforms[]={"dos","msdos", NULL};
 
 if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
-if (MatchTokenFromList(Platform, DosPlatforms, 0) > -1) return(PLATFORM_DOS);
-if (strcasecmp(Platform, "zx48")==0) return(PLATFORM_ZXSPECTRUM);
-if (strcasecmp(Platform, "spectrum")==0) return(PLATFORM_ZXSPECTRUM);
+if (strcasecmp(Platform, "dos")==0) return(PLATFORM_DOS);
+if (strcasecmp(Platform, "zxspectrum")==0) return(PLATFORM_ZXSPECTRUM);
 if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
-if (strcasecmp(Platform, "gog:lin")==0) return(PLATFORM_GOGLINUX);
-if (strcasecmp(Platform, "gog:linux")==0) return(PLATFORM_GOGLINUX);
-if (strcasecmp(Platform, "gog:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
-if (strcasecmp(Platform, "gog:lindos")==0) return(PLATFORM_GOGDOS);
-if (strcasecmp(Platform, "gog:windos")==0) return(PLATFORM_GOGWINDOS);
+if (strcasecmp(Platform, "sega_megadrive")==0) return(PLATFORM_MEGADRIVE);
+if (strcasecmp(Platform, "nintendo_nes")==0) return(PLATFORM_NES);
+if (strcasecmp(Platform, "segamaster")==0) return(PLATFORM_SEGAMASTER);
+if (strcasecmp(Platform, "gameboyadvanced")==0) return(PLATFORM_GAMEBOYADVANCED);
+if (strcasecmp(Platform, "gog.com:linux")==0) return(PLATFORM_GOGLINUX);
+if (strcasecmp(Platform, "gog.com:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
+if (strcasecmp(Platform, "gog.com:lindos")==0) return(PLATFORM_GOGDOS);
+if (strcasecmp(Platform, "gog.com:windos")==0) return(PLATFORM_GOGWINDOS);
 if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
 if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
 if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
@@ -94,6 +95,39 @@ ListAddNamedItem(Platforms, Names, Plt);
 
 return(Plt);
 }
+
+
+static TPlatform *PlatformsParse(const char *Line)
+{
+TPlatform *Plt;
+char *Aliases=NULL, *Name=NULL, *Value=NULL;
+const char *ptr;
+
+Plt=(TPlatform *) calloc(1, sizeof(TPlatform));
+ptr=GetToken(Line, "\\S", &Aliases, GETTOKEN_QUOTES);
+ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
+while (ptr)
+{
+
+if (strcmp(Name, "platform")==0) Plt->ID=PlatformType(Value);
+if (strcmp(Name, "emu")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
+if (strcmp(Name, "emulator")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
+if (strcmp(Name, "dir")==0) Plt->WorkingDir=CopyStr(Plt->WorkingDir, Value);
+if (strcmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
+if (strcmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
+ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
+}
+
+ListAddNamedItem(Platforms, Aliases, Plt);
+
+Destroy(Name);
+Destroy(Value);
+Destroy(Aliases);
+
+return(Plt);
+}
+
+
 
 
 TPlatform *PlatformFind(const char *Name)
@@ -276,7 +310,7 @@ return(RetStr);
 
 void PlatformApplySettings(TAction *Act)
 {
-switch (PlatformType(Act->Platform))
+switch (Act->PlatformID)
 {
 	case PLATFORM_WINDOWS:
 		RegEditApplySettings(Act);
@@ -293,7 +327,7 @@ void PlatformFindIcon(TAction *Act)
 {
 char *Tempstr=NULL;
 
-switch (PlatformType(Act->Platform))
+switch (Act->PlatformID)
 {
 	case PLATFORM_ZXSPECTRUM:
 	break;
@@ -304,37 +338,37 @@ Destroy(Tempstr);
 
 
 
-
-void PlatformsInit()
+void PlatformsInit(const char *Path)
 {
-TPlatform *Plt;
+STREAM *S;
+char *Tempstr=NULL, *Token=NULL;
+const char *ptr;
 
 Platforms=ListCreate();
-
-Plt=PlatformsAdd("dos,msdos", PLATFORM_DOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
-
-Plt=PlatformsAdd("windows,win,win16,win32,win64,wine", PLATFORM_WINDOWS, "wine", "", "*.exe","");
-
-
-Plt=PlatformsAdd("gog:lindos", PLATFORM_GOGDOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
-Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
-Plt=PlatformsAdd("gog:windos", PLATFORM_GOGWINDOS, "dosbox $(emulator-args) -exit '$(exec-path)' $(exec-args)", "", "*.exe","");
-Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.exe");
-
-Plt=PlatformsAdd("gog:win,gog:windows", PLATFORM_WINDOWS, "wine", "", "*.exe","");
-Plt->InstallMessage=CopyStr(Plt->InstallMessage, "Some gog.com windows installers display error messages at the end of the install. Just click through these, the game should have installed okay.");
-Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.exe");
-
-Plt=PlatformsAdd("scummvm", PLATFORM_SCUMMVM, "scummvm --path='$(working-dir)' --auto-detect", "$(install-dir)", "","");
-Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
-
-Plt=PlatformsAdd("gog:scummvm", PLATFORM_GOGSCUMMVM, "scummvm --path='$(working-dir)' --auto-detect", "$(install-dir)/data/noarch/data", "","");
-
-Plt=PlatformsAdd("gog:lin,gog:linux", PLATFORM_GOGLINUX, "", "", "*.x86,*386","*.x86_64,.amd64");
-Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, "*.sh");
-
-Plt=PlatformsAdd("doom", PLATFORM_DOOM, "crispy-doom $(emulator-args) $(wads),chocolate-doom $(emulator-args) $(wads),prboom-plus $(emulator-args) $(wads)", "",  "*.wad","");
-Plt=PlatformsAdd("spectrum,zx48", PLATFORM_ZXSPECTRUM, "fuse $(exec-path),zesarux $(exec-path)", "",  "*.z80","");
-Plt=PlatformsAdd("linux32", PLATFORM_LINUX32, "$(exec-path)", "",  "","");
-Plt=PlatformsAdd("linux64", PLATFORM_LINUX64, "$(exec-path)", "",  "","");
+Tempstr=FormatPath(Tempstr, Path);
+ptr=GetToken(Tempstr, ",", &Token, GETTOKEN_QUOTES);
+while (ptr)
+{
+S=STREAMOpen(Token, "");
+if (S) break;
+ptr=GetToken(ptr, ",", &Token, GETTOKEN_QUOTES);
 }
+
+if (S)
+{
+Tempstr=STREAMReadLine(Tempstr, S);
+while (Tempstr)
+{
+StripTrailingWhitespace(Tempstr);
+PlatformsParse(Tempstr);
+Tempstr=STREAMReadLine(Tempstr, S);
+}
+STREAMClose(S);
+}
+else printf("ERROR: no platforms.conf found in:  %s\n", Path);
+
+Destroy(Tempstr);
+Destroy(Token);
+}
+
+

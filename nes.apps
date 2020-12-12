@@ -1,0 +1,13 @@
+* platform=nes category=Game;Games/NES install-type=executable
+
+Assimilate url=https://github.com/retrobrews/nes-games/raw/master/assimilate.nes
+Bootee url=https://github.com/retrobrews/nes-games/raw/master/bootee.nes
+Indivisible url=https://github.com/retrobrews/nes-games/raw/master/indivisibleonnes.nes
+Invaders url=https://github.com/retrobrews/nes-games/raw/master/invaders.nes
+JetPaco url=https://github.com/retrobrews/nes-games/raw/master/jetpaco.nes
+Lala url=https://github.com/retrobrews/nes-games/raw/master/lala.nes
+Owlia url=https://github.com/retrobrews/nes-games/raw/master/owlia.nes
+TheMadWizard url=https://github.com/retrobrews/nes-games/raw/master/themadwizard.nes
+Yun url=https://github.com/retrobrews/nes-games/blob/master/yun.nes?raw=true
+
+BladeBuster url=http://hlc6502.web.fc2.com/BB_20120301.zip install-type=zip

@@ -52,13 +52,13 @@ install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
 	cp sommelier $(HOME)/bin/
-	cp *.apps $(HOME)/.sommelier/
+	cp *.apps *.conf $(HOME)/.sommelier/
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
 	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
 	cp sommelier $(DESTDIR)$(exec_prefix)/bin/
-	cp *.apps $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp *.apps *.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 
 test:

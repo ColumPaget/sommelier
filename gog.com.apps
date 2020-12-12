@@ -5,6 +5,7 @@
 Cayne platform=gog:linux category='Game'
 SerialCleaner platform=gog:linux category='Game'
 
+Gauntlet platform=gog:windows category='Game'
 
 #these games have worked for me in native linux
 
@@ -36,11 +37,13 @@ InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data
 Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux category='Game' 
 MotherRussiaBleeds platform=gog:linux category='Game' 
+CelestianTales platform=gog:linux category='Game'
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
+AloneInTheDark platform=gog:windos category='Game' exec=INDARK.EXE 
 AnvilOfDawn platform=gog:windos category='Game' exec="ANVIL.EXE"
 BattleChess  platform=gog:lindos category='Game' exec="CHESS.EXE"
 BattleChess  platform=gog:windos category='Game' exec="CHESS.EXE"
@@ -89,17 +92,20 @@ TheDig platform=gog:scummvm category='Game'
 # windows via wine
 99LevelsToHell platform=gog:windows category='Game'
 AgeOfWonders platform=gog:windows category='Game' exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
+ABCMurders platform=gog:windows category='Game'
 AnomalyWarzoneEarth platform=gog:windows category='Game' 
 AnomalyDefenders platform=gog:windows category='Game' 
 ArxFatalis platform=gog:windows category='Game' vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Battlevoid platform=gog:windows category='Game' 
 Caravan platform=gog:windows category='Game' 
 ChaosReborn platform=gog:windows category='Game' 
+ChaosOverlords platform=gog:windows category='Game'
 CrusaderKings platform=gog:windows category='Game'
 DarkestDungeon platform=gog:windows category='Game' 
 Darkstone platform=gog:windows category='Game' exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 Defcon platform=gog:windows category='Game' 
 DinsCurse platform=gog:windows category='Game' rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
+DraculaTheResurrection platform=gog:windows category='Game'
 DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
 DungeonSiege platform=gog:windows category='Game' exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
 DungeonSiege2 platform=gog:windows category='Game' exec="DungeonSiege2.exe"
@@ -107,10 +113,7 @@ DungeonSiege3 platform=gog:windows category='Game' exec="Dungeon Siege III.exe"
 DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
 DivineDivinity platform=gog:windows category='Game' exec=div.exe
 Duskers platform=gog:windows category='Game'
-DungeonSiege platform=gog:windows category='Game'
-DungeonSiege2 platform=gog:windows category='Game'
-DungeonSiege3 platform=gog:windows category='Game'
-
+Etherlords platform=gog:windows category='Game'
 EuropaUniversalis  platform=gog:windows category='Game' exec=eu.exe
 EuropaUniversalis2 platform=gog:windows category='Game' exec=eu2.exe
 FantasyWars platform=gog:windows category='Game' exec=fw.exe
@@ -143,12 +146,14 @@ Reigns platform=gog:windows category='Game'
 RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows category='Game'
 SlayTheSpire platform=gog:windows category='Game' exec="SlayTheSpire"
+SmugglersV platform=gog:windows category='Game'
 SpaceCom platform=gog:windows category='Game' 
 SpaceEmpiresDeluxe4 platform=gog:windows category='Game' exec="Se4.exe"
 SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"
 SpaceRun platform=gog:windows category='Game' exec="oSpaceGame.exe"
 Spellforce platform=gog:windows category='Game' warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
 StarfleetCommand platform=gog:windows category='Game' vdesk=y os-version=winxp exec="sfc.exe"
+StarsInShadow platform=gog:windows category='Game'
 StarWolves platform=gog:windows category='Game' 
 StealthBastard platform=gog:windows category='Game' exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha platform=gog:windows category='Game'

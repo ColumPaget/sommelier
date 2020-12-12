@@ -6,6 +6,20 @@
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
 
 
+char *FormatPath(char *RetStr, const char *Fmt)
+{
+ListNode *Vars;
+
+Vars=ListCreate();
+SetVar(Vars, "homedir", GetCurrUserHomeDir());
+SetVar(Vars, "install_prefix", INSTALL_PREFIX);
+RetStr=SubstituteVarsInString(RetStr, Fmt, Vars, 0);
+ListDestroy(Vars, Destroy);
+
+return(RetStr);
+}
+
+
 char *URLBasename(char *RetStr, const char *URL)
 {
 char *Tempstr=NULL;

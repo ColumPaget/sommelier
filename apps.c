@@ -48,6 +48,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
 {
 char *Name=NULL, *Value=NULL, *Tempstr=NULL;
 const char *ptr;
+TPlatform *Plt;
 
 ptr=GetNameValuePair(Config," ", "=", &Name, &Value);
 while (ptr)
@@ -66,7 +67,13 @@ if (strcmp(Name,"url")==0)
 }
 else if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
 else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
-else if (strcmp(Name,"platform")==0) Act->Platform=CopyStr(Act->Platform, Value);
+else if (strcmp(Name,"platform")==0) 
+{
+	Act->Platform=CopyStr(Act->Platform, Value);
+	Plt=PlatformFind(Act->Platform);
+	if (Plt) Act->PlatformID=Plt->ID;
+	else printf("PLATFORM NOT FOUND: %s\n", Act->Platform);
+}
 else if (strcmp(Name,"install-type")==0) 
 {
 	if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
@@ -77,7 +84,6 @@ else if (strcmp(Name,"sha256")==0)
 	strlwr(Value);
 	SetVar(Act->Vars, Name, Value);
 }
-
 else if (strcmp(Name,"bundled")==0)
 {
 	//app is bundled with another app! Set the bundled flag, and set a variable
@@ -120,6 +126,8 @@ Destroy(Config);
 
 return(Act);
 }
+
+
 
 void AppsLoadFromFile(const char *Path, ListNode *Apps)
 {
@@ -176,13 +184,13 @@ char *Tempstr=NULL;
 Curr=ListFindNamedItem(Apps, ParentName);
 while (Curr)
 {
-if (strcmp(Curr->Tag, ParentName)==0)
-{
-Parent=(TAction *) Curr->Item;
-Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
-Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
-SetVar(Parent->Vars, "bundles", Tempstr);
-}
+	if (strcmp(Curr->Tag, ParentName)==0)
+	{
+		Parent=(TAction *) Curr->Item;
+		Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
+		Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
+		SetVar(Parent->Vars, "bundles", Tempstr);
+	}
 Curr=ListGetNext(Curr);
 }
 
@@ -215,20 +223,16 @@ ListNode *AppsLoad(const char *ConfigFiles)
 {
 char *Tempstr=NULL, *Token=NULL;
 const char *ptr;
-ListNode *Vars;
 glob_t Glob;
 int i;
 
 if (! Apps) Apps=ListCreate();
-Vars=ListCreate();
-SetVar(Vars, "homedir", GetCurrUserHomeDir());
-SetVar(Vars, "install_prefix", INSTALL_PREFIX);
 
-ptr=GetToken(ConfigFiles, ",", &Token, 0);
+Tempstr=FormatPath(Tempstr, ConfigFiles);
+ptr=GetToken(Tempstr, ",", &Token, 0);
 while (ptr)
 {
-	Tempstr=SubstituteVarsInString(Tempstr, Token, Vars, 0);
-	glob(Tempstr, 0, 0, &Glob);
+	glob(Token, 0, 0, &Glob);
 	for (i=0; i < Glob.gl_pathc; i++) AppsLoadFromFile(Glob.gl_pathv[i], Apps);
 	globfree(&Glob);
 	ptr=GetToken(ptr, ",", &Token, 0);
@@ -236,7 +240,6 @@ while (ptr)
 
 AppsProcessBundles(Apps);
 
-ListDestroy(Vars, Destroy);
 Destroy(Tempstr);
 Destroy(Token);
 
@@ -274,7 +277,7 @@ else Path=CopyStr(Path,ptr);
 
 //for dos and golang/go path==prefix
 //for wine path is more complex
-if (PlatformType(Act->Platform)==PLATFORM_WINDOWS)
+if (Act->PlatformID==PLATFORM_WINDOWS)
 {
 	Path=CatStr(Path,"drive_c/");
 	SetVar(Act->Vars, "drive_c",Path);
@@ -323,6 +326,7 @@ while (Curr)
 		App->Flags |= AppConfig->Flags;
 		App->InstallType |= AppConfig->InstallType;
 		App->Platform=CopyStr(App->Platform, AppConfig->Platform);
+		App->PlatformID=AppConfig->PlatformID;
 		if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
 		CopyVars(App->Vars, AppConfig->Vars);
 		result=TRUE;

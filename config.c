@@ -1,5 +1,6 @@
 #include "config.h"
 
+#define DEFAULT_PLATFORMS_PATH "$(install_prefix)/etc/sommelier.platforms,$(install_prefix)/etc/sommelier/platforms.conf,$(homedir)/.sommelier.platforms,$(homedir)/.sommelier/platforms.conf"
 #define DEFAULT_APPCONFIG_PATH "$(install_prefix)/etc/sommelier.apps,$(install_prefix)/etc/sommelier/*.apps,$(homedir)/.sommelier.apps,$(homedir)/.sommelier/*.apps"
 
 
@@ -12,6 +13,7 @@ const char *ptr;
 int i;
 
 Config=(TConfig *) calloc(1, sizeof(TConfig));
+Config->PlatformsPath=CopyStr(Config->PlatformsPath, DEFAULT_PLATFORMS_PATH);
 Config->AppConfigPath=CopyStr(Config->AppConfigPath, DEFAULT_APPCONFIG_PATH);
 
 for (i=0; CABundleEnvVars[i] !=NULL; i++)

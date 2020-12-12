@@ -218,9 +218,9 @@ LibUsefulSetValue("HTTP:UserAgent","Wget/1.19.2");
 //LibUsefulSetValue("HTTP:Debug", "Y");
 
 ConfigInit();
-PlatformsInit();
 
 Acts=ParseCommandLine(argc, argv);
+PlatformsInit(Config->PlatformsPath);
 AppsLoad(Config->AppConfigPath);
 
 Curr=ListGetNext(Acts);

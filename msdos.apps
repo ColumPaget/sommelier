@@ -19,4 +19,7 @@ CloneInvader platform=dos url=https://image.dosgamesarchive.com/games/cloneinv.z
 4DPrinceOfPersia platform=dos url=http://www.completelyfreesoftware.com/software/4dprince.zip  exec='4D_PRIN.EXE' category='Game' sha256='9a85556ff68a01902914e7b395bee658107198c5ff2c6378d7be8ef943de67f0' 
 DigiClock platform=dos url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip  exec='DIGITAL.EXE' category='Utility' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 
 
+StarHammer platform=dos url=https://archive.org/download/StarHammer/shammer.zip exec=HAMMER.EXE
+ThorsHammer platform=dos url=https://archive.org/download/ThorsHammer/thor10.zip exec=THOR.EXE
+Xyphr platform=dos url=https://archive.org/download/Xyphr_1020/Xyphrsw1991eugeneLinaction.ZIP exec=XYPHR.EXE
 

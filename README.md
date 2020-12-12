@@ -173,6 +173,14 @@ gog:windos
  : msdos app from from gog.com that's packaged for windows
 gog:scummvm
  : scummvm adventure game from from gog.com that's packaged for linux
+megadrive
+ : sega megadrive games run under the dgen or mednafen emulators
+segamaster
+ : sega master system run under the mednafen emulator
+gba
+ : game boy advanced games run under mgba or mednafen emulators
+nes
+ : nintendo entertainment system games run under the dnes or mednafen emulators
 
 
 PROXY URLS

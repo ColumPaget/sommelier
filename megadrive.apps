@@ -1,0 +1,9 @@
+* platform=megadrive category=Game;Games/MegaDrive install-type=executable
+
+Barbarian url=https://github.com/retrobrews/md-games/raw/master/barbarian.bin
+UltimateTetris url=https://github.com/retrobrews/md-games/raw/master/ultimatetetris.bin
+MegamindTris url=https://github.com/retrobrews/md-games/raw/master/megamindtris.bin
+PapiCommandTennis url=https://github.com/retrobrews/md-games/raw/master/papicommandotennis.bin
+OldTowers url=https://github.com/retrobrews/md-games/raw/master/oldtowers.bin
+IKPlusDeluxe url=https://github.com/retrobrews/md-games/raw/master/ikplusdeluxe.bin
+OmegaBlast url=https://drive.google.com/uc?export=download&id=1NEB8T38ZY1PDqEBcAB3g-cwjWZaMhLuV

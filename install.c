@@ -140,6 +140,7 @@ if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
 //full path given to executable, so it must exist at this path
 if (StrValid(Exec) && *Exec == '/')
 {
+	//do nothing
 }
 else Exec=FindProgramGoFishing(Exec, Act);
 
@@ -180,7 +181,7 @@ int RegFlags=0;
 printf("INSTALLER PATH: %s\n", ptr);
 	if (StrValid(ptr)) 
 	{
-		switch (PlatformType(Act->Platform))
+		switch (Act->PlatformID)
 		{
 			case PLATFORM_DOS:
 			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
@@ -213,7 +214,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 		RunProgramAndConsumeOutput(Cmd);
 	}
 
-	if (PlatformType(Act->Platform)==PLATFORM_WINDOWS)
+	if (Act->PlatformID==PLATFORM_WINDOWS)
 	{
 	if (RegFlags & REG_VDESK)	
 	{
@@ -239,7 +240,7 @@ char *Tempstr=NULL, *FilesToExtract=NULL;
 const char *ptr;
 int ForcedFileType=FILETYPE_UNKNOWN;
 
-	switch (PlatformType(Act->Platform))
+	switch (Act->PlatformID)
 	{	
 		case PLATFORM_SCUMMVM:
 			ForcedFileType=FILETYPE_ZIP;
@@ -421,7 +422,7 @@ int len;
 	PostProcessInstall(Act);
 
 	Path=FindProgram(Path, Act);
-	switch (PlatformType(Act->Platform))
+	switch (Act->PlatformID)
 	{
 		case PLATFORM_WINDOWS:
 		//reconfigure path to be from our wine 'drive_c' rather than from system root
@@ -444,6 +445,15 @@ int len;
     SetVar(Act->Vars, "working-dir", Tempstr);
 		break;
 
+		case PLATFORM_GOGSCUMMVM:
+		Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"), "/data/noarch/data", NULL);
+    SetVar(Act->Vars, "working-dir", Path);
+		break;
+
+		case PLATFORM_SCUMMVM:
+		Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"));
+    SetVar(Act->Vars, "working-dir", Path);
+		break;
 
 		default:
 		//is a working dir set in the app config?
@@ -473,8 +483,8 @@ int len;
 
 	if (StrValid(Path))
 	{
-	Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
-	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", Tempstr);
+	//Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
+	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
 	SetVar(Act->Vars, "exec-path", Path);
 
 	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
@@ -744,7 +754,7 @@ if (! StrValid(Act->Platform))
 {
 	TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
 }
-else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
+else if (Act->PlatformID==PLATFORM_UNKNOWN)
 {
 	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
 	TerminalPutStr(Tempstr, NULL);
@@ -780,7 +790,7 @@ else
 	Path=AppFormatPath(Path, Act);
 	MakeDirPath(Path, 0700);
 	
-	if (PlatformType(Act->Platform)==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
+	if (Act->PlatformID==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
 	InstallRequiredDependancies(Act);
 	
 	InstallSingleItem(Act);
@@ -807,7 +817,7 @@ if (! StrValid(Act->Platform))
 {
 	TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
 }
-else if (PlatformType(Act->Platform)==PLATFORM_UNKNOWN)
+else if (Act->PlatformID==PLATFORM_UNKNOWN)
 {
 	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
 	TerminalPutStr(Tempstr, NULL);

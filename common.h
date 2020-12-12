@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "6.1"
+#define VERSION "7.0"
 
 
 #define INSTALL_RUN 0
@@ -43,6 +43,7 @@ typedef struct
 int Type;
 int Flags;
 int InstallType;
+int PlatformID;
 char *Name;
 char *URL;
 char *Root;
@@ -58,7 +59,7 @@ ListNode *Vars;
 } TAction;
 
 
-
+char *FormatPath(char *RetStr, const char *Fmt);
 char *URLBasename(char *RetStr, const char *URL);
 int InList(const char *Item, const char *List);
 TAction *ActionCreate(int Type, const char *Name);

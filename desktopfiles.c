@@ -115,7 +115,7 @@ if (S)
 {
 fchmod(S->out_fd, 0744);
 
-switch (PlatformType(Act->Platform))
+switch (Act->PlatformID)
 {
 	case PLATFORM_WINDOWS:
 		//for windows we must override the found exec-path to be in windows format
@@ -139,6 +139,10 @@ switch (PlatformType(Act->Platform))
 	case PLATFORM_GOGWINDOS:
 	case PLATFORM_DOOM:
 	case PLATFORM_ZXSPECTRUM:
+	case PLATFORM_MEGADRIVE:
+	case PLATFORM_NES:
+	case PLATFORM_SEGAMASTER:
+	case PLATFORM_GAMEBOYADVANCED:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
@@ -154,7 +158,7 @@ switch (PlatformType(Act->Platform))
 		if (StrValid(ptr))
 		{
 		//Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
-		Tempstr=SubstituteVarsInString(Tempstr, "$(platform-vars) $(exec-vars) $(exec-path) $(exec-args)", Act->Vars, 0);
+		Tempstr=SubstituteVarsInString(Tempstr, "WHATEVER= $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
 
@@ -164,7 +168,7 @@ switch (PlatformType(Act->Platform))
 		ptr=GetVar(Act->Vars, "exec64");
 		if (StrValid(ptr))
 		{
-		Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec64)", Act->Vars, 0);
+		Tempstr=SubstituteVarsInString(Tempstr, "'$(exec-dir)/$(exec64)'", Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);
 		StripTrailingWhitespace(Tempstr);
 

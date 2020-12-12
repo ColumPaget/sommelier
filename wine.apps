@@ -233,3 +233,5 @@ Transcendance platform=windows url=http://kronosaur.com/downloads/Transcendence.
 Glest platform=windows url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec=glest.exe warn="Installer shows some errors while running, just select 'ignore'. Program seems to work okay"
 
 FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment="Bittorrent media downloader/player"
+
+PrivateerRemake platform=windows url=https://archive.org/download/Privateer_Remake/privateer1.2.exe

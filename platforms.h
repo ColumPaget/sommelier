@@ -16,6 +16,10 @@
 #define PLATFORM_LINUX32   32
 #define PLATFORM_LINUX64   64
 #define PLATFORM_ZXSPECTRUM  90
+#define PLATFORM_MEGADRIVE   100
+#define PLATFORM_NES   101
+#define PLATFORM_SEGAMASTER   102
+#define PLATFORM_GAMEBOYADVANCED   103
 
 #define PLATFORM_INFO_INSTALL_MESSAGE 1
 #define PLATFORM_INFO_EXE_SEARCH_PATTERN 2
@@ -42,6 +46,7 @@ char *InstallerPattern;
 } TPlatform;
 
 const char *PlatformDefault();
+TPlatform *PlatformFind(const char *Name);
 int PlatformType(const char *Platform);
 int PlatformBitWidth(const char *Platform);
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);
@@ -50,6 +55,6 @@ char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);
 char *PlatformSelect(char *RetStr, TAction *Act);
 
 void PlatformApplySettings(TAction *Act);
-void PlatformsInit();
+void PlatformsInit(const char *Path);
 
 #endif

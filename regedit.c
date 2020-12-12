@@ -166,7 +166,7 @@ const char *p_Value;
 int Flags=0;
 
 //only do this for windows apps
-if (PlatformType(Act->Platform) != PLATFORM_WINDOWS) return;
+if (Act->PlatformID != PLATFORM_WINDOWS) return;
 
 Curr=ListGetNext(Act->Vars);
 while (Curr)
