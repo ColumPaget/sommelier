@@ -131,28 +131,9 @@ switch (Act->PlatformID)
 		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
 
-	//emulated apps that aren't 'wine'
-	case PLATFORM_DOS:
-	case PLATFORM_SCUMMVM:
-	case PLATFORM_GOGSCUMMVM:
-	case PLATFORM_GOGDOS:
-	case PLATFORM_GOGWINDOS:
-	case PLATFORM_DOOM:
-	case PLATFORM_ZXSPECTRUM:
-	case PLATFORM_MEGADRIVE:
-	case PLATFORM_NES:
-	case PLATFORM_SEGAMASTER:
-	case PLATFORM_GAMEBOYADVANCED:
-		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
-		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
-		StripLeadingWhitespace(Tempstr);
-		StripTrailingWhitespace(Tempstr);
-		SetVar(Act->Vars, "invocation", Tempstr);
-		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
-	break;
-
 	//native apps
-	default:
+	case PLATFORM_LINUX32:
+	case PLATFORM_LINUX64:
 		ptr=GetVar(Act->Vars, "exec");
 
 		if (StrValid(ptr))
@@ -176,6 +157,29 @@ switch (Act->PlatformID)
 		}
 		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 	break;
+
+	default:
+	//emulated apps that aren't 'wine'
+	case PLATFORM_DOS:
+	case PLATFORM_SCUMMVM:
+	case PLATFORM_GOGSCUMMVM:
+	case PLATFORM_GOGDOS:
+	case PLATFORM_GOGWINDOS:
+	case PLATFORM_DOOM:
+	case PLATFORM_ZXSPECTRUM:
+	case PLATFORM_MEGADRIVE:
+	case PLATFORM_NES:
+	case PLATFORM_SEGAMASTER:
+	case PLATFORM_GAMEBOYADVANCED:
+		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
+		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
+		StripLeadingWhitespace(Tempstr);
+		StripTrailingWhitespace(Tempstr);
+		SetVar(Act->Vars, "invocation", Tempstr);
+		SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+	break;
+
+
 }
 
 

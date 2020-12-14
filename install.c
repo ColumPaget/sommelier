@@ -269,6 +269,26 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 
 	switch (IdentifyFileType(Path, ForcedFileType))
 	{
+		case FILETYPE_7ZIP:
+		Tempstr=MCopyStr(Tempstr, "7za x '",Path, "' ", FilesToExtract, NULL);
+		printf("unpacking: %s\n",GetBasename(Path));
+		RunProgramAndConsumeOutput(Tempstr);
+
+		//for zipfiles and the like the installer has to be found. Either it's
+		//specified in the app config, as 'installer' 
+		//or we go looking for certain common filenames
+
+		ptr=GetVar(Act->Vars, "installer");
+		if (! ptr) ptr="setup.exe,install.exe,*.msi";
+		Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
+		if (StrValid(Tempstr)) 
+		{
+			printf("Found installer program: %s\n", Tempstr);
+			SetVar(Act->Vars, "installer-path", Tempstr);
+			RunInstallers(Act);
+		}
+		break;
+
 		case FILETYPE_ZIP:
 		Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));

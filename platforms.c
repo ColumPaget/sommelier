@@ -42,6 +42,7 @@ if (strcasecmp(Platform, "gog.com:windos")==0) return(PLATFORM_GOGWINDOS);
 if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
 if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
 if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
+if (strcasecmp(Platform, "ps1")==0) return(PLATFORM_PLAYSTATION1);
 
 return(PLATFORM_UNKNOWN);
 }

@@ -125,6 +125,7 @@ if (strcmp(Tempstr, "\x50\x4b\x03\x04")==0) FT=FILETYPE_ZIP;
 else if (strcmp(Tempstr, "\xd0\xcf\x11\xe0")==0) FT=FILETYPE_MSI;
 else if (strncmp(Tempstr, "PE", 2)==0) FT=FILETYPE_PE;
 else if (strncmp(Tempstr, "MZ", 2)==0) FT=FILETYPE_MZ;
+else if (strncmp(Tempstr, "7z", 2)==0) FT=FILETYPE_7ZIP;
 
 STREAMClose(S);
 }
@@ -182,8 +183,7 @@ void RunProgramAndConsumeOutput(const char *Cmd)
 STREAM *S;
 char *Tempstr=NULL;
 
-Tempstr=MCopyStr(Tempstr, Cmd, " 2>&1", NULL);
-S=STREAMSpawnCommand(Tempstr, "");
+S=STREAMSpawnCommand(Cmd, "noshell +stderr");
 if (S)
 {
   Tempstr=STREAMReadLine(Tempstr, S);
