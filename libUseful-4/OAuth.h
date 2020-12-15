@@ -14,14 +14,14 @@ OAuth is not really a standard, most sites seem to implement it differently. The
 implementing OAuth 2.0 authentication. It's complicated. More than it should be.
 
 OAuth works via a system of granting 'access tokens' to an application. In order to grant such a token
-the user normally has to log in via a browser and confirm the grant. This has the advantage of never 
+the user normally has to log in via a browser and confirm the grant. This has the advantage of never
 storing the users real username and password, all that's stored is the access token. Some sites revoke
 access tokens after a period of time, but they supply a 'refresh token' in addition to the access token.
 The application can use the refresh token to get a fresh access token without user involvement.
 
 In order for an application to identify itself it usually uses an API key, or a 'client id' and 'client secret'.
 
-There's a lot of different oauth implementations, called 'flows'. libUseful knows of several 
+There's a lot of different oauth implementations, called 'flows'. libUseful knows of several
 different flow types, more will likely be added in future. The most common flow (e.g. used by google)
 is called 'auth flow' and you use it like this:
 
@@ -41,7 +41,7 @@ printf("AccessToken: %s RefreshToken: %s\n",Ctx->AccessToken, Ctx->RefreshToken)
 
 
 
-OAuthCreate sets up an OAuth context. The first argument is the flow type, the second argument is a unique name for this oauth session, then come the client-id and client-secret which will have been provided by the website when you registered the application. The forth argument is what's known as a 'scope', google is unusual in sometimes using URLs as scopes, normally it's a word like 'basic' or 'advanced'. The scope defines what subset of permissions you want to use on the site. Finally there's the 'refresh URL', which is a URL to connect to to exchange a refresh token for another access token. 
+OAuthCreate sets up an OAuth context. The first argument is the flow type, the second argument is a unique name for this oauth session, then come the client-id and client-secret which will have been provided by the website when you registered the application. The forth argument is what's known as a 'scope', google is unusual in sometimes using URLs as scopes, normally it's a word like 'basic' or 'advanced'. The scope defines what subset of permissions you want to use on the site. Finally there's the 'refresh URL', which is a URL to connect to to exchange a refresh token for another access token.
 
 The first step of the process, 'OAuthStage1' results in a 'VerifyURL' that the user must go to and type in a 'VerifyCode'. They will then be asked to acknowledge that they want to grant access to this application. If they grant access then they'll be given another code which they then paste back into the application. The application then uses this code to finalize the transaction and get an access token and perhaps a refresh token too (depending on the site's oauth implementation).
 
@@ -61,7 +61,7 @@ an OAUTH object contains a member called 'SavePath', and this holds the path to 
 Ctx=OAuthCreate("auth","gdrive", GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,"https://www.googleapis.com/auth/drive", "https://www.googleapis.com/oauth2/v4/token");
 OAuthLoad(Ctx, "");
 
-The second argument to OAuthLoad is a path that overrides Ctx->SavePath. If this argument is left blank the value of Ctx->SavePath is used. 
+The second argument to OAuthLoad is a path that overrides Ctx->SavePath. If this argument is left blank the value of Ctx->SavePath is used.
 
 This means that in normal usage, after the initial getting the access token, you just call OAuthCreate and OAuthLoad, and everything should update automatically. You should only have to re-authenticate if your credential file gets deleted or something.
 
@@ -77,7 +77,7 @@ OAuthListen(Ctx, 8989, "https://www.deviantart.com/oauth2/token", 0);
 
 
 
-The user is sent to the VerifyURL, but in this method they won't be asked to enter a code. If the application can launch a webrowser itself it can just do that with the VerifyURL passed to the browser on the command line, and not have to tell the user to do so. The user grants permission in the browser, and the browser connects to the 'redirect_uri' of "http://localhost:8989/google.callback" and pushes the secret code that's needed to complete authorization. 
+The user is sent to the VerifyURL, but in this method they won't be asked to enter a code. If the application can launch a webrowser itself it can just do that with the VerifyURL passed to the browser on the command line, and not have to tell the user to do so. The user grants permission in the browser, and the browser connects to the 'redirect_uri' of "http://localhost:8989/google.callback" and pushes the secret code that's needed to complete authorization.
 
 
 

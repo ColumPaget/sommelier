@@ -22,23 +22,41 @@ static DH *CachedDH=NULL;
 
 void HandleSSLError(int err)
 {
-switch (err)
-{
-case SSL_ERROR_NONE: printf("none\n");break;
-case SSL_ERROR_ZERO_RETURN: printf("zero\n");break;
-case SSL_ERROR_WANT_READ: printf("wr\n");break;
-case SSL_ERROR_WANT_WRITE: printf("ww\n");break;
-case SSL_ERROR_WANT_CONNECT: printf("connect\n");break;
-case SSL_ERROR_WANT_ACCEPT: printf("accept\n");break;
-case SSL_ERROR_WANT_X509_LOOKUP: ("lookup\n");break;
-/*
-case SSL_ERROR_WANT_ASYNC: printf("async\n");break;
-case SSL_ERROR_WANT_ASYNC_JOB: printf("job\n");break;
-case SSL_ERROR_WANT_CLIENT_HELLO_CB: printf("cb\n");break;
-*/
-case SSL_ERROR_SYSCALL: printf("syscall\n");break;
-case SSL_ERROR_SSL: ("ssl\n");break;
-}
+    switch (err)
+    {
+    case SSL_ERROR_NONE:
+        printf("none\n");
+        break;
+    case SSL_ERROR_ZERO_RETURN:
+        printf("zero\n");
+        break;
+    case SSL_ERROR_WANT_READ:
+        printf("wr\n");
+        break;
+    case SSL_ERROR_WANT_WRITE:
+        printf("ww\n");
+        break;
+    case SSL_ERROR_WANT_CONNECT:
+        printf("connect\n");
+        break;
+    case SSL_ERROR_WANT_ACCEPT:
+        printf("accept\n");
+        break;
+    case SSL_ERROR_WANT_X509_LOOKUP:
+        ("lookup\n");
+        break;
+    /*
+    case SSL_ERROR_WANT_ASYNC: printf("async\n");break;
+    case SSL_ERROR_WANT_ASYNC_JOB: printf("job\n");break;
+    case SSL_ERROR_WANT_CLIENT_HELLO_CB: printf("cb\n");break;
+    */
+    case SSL_ERROR_SYSCALL:
+        printf("syscall\n");
+        break;
+    case SSL_ERROR_SSL:
+        ("ssl\n");
+        break;
+    }
 }
 
 void OpenSSLReseedRandom()
@@ -614,10 +632,10 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
                 OpenSSLSetOptions(S, ssl, SSL_OP_SINGLE_DH_USE|SSL_OP_CIPHER_SERVER_PREFERENCE);
 
                 SSL_set_fd(ssl,S->in_fd);
-              
- 		            STREAMSetItem(S,"LIBUSEFUL-SSL:CTX",(void *) ctx);
-   			        STREAMSetItem(S,"LIBUSEFUL-SSL:OBJ",(void *) ssl);
- 
+
+                STREAMSetItem(S,"LIBUSEFUL-SSL:CTX",(void *) ctx);
+                STREAMSetItem(S,"LIBUSEFUL-SSL:OBJ",(void *) ssl);
+
                 ptr=LibUsefulGetValue("SSL:PermittedCiphers");
                 if (StrValid(ptr)) SSL_set_cipher_list(ssl, ptr);
                 SSL_set_accept_state(ssl);
@@ -680,14 +698,14 @@ int OpenSSLIsPeerAuth(STREAM *S)
 
 void OpenSSLClose(STREAM *S)
 {
-void *ptr;
+    void *ptr;
 
 #ifdef HAVE_LIBSSL
-ptr=STREAMGetItem(S,"LIBUSEFUL-SSL:OBJ");
-if (ptr) SSL_free((SSL *) ptr);
+    ptr=STREAMGetItem(S,"LIBUSEFUL-SSL:OBJ");
+    if (ptr) SSL_free((SSL *) ptr);
 
-ptr=STREAMGetItem(S,"LIBUSEFUL-SSL:CTX");
-if (ptr) SSL_CTX_free((SSL_CTX *) ptr);
+    ptr=STREAMGetItem(S,"LIBUSEFUL-SSL:CTX");
+    if (ptr) SSL_CTX_free((SSL_CTX *) ptr);
 #endif
 }
 
@@ -695,30 +713,30 @@ if (ptr) SSL_CTX_free((SSL_CTX *) ptr);
 
 int OpenSSLAutoDetect(STREAM *S)
 {
-int result, val, RetVal=FALSE;
-char *Tempstr=NULL;
+    int result, val, RetVal=FALSE;
+    char *Tempstr=NULL;
 
-val=S->Timeout;
-STREAMSetTimeout(S, 1);
+    val=S->Timeout;
+    STREAMSetTimeout(S, 1);
 
-result=STREAMCountWaitingBytes(S);
-if (result > 1)
-{
-   Tempstr=SetStrLen(Tempstr,255);
-   result=recv(S->in_fd, Tempstr, 2, MSG_PEEK);
-   if (result >1)
-   {
-     if (memcmp(Tempstr, "\x16\x03",2)==0)
-     {
-     	//it's SSL/TLS
-			DoSSLServerNegotiation(S, 0);
-			RetVal=TRUE;
-     }
-   }
-}
-STREAMSetTimeout(S, val);
+    result=STREAMCountWaitingBytes(S);
+    if (result > 1)
+    {
+        Tempstr=SetStrLen(Tempstr,255);
+        result=recv(S->in_fd, Tempstr, 2, MSG_PEEK);
+        if (result >1)
+        {
+            if (memcmp(Tempstr, "\x16\x03",2)==0)
+            {
+                //it's SSL/TLS
+                DoSSLServerNegotiation(S, 0);
+                RetVal=TRUE;
+            }
+        }
+    }
+    STREAMSetTimeout(S, val);
 
-Destroy(Tempstr);
+    Destroy(Tempstr);
 
-return(RetVal);
+    return(RetVal);
 }

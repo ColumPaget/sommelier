@@ -9,8 +9,8 @@
 //these keycodes try not to clash with those in linux/input.h. The linux/evdev system doesn't
 //use keycodes for shift and control modified keys, instead it uses a seperate modifier value
 //so the shift- or control- values here are given values high enough to put them out of the
-//keycode range of linux/input, whereas individual keypress values, like TKEY_F1 are only 
-//defined if they are not already defined (probably because linux/input.h isn't present) 
+//keycode range of linux/input, whereas individual keypress values, like TKEY_F1 are only
+//defined if they are not already defined (probably because linux/input.h isn't present)
 
 
 #define KEYMOD_SHIFT 1
@@ -29,7 +29,7 @@
 #define TKEY_F1 0x111
 #endif
 
-#ifndef TKEY_F2 
+#ifndef TKEY_F2
 #define TKEY_F2 0x112
 #endif
 

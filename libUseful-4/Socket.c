@@ -103,25 +103,25 @@ const char *LookupHostIP(const char *Host)
 
 ListNode *LookupHostIPList(const char *Host)
 {
-struct hostent *hostdata;
-ListNode *List;
-char **ptr;
-  
-   hostdata=gethostbyname(Host);
-   if (!hostdata) 
-   {
-     return(NULL);
-   }
+    struct hostent *hostdata;
+    ListNode *List;
+    char **ptr;
 
-List=ListCreate();
+    hostdata=gethostbyname(Host);
+    if (!hostdata)
+    {
+        return(NULL);
+    }
+
+    List=ListCreate();
 //inet_ntoa shouldn't need this cast to 'char *', but it emitts a warning
 //without it
-for (ptr=hostdata->h_addr_list; *ptr !=NULL; ptr++)
-{
- ListAddItem(List, CopyStr(NULL,  (char *) inet_ntoa(*(struct in_addr *) *ptr)));
-}
+    for (ptr=hostdata->h_addr_list; *ptr !=NULL; ptr++)
+    {
+        ListAddItem(List, CopyStr(NULL,  (char *) inet_ntoa(*(struct in_addr *) *ptr)));
+    }
 
-return(List);
+    return(List);
 }
 
 
@@ -424,9 +424,9 @@ char *GetInterfaceDetails(char *RetStr, const char *Interface)
 {
     int fd, result;
     struct ifreq ifr;
-		char *Tempstr=NULL;
+    char *Tempstr=NULL;
 
-		RetStr=CopyStr(RetStr, "");
+    RetStr=CopyStr(RetStr, "");
     if (! StrValid(Interface)) return(RetStr);
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd==-1) return(RetStr);
@@ -435,25 +435,25 @@ char *GetInterfaceDetails(char *RetStr, const char *Interface)
     strncpy(ifr.ifr_name, Interface, IFNAMSIZ-1);
 
     result=ioctl(fd, SIOCGIFADDR, &ifr);
-		if (result > -1) RetStr=MCopyStr(RetStr, "ip4address=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr), " ", NULL);
+    if (result > -1) RetStr=MCopyStr(RetStr, "ip4address=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFBRDADDR, &ifr);
-		RetStr=MCatStr(RetStr, "ip4broadcast=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
+    RetStr=MCatStr(RetStr, "ip4broadcast=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFNETMASK, &ifr);
-		RetStr=MCatStr(RetStr, "ip4netmask=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
+    RetStr=MCatStr(RetStr, "ip4netmask=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFDSTADDR, &ifr);
-		RetStr=MCatStr(RetStr, "ip4destaddr=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_dstaddr)->sin_addr), " ", NULL);
+    RetStr=MCatStr(RetStr, "ip4destaddr=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_dstaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFMTU, &ifr);
-		Tempstr=FormatStr(Tempstr, "%d", ifr.ifr_mtu);
-		RetStr=MCatStr(RetStr, "ip4destaddr=", Tempstr, " ", NULL);
+    Tempstr=FormatStr(Tempstr, "%d", ifr.ifr_mtu);
+    RetStr=MCatStr(RetStr, "ip4destaddr=", Tempstr, " ", NULL);
 
     close(fd);
 
-		Destroy(Tempstr);
-	return(RetStr);
+    Destroy(Tempstr);
+    return(RetStr);
 }
 
 
@@ -585,7 +585,7 @@ int UDPSend(int sock, const char *Host, int Port, char *Data, int len)
     salen=SockAddrCreate(&sa, Host, Port);
     if (salen==0) return(-1);
 
-    result=sendto(sock, Data, len, 0, sa , salen);
+    result=sendto(sock, Data, len, 0, sa, salen);
     free(sa);
     return(result);
 }
@@ -793,8 +793,8 @@ STREAM *STREAMServerAccept(STREAM *Serv)
     S=STREAMFromSock(fd, type, Tempstr, DestIP, DestPort);
     if (type==STREAM_TYPE_TCP_ACCEPT)
     {
-    	//if TLS autodetection enabled, perform it now
-    	if (Serv->Flags & SF_TLS_AUTO) OpenSSLAutoDetect(S);
+        //if TLS autodetection enabled, perform it now
+        if (Serv->Flags & SF_TLS_AUTO) OpenSSLAutoDetect(S);
     }
 
     DestroyString(Tempstr);
@@ -934,24 +934,24 @@ int IPReconnect(int sock, const char *Host, int Port, int Flags)
 
 int TCPConnectWithAttributes(const char *LocalHost, const char *Host, int Port, int Flags, int TTL, int ToS)
 {
-const char *p_LocalHost=LocalHost;
-int sock, result;
+    const char *p_LocalHost=LocalHost;
+    int sock, result;
 
-if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
+    if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
 
-sock=BindSock(SOCK_STREAM, p_LocalHost, 0, 0);
+    sock=BindSock(SOCK_STREAM, p_LocalHost, 0, 0);
 
-if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
-if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
+    if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
+    if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
 
-result=IPReconnect(sock,Host,Port,Flags);
-if (result==-1)
-{
-  close(sock);
-  return(-1);
-}
+    result=IPReconnect(sock,Host,Port,Flags);
+    if (result==-1)
+    {
+        close(sock);
+        return(-1);
+    }
 
-return(sock);
+    return(sock);
 }
 
 
@@ -1201,8 +1201,8 @@ int STREAMConnect(STREAM *S, const char *URL, const char *Config)
     const char *ptr;
     int Flags=0;
 
-		ptr=LibUsefulGetValue("TCP:Keepalives");
-		if ( StrValid(ptr) &&  (! strtobool(ptr)) ) Flags |= SOCK_NOKEEPALIVE;
+    ptr=LibUsefulGetValue("TCP:Keepalives");
+    if ( StrValid(ptr) &&  (! strtobool(ptr)) ) Flags |= SOCK_NOKEEPALIVE;
 
     ptr=GetNameValuePair(Config," ","=",&Name,&Value);
     while (ptr)

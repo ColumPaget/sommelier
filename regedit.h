@@ -8,7 +8,7 @@
 #define REG_NO_GRAB 4
 #define REG_VDESK   8
 #define REG_NO_VDESK   16
-#define REG_FONT_SMOOTH 32 
+#define REG_FONT_SMOOTH 32
 #define REG_NO_FONT_SMOOTH 64
 #define REG_GDI3D 128
 #define REG_OPENGL3D 256

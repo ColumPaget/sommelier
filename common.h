@@ -41,22 +41,22 @@ typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE
 
 typedef struct
 {
-int Type;
-int Flags;
-int InstallType;
-int PlatformID;
-char *Name;
-char *URL;
-char *Root;
-char *DownName;
-char *InstallPath;
-char *SrcPath;
-char *Exec;
-char *Exec64;
-char *Args;
-char *Platform;
-char *OSVersion;
-ListNode *Vars;
+    int Type;
+    int Flags;
+    int InstallType;
+    int PlatformID;
+    char *Name;
+    char *URL;
+    char *Root;
+    char *DownName;
+    char *InstallPath;
+    char *SrcPath;
+    char *Exec;
+    char *Exec64;
+    char *Args;
+    char *Platform;
+    char *OSVersion;
+    ListNode *Vars;
 } TAction;
 
 

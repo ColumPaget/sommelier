@@ -5,10 +5,10 @@
 
 typedef struct
 {
-int Flags;
-char *PlatformsPath;
-char *AppConfigPath;
-char *InstallerCache;
+    int Flags;
+    char *PlatformsPath;
+    char *AppConfigPath;
+    char *InstallerCache;
 } TConfig;
 
 extern TConfig *Config;

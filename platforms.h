@@ -35,15 +35,15 @@
 
 typedef struct
 {
-int Flags;
-int ID;
-char *Emulators;
-char *InstallMessage;
-char *WorkingDir;
-char *UnpackDir;
-char *ExeSearchPattern;
-char *Exe64SearchPattern;
-char *InstallerPattern;
+    int Flags;
+    int ID;
+    char *Emulators;
+    char *InstallMessage;
+    char *WorkingDir;
+    char *UnpackDir;
+    char *ExeSearchPattern;
+    char *Exe64SearchPattern;
+    char *InstallerPattern;
 } TPlatform;
 
 const char *PlatformDefault();

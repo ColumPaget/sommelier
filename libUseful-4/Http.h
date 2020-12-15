@@ -89,7 +89,7 @@ Note, 'hostauth' is not a name/value pair, just a config flag that enables sendi
 #define HTTP_TRY_HTTPS 64   // try to connect with https even if connection says http
 #define HTTP_REQ_HTTPS 128  // fail if connection isn't HTTPS
 #define HTTP_KEEPALIVE 256  // use HTTP keepalive 
-#define HTTP_POSTARGS  512  
+#define HTTP_POSTARGS  512
 #define HTTP_SSL 1024          //flag indicates SSL is in use, not set by user
 #define HTTP_SSL_REWRITE 2048
 #define HTTP_PROXY 4096
@@ -149,7 +149,7 @@ typedef struct
     char *Authorization;
     char *ProxyAuthorization;
     char *ConnectionChain;
-		char *UserAgent;
+    char *UserAgent;
     STREAM *S;
 } HTTPInfoStruct;
 

@@ -432,7 +432,7 @@ int ConnectHopSSH(STREAM *S, int Type, const char *ProxyURL, const char *Destina
             S->out_fd=tmpS->out_fd;
         }
 
-				//STREAMDestroy is like STREAMClose, except it doesn't close any file descriptors
+        //STREAMDestroy is like STREAMClose, except it doesn't close any file descriptors
         if (tmpS) STREAMDestroy(tmpS);
     }
 

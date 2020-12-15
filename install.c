@@ -12,116 +12,116 @@
 
 static void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions, ListNode *Founds)
 {
-char *Tempstr=NULL;
-struct stat FStat;
-glob_t Glob;
-int i;
-const char *IgnoreDirs[]={"windows", "Windows NT", "Internet Explorer", "Windows Media Player", NULL};
-const char *ptr, *p_Basename;
+    char *Tempstr=NULL;
+    struct stat FStat;
+    glob_t Glob;
+    int i;
+    const char *IgnoreDirs[]= {"windows", "Windows NT", "Internet Explorer", "Windows Media Player", NULL};
+    const char *ptr, *p_Basename;
 
-Tempstr=CopyStr(Tempstr, Path);
-Tempstr=SlashTerminateDirectoryPath(Tempstr);
-Tempstr=CatStr(Tempstr, "*");
+    Tempstr=CopyStr(Tempstr, Path);
+    Tempstr=SlashTerminateDirectoryPath(Tempstr);
+    Tempstr=CatStr(Tempstr, "*");
 
-glob(Tempstr, 0, 0, &Glob);
-for (i=0; i < Glob.gl_pathc; i++)
-{
-	lstat(Glob.gl_pathv[i], &FStat);
-	p_Basename=GetBasename(Glob.gl_pathv[i]);
-	if (p_Basename)
-	{
-		if (S_ISLNK(FStat.st_mode)) /*Do nothing, don't follow links */ ;
-		else if (S_ISDIR(FStat.st_mode))
-		{
-			if (MatchTokenFromList(p_Basename, IgnoreDirs, 0) == -1) FindFiles(Glob.gl_pathv[i], Inclusions, Exclusions, Founds);
-		}		
-		else 
-		{
-			Tempstr=CopyStr(Tempstr, p_Basename);
-			//must strlwr here, as InList will do so to Inclusions and Exclusions
-			strlwr(Tempstr);
-			if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) ) 
-			{
-				//can't use 'SetVar' here as multiple files might have the same basename, but different paths
-							ListAddNamedItem(Founds, p_Basename, CopyStr(NULL, Glob.gl_pathv[i]));
-			}
-		}
-	}	
-}
-globfree(&Glob);
-Destroy(Tempstr);
+    glob(Tempstr, 0, 0, &Glob);
+    for (i=0; i < Glob.gl_pathc; i++)
+    {
+        lstat(Glob.gl_pathv[i], &FStat);
+        p_Basename=GetBasename(Glob.gl_pathv[i]);
+        if (p_Basename)
+        {
+            if (S_ISLNK(FStat.st_mode)) /*Do nothing, don't follow links */ ;
+            else if (S_ISDIR(FStat.st_mode))
+            {
+                if (MatchTokenFromList(p_Basename, IgnoreDirs, 0) == -1) FindFiles(Glob.gl_pathv[i], Inclusions, Exclusions, Founds);
+            }
+            else
+            {
+                Tempstr=CopyStr(Tempstr, p_Basename);
+                //must strlwr here, as InList will do so to Inclusions and Exclusions
+                strlwr(Tempstr);
+                if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) )
+                {
+                    //can't use 'SetVar' here as multiple files might have the same basename, but different paths
+                    ListAddNamedItem(Founds, p_Basename, CopyStr(NULL, Glob.gl_pathv[i]));
+                }
+            }
+        }
+    }
+    globfree(&Glob);
+    Destroy(Tempstr);
 }
 
 
 
 char *FindSingleFile(char *RetStr, const char *Root, const char *File)
 {
-ListNode *Files, *Curr;
+    ListNode *Files, *Curr;
 
-RetStr=CopyStr(RetStr, "");
-Files=ListCreate();
+    RetStr=CopyStr(RetStr, "");
+    Files=ListCreate();
 
 
-FindFiles(Root, File, "", Files);
+    FindFiles(Root, File, "", Files);
 
-Curr=ListGetNext(Files);
-if (Curr) RetStr=CopyStr(RetStr, Curr->Item);
+    Curr=ListGetNext(Files);
+    if (Curr) RetStr=CopyStr(RetStr, Curr->Item);
 
-ListDestroy(Files, Destroy);
-return(RetStr);
+    ListDestroy(Files, Destroy);
+    return(RetStr);
 }
 
 
 static char *FindProgramGoFishing(char *RetStr, TAction *Act)
 {
-ListNode *Exes, *Curr;
-char *Tempstr=NULL, *SearchPatterns=NULL, *IgnorePatterns=NULL;
-const char *ptr;
+    ListNode *Exes, *Curr;
+    char *Tempstr=NULL, *SearchPatterns=NULL, *IgnorePatterns=NULL;
+    const char *ptr;
 
 
-RetStr=CopyStr(RetStr, "");
-Exes=ListCreate();
+    RetStr=CopyStr(RetStr, "");
+    Exes=ListCreate();
 
 //this needs to be configured in 'platforms.c' eventually
-IgnorePatterns=MCopyStr(IgnorePatterns, "setup*.exe,unin*.exe,dosbox.exe,crash*.exe,",NULL);
+    IgnorePatterns=MCopyStr(IgnorePatterns, "setup*.exe,unin*.exe,dosbox.exe,crash*.exe,",NULL);
 
 
 //if we are not downloading and installing a straightforward executable then we are likely
 //downloading some kind of installer which we don't want to 'find' in the search process and
 //confuse with the real executable
-if (Act->InstallType != INSTALL_EXECUTABLE )
-{
-	ptr=GetVar(Act->Vars, "dlfile");
-	if (StrValid(ptr)) IgnorePatterns=MCatStr(IgnorePatterns, ptr, ",", NULL);
+    if (Act->InstallType != INSTALL_EXECUTABLE )
+    {
+        ptr=GetVar(Act->Vars, "dlfile");
+        if (StrValid(ptr)) IgnorePatterns=MCatStr(IgnorePatterns, ptr, ",", NULL);
 
-	ptr=GetVar(Act->Vars,"installer");
-	if (StrValid(ptr)) IgnorePatterns=MCatStr(IgnorePatterns, ptr, ",", NULL);
-}
+        ptr=GetVar(Act->Vars,"installer");
+        if (StrValid(ptr)) IgnorePatterns=MCatStr(IgnorePatterns, ptr, ",", NULL);
+    }
 
-ptr=GetVar(Act->Vars, "exec");
-SearchPatterns=MCopyStr(SearchPatterns, ptr, ",", NULL);
+    ptr=GetVar(Act->Vars, "exec");
+    SearchPatterns=MCopyStr(SearchPatterns, ptr, ",", NULL);
 
-if (PlatformBitWidth(Act->Platform)==64) Tempstr=PlatformGetExe64SearchPattern(Tempstr, Act->Platform);
-else Tempstr=PlatformGetExeSearchPattern(Tempstr, Act->Platform);
+    if (PlatformBitWidth(Act->Platform)==64) Tempstr=PlatformGetExe64SearchPattern(Tempstr, Act->Platform);
+    else Tempstr=PlatformGetExeSearchPattern(Tempstr, Act->Platform);
 
-SearchPatterns=CatStr(SearchPatterns, Tempstr);
+    SearchPatterns=CatStr(SearchPatterns, Tempstr);
 
-FindFiles(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, Exes);
-if (Config->Flags & FLAG_DEBUG) printf("Find: [%s] [%s] [%s]\n", GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns);
+    FindFiles(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, Exes);
+    if (Config->Flags & FLAG_DEBUG) printf("Find: [%s] [%s] [%s]\n", GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns);
 
-Curr=NULL;
-ptr=GetVar(Act->Vars, "exec");
-if (StrValid(ptr)) Curr=ListFindNamedItem(Exes, ptr);
-if (! Curr) Curr=ListGetNext(Exes);
+    Curr=NULL;
+    ptr=GetVar(Act->Vars, "exec");
+    if (StrValid(ptr)) Curr=ListFindNamedItem(Exes, ptr);
+    if (! Curr) Curr=ListGetNext(Exes);
 
-if (Curr) RetStr=CopyStr(RetStr, Curr->Item);
+    if (Curr) RetStr=CopyStr(RetStr, Curr->Item);
 
-ListDestroy(Exes, Destroy);
-DestroyString(SearchPatterns);
-DestroyString(IgnorePatterns);
-DestroyString(Tempstr);
+    ListDestroy(Exes, Destroy);
+    DestroyString(SearchPatterns);
+    DestroyString(IgnorePatterns);
+    DestroyString(Tempstr);
 
-return(RetStr);
+    return(RetStr);
 }
 
 
@@ -130,33 +130,33 @@ Try to find the actual executable that we'll run with 'sommelier'
 */
 static char *FindProgram(char *RetStr, TAction *Act)
 {
-char *Exec=NULL, *Tempstr=NULL;
-const char *ptr;
+    char *Exec=NULL, *Tempstr=NULL;
+    const char *ptr;
 
-ptr=GetVar(Act->Vars, "exec");
-if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
+    ptr=GetVar(Act->Vars, "exec");
+    if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
 
 
 //full path given to executable, so it must exist at this path
-if (StrValid(Exec) && *Exec == '/')
-{
-	//do nothing
-}
-else Exec=FindProgramGoFishing(Exec, Act);
+    if (StrValid(Exec) && *Exec == '/')
+    {
+        //do nothing
+    }
+    else Exec=FindProgramGoFishing(Exec, Act);
 
-RetStr=CopyStr(RetStr, Exec);
+    RetStr=CopyStr(RetStr, Exec);
 
-if (StrValid(RetStr))
-{
-Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0\n", NULL);
-TerminalPutStr(Tempstr, NULL);
-}
+    if (StrValid(RetStr))
+    {
+        Tempstr=MCopyStr(Tempstr, "~g~eFound Program: ~w", RetStr, "~0\n", NULL);
+        TerminalPutStr(Tempstr, NULL);
+    }
 
 
-Destroy(Tempstr);
-Destroy(Exec);
+    Destroy(Tempstr);
+    Destroy(Exec);
 
-return(RetStr);
+    return(RetStr);
 }
 
 
@@ -164,69 +164,69 @@ return(RetStr);
 
 static void RunInstallers(TAction *Act)
 {
-const char *ptr;
-char *Tempstr=NULL, *Cmd=NULL;
-int RegFlags=0;
+    const char *ptr;
+    char *Tempstr=NULL, *Cmd=NULL;
+    int RegFlags=0;
 
-	ptr=GetVar(Act->Vars, "installer-vdesk");
-	if (StrValid(ptr)) 
-	{
-		if (Config->Flags & FLAG_DEBUG) printf("Running installer in a virtual desktop\n");
-		RegFlags |= REG_VDESK;
-	}
+    ptr=GetVar(Act->Vars, "installer-vdesk");
+    if (StrValid(ptr))
+    {
+        if (Config->Flags & FLAG_DEBUG) printf("Running installer in a virtual desktop\n");
+        RegFlags |= REG_VDESK;
+    }
 
-	if (RegFlags)	RegEdit(Act, RegFlags, NULL, NULL, NULL);
+    if (RegFlags)	RegEdit(Act, RegFlags, NULL, NULL, NULL);
 
-	ptr=GetVar(Act->Vars, "installer-path");
-printf("INSTALLER PATH: %s\n", ptr);
-	if (StrValid(ptr)) 
-	{
-		switch (Act->PlatformID)
-		{
-			case PLATFORM_DOS:
-			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
-			printf("RUN INSTALLER: %s\n",Tempstr);
-			Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-			RunProgramAndConsumeOutput(Cmd, "+stderr");
-			break;
+    ptr=GetVar(Act->Vars, "installer-path");
+    printf("INSTALLER PATH: %s\n", ptr);
+    if (StrValid(ptr))
+    {
+        switch (Act->PlatformID)
+        {
+        case PLATFORM_DOS:
+            Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
+            printf("RUN INSTALLER: %s\n",Tempstr);
+            Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
+            RunProgramAndConsumeOutput(Cmd, "+stderr");
+            break;
 
-			case PLATFORM_WINDOWS:
-			//windos has windows installer but msdos (Dosbox) executable
-			case PLATFORM_GOGWINDOS:
-			ptr=strrchr(ptr, '.');
-			if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine msiexec /i '$(installer-path)' $(installer-args)", Act->Vars, 0);
-			else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine '$(installer-path)' $(installer-args)", Act->Vars, 0);
+        case PLATFORM_WINDOWS:
+        //windos has windows installer but msdos (Dosbox) executable
+        case PLATFORM_GOGWINDOS:
+            ptr=strrchr(ptr, '.');
+            if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine msiexec /i '$(installer-path)' $(installer-args)", Act->Vars, 0);
+            else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine '$(installer-path)' $(installer-args)", Act->Vars, 0);
 
-		printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
-		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-		RunProgramAndConsumeOutput(Cmd, "+stderr");
-			break;
-		}
-	}
+            printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
+            Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
+            RunProgramAndConsumeOutput(Cmd, "+stderr");
+            break;
+        }
+    }
 
-	ptr=GetVar(Act->Vars, "install_stage2");
-	if (StrValid(ptr)) 
-	{
-		Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
-		SetVar(Act->Vars, "installer-path", Tempstr);	
-		Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
-		printf("RUN INSTALL STAGE2: %s\n", Cmd);
-		RunProgramAndConsumeOutput(Cmd, "+stderr");
-	}
+    ptr=GetVar(Act->Vars, "install_stage2");
+    if (StrValid(ptr))
+    {
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
+        SetVar(Act->Vars, "installer-path", Tempstr);
+        Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
+        printf("RUN INSTALL STAGE2: %s\n", Cmd);
+        RunProgramAndConsumeOutput(Cmd, "+stderr");
+    }
 
-	if (Act->PlatformID==PLATFORM_WINDOWS)
-	{
-	if (RegFlags & REG_VDESK)	
-	{
-		RegFlags &= ~REG_VDESK;
-		RegFlags |= REG_NO_VDESK;
-	}
-	RegFlags |= REG_FONT_SMOOTH;
-	RegEdit(Act, RegFlags, NULL, NULL, NULL);
-	}
+    if (Act->PlatformID==PLATFORM_WINDOWS)
+    {
+        if (RegFlags & REG_VDESK)
+        {
+            RegFlags &= ~REG_VDESK;
+            RegFlags |= REG_NO_VDESK;
+        }
+        RegFlags |= REG_FONT_SMOOTH;
+        RegEdit(Act, RegFlags, NULL, NULL, NULL);
+    }
 
-	Destroy(Tempstr);
-	Destroy(Cmd);
+    Destroy(Tempstr);
+    Destroy(Cmd);
 }
 
 
@@ -236,119 +236,119 @@ printf("INSTALLER PATH: %s\n", ptr);
 // Finding the resulting exe that we are going to run when we start the app is done in 'FinalizeExeInstall'
 static int InstallAppFromFile(TAction *Act, const char *Path)
 {
-char *Tempstr=NULL, *FilesToExtract=NULL;
-const char *ptr;
-int ForcedFileType=FILETYPE_UNKNOWN;
+    char *Tempstr=NULL, *FilesToExtract=NULL;
+    const char *ptr;
+    int ForcedFileType=FILETYPE_UNKNOWN;
 
-	switch (Act->PlatformID)
-	{	
-		case PLATFORM_SCUMMVM:
-			ForcedFileType=FILETYPE_ZIP;
-		break;
+    switch (Act->PlatformID)
+    {
+    case PLATFORM_SCUMMVM:
+        ForcedFileType=FILETYPE_ZIP;
+        break;
 
-		case PLATFORM_GOGLINUX:
-			ForcedFileType=FILETYPE_ZIP;
-			FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* $(extra-files)", Act->Vars, 0);
-		break;
+    case PLATFORM_GOGLINUX:
+        ForcedFileType=FILETYPE_ZIP;
+        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* $(extra-files)", Act->Vars, 0);
+        break;
 
-		case PLATFORM_GOGSCUMMVM:
-		case PLATFORM_GOGDOS:
-			ForcedFileType=FILETYPE_ZIP;
-			FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* $(extra-files)", Act->Vars, 0);
-		break;
-	}
+    case PLATFORM_GOGSCUMMVM:
+    case PLATFORM_GOGDOS:
+        ForcedFileType=FILETYPE_ZIP;
+        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* $(extra-files)", Act->Vars, 0);
+        break;
+    }
 
-	//we can force the type of the downloaded file, which allows us to override things like .zip files that have
-	//a self-extracting program stub on the front
-	ptr=GetVar(Act->Vars, "download-type");
-	if (StrValid(ptr))
-	{
-		if (strcasecmp(ptr, "zip")==0) ForcedFileType=FILETYPE_ZIP;
-		else if (strcasecmp(ptr, "7z")==0) ForcedFileType=FILETYPE_7ZIP;
-		else if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
-		else if (strcasecmp(ptr, "tar.bz2")==0) ForcedFileType=FILETYPE_TBZ;
-		else if (strcasecmp(ptr, "tar.xz")==0) ForcedFileType=FILETYPE_TXZ;
-	}
-
-
-	switch (IdentifyFileType(Path, ForcedFileType))
-	{
-		case FILETYPE_7ZIP:
-		Tempstr=MCopyStr(Tempstr, "7za x '",Path, "' ", FilesToExtract, NULL);
-		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr, "noshell");
-
-		//for zipfiles and the like the installer has to be found. Either it's
-		//specified in the app config, as 'installer' 
-		//or we go looking for certain common filenames
-
-		ptr=GetVar(Act->Vars, "installer");
-		if (! ptr) ptr="setup.exe,install.exe,*.msi";
-		Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
-		if (StrValid(Tempstr)) 
-		{
-			printf("Found installer program: %s\n", Tempstr);
-			SetVar(Act->Vars, "installer-path", Tempstr);
-			RunInstallers(Act);
-		}
-		break;
-
-		case FILETYPE_ZIP:
-		Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
-		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr, "noshell");
-
-		//for zipfiles and the like the installer has to be found. Either it's
-		//specified in the app config, as 'installer' 
-		//or we go looking for certain common filenames
-
-		ptr=GetVar(Act->Vars, "installer");
-		if (! ptr) ptr="setup.exe,install.exe,*.msi";
-		Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
-		if (StrValid(Tempstr)) 
-		{
-			printf("Found installer program: %s\n", Tempstr);
-			SetVar(Act->Vars, "installer-path", Tempstr);
-			RunInstallers(Act);
-		}
-		break;
-
-		case FILETYPE_TGZ:
-		case FILETYPE_TBZ:
-		case FILETYPE_TXZ:
-		Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
-		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr, "noshell");
-		break;
-
-		case FILETYPE_PE:
-		case FILETYPE_MZ:
-		if (Act->InstallType == INSTALL_EXECUTABLE)
-		{
-			//if file has no installer, is just an executable, then do nothing
-			SetVar(Act->Vars, "exec", GetBasename(Act->URL));	
-		}
-		else
-		{
-			//else file is an installer, set the install-path to point to it
-			SetVar(Act->Vars, "installer-path", Path);
-			RunInstallers(Act);
-		}
-		break;
-
-		case FILETYPE_MSI:
-		//wine msiexec /i whatever.msi 
-		Tempstr=MCopyStr(Tempstr, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
-		RunProgramAndConsumeOutput(Tempstr, "");
-		break;
-	}
+    //we can force the type of the downloaded file, which allows us to override things like .zip files that have
+    //a self-extracting program stub on the front
+    ptr=GetVar(Act->Vars, "download-type");
+    if (StrValid(ptr))
+    {
+        if (strcasecmp(ptr, "zip")==0) ForcedFileType=FILETYPE_ZIP;
+        else if (strcasecmp(ptr, "7z")==0) ForcedFileType=FILETYPE_7ZIP;
+        else if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
+        else if (strcasecmp(ptr, "tar.bz2")==0) ForcedFileType=FILETYPE_TBZ;
+        else if (strcasecmp(ptr, "tar.xz")==0) ForcedFileType=FILETYPE_TXZ;
+    }
 
 
+    switch (IdentifyFileType(Path, ForcedFileType))
+    {
+    case FILETYPE_7ZIP:
+        Tempstr=MCopyStr(Tempstr, "7za x '",Path, "' ", FilesToExtract, NULL);
+        printf("unpacking: %s\n",GetBasename(Path));
+        RunProgramAndConsumeOutput(Tempstr, "noshell");
 
-Destroy(Tempstr);
-Destroy(FilesToExtract);
+        //for zipfiles and the like the installer has to be found. Either it's
+        //specified in the app config, as 'installer'
+        //or we go looking for certain common filenames
 
-return(TRUE);
+        ptr=GetVar(Act->Vars, "installer");
+        if (! ptr) ptr="setup.exe,install.exe,*.msi";
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
+        if (StrValid(Tempstr))
+        {
+            printf("Found installer program: %s\n", Tempstr);
+            SetVar(Act->Vars, "installer-path", Tempstr);
+            RunInstallers(Act);
+        }
+        break;
+
+    case FILETYPE_ZIP:
+        Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
+        printf("unpacking: %s\n",GetBasename(Path));
+        RunProgramAndConsumeOutput(Tempstr, "noshell");
+
+        //for zipfiles and the like the installer has to be found. Either it's
+        //specified in the app config, as 'installer'
+        //or we go looking for certain common filenames
+
+        ptr=GetVar(Act->Vars, "installer");
+        if (! ptr) ptr="setup.exe,install.exe,*.msi";
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
+        if (StrValid(Tempstr))
+        {
+            printf("Found installer program: %s\n", Tempstr);
+            SetVar(Act->Vars, "installer-path", Tempstr);
+            RunInstallers(Act);
+        }
+        break;
+
+    case FILETYPE_TGZ:
+    case FILETYPE_TBZ:
+    case FILETYPE_TXZ:
+        Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
+        printf("unpacking: %s\n",GetBasename(Path));
+        RunProgramAndConsumeOutput(Tempstr, "noshell");
+        break;
+
+    case FILETYPE_PE:
+    case FILETYPE_MZ:
+        if (Act->InstallType == INSTALL_EXECUTABLE)
+        {
+            //if file has no installer, is just an executable, then do nothing
+            SetVar(Act->Vars, "exec", GetBasename(Act->URL));
+        }
+        else
+        {
+            //else file is an installer, set the install-path to point to it
+            SetVar(Act->Vars, "installer-path", Path);
+            RunInstallers(Act);
+        }
+        break;
+
+    case FILETYPE_MSI:
+        //wine msiexec /i whatever.msi
+        Tempstr=MCopyStr(Tempstr, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
+        RunProgramAndConsumeOutput(Tempstr, "");
+        break;
+    }
+
+
+
+    Destroy(Tempstr);
+    Destroy(FilesToExtract);
+
+    return(TRUE);
 }
 
 
@@ -358,76 +358,76 @@ return(TRUE);
 
 static void PostProcessInstall(TAction *Act)
 {
-glob_t Glob;
-char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
-const char *ptr;
-int i, result;
+    glob_t Glob;
+    char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
+    const char *ptr;
+    int i, result;
 
-ptr=GetVar(Act->Vars, "delete");
-if (StrValid(ptr))
-{
-	Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-	glob(Tempstr, 0, 0, &Glob);
-	for (i=0; i < Glob.gl_pathc; i++)
-	{
-		if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
-		unlink(Glob.gl_pathv[i]);
-	}
-}
+    ptr=GetVar(Act->Vars, "delete");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        glob(Tempstr, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
+            unlink(Glob.gl_pathv[i]);
+        }
+    }
 
-ptr=GetVar(Act->Vars, "movefiles-from");
-if (StrValid(ptr))
-{
-	Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-	glob(Tempstr, 0, 0, &Glob);
-	for (i=0; i < Glob.gl_pathc; i++)
-	{
-		if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
-		rename(Glob.gl_pathv[i], GetBasename(Glob.gl_pathv[i]));
-	}
-}
-
-
-ptr=GetVar(Act->Vars, "rename");
-if (StrValid(ptr))
-{
-	Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-	ptr=GetToken(Tempstr, "\\S", &Value, GETTOKEN_QUOTES);
-	From=UnQuoteStr(From, Value);
-	ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
-	To=UnQuoteStr(To, Value);
-
-	if (Config->Flags & FLAG_DEBUG) printf("RENAME: '%s' -> '%s'\n", From, To);
-	result=rename(From, To);
-}
+    ptr=GetVar(Act->Vars, "movefiles-from");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        glob(Tempstr, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
+            rename(Glob.gl_pathv[i], GetBasename(Glob.gl_pathv[i]));
+        }
+    }
 
 
+    ptr=GetVar(Act->Vars, "rename");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        ptr=GetToken(Tempstr, "\\S", &Value, GETTOKEN_QUOTES);
+        From=UnQuoteStr(From, Value);
+        ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
+        To=UnQuoteStr(To, Value);
 
-ptr=GetVar(Act->Vars, "winmanager");
-if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL, NULL);
+        if (Config->Flags & FLAG_DEBUG) printf("RENAME: '%s' -> '%s'\n", From, To);
+        result=rename(From, To);
+    }
 
 
-Destroy(Tempstr);
-Destroy(Value);
-Destroy(From);
-Destroy(To);
+
+    ptr=GetVar(Act->Vars, "winmanager");
+    if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL, NULL);
+
+
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
 }
 
 
 void InstallFindIcon(TAction *Act)
 {
-ListNode *Founds, *Curr;
+    ListNode *Founds, *Curr;
 
-if (StrValid(GetVar(Act->Vars, "app-icon"))) return;
+    if (StrValid(GetVar(Act->Vars, "app-icon"))) return;
 
-Founds=ListCreate();
-FindFiles(GetVar(Act->Vars, "drive_c"), GetVar(Act->Vars, "icon"), "", Founds);
-Curr=ListGetNext(Founds);
-if (Curr)
-{
-SetVar(Act->Vars, "app-icon", Curr->Item);
-}
-ListDestroy(Founds, Destroy);
+    Founds=ListCreate();
+    FindFiles(GetVar(Act->Vars, "drive_c"), GetVar(Act->Vars, "icon"), "", Founds);
+    Curr=ListGetNext(Founds);
+    if (Curr)
+    {
+        SetVar(Act->Vars, "app-icon", Curr->Item);
+    }
+    ListDestroy(Founds, Destroy);
 }
 
 
@@ -438,441 +438,441 @@ the actual program that we're going to run to execute the application
 */
 static void FinalizeExeInstall(TAction *Act)
 {
-char *Path=NULL, *Tempstr=NULL, *WorkDir=NULL;
-const char *ptr;
-char *wptr;
-int len;
+    char *Path=NULL, *Tempstr=NULL, *WorkDir=NULL;
+    const char *ptr;
+    char *wptr;
+    int len;
 
-	PostProcessInstall(Act);
+    PostProcessInstall(Act);
 
-	Path=FindProgram(Path, Act);
-	switch (Act->PlatformID)
-	{
-		case PLATFORM_WINDOWS:
-		//reconfigure path to be from our wine 'drive_c' rather than from system root
-		ptr=GetVar(Act->Vars, "drive_c");
-		len=StrLen(ptr);
-		if ( (len > 0) && (strncmp(Path, ptr, len)==0) )
-		{
-			Tempstr=CopyStr(Tempstr, Path+len);
-			Path=CopyStr(Path, Tempstr);	
-		}
+    Path=FindProgram(Path, Act);
+    switch (Act->PlatformID)
+    {
+    case PLATFORM_WINDOWS:
+        //reconfigure path to be from our wine 'drive_c' rather than from system root
+        ptr=GetVar(Act->Vars, "drive_c");
+        len=StrLen(ptr);
+        if ( (len > 0) && (strncmp(Path, ptr, len)==0) )
+        {
+            Tempstr=CopyStr(Tempstr, Path+len);
+            Path=CopyStr(Path, Tempstr);
+        }
 
-		ptr=GetVar(Act->Vars,"exec-dir");
-		if (! StrValid(ptr)) 
-		{
-			Tempstr=CopyStr(Tempstr, Path);
-			StrRTruncChar(Tempstr, '/');
-			SetVar(Act->Vars, "exec-dir", Tempstr);
-		}
-    Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
-    SetVar(Act->Vars, "working-dir", Tempstr);
-		break;
+        ptr=GetVar(Act->Vars,"exec-dir");
+        if (! StrValid(ptr))
+        {
+            Tempstr=CopyStr(Tempstr, Path);
+            StrRTruncChar(Tempstr, '/');
+            SetVar(Act->Vars, "exec-dir", Tempstr);
+        }
+        Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
+        SetVar(Act->Vars, "working-dir", Tempstr);
+        break;
 
-		case PLATFORM_GOGSCUMMVM:
-		Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"), "/data/noarch/data", NULL);
-    SetVar(Act->Vars, "working-dir", Path);
-		break;
+    case PLATFORM_GOGSCUMMVM:
+        Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"), "/data/noarch/data", NULL);
+        SetVar(Act->Vars, "working-dir", Path);
+        break;
 
-		default:
-		//is a working dir set in the app config?
-		Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
+    default:
+        //is a working dir set in the app config?
+        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
 
-		//if not set in the app config, is a working dir set in the platform config?
-		if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
+        //if not set in the app config, is a working dir set in the platform config?
+        if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
 
-		//if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
-		if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
+        //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
+        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
 
-		if (StrValid(Tempstr))
-		{
-			WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
-			SetVar(Act->Vars, "working-dir", WorkDir);
-			if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
-		}
-		break;
-	}
-
-
-	if (StrValid(Path))
-	{
-	//Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
-	if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
-	SetVar(Act->Vars, "exec-path", Path);
-
-	//must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
-	//desktop file as command-line args passed to the emulator
-	PlatformApplySettings(Act);
-
-	InstallFindIcon(Act);
+        if (StrValid(Tempstr))
+        {
+            WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
+            SetVar(Act->Vars, "working-dir", WorkDir);
+            if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
+        }
+        break;
+    }
 
 
-	if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
-	}
-	else 
-	{
-		Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find executable for ", Act->Name, "~0\n", NULL);
-		TerminalPutStr(Tempstr, NULL);
-	}
+    if (StrValid(Path))
+    {
+        //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
+        if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
+        SetVar(Act->Vars, "exec-path", Path);
 
-Destroy(Tempstr);
-Destroy(WorkDir);
-Destroy(Path);
+        //must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
+        //desktop file as command-line args passed to the emulator
+        PlatformApplySettings(Act);
+
+        InstallFindIcon(Act);
+
+
+        if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
+    }
+    else
+    {
+        Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find executable for ", Act->Name, "~0\n", NULL);
+        TerminalPutStr(Tempstr, NULL);
+    }
+
+    Destroy(Tempstr);
+    Destroy(WorkDir);
+    Destroy(Path);
 }
 
 
 static void InstallSingleItemPreProcessInstall(TAction *Act)
 {
-char *Token=NULL, *Tempstr=NULL;
-const char *ptr;
+    char *Token=NULL, *Tempstr=NULL;
+    const char *ptr;
 
 //if package supports both 32 and 64 bit architectures (or only 64, but the package type could support 32-bit, as with GOG games) then if we are running on a 64bit architecture we want to use the
 //64bit version
-ptr=GetVar(Act->Vars, "exec64");
-if (StrValid(ptr))
-{
-	if (PlatformBitWidth(Act->Platform)==64)
-	{
-		SetVar(Act->Vars, "exec", ptr);
-		printf("EXEC64: %s\n", ptr);
-	}
-}
+    ptr=GetVar(Act->Vars, "exec64");
+    if (StrValid(ptr))
+    {
+        if (PlatformBitWidth(Act->Platform)==64)
+        {
+            SetVar(Act->Vars, "exec", ptr);
+            printf("EXEC64: %s\n", ptr);
+        }
+    }
 
 
 //dll-overrides creates a wine bottle with certain dlls missing, forcing the installer to install it's own
 //this is for sitations where the installer will supply a better choice of DLL for this app than wine's own
-ptr=GetVar(Act->Vars, "dll-overrides");
-if (StrValid(ptr))
-{
-	//run fake installer to ensure a wine bottle is created, so that
-	//we can clear DLLs out of it before doing the install
-	SetVar(Act->Vars, "installer", "this-does-not-exist.exe");
-	RunInstallers(Act);
+    ptr=GetVar(Act->Vars, "dll-overrides");
+    if (StrValid(ptr))
+    {
+        //run fake installer to ensure a wine bottle is created, so that
+        //we can clear DLLs out of it before doing the install
+        SetVar(Act->Vars, "installer", "this-does-not-exist.exe");
+        RunInstallers(Act);
 
-	//go through list of DLLs, deleting them so that the real installer, when we run it, will install it's own
-  ptr=GetToken(ptr, ",", &Token, 0);
-  while (ptr)
-  {
-  SetVar(Act->Vars, "delete-dll", Token);
-  Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)/windows/system32/$(delete-dll).dll", Act->Vars, 0);
-  unlink(Tempstr);
-  ptr=GetToken(ptr, ",", &Token, 0);
-  }
-}
+        //go through list of DLLs, deleting them so that the real installer, when we run it, will install it's own
+        ptr=GetToken(ptr, ",", &Token, 0);
+        while (ptr)
+        {
+            SetVar(Act->Vars, "delete-dll", Token);
+            Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)/windows/system32/$(delete-dll).dll", Act->Vars, 0);
+            unlink(Tempstr);
+            ptr=GetToken(ptr, ",", &Token, 0);
+        }
+    }
 
-Destroy(Tempstr);
-Destroy(Token);
+    Destroy(Tempstr);
+    Destroy(Token);
 }
 
 
 
 static void InstallBundledItems(TAction *Parent)
 {
-char *Name=NULL;
-const char *ptr;
-ListNode *Node;
-TAction *Child;
+    char *Name=NULL;
+    const char *ptr;
+    ListNode *Node;
+    TAction *Child;
 
-ptr=GetToken(GetVar(Parent->Vars, "bundles"), " ", &Name, 0);
-while (ptr)
-{
-Node=ListFindNamedItem(AppsGetList(), Name);
-if (Node)
-{
-	Child=(TAction *) Node->Item;
-	SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
-	SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
-	FinalizeExeInstall(Child);
-}
-ptr=GetToken(ptr, " ", &Name, 0);
-}
+    ptr=GetToken(GetVar(Parent->Vars, "bundles"), " ", &Name, 0);
+    while (ptr)
+    {
+        Node=ListFindNamedItem(AppsGetList(), Name);
+        if (Node)
+        {
+            Child=(TAction *) Node->Item;
+            SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
+            SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
+            FinalizeExeInstall(Child);
+        }
+        ptr=GetToken(ptr, " ", &Name, 0);
+    }
 
-Destroy(Name);
+    Destroy(Name);
 }
 
 
 static void InstallSingleItem(TAction *Act)
 {
-char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
-const char *p_URL, *ptr;
-int InstallResult=FALSE, exitval;
-pid_t pid;
+    char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
+    const char *p_URL, *ptr;
+    int InstallResult=FALSE, exitval;
+    pid_t pid;
 
 //Fork so we don't chdir current app
-pid=fork();
-if (pid==0)
-{
-	InstallSingleItemPreProcessInstall(Act);
+    pid=fork();
+    if (pid==0)
+    {
+        InstallSingleItemPreProcessInstall(Act);
 
 
-	Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
-	InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
-printf("upack-dir: %s\n", InstallPath);
-	if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
-	mkdir(InstallPath, 0700);
-	chdir(InstallPath);
+        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
+        InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
+        printf("upack-dir: %s\n", InstallPath);
+        if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
+        mkdir(InstallPath, 0700);
+        chdir(InstallPath);
 
-	if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
-	else 
-	{
-		TerminalPutStr("~eValidating download~0\n", NULL);
+        if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
+        else
+        {
+            TerminalPutStr("~eValidating download~0\n", NULL);
 
-		if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
-		else if (! CompareSha256(Act)) 
-		{
-				TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
-				TerminalPutStr("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n", NULL);
-				Act->Flags |= FLAG_ABORT;
-		}
-	}
+            if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
+            else if (! CompareSha256(Act))
+            {
+                TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
+                TerminalPutStr("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n", NULL);
+                Act->Flags |= FLAG_ABORT;
+            }
+        }
 
-	if (! (Act->Flags & FLAG_ABORT))
-	{
-	InstallResult=InstallAppFromFile(Act, Act->SrcPath);
-	if ( InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) ) 
-	{
-		TerminalPutStr("~eFinding executables~0\n", NULL);
-		FinalizeExeInstall(Act);
-		InstallBundledItems(Act);
-	}
-	}
-
-
-	//make sure executables are... executable
-	if (Act->InstallType == INSTALL_EXECUTABLE) chmod(Act->SrcPath, 0770);
-	else if (
-		(! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
-		(Act->Flags & FLAG_DOWNLOADED)
-	) 
-	{
-		unlink(Act->SrcPath);
-	}
-
-	if (Act->Flags |= FLAG_ABORT) _exit(1);
-	_exit(0);
-}
-
-waitpid(pid, &exitval, 0);
-if (exitval==1)
-{
-	Act->Flags |= FLAG_ABORT;
-	Tempstr=MCopyStr(Tempstr, "~r~eInstall Aborted for ~0", Act->Name, "\n", NULL);
-	TerminalPutStr(Tempstr, NULL);
-}
+        if (! (Act->Flags & FLAG_ABORT))
+        {
+            InstallResult=InstallAppFromFile(Act, Act->SrcPath);
+            if ( InstallResult && (! (Act->Flags & FLAG_DEPENDANCY)) )
+            {
+                TerminalPutStr("~eFinding executables~0\n", NULL);
+                FinalizeExeInstall(Act);
+                InstallBundledItems(Act);
+            }
+        }
 
 
+        //make sure executables are... executable
+        if (Act->InstallType == INSTALL_EXECUTABLE) chmod(Act->SrcPath, 0770);
+        else if (
+            (! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
+            (Act->Flags & FLAG_DOWNLOADED)
+        )
+        {
+            unlink(Act->SrcPath);
+        }
 
-DestroyString(Tempstr);
-DestroyString(InstallPath);
-DestroyString(Path);
+        if (Act->Flags |= FLAG_ABORT) _exit(1);
+        _exit(0);
+    }
+
+    waitpid(pid, &exitval, 0);
+    if (exitval==1)
+    {
+        Act->Flags |= FLAG_ABORT;
+        Tempstr=MCopyStr(Tempstr, "~r~eInstall Aborted for ~0", Act->Name, "\n", NULL);
+        TerminalPutStr(Tempstr, NULL);
+    }
+
+
+
+    DestroyString(Tempstr);
+    DestroyString(InstallPath);
+    DestroyString(Path);
 }
 
 
 
 static int InstallDependancy(TAction *Parent, const char *Name)
-{	
-TAction *Dependancy;
+{
+    TAction *Dependancy;
 
-		Dependancy=ActionCreate(ACT_INSTALL, Name);
-		if (Dependancy) 
-		{
-		Dependancy->Flags |= FLAG_DEPENDANCY;
-		CopyVars(Dependancy->Vars, Parent->Vars);
-		//do AppLoadConfig after copy vars, so vars set in dependancy config
-		//override those inherited from calling app
-		if (AppLoadConfig(Dependancy)) InstallSingleItem(Dependancy);
-		ActionDestroy(Dependancy);
-		}
+    Dependancy=ActionCreate(ACT_INSTALL, Name);
+    if (Dependancy)
+    {
+        Dependancy->Flags |= FLAG_DEPENDANCY;
+        CopyVars(Dependancy->Vars, Parent->Vars);
+        //do AppLoadConfig after copy vars, so vars set in dependancy config
+        //override those inherited from calling app
+        if (AppLoadConfig(Dependancy)) InstallSingleItem(Dependancy);
+        ActionDestroy(Dependancy);
+    }
 
-		return(TRUE);
+    return(TRUE);
 }
 
 
 static char *InstallStandardDependancies(char *RetStr)
 {
-TAction *Act;
-char *Tempstr=NULL;
+    TAction *Act;
+    char *Tempstr=NULL;
 
-Act=ActionCreate(ACT_INSTALL, "StandardDependancies");
-Act->Platform=CopyStr(Act->Platform, "windows");
-Tempstr=AppFormatPath(Tempstr,  Act);
-if (access(Tempstr, F_OK) !=0)
-{
-Act->Flags |= FLAG_DEPENDANCY;
-printf("Running wine to download/install standard dependancies (mono, gecko, etc)\n");
-MakeDirPath(Tempstr, 0700);
-SetVar(Act->Vars, "installer", "this-does-not-exist.exe");
-RunInstallers(Act);
-}
-RetStr=CopyStr(RetStr, GetVar(Act->Vars, "prefix"));
+    Act=ActionCreate(ACT_INSTALL, "StandardDependancies");
+    Act->Platform=CopyStr(Act->Platform, "windows");
+    Tempstr=AppFormatPath(Tempstr,  Act);
+    if (access(Tempstr, F_OK) !=0)
+    {
+        Act->Flags |= FLAG_DEPENDANCY;
+        printf("Running wine to download/install standard dependancies (mono, gecko, etc)\n");
+        MakeDirPath(Tempstr, 0700);
+        SetVar(Act->Vars, "installer", "this-does-not-exist.exe");
+        RunInstallers(Act);
+    }
+    RetStr=CopyStr(RetStr, GetVar(Act->Vars, "prefix"));
 
-Destroy(Tempstr);
+    Destroy(Tempstr);
 
-return(RetStr);
+    return(RetStr);
 }
 
 
 
 static void InstallSetupWindowsDependancies(TAction *Act)
 {
-char *Tempstr=NULL, *StdDepsPath=NULL, *Path=NULL;
+    char *Tempstr=NULL, *StdDepsPath=NULL, *Path=NULL;
 
-StdDepsPath=InstallStandardDependancies(StdDepsPath);
-if (StrValid(StdDepsPath))
-{
-	Tempstr=MCopyStr(Tempstr, StdDepsPath, "/drive_c/windows/mono/mono-2.0", NULL);
-	Path=MCopyStr(Path, GetVar(Act->Vars, "prefix"), "/drive_c/windows/mono/mono-2.0", NULL);
-	MakeDirPath(Path, 0700);
-	symlink(Tempstr, Path);
+    StdDepsPath=InstallStandardDependancies(StdDepsPath);
+    if (StrValid(StdDepsPath))
+    {
+        Tempstr=MCopyStr(Tempstr, StdDepsPath, "/drive_c/windows/mono/mono-2.0", NULL);
+        Path=MCopyStr(Path, GetVar(Act->Vars, "prefix"), "/drive_c/windows/mono/mono-2.0", NULL);
+        MakeDirPath(Path, 0700);
+        symlink(Tempstr, Path);
 
-	Tempstr=MCopyStr(Tempstr, StdDepsPath, "/drive_c/windows/system32/gecko", NULL);
-	Path=MCopyStr(Path, GetVar(Act->Vars, "prefix"), "/drive_c/windows/system32/gecko", NULL);
-	MakeDirPath(Path, 0700);
-	symlink(Tempstr, Path);
-}
+        Tempstr=MCopyStr(Tempstr, StdDepsPath, "/drive_c/windows/system32/gecko", NULL);
+        Path=MCopyStr(Path, GetVar(Act->Vars, "prefix"), "/drive_c/windows/system32/gecko", NULL);
+        MakeDirPath(Path, 0700);
+        symlink(Tempstr, Path);
+    }
 
-Destroy(StdDepsPath);
-Destroy(Tempstr);
-Destroy(Path);
+    Destroy(StdDepsPath);
+    Destroy(Tempstr);
+    Destroy(Path);
 }
 
 
 static int InstallRequiredDependancies(TAction *Act)
 {
-const char *ptr, *p_Requires;
-char *Name=NULL;
+    const char *ptr, *p_Requires;
+    char *Name=NULL;
 
-p_Requires=GetVar(Act->Vars, "requires");
-if (p_Requires)
-{
-	ptr=GetToken(p_Requires,",",&Name,0);
-	while (ptr)
-	{
-		printf("Installing dependancy: '%s'\n", Name);
-		InstallDependancy(Act, Name);
+    p_Requires=GetVar(Act->Vars, "requires");
+    if (p_Requires)
+    {
+        ptr=GetToken(p_Requires,",",&Name,0);
+        while (ptr)
+        {
+            printf("Installing dependancy: '%s'\n", Name);
+            InstallDependancy(Act, Name);
 
-		ptr=GetToken(ptr,",",&Name,0);
-	}
-}
-Destroy(Name);
+            ptr=GetToken(ptr,",",&Name,0);
+        }
+    }
+    Destroy(Name);
 }
 
 
 
 void InstallApp(TAction *Act)
 {
-const char *ptr, *p_Requires;
-char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
+    const char *ptr, *p_Requires;
+    char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
-Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
-TerminalPutStr(Tempstr, NULL);
-Tempstr=CopyStr(Tempstr, "");
+    Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
+    TerminalPutStr(Tempstr, NULL);
+    Tempstr=CopyStr(Tempstr, "");
 
-if (! StrValid(Act->Platform))
-{
-	TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
-}
-else if (Act->PlatformID==PLATFORM_UNKNOWN)
-{
-	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
-	TerminalPutStr(Tempstr, NULL);
-}
-else
-{
-	//is an emulator installed for this platform? NULL means one is required by can't be found,
-	//empty string means none is required
-	Emulator=PlatformFindEmulator(Emulator, Act->Platform);
+    if (! StrValid(Act->Platform))
+    {
+        TerminalPutStr("~r~eERROR: no platform configured for this application~0 Cannot install.\n", NULL);
+    }
+    else if (Act->PlatformID==PLATFORM_UNKNOWN)
+    {
+        Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
+        TerminalPutStr(Tempstr, NULL);
+    }
+    else
+    {
+        //is an emulator installed for this platform? NULL means one is required by can't be found,
+        //empty string means none is required
+        Emulator=PlatformFindEmulator(Emulator, Act->Platform);
 
-	if (StrValid(Emulator))
-	{ 
-	Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
-	SetVar(Act->Vars, "emulator", Emulator);
-	}
-	else if (! Emulator) 
-	{
-	Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
-	Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-	Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
-	}
+        if (StrValid(Emulator))
+        {
+            Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+            SetVar(Act->Vars, "emulator", Emulator);
+        }
+        else if (! Emulator)
+        {
+            Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
+            Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+            Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
+        }
 
 
-	Name=PlatformGetInstallMessage(Name, Act->Platform);
-	if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
-	
-	ptr=GetVar(Act->Vars, "warn");
-	if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
-	
-	TerminalPutStr(Tempstr, NULL);
-	
-	
-	Path=AppFormatPath(Path, Act);
-	MakeDirPath(Path, 0700);
-	
-	if (Act->PlatformID==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
-	InstallRequiredDependancies(Act);
-	
-	InstallSingleItem(Act);
-	printf("%s install complete\n", Act->Name);
-}
+        Name=PlatformGetInstallMessage(Name, Act->Platform);
+        if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
 
-Destroy(Emulator);
-Destroy(Tempstr);
-Destroy(Path);
-Destroy(Name);
+        ptr=GetVar(Act->Vars, "warn");
+        if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
+
+        TerminalPutStr(Tempstr, NULL);
+
+
+        Path=AppFormatPath(Path, Act);
+        MakeDirPath(Path, 0700);
+
+        if (Act->PlatformID==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
+        InstallRequiredDependancies(Act);
+
+        InstallSingleItem(Act);
+        printf("%s install complete\n", Act->Name);
+    }
+
+    Destroy(Emulator);
+    Destroy(Tempstr);
+    Destroy(Path);
+    Destroy(Name);
 }
 
 
 
 void InstallReconfigure(TAction *Act)
 {
-const char *ptr, *p_Requires;
-char *Name=NULL, *Path=NULL, *Tempstr=NULL;
+    const char *ptr, *p_Requires;
+    char *Name=NULL, *Path=NULL, *Tempstr=NULL;
 
-Tempstr=MCopyStr(Tempstr, "\n~e##### Reconfigure ", Act->Name, " #########~0\n", NULL);
-TerminalPutStr(Tempstr, NULL);
+    Tempstr=MCopyStr(Tempstr, "\n~e##### Reconfigure ", Act->Name, " #########~0\n", NULL);
+    TerminalPutStr(Tempstr, NULL);
 
-if (! StrValid(Act->Platform))
-{
-	TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
-}
-else if (Act->PlatformID==PLATFORM_UNKNOWN)
-{
-	Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
-	TerminalPutStr(Tempstr, NULL);
-}
-else
-{
+    if (! StrValid(Act->Platform))
+    {
+        TerminalPutStr("~r~eERROR: no platform configured for this application~0\n", NULL);
+    }
+    else if (Act->PlatformID==PLATFORM_UNKNOWN)
+    {
+        Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0\n", Act->Platform);
+        TerminalPutStr(Tempstr, NULL);
+    }
+    else
+    {
 //is an emulator installed for this platform? NULL means one is required by can't be found,
 //empty string means none is required
-Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
+        Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
 
-if (StrValid(Tempstr)) Name=MCatStr(Name, "Found suitable emulator '", Tempstr, "'\n", NULL);
-else if (! Tempstr) 
-{
-	Name=MCatStr(Name, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-	Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
+        if (StrValid(Tempstr)) Name=MCatStr(Name, "Found suitable emulator '", Tempstr, "'\n", NULL);
+        else if (! Tempstr)
+        {
+            Name=MCatStr(Name, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+            Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
 
-	Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
-}
-
-
-Path=AppFormatPath(Path, Act);
-MakeDirPath(Path, 0700);
+            Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
+        }
 
 
-InstallSingleItemPreProcessInstall(Act);
-Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
+        Path=AppFormatPath(Path, Act);
+        MakeDirPath(Path, 0700);
 
-chdir(Path);
-TerminalPutStr("~eFinding executables~0\n", NULL);
-FinalizeExeInstall(Act);
-InstallBundledItems(Act);
 
-printf("%s reconfigure complete\n", Act->Name);
-}
+        InstallSingleItemPreProcessInstall(Act);
+        Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
 
-Destroy(Tempstr);
-Destroy(Path);
+        chdir(Path);
+        TerminalPutStr("~eFinding executables~0\n", NULL);
+        FinalizeExeInstall(Act);
+        InstallBundledItems(Act);
+
+        printf("%s reconfigure complete\n", Act->Name);
+    }
+
+    Destroy(Tempstr);
+    Destroy(Path);
 }
 
 

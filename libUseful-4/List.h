@@ -121,7 +121,7 @@ void ListSetFlags(ListNode *List, int Flags);
 //Set time on a list. Normally this is automatically set on insertion
 void ListNodeSetTime(ListNode *Node, time_t When);
 
-//set number of hits on a listnode, This is normally set by 'ListFindNamedItem' 
+//set number of hits on a listnode, This is normally set by 'ListFindNamedItem'
 void ListNodeSetHits(ListNode *Node, int Hits);
 
 //add to number of hits on a listnode
@@ -150,7 +150,7 @@ void ListThreadNode(ListNode *Prev, ListNode *Node);
 //unclip a node from a list
 void ListUnThreadNode(ListNode *Node);
 
-//add an item to a list or map, 'Type' is just a number used to identify different 
+//add an item to a list or map, 'Type' is just a number used to identify different
 //types of thing in a list or map
 ListNode *ListAddTypedItem(ListNode *List, uint16_t Type, const char *Name, void *Item);
 

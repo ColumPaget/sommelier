@@ -3,10 +3,10 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 * SPDX-License-Identifier: GPL-3.0
 */
 
-/* 
+/*
 This module provides various functions related to terminal input and output, particularly terminal colors.
 
-The functions 'TerminalFormatStr' and  'TerminalPutStr' accept a string with the following 'tilde command' formatting values 
+The functions 'TerminalFormatStr' and  'TerminalPutStr' accept a string with the following 'tilde command' formatting values
 
 
 ~~    output the tilde character '~'
@@ -90,16 +90,16 @@ typedef enum {ANSI_NONE, ANSI_BLACK, ANSI_RED, ANSI_GREEN, ANSI_YELLOW, ANSI_BLU
 
 typedef struct
 {
-int Flags;
-int ForeColor;
-int BackColor;
-int TextLen;
-char *Text;
-char *MenuPadLeft;
-char *MenuPadRight;
-char *MenuCursorLeft;
-char *MenuCursorRight;
-STREAM *Term;
+    int Flags;
+    int ForeColor;
+    int BackColor;
+    int TextLen;
+    char *Text;
+    char *MenuPadLeft;
+    char *MenuPadRight;
+    char *MenuCursorLeft;
+    char *MenuCursorRight;
+    STREAM *Term;
 } TERMBAR;
 
 
@@ -110,7 +110,7 @@ typedef enum {TERM_NORM, TERM_TEXT, TERM_COLOR, TERM_CLEAR_SCREEN, TERM_CLEAR_EN
 
 
 
-// pass in ANSI_ flags as listed above and get out an ANSI escape sequence 
+// pass in ANSI_ flags as listed above and get out an ANSI escape sequence
 char *ANSICode(int Color, int BgColor, int Flags);
 
 //parse a color name ('red', 'yellow' etc) and return the equivalent ANSI_ flag
@@ -174,7 +174,7 @@ char *TerminalFormatStr(char *RetStr, const char *Str, STREAM *Term);
 //'Str' is a format string with 'tilde commands' in it. The ANSI coded result is output to stream S
 void TerminalPutStr(const char *Str, STREAM *S);
 
-//calculate length of string *after ANSI formating* 
+//calculate length of string *after ANSI formating*
 int TerminalStrLen(const char *Str);
 
 
@@ -186,7 +186,7 @@ void TerminalCommand(int Cmd, int Arg1, int Arg2, STREAM *S);
 int TerminalReadChar(STREAM *S);
 
 
-/* 
+/*
 converts a key to a string. For non-printable key values these strings are the same as the #defined keys above, except without
 the leading 'TKEY_'. So 'ESC', 'F1' 'SHIFT_F1' 'UP' 'DOWN' etc etc */
 const char *TerminalTranslateKeyCode(int key);
@@ -202,7 +202,7 @@ int TerminalTranslateKeyStr(const char *str);
 int TerminalTextConfig(const char *Config);
 
 //read a line of text from the terminal. This command reads keystrokes and optionally echoes them. It supports backspace to delete typed
-//characters. When enter/newline is pressed the whole string of typed characters is returned. 
+//characters. When enter/newline is pressed the whole string of typed characters is returned.
 //N.B. this requires the termainl to have been initialized with the TERM_RAWKEYS flag set, otherwise the terminal driver will handle this
 //job in 'canonical' mode
 //Supported Flags are:
@@ -212,13 +212,13 @@ int TerminalTextConfig(const char *Config);
 //       a password is visible at any time
 char *TerminalReadText(char *RetStr, int Flags, STREAM *S);
 
-//as TerminalReadText but with a prompt 
+//as TerminalReadText but with a prompt
 char *TerminalReadPrompt(char *RetStr, const char *Prompt, int Flags, STREAM *S);
 
 //get width and height/length of a terminal
 void TerminalGeometry(STREAM *S, int *wid, int *len);
 
-// These functions create a terminal bar at the bottom of the screen. 
+// These functions create a terminal bar at the bottom of the screen.
 TERMBAR *TerminalBarCreate(STREAM *Term, const char *Config, const char *Text);
 void TerminalBarDestroy(TERMBAR *TB);
 
@@ -232,7 +232,7 @@ void TerminalBarDestroy(TERMBAR *TB);
 void TerminalBarSetConfig(TERMBAR *TB, const char *Config);
 
 
-//display a terminal bar with 'Text' 
+//display a terminal bar with 'Text'
 void TerminalBarUpdate(TERMBAR *TB, const char *Text);
 
 //display a prompt in a terminal bar and let the user type in text. Flags are as for 'TerminalReadText'
@@ -258,15 +258,15 @@ void TerminalSetKeyCallback(STREAM *Term, TKEY_CALLBACK_FUNC Func);
 
 typedef struct
 {
-int x;
-int y;
-int wid;
-int high;
-STREAM *Term;
-ListNode *Options;
-char *MenuAttribs;
-char *MenuCursorLeft;
-char *MenuCursorRight;
+    int x;
+    int y;
+    int wid;
+    int high;
+    STREAM *Term;
+    ListNode *Options;
+    char *MenuAttribs;
+    char *MenuCursorLeft;
+    char *MenuCursorRight;
 } TERMMENU;
 
 #define TERMMENU_SELECTED LIST_FLAG_USER1
@@ -287,7 +287,7 @@ ListNode *TerminalMenuOnKey(TERMMENU *Menu, int key);
 ListNode *TerminalMenuProcess(TERMMENU *Menu);
 
 //create a menu from a list of options, and run it.
-//This keeps reading keypresses until an option is selected. 
+//This keeps reading keypresses until an option is selected.
 //Returns the selected option, or returns NULL if escape is pressed.
 //if TERMMENU_SELECTED is set on the head of Options, then the menu will allow setting
 //'selected' against multiple values

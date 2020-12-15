@@ -8,7 +8,7 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 
 /*
 
-The STREAM object and its functions is the main means of accessing files and network resources in libUseful. 
+The STREAM object and its functions is the main means of accessing files and network resources in libUseful.
 
 STREAMOpen returns a stream object and takes two arguments, a URL and a 'Config' argument
 
@@ -19,7 +19,7 @@ S=STREAMOpen("/tmp/myfile.txt", "w");
 The first argument can be any of the following types:
 
 /tmp/myfile.txt                          file
-file:///tmp/myfile.txt                   file, web-browser style. Note 3 '/' symbols. 
+file:///tmp/myfile.txt                   file, web-browser style. Note 3 '/' symbols.
 mmap:/tmp/myfile.txt                     memory mapped file
 tty:/dev/ttyS0:38400                     open a serial device, in this case at 38400 baud
 udp:192.168.2.1:53                       udp network connection
@@ -35,7 +35,7 @@ ssh:192.168.2.1:1022/cat /etc/hosts      ssh connect, running the command 'cat /
 
 'file://' is provided for compatiblity with web-browser environments. In this url format the protocol part is 'file://'. If a third '/' is present, like so 'file:///etc/services' then the url is a full path from the filesystem root. Any lesser number of '/' indicates a relative path from the current directory
 
-in the case of SSH stream the default action, if no 'config' flags are passed, is to run a command. 'x' config flag will also explictly run a command. 'r' will cat a file from the remote server. 'w' will cat from the stream TO a file on the remote server. 
+in the case of SSH stream the default action, if no 'config' flags are passed, is to run a command. 'x' config flag will also explictly run a command. 'r' will cat a file from the remote server. 'w' will cat from the stream TO a file on the remote server.
 
 S=STREAMOpen("ssh:192.168.2.1/myfile.txt", "r");  //read from 'myfile.txt' in current directory
 
@@ -54,13 +54,13 @@ S=STREAMOpen("ssh:192.168.2.1/ls *", "x");  //RUN COMMAND 'ls *'
 
 The 'config' argument has different meanings for some of the different URL types.
 
-For files and http the config argument is a string of characters each of which represents an option 
+For files and http the config argument is a string of characters each of which represents an option
 that modifies stream behavior, as with 'fopen'
 
 c     create file
 r     read only
 w     write only
-a     append 
+a     append
 +     make read-only, append or write-only be read-write
 E     raise an error if this file fails to open
 F     follow symlinks. Without this flag an error is raised when a symlink is opened.
@@ -69,7 +69,7 @@ L     lock/unlock file on each write
 i     allow this file to be inherited across an exec (default is close-on-exec)
 t     make a unique temporary file name. the file path must be a mktemp style template, with the last six characters being 'XXXXXX'
 S     file contents are sorted
-x     treat file path as a command to execute (currently on in ssh: streams) 
+x     treat file path as a command to execute (currently on in ssh: streams)
 z     compress/uncompress with gzip
 
 for 'http' and 'https' URLs the first argument is a character list (though only one character long) with the following values
@@ -116,7 +116,7 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 
 
 
-//error condition return values from functions like "STREAMReadBytes". Mostly you will just see 'STREAM_TIMEOUT', meaning no data was read in the 
+//error condition return values from functions like "STREAMReadBytes". Mostly you will just see 'STREAM_TIMEOUT', meaning no data was read in the
 //time that a stream it configured to block for, or STREAM_CLOSED, meaning the end-of-file has been reached, or that the remote peer has closed
 //a network connection
 #define STREAM_TIMEOUT 0
@@ -191,7 +191,7 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 #define SELECT_WRITE 2
 
 
-//These flags are used to alter behavior of STREAMSendFile. 
+//These flags are used to alter behavior of STREAMSendFile.
 #define SENDFILE_KERNEL 1   //enables use of the 'sendfile' kernel syscall
 #define SENDFILE_LOOP   2   //keep copying bytes until required number transfered
 #define SENDFILE_NOREAD 4   //
@@ -237,7 +237,7 @@ int FDSelect(int fd, int Flags, struct timeval *tv);
 //is file ready to recieve bytes?
 int FDIsWritable(int fd);
 
-//are bytes available to be read? 
+//are bytes available to be read?
 int FDCheckForBytes(int fd);
 
 
@@ -252,7 +252,7 @@ STREAM *STREAMOpen(const char *Path, const char *Config);
 //create a stream from a file descriptor
 STREAM *STREAMFromFD(int fd);
 
-//create a stream from two file descriptors, one for input/read and one for output/write 
+//create a stream from two file descriptors, one for input/read and one for output/write
 //for example, file descriptors 0 and 1 are normally standard in and standard out and you
 //could use this function to create a stream for interacting with the terminal
 STREAM *STREAMFromDualFD(int in_fd, int out_fd);
@@ -265,11 +265,11 @@ void STREAMSetTimeout(STREAM *, int Centisecs);
 
 /* configures flushing on a stream. The 'Type' argument can be one of:
 
-FLUSH_FULL         Only flush a streams output buffer when it's full 
+FLUSH_FULL         Only flush a streams output buffer when it's full
 FLUSH_LINE         flush on a newline
 FLUSH_BLOCK        flush when hit BlockSize
 FLUSH_ALWAYS       flush on every call to STREAMWrite or STREAMWriteLine etc
-FLUSH_BUFFER       
+FLUSH_BUFFER
 
 'StartPoint' sets a number of bytes where flushing starts. This can be used for buffering in media streams, no flushing occurs until
 the first time that the output buffer fills to this point, after that flushing happens as normal. Set to zero to disable this feature
@@ -297,7 +297,7 @@ int STREAMFlush(STREAM *Stream);
 //clear any data in the input and output buffers of a stream
 void STREAMClear(STREAM *Stream);
 
-//return read/write postition of a file 
+//return read/write postition of a file
 uint64_t STREAMTell(STREAM *Stream);
 
 //set read/write position of a file. 'whence' takes the same values as lseek
@@ -318,13 +318,13 @@ int STREAMPeekChar(STREAM *);
 int STREAMWriteChar(STREAM *,unsigned char c);
 
 //Read 'ByteCount' bytes from a stream into 'Buffer'. Buffer must be large enough to take the specified number of bytes.
-//Return value is number of bytes actually read, which can be less than number requested. Negative return values 
+//Return value is number of bytes actually read, which can be less than number requested. Negative return values
 //indicate errors or end of stream.
 int STREAMReadBytes(STREAM *, char *Buffer, int ByteCount);
 
 //Read 'ByteCount' bytes from a stream into 'Buffer', but do not remove them from the STREAM objects internal buffer, so they
 //are still there to be read again. Buffer must be large enough to take the specified number of bytes
-//Return value is number of bytes actually read, which can be less than number requested. Negative return values 
+//Return value is number of bytes actually read, which can be less than number requested. Negative return values
 //indicate errors or end of stream.
 int STREAMPeekBytes(STREAM *S, char *Buffer, int ByteCount);
 
@@ -340,13 +340,13 @@ int STREAMReadBytesToTerm(STREAM *S, char *Buffer, int ByteCount, unsigned char 
 
 
 
-//The following block of functions all take a 'Buffer' passed in, and also return it back out. These functions resize the 
+//The following block of functions all take a 'Buffer' passed in, and also return it back out. These functions resize the
 //supplied buffer as needed. If there are no more bytes to be read (stream is closed etc) then they will free the buffer
 //and return NULL. Thus you do not need to free the buffer if the function returns NULL, that has already been done.
 //Best to use 'DestroyString' to free the buffer variable, as it detects NULL and does nothing, whereas 'free' will try
 //to free a NULL and crash
 
-//Read bytes until terminator character 'Term' is encountered. 
+//Read bytes until terminator character 'Term' is encountered.
 char* STREAMReadToTerminator(char *Buffer, STREAM *S, unsigned char Term);
 
 //read bytes until any character in the string 'Terms' is encountered
@@ -358,7 +358,7 @@ char* STREAMReadLine(char *Buffer, STREAM *S);
 //read bytes until end-of-file/stream closed
 char *STREAMReadDocument(char *RetStr, STREAM *S);
 
-//read till the string 'Term' is found. Return value is true or false depending on whether the string was found. 
+//read till the string 'Term' is found. Return value is true or false depending on whether the string was found.
 //'RetStr' is resized to accept the bytes read and 'len' is set to the length of those bytes. As this function returns a
 //length it can return binary data
 int STREAMReadToString(STREAM *S, char **RetStr, int *len, const char *Term);
@@ -386,10 +386,10 @@ STREAM *STREAMSelect(ListNode *Streams, struct timeval *timeout);
 
 
 
-//Push bytes into the front of the stream (so, they will be the first things read). 
+//Push bytes into the front of the stream (so, they will be the first things read).
 void STREAMInsertBytes(STREAM *S, const char *Bytes, int len);
 
-//if the stream is a file then peform file locking. Flags are the same as for flock: 
+//if the stream is a file then peform file locking. Flags are the same as for flock:
 //LOCK_EX for an exclusive lock where only one process can lock the file
 //LOCK_SH for a shared lock where many processes can lock, but none can lock exclusively, usually used to implement 'read locks'
 //LOCK_UN for unlock
@@ -407,7 +407,7 @@ int STREAMFind(STREAM *S, const char *Item, const char *Delimiter, char **RetStr
 void STREAMSetValue(STREAM *S, const char *Name, const char *Value);
 char *STREAMGetValue(STREAM *S, const char *Name);
 
-//book any type of object against a STREAM object. 
+//book any type of object against a STREAM object.
 void STREAMSetItem(STREAM *S, const char *Name, void *Item);
 void *STREAMGetItem(STREAM *S, const char *Name);
 
@@ -421,7 +421,7 @@ unsigned long STREAMSendFile(STREAM *In, STREAM *Out, unsigned long Max, int Fla
 //Copy all bytes from 'Src' to a new file at 'DestPath'
 unsigned long STREAMCopy(STREAM *Src, const char *DestPath);
 
-//this function parses the 'config' argument to STREAMOpen, returning flags that mean something to the stream functions. 
+//this function parses the 'config' argument to STREAMOpen, returning flags that mean something to the stream functions.
 // It wouldn't normally be used externally to that function.
 int STREAMParseConfig(const char *Config);
 
