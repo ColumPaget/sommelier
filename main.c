@@ -33,7 +33,7 @@ if (StrValid(Act->Exec))
   if (Act->Flags & FLAG_SANDBOX)
   {
 		seteuid(0);
-    SpawnConfig=FormatStr(SpawnConfig, "noshell container=/tmp/container/ uid=%d gid=%d dir='%s' ", getuid(), getgid(), GetVar(Act->Vars,"working-dir"));
+    SpawnConfig=FormatStr(SpawnConfig, "noshell +stderr container=/tmp/container/ uid=%d gid=%d dir='%s' ", getuid(), getgid(), GetVar(Act->Vars,"working-dir"));
 
 	  if (Act->Flags & FLAG_NET) SpawnConfig=CatStr(SpawnConfig, "+net ");
  		else SpawnConfig=CatStr(SpawnConfig, "-net ");
@@ -77,7 +77,7 @@ if (StrValid(Act->Exec))
 	SetVar(Act->Vars, "exec-args", Act->Args);
 	Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) $(exec) $(exec-args)" ,Act->Vars, 0);
 	if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
-
+	SpawnConfig=CopyStr(SpawnConfig, "+stderr");
 	Spawn(Tempstr, SpawnConfig);
 	}
 }

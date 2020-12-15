@@ -71,7 +71,12 @@ else if (strcmp(Name,"platform")==0)
 {
 	Act->Platform=CopyStr(Act->Platform, Value);
 	Plt=PlatformFind(Act->Platform);
-	if (Plt) Act->PlatformID=Plt->ID;
+	if (Plt) 
+	{
+		Act->PlatformID=Plt->ID;
+		if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
+		if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
+	}
 	else printf("PLATFORM NOT FOUND: %s\n", Act->Platform);
 }
 else if (strcmp(Name,"install-type")==0) 
@@ -154,7 +159,7 @@ if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
 				(strcmp(Token, "*")==0) ||
 				(strncmp(Token, "url=", 4)==0)
 		) SetVar(FileWideSettings, Token, ptr);
-	else
+	else if (StrValid(Token))
 	{
 		Act=AppConfigure(Token, ptr, FileWideSettings);
 		ListAddNamedItem(Apps, Token, Act);
@@ -284,9 +289,6 @@ if (Act->PlatformID==PLATFORM_WINDOWS)
 
   if (StrValid(Act->InstallPath)) Path=SubstituteVarsInString(Path, Act->InstallPath, Act->Vars, 0);
   else Path=SubstituteVarsInString(Path, "$(drive_c)/Program Files/$(name)", Act->Vars, 0);
-
-//  Tempstr=SubstituteVarsInString(Tempstr, "/Program Files/$(name)", Act->Vars, 0);
-//  SetVar(Act->Vars, "exec-dir", Tempstr);
 }
 else 
 {

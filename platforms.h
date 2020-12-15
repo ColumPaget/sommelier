@@ -3,6 +3,8 @@
 
 #include "common.h"
 
+#define PLATFORM_FLAG_NOEXEC 1
+
 #define PLATFORM_UNKNOWN 0
 #define PLATFORM_WINDOWS 1
 #define PLATFORM_DOS 2
@@ -16,11 +18,12 @@
 #define PLATFORM_LINUX32   32
 #define PLATFORM_LINUX64   64
 #define PLATFORM_ZXSPECTRUM  90
-#define PLATFORM_MEGADRIVE   100
+#define PLATFORM_GENERIC  100
 #define PLATFORM_NES   101
 #define PLATFORM_SEGAMASTER   102
 #define PLATFORM_GAMEBOYADVANCED   103
 #define PLATFORM_PLAYSTATION1 104
+#define PLATFORM_MEGADRIVE   105
 
 #define PLATFORM_INFO_INSTALL_MESSAGE 1
 #define PLATFORM_INFO_EXE_SEARCH_PATTERN 2
@@ -37,10 +40,12 @@
 
 typedef struct
 {
+int Flags;
 int ID;
 char *Emulators;
 char *InstallMessage;
 char *WorkingDir;
+char *UnpackDir;
 char *ExeSearchPattern;
 char *Exe64SearchPattern;
 char *InstallerPattern;

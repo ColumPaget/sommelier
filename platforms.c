@@ -109,13 +109,18 @@ ptr=GetToken(Line, "\\S", &Aliases, GETTOKEN_QUOTES);
 ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
 while (ptr)
 {
-
-if (strcmp(Name, "platform")==0) Plt->ID=PlatformType(Value);
+if (strcmp(Name, "platform")==0) 
+{
+	Plt->ID=PlatformType(Value);
+	if (Plt->ID==PLATFORM_UNKNOWN) Plt->ID=PLATFORM_GENERIC;
+}
 if (strcmp(Name, "emu")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
 if (strcmp(Name, "emulator")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
 if (strcmp(Name, "dir")==0) Plt->WorkingDir=CopyStr(Plt->WorkingDir, Value);
+if (strcmp(Name, "unpack-dir")==0) Plt->UnpackDir=CopyStr(Plt->UnpackDir, Value);
 if (strcmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
 if (strcmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
+if (strcmp(Name, "noexec")==0) Plt->Flags |= PLATFORM_FLAG_NOEXEC;
 ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
 }
 

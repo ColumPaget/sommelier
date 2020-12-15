@@ -178,12 +178,12 @@ return(result);
 //will no longer consider them child processes and will no longer wait for them.
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
-void RunProgramAndConsumeOutput(const char *Cmd)
+void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig)
 {
 STREAM *S;
 char *Tempstr=NULL;
 
-S=STREAMSpawnCommand(Cmd, "noshell +stderr");
+S=STREAMSpawnCommand(Cmd, SpawnConfig);
 if (S)
 {
   Tempstr=STREAMReadLine(Tempstr, S);

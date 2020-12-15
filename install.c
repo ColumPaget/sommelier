@@ -187,7 +187,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
 			printf("RUN INSTALLER: %s\n",Tempstr);
 			Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-			RunProgramAndConsumeOutput(Cmd);
+			RunProgramAndConsumeOutput(Cmd, "");
 			break;
 
 			case PLATFORM_WINDOWS:
@@ -199,7 +199,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 
 		printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
 		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-		RunProgramAndConsumeOutput(Cmd);
+		RunProgramAndConsumeOutput(Cmd, "");
 			break;
 		}
 	}
@@ -211,7 +211,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 		SetVar(Act->Vars, "installer-path", Tempstr);	
 		Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
 		printf("RUN INSTALL STAGE2: %s\n", Cmd);
-		RunProgramAndConsumeOutput(Cmd);
+		RunProgramAndConsumeOutput(Cmd, "");
 	}
 
 	if (Act->PlatformID==PLATFORM_WINDOWS)
@@ -272,7 +272,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_7ZIP:
 		Tempstr=MCopyStr(Tempstr, "7za x '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr);
+		RunProgramAndConsumeOutput(Tempstr, "noshell");
 
 		//for zipfiles and the like the installer has to be found. Either it's
 		//specified in the app config, as 'installer' 
@@ -292,7 +292,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_ZIP:
 		Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr);
+		RunProgramAndConsumeOutput(Tempstr, "noshell");
 
 		//for zipfiles and the like the installer has to be found. Either it's
 		//specified in the app config, as 'installer' 
@@ -314,7 +314,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_TXZ:
 		Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
 		printf("unpacking: %s\n",GetBasename(Path));
-		RunProgramAndConsumeOutput(Tempstr);
+		RunProgramAndConsumeOutput(Tempstr, "noshell");
 		break;
 
 		case FILETYPE_PE:
@@ -335,7 +335,7 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		case FILETYPE_MSI:
 		//wine msiexec /i whatever.msi 
 		Tempstr=MCopyStr(Tempstr, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
-		RunProgramAndConsumeOutput(Tempstr);
+		RunProgramAndConsumeOutput(Tempstr, "");
 		break;
 	}
 
@@ -470,11 +470,6 @@ int len;
     SetVar(Act->Vars, "working-dir", Path);
 		break;
 
-		case PLATFORM_SCUMMVM:
-		Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"));
-    SetVar(Act->Vars, "working-dir", Path);
-		break;
-
 		default:
 		//is a working dir set in the app config?
 		Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
@@ -482,21 +477,15 @@ int len;
 		//if not set in the app config, is a working dir set in the platform config?
 		if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
 
-		//if neither of the above, we assume the working dir is the one that we found
-		//the executable in
-		if (! StrValid(Tempstr))
-		{
-			Tempstr=CopyStr(Tempstr, Path);
-			StrRTruncChar(Tempstr, '/');
-		}
+		//if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
+		if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
 
 		if (StrValid(Tempstr))
 		{
 			WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
 			SetVar(Act->Vars, "working-dir", WorkDir);
+			if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
 		}
-
-		if (! StrValid(GetVar(Act->Vars, "exec-dir"))) SetVar(Act->Vars, "exec-dir", ".");
 		break;
 	}
 
@@ -611,9 +600,14 @@ if (pid==0)
 {
 	InstallSingleItemPreProcessInstall(Act);
 
-	InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
 
+	Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
+	InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
+printf("upack-dir: %s\n", InstallPath);
+	if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
+	mkdir(InstallPath, 0700);
 	chdir(InstallPath);
+
 	if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
 	else 
 	{

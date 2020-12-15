@@ -35,6 +35,7 @@
 #define FLAG_HASH_DOWNLOAD 1024
 #define FLAG_ABORT 2048
 #define FLAG_BUNDLED 4096
+#define FLAG_NOEXEC 8192
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR, FILETYPE_TGZ, FILETYPE_TBZ, FILETYPE_TXZ, FILETYPE_7ZIP} TEnumFileTypes;
 
@@ -72,7 +73,7 @@ int IdentifyFileType(const char *Path, int ForcedFileType);
 //will no longer consider them child processes and will no longer wait for them.
 //Holding open a pipe for their output seems to overcome this, and also allows us
 //to suppress a lot of crap that they might print out.
-void RunProgramAndConsumeOutput(const char *Cmd);
+void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig);
 
 
 #endif

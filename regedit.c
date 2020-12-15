@@ -145,7 +145,7 @@ STREAMClose(S);
 Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine regedit ", Act->Vars, 0);
 Tempstr=CatStr(Tempstr,Path);
 
-RunProgramAndConsumeOutput(Tempstr);
+RunProgramAndConsumeOutput(Tempstr, "");
 }
 
 unlink(Path);
