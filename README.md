@@ -133,7 +133,7 @@ The 'run' command can take arguments that are passed to the program. For instanc
 PLATFORMS
 =========
 
-The following platforms are supported for use in the `-platform` option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed.
+The following platforms are supported for use in the `-platform` option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed. Platforms are defined in the platforms.conf file that is installed into the .sommelier config directory along with the '.apps' config files.
 
 win
  : windows apps that run under wine (equivalent to win32)
@@ -181,6 +181,8 @@ gba
  : game boy advanced games run under mgba or mednafen emulators
 nes
  : nintendo entertainment system games run under the dnes or mednafen emulators
+3ds
+ : 3ds games run under the citra emulator
 
 
 PROXY URLS

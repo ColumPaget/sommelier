@@ -354,10 +354,9 @@ if (StrValid(Tempstr)) printf("Selected Platforms: %s\n", Tempstr);
 
 //if no platform specified this will use the first matching app config it finds for any platform
 result=AppFindConfig(App, Tempstr);
-if (! result) result=AppFindConfig(App, "");
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
-Tempstr=AppFormatPath(Tempstr, App);
+if (result) Tempstr=AppFormatPath(Tempstr, App);
 
 Destroy(Tempstr);
 

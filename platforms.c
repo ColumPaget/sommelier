@@ -365,7 +365,11 @@ Tempstr=STREAMReadLine(Tempstr, S);
 }
 STREAMClose(S);
 }
-else printf("ERROR: no platforms.conf found in:  %s\n", Path);
+else 
+{
+	Tempstr=FormatStr(Tempstr, "~rERROR: no platforms.conf found in:  %s~0\n", Path);
+	TerminalPutStr(Tempstr, NULL);
+}
 
 Destroy(Tempstr);
 Destroy(Token);
