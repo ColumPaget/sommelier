@@ -14,6 +14,7 @@ K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-me
 SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/en-US/seamonkey-2.53.1.en-US.win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser'  sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8'
 PaleMoon platform=windows url="https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer" comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' 
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download
+FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=en-US os-version=win7 exec=firefox.exe
 
 * category='Email;Office;Network'
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe  exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
@@ -29,7 +30,7 @@ MirandaIM platform=windows url=https://sourceforge.net/projects/miranda/files/mi
 Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.en-US.win32.installer.exe  comment='Multiprotocol Messenger' sha256='363d98dc34d5b3eb525ed16cc3678afac70fac84e93addbc81be08407be6eb90' 
 #seems like utox team haven't paid the bill for their hosting
 #uTox platform=windows url=https://downloads.utox.io/stable/uTox_win32.exe  winmanager='N' install-type=executable comment='uTox chat app'
-
+LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec=LineLauncher.exe
 
 * category='VOIP;Telephony;Chat;Internet;Network'
 MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname=MicroSIP-3.19.10.exe winmanager='N' comment='MicroSIP SIP communicator' sha256="d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5"
@@ -55,7 +56,7 @@ FireAlpaca platform=windows url=https://firealpaca.com/download/win comment='Ano
 Krita platform=windows url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec=krita.exe
 PaintBuster platform=windows url=https://archive.org/download/tucows_362047_PaintBuster/PB7Setup.exe  licence='Shareware' sha256='83c9aa3dc2a32cc3e24304bf06c82f6043d97b60c0ada9b1d15409a8a7951b03' 
 LazPaint platform=windows url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_setup_win32_no_install.zip/download  sha256=a9d9988f9c5b091a16ae4beebb95022fe07f68e2ec6e340878b189749cdc684b
-
+MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type=zip exec=MSPAINT.EXE
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256=a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5
@@ -65,7 +66,7 @@ OpenFX platform=windows url=http://openfx.org/download/install.msi exec="openfx.
 Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip  version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package'
 
 * category='ImageViewer;Viewer;Graphics'
-IfranView platform=windows url=http://download.betanews.com/download/967963863-1/iview451_setup.exe  comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' 
+IfranView platform=windows url=http://download.betanews.com/download/967963863-1/iview451_setup.exe  comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec=i_view32.exe
 Faststone platform=windows url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe  comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
 
 
@@ -82,6 +83,8 @@ FileZilla platform=windows url=https://dl1.cdn.filezilla-project.org/client/File
 * category='Office'
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe  exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
 OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite'
+LibreOffice platform=windows url=http://download.documentfoundation.org/libreoffice/stable/5.1.0/win/x86/LibreOffice_5.1.0_Win_x86.msi"
+ 
 
 
 * category='Viewer;Office'
@@ -118,8 +121,11 @@ CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolpl
 XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip  winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc, etc='
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip  version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec=RadioSure.exe
+Spotify platform=windows url=https://download.scdn.co/SpotifySetup.exe
 
 * comment='AudioVideoEditor;Audio'
+
+AIMP platform=windows url=https://www.aimp.ru/?do=download.file&id=4
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256=48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965 comment="Edit MP3 files"
 AudioLab platform=windows url=http://www.completelyfreesoftware.com/software/alab11d.zip  type='WAV editor' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' comment="Editor for WAV files"
 BRELS platform=windows url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip  title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' comment="Midi Editor"

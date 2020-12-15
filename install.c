@@ -187,7 +187,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 			Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
 			printf("RUN INSTALLER: %s\n",Tempstr);
 			Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-			RunProgramAndConsumeOutput(Cmd, "");
+			RunProgramAndConsumeOutput(Cmd, "+stderr");
 			break;
 
 			case PLATFORM_WINDOWS:
@@ -199,7 +199,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 
 		printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
 		Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-		RunProgramAndConsumeOutput(Cmd, "");
+		RunProgramAndConsumeOutput(Cmd, "+stderr");
 			break;
 		}
 	}
@@ -211,7 +211,7 @@ printf("INSTALLER PATH: %s\n", ptr);
 		SetVar(Act->Vars, "installer-path", Tempstr);	
 		Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
 		printf("RUN INSTALL STAGE2: %s\n", Cmd);
-		RunProgramAndConsumeOutput(Cmd, "");
+		RunProgramAndConsumeOutput(Cmd, "+stderr");
 	}
 
 	if (Act->PlatformID==PLATFORM_WINDOWS)
@@ -258,10 +258,14 @@ int ForcedFileType=FILETYPE_UNKNOWN;
 		break;
 	}
 
+	//we can force the type of the downloaded file, which allows us to override things like .zip files that have
+	//a self-extracting program stub on the front
 	ptr=GetVar(Act->Vars, "download-type");
 	if (StrValid(ptr))
 	{
-		if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
+		if (strcasecmp(ptr, "zip")==0) ForcedFileType=FILETYPE_ZIP;
+		else if (strcasecmp(ptr, "7z")==0) ForcedFileType=FILETYPE_7ZIP;
+		else if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
 		else if (strcasecmp(ptr, "tar.bz2")==0) ForcedFileType=FILETYPE_TBZ;
 		else if (strcasecmp(ptr, "tar.xz")==0) ForcedFileType=FILETYPE_TXZ;
 	}

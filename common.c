@@ -189,7 +189,7 @@ if (S)
   Tempstr=STREAMReadLine(Tempstr, S);
   while (Tempstr)
   {
-	if (Config->Flags & FLAG_DEBUG) printf("%s", Tempstr);
+	if (Config->Flags & FLAG_DEBUG) printf("DBG: %s", Tempstr);
   	Tempstr=STREAMReadLine(Tempstr, S);
   }
   STREAMClose(S);

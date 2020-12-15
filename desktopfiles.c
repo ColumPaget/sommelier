@@ -166,11 +166,6 @@ switch (Act->PlatformID)
 	case PLATFORM_GOGDOS:
 	case PLATFORM_GOGWINDOS:
 	case PLATFORM_DOOM:
-	case PLATFORM_ZXSPECTRUM:
-	case PLATFORM_MEGADRIVE:
-	case PLATFORM_NES:
-	case PLATFORM_SEGAMASTER:
-	case PLATFORM_GAMEBOYADVANCED:
 		EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
 		Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
 		StripLeadingWhitespace(Tempstr);

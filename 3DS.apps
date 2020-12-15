@@ -1,0 +1,8 @@
+* platform=3ds category=Games;Games/3DS
+
+Breakout url=https://github.com/Magicrafter13/Breakout/releases/download/B_1.07.02/Breakout.3dsx install-type=executable
+ColossalCaveAdventure url=https://github.com/nop90/Colossal-Cave-Adventure-2.5-for-3ds/releases/download/v1.1/Advent_3DSX_v1.1.zip
+GriffonLegend url=https://github.com/nop90/Griffon-Legend-3DS/releases/download/v1.0/GriffonLegend.v1.0.zip
+InsectoidDefence url=https://github.com/sgowen/insectoid-defense/releases/download/v1.0-all/insectoid-defense-3DS.zip
+Sokoban url=https://github.com/landm2000/sokoban/blob/master/sokoban.3dsx?raw=true install-type=executable
+

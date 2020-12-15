@@ -29,12 +29,7 @@ const char *WindowsPlatforms[]={"win","win16","win32","win64","windows","gog:win
 if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
 if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
 if (strcasecmp(Platform, "dos")==0) return(PLATFORM_DOS);
-if (strcasecmp(Platform, "zxspectrum")==0) return(PLATFORM_ZXSPECTRUM);
 if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
-if (strcasecmp(Platform, "sega_megadrive")==0) return(PLATFORM_MEGADRIVE);
-if (strcasecmp(Platform, "nintendo_nes")==0) return(PLATFORM_NES);
-if (strcasecmp(Platform, "segamaster")==0) return(PLATFORM_SEGAMASTER);
-if (strcasecmp(Platform, "gameboyadvanced")==0) return(PLATFORM_GAMEBOYADVANCED);
 if (strcasecmp(Platform, "gog.com:linux")==0) return(PLATFORM_GOGLINUX);
 if (strcasecmp(Platform, "gog.com:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
 if (strcasecmp(Platform, "gog.com:lindos")==0) return(PLATFORM_GOGDOS);
@@ -42,7 +37,6 @@ if (strcasecmp(Platform, "gog.com:windos")==0) return(PLATFORM_GOGWINDOS);
 if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
 if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
 if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
-if (strcasecmp(Platform, "ps1")==0) return(PLATFORM_PLAYSTATION1);
 
 return(PLATFORM_UNKNOWN);
 }
