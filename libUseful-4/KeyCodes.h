@@ -9,8 +9,8 @@
 //these keycodes try not to clash with those in linux/input.h. The linux/evdev system doesn't
 //use keycodes for shift and control modified keys, instead it uses a seperate modifier value
 //so the shift- or control- values here are given values high enough to put them out of the
-//keycode range of linux/input, whereas individual keypress values, like TKEY_F1 are only
-//defined if they are not already defined (probably because linux/input.h isn't present)
+//keycode range of linux/input, whereas individual keypress values, like TKEY_F1 are only 
+//defined if they are not already defined (probably because linux/input.h isn't present) 
 
 
 #define KEYMOD_SHIFT 1
@@ -19,6 +19,8 @@
 
 //Keycode definitions
 #define ESCAPE 0x1b
+#define TKEY_ESCAPE 0x1b
+#define TKEY_TAB '	'
 
 #ifndef TKEY_ENTER
 #define TKEY_ENTER  '\n'
@@ -29,7 +31,7 @@
 #define TKEY_F1 0x111
 #endif
 
-#ifndef TKEY_F2
+#ifndef TKEY_F2 
 #define TKEY_F2 0x112
 #endif
 
@@ -80,7 +82,6 @@
 #ifndef TKEY_F14
 #define TKEY_F14 0x11E
 #endif
-
 
 #ifndef TKEY_UP
 #define TKEY_UP 0x141
@@ -148,6 +149,7 @@
 #define TKEY_LCNTRL 0x153
 #define TKEY_RCNTRL 0x154
 
+#define TKEY_CAPS_LOCK 0x160
 
 //'internet' and 'multimedia' keyboards
 
@@ -295,14 +297,17 @@
 
 
 
-
-//not used by libUseful, but assigned so other programs can use
-//these key definitions and mouse input without clashing
+// mouse button values returned by xterm mouse reporting
+#define MOUSE_BTN_0 0xFF00 //this means 'no button' or 'release'
 #define MOUSE_BTN_1 0xFF01
 #define MOUSE_BTN_2 0xFF02
 #define MOUSE_BTN_3 0xFF03
 #define MOUSE_BTN_4 0xFF04 //4 & 5 scrollwheel
 #define MOUSE_BTN_5 0xFF05
+
+//not used by libUseful, but assigned so other programs can use
+//these key definitions and mouse input without clashing
+
 #define MOUSE_BTN_6 0xFF06 //6 & 7 thumbbuttons
 #define MOUSE_BTN_7 0xFF07
 #define MOUSE_BTN_8 0xFF08 //from here on in is gaming mice!

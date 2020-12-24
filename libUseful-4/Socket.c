@@ -4,6 +4,9 @@
 #include "UnixSocket.h"
 
 #include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
@@ -13,6 +16,52 @@
 #ifdef linux
 #include <linux/netfilter_ipv4.h>
 #endif
+
+
+typedef struct
+{
+int Flags;
+int QueueLen;
+} TSockSettings;
+
+int SocketParseConfig(const char *Config, TSockSettings *Settings)
+{
+const char *ptr;
+char *Name=NULL, *Value=NULL;
+
+Settings->Flags=0;
+Settings->QueueLen=0;
+
+ptr=GetToken(Config, "\\S", &Value, 0);
+for (ptr=Value; *ptr !='\0'; ptr++)
+{
+	switch (*ptr)
+	{
+    case 'n': Settings->Flags |= CONNECT_NONBLOCK; break;
+		case 'E': Settings->Flags |= CONNECT_ERROR; break;
+		case 'k': Settings->Flags |= SOCK_NOKEEPALIVE; break;
+		case 'A': Settings->Flags |= SOCK_TLS_AUTO; break;
+		case 'B': Settings->Flags |= SOCK_BROADCAST; break;
+		case 'F': Settings->Flags |= SOCK_TCP_FASTOPEN; break;
+		case 'R': Settings->Flags |= SOCK_DONTROUTE; break;
+		case 'P': Settings->Flags |= SOCK_REUSEPORT; break;
+		case 'N': Settings->Flags |= SOCK_TCP_NODELAY; break;
+	}
+}
+
+ptr=GetNameValuePair(ptr, "=", "\\S", &Name, &Value);
+while (ptr)
+{
+if (strcmp(Name, "listen")==0) Settings->QueueLen=atoi(Value);
+ptr=GetNameValuePair(ptr, "=", "\\S", &Name, &Value);
+}
+
+Destroy(Name);
+Destroy(Value);
+
+return(Settings->Flags);
+}
+
 
 
 int IsIP4Address(const char *Str)
@@ -95,7 +144,7 @@ const char *LookupHostIP(const char *Host)
         return(NULL);
     }
 
-//inet_ntoa shouldn't need this cast to 'char *', but it emitts a warning
+//inet_ntoa shouldn't need this cast to 'char *', but it emits a warning
 //without it
     return(inet_ntoa(*(struct in_addr *) *hostdata->h_addr_list));
 }
@@ -103,25 +152,25 @@ const char *LookupHostIP(const char *Host)
 
 ListNode *LookupHostIPList(const char *Host)
 {
-    struct hostent *hostdata;
-    ListNode *List;
-    char **ptr;
+struct hostent *hostdata;
+ListNode *List;
+char **ptr;
+  
+   hostdata=gethostbyname(Host);
+   if (!hostdata) 
+   {
+     return(NULL);
+   }
 
-    hostdata=gethostbyname(Host);
-    if (!hostdata)
-    {
-        return(NULL);
-    }
-
-    List=ListCreate();
+List=ListCreate();
 //inet_ntoa shouldn't need this cast to 'char *', but it emitts a warning
 //without it
-    for (ptr=hostdata->h_addr_list; *ptr !=NULL; ptr++)
-    {
-        ListAddItem(List, CopyStr(NULL,  (char *) inet_ntoa(*(struct in_addr *) *ptr)));
-    }
+for (ptr=hostdata->h_addr_list; *ptr !=NULL; ptr++)
+{
+ ListAddItem(List, CopyStr(NULL,  (char *) inet_ntoa(*(struct in_addr *) *ptr)));
+}
 
-    return(List);
+return(List);
 }
 
 
@@ -143,9 +192,12 @@ int IsSockConnected(int sock)
 
 int SockSetOpt(int sock, int Opt, const char *Name, int OnOrOff)
 {
-    int val=OnOrOff;
+    int val=OnOrOff, level;
+		
+		if (strncmp(Name, "TCP_", 4)==0) level=IPPROTO_TCP;
+		else level=SOL_SOCKET;
 
-    if (setsockopt(sock, SOL_SOCKET, Opt, &val,sizeof(int)) != 0)
+    if (setsockopt(sock, level, Opt, &val, sizeof(int)) != 0)
     {
         RaiseError(ERRFLAG_ERRNO, "Failed to setsockopt '%s'",Name);
         return(FALSE);
@@ -158,48 +210,69 @@ int SockSetOpt(int sock, int Opt, const char *Name, int OnOrOff)
 void SockSetOptions(int sock, int SetFlags, int UnsetFlags)
 {
 #ifdef SO_BROADCAST
-    if (SetFlags & SOCK_BROADCAST) SockSetOpt(sock, SO_BROADCAST, "SOCK_BROADCAST", 1);
+  if (SetFlags & SOCK_BROADCAST) SockSetOpt(sock, SO_BROADCAST, "SOCK_BROADCAST", 1);
 #endif
 
 #ifdef SO_DONTROUTE
-    if (SetFlags & SOCK_DONTROUTE) SockSetOpt(sock, SO_DONTROUTE, "SOCK_DONEROUTE", 1);
+  if (SetFlags & SOCK_DONTROUTE) SockSetOpt(sock, SO_DONTROUTE, "SOCK_DONTROUTE", 1);
 #endif
 
 #ifdef SO_REUSEPORT
-    if (SetFlags & SOCK_REUSEPORT) SockSetOpt(sock, SO_REUSEPORT, "SOCK_REUSEPORT", 1);
+  if (SetFlags & SOCK_REUSEPORT) SockSetOpt(sock, SO_REUSEPORT, "SOCK_REUSEPORT", 1);
 #endif
 
 #ifdef SO_PASSCRED
-    if (SetFlags & SOCK_PEERCREDS) SockSetOpt(sock, SO_PASSCRED, "SOCK_PEERCREDS", 1);
+  if (SetFlags & SOCK_PEERCREDS) SockSetOpt(sock, SO_PASSCRED,  "SOCK_PEERCREDS", 1);
 #endif
+
+#ifdef TCP_NODELAY
+  if (SetFlags & SOCK_TCP_NODELAY) SockSetOpt(sock, TCP_NODELAY, "TCP_NODELAY", 1);
+#endif
+
+#ifdef TCP_FASTOPEN
+  if (SetFlags & SOCK_TCP_FASTOPEN) SockSetOpt(sock, TCP_FASTOPEN, "TCP_FASTOPEN", 1);
+#endif
+
 
 #ifdef SO_KEEPALIVE
-//Default is KEEPALIVE ON
-    SockSetOpt(sock, SO_KEEPALIVE, "SO_KEEPALIVE", 1);
+	//Default is KEEPALIVE ON
+	//SOCK_NOKEEPALIVE unsets the default, so looks opposite to all the others
+  SockSetOpt(sock, SO_KEEPALIVE, "SO_KEEPALIVE", 1);
 #endif
 
-    if (SetFlags & CONNECT_NONBLOCK) fcntl(sock,F_SETFL,O_NONBLOCK);
+
+if (SetFlags & CONNECT_NONBLOCK) fcntl(sock,F_SETFL,O_NONBLOCK);
 
 
 #ifdef SO_BROADCAST
-    if (UnsetFlags & SOCK_BROADCAST) SockSetOpt(sock, SO_BROADCAST, "", 0);
+  if (UnsetFlags & SOCK_BROADCAST) SockSetOpt(sock, SO_BROADCAST, "SOCK_BROADCAST", 0);
 #endif
 
 #ifdef SO_DONTROUTE
-    if (UnsetFlags & SOCK_DONTROUTE) SockSetOpt(sock, SO_DONTROUTE, "", 1);
+  if (UnsetFlags & SOCK_DONTROUTE) SockSetOpt(sock, SO_DONTROUTE, "SOCK_DONTROUTE", 0);
 #endif
 
 #ifdef SO_REUSEPORT
-    if (UnsetFlags & SOCK_REUSEPORT) SockSetOpt(sock, SO_REUSEPORT, "", 1);
+  if (UnsetFlags & SOCK_REUSEPORT) SockSetOpt(sock, SO_REUSEPORT, "SOCK_REUSEPORT", 0);
 #endif
 
 #ifdef SO_PASSCRED
-    if (UnsetFlags & SOCK_PEERCREDS) SockSetOpt(sock, SO_PASSCRED, "", 1);
+  if (UnsetFlags & SOCK_PEERCREDS) SockSetOpt(sock, SO_PASSCRED, "SOCK_PASSCRED", 0);
+#endif
+
+#ifdef TCP_NODELAY
+  if (UnsetFlags & SOCK_TCP_NODELAY) SockSetOpt(sock, TCP_NODELAY, "TCP_NODELAY", 0);
+#endif
+
+#ifdef TCP_FASTOPEN
+  if (UnsetFlags & SOCK_TCP_FASTOPEN) SockSetOpt(sock, TCP_FASTOPEN, "TCP_FASTOPEN", 0);
 #endif
 
 #ifdef SO_KEEPALIVE
-    if (SetFlags & SOCK_NOKEEPALIVE) SockSetOpt(sock, SO_KEEPALIVE, "SOCK_NOKEEPALIVE", 0);
+	//SOCK_NOKEEPALIVE unsets the default, so looks opposite to all the others
+  if (SetFlags & SOCK_NOKEEPALIVE) SockSetOpt(sock, SO_KEEPALIVE, "SOCK_NOKEEPALIVE", 0);
 #endif
+
 }
 
 
@@ -298,7 +371,6 @@ int BindSock(int Type, const char *Address, int Port, int Flags)
     socklen_t salen;
     int fd;
 
-
     salen=SockAddrCreate(&sa, Address, Port);
     if (salen==0) return(-1);
     if (Flags & BIND_RAW)
@@ -308,17 +380,15 @@ int BindSock(int Type, const char *Address, int Port, int Flags)
     }
     else fd=socket(sa->sa_family, Type, 0);
 
-    //REISEADDR and REUSEPORT must be set BEFORE bind
+    //REUSEADDR and REUSEPORT must be set BEFORE bind
     result=1;
-#ifdef SO_REUSEADDR
-    setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,&result,sizeof(result));
-#endif
+		#ifdef SO_REUSEADDR
+	    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &result, sizeof(result));
+		#endif
 
-    /*
-    	#ifdef SO_REUSEPORT
-    	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,&result,sizeof(result));
-    	#endif
-    */
+   	#ifdef SO_REUSEPORT
+	   	if (Flags & BIND_REUSEPORT) setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &result, sizeof(result));
+   	#endif
 
     result=bind(fd, sa, salen);
     free(sa);
@@ -424,9 +494,9 @@ char *GetInterfaceDetails(char *RetStr, const char *Interface)
 {
     int fd, result;
     struct ifreq ifr;
-    char *Tempstr=NULL;
+		char *Tempstr=NULL;
 
-    RetStr=CopyStr(RetStr, "");
+		RetStr=CopyStr(RetStr, "");
     if (! StrValid(Interface)) return(RetStr);
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd==-1) return(RetStr);
@@ -435,25 +505,25 @@ char *GetInterfaceDetails(char *RetStr, const char *Interface)
     strncpy(ifr.ifr_name, Interface, IFNAMSIZ-1);
 
     result=ioctl(fd, SIOCGIFADDR, &ifr);
-    if (result > -1) RetStr=MCopyStr(RetStr, "ip4address=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr), " ", NULL);
+		if (result > -1) RetStr=MCopyStr(RetStr, "ip4address=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFBRDADDR, &ifr);
-    RetStr=MCatStr(RetStr, "ip4broadcast=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
+		RetStr=MCatStr(RetStr, "ip4broadcast=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFNETMASK, &ifr);
-    RetStr=MCatStr(RetStr, "ip4netmask=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
+		RetStr=MCatStr(RetStr, "ip4netmask=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_broadaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFDSTADDR, &ifr);
-    RetStr=MCatStr(RetStr, "ip4destaddr=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_dstaddr)->sin_addr), " ", NULL);
+		RetStr=MCatStr(RetStr, "ip4destaddr=", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_dstaddr)->sin_addr), " ", NULL);
 
     result=ioctl(fd, SIOCGIFMTU, &ifr);
-    Tempstr=FormatStr(Tempstr, "%d", ifr.ifr_mtu);
-    RetStr=MCatStr(RetStr, "ip4destaddr=", Tempstr, " ", NULL);
+		Tempstr=FormatStr(Tempstr, "%d", ifr.ifr_mtu);
+		RetStr=MCatStr(RetStr, "ip4destaddr=", Tempstr, " ", NULL);
 
     close(fd);
 
-    Destroy(Tempstr);
-    return(RetStr);
+		Destroy(Tempstr);
+	return(RetStr);
 }
 
 
@@ -585,7 +655,7 @@ int UDPSend(int sock, const char *Host, int Port, char *Data, int len)
     salen=SockAddrCreate(&sa, Host, Port);
     if (salen==0) return(-1);
 
-    result=sendto(sock, Data, len, 0, sa, salen);
+    result=sendto(sock, Data, len, 0, sa , salen);
     free(sa);
     return(result);
 }
@@ -600,9 +670,10 @@ int STREAMSendDgram(STREAM *S, const char *Host, int Port, char *Data, int len)
 
 
 
-int IPServerInit(int iType, const char *Address, int Port)
+int IPServerNew(int iType, const char *Address, int Port, int Flags)
 {
     int sock, val, Type;
+		int BindFlags=0;
     const char *p_Addr=NULL, *ptr;
 
 //if IP6 not compiled in then throw error if one is passed
@@ -634,7 +705,11 @@ int IPServerInit(int iType, const char *Address, int Port)
         break;
     }
 
-    sock=BindSock(Type, p_Addr, Port, BIND_CLOEXEC | BIND_LISTEN);
+		BindFlags=BIND_CLOEXEC | BIND_LISTEN;
+		if (Flags & SOCK_REUSEPORT) BindFlags |= BIND_REUSEPORT;
+    sock=BindSock(Type, p_Addr, Port, BindFlags);
+
+   if (sock > -1) SockSetOptions(sock, Flags, 0);
 
 #ifdef IP_TRANSPARENT
     if (iType==SOCK_TPROXY)
@@ -651,6 +726,13 @@ int IPServerInit(int iType, const char *Address, int Port)
 
 
     return(sock);
+}
+
+
+
+int IPServerInit(int iType, const char *Address, int Port)
+{
+return(IPServerNew(iType, Address, Port, 0));
 }
 
 
@@ -682,8 +764,8 @@ STREAM *STREAMFromSock(int sock, int Type, const char *Peer, const char *DestIP,
     S->Type=Type;
     if (StrValid(Peer))
     {
-        if (strncmp(Peer,"::ffff:",7)==0) STREAMSetValue(S,"Peer",Peer+7);
-        else STREAMSetValue(S,"Peer",Peer);
+        if (strncmp(Peer,"::ffff:",7)==0) STREAMSetValue(S,"PeerIP",Peer+7);
+        else STREAMSetValue(S,"PeerIP",Peer);
     }
 
     if (StrValid(DestIP))
@@ -702,31 +784,37 @@ STREAM *STREAMFromSock(int sock, int Type, const char *Peer, const char *DestIP,
     return(S);
 }
 
-STREAM *STREAMServerInit(const char *URL)
+
+
+
+STREAM *STREAMServerNew(const char *URL, const char *Config)
 {
     char *Proto=NULL, *Host=NULL, *Token=NULL;
-    int fd=-1, Port=0, Type;
+    int fd=-1, Port=0, Type, Flags=0;
+		TSockSettings Settings;
     STREAM *S=NULL;
 
     ParseURL(URL, &Proto, &Host, &Token,NULL, NULL,NULL,NULL);
     if (StrValid(Token)) Port=atoi(Token);
+
+		Flags=SocketParseConfig(Config, &Settings);
 
     switch (*Proto)
     {
     case 'u':
         if (strcmp(Proto,"udp")==0)
         {
-            fd=IPServerInit(SOCK_DGRAM,Host,Port);
+            fd=IPServerNew(SOCK_DGRAM, Host, Port, Flags);
             Type=STREAM_TYPE_UDP;
         }
         else if (strcmp(Proto,"unix")==0)
         {
-            fd=UnixServerInit(SOCK_STREAM,URL+5);
+            fd=UnixServerInit(SOCK_STREAM, URL+5);
             Type=STREAM_TYPE_UNIX_SERVER;
         }
         else if (strcmp(Proto,"unixdgram")==0)
         {
-            fd=UnixServerInit(SOCK_DGRAM,URL+10);
+            fd=UnixServerInit(SOCK_DGRAM, URL+10);
             Type=STREAM_TYPE_UNIX_DGRAM;
         }
         break;
@@ -734,13 +822,18 @@ STREAM *STREAMServerInit(const char *URL)
     case 't':
         if (strcmp(Proto,"tcp")==0)
         {
-            fd=IPServerInit(SOCK_STREAM,Host,Port);
+            fd=IPServerNew(SOCK_STREAM, Host, Port, Flags);
             Type=STREAM_TYPE_TCP_SERVER;
+						if (Settings.QueueLen > 0)
+						{
+							listen(fd, Settings.QueueLen);
+							if (Flags & SOCK_TCP_FASTOPEN) SockSetOpt(fd, TCP_FASTOPEN, "TCP_FASTOPEN", Settings.QueueLen);
+						}
         }
         else if (strcmp(Proto,"tproxy")==0)
         {
 #ifdef SOCK_TPROXY
-            fd=IPServerInit(SOCK_TPROXY,Host,Port);
+            fd=IPServerNew(SOCK_TPROXY, Host, Port, Flags);
             Type=STREAM_TYPE_TPROXY;
 #endif
         }
@@ -748,7 +841,11 @@ STREAM *STREAMServerInit(const char *URL)
     }
 
     S=STREAMFromSock(fd, Type, NULL, Host, Port);
-    if (S) S->Path=CopyStr(S->Path, URL);
+    if (S) 
+		{
+			S->Path=CopyStr(S->Path, URL);
+   		if (Flags & SOCK_TLS_AUTO) S->Flags |= SF_TLS_AUTO;
+		}
 
     DestroyString(Proto);
     DestroyString(Host);
@@ -757,6 +854,11 @@ STREAM *STREAMServerInit(const char *URL)
     return(S);
 }
 
+
+STREAM *STREAMServerInit(const char *URL)
+{
+return(STREAMServerNew(URL, ""));
+}
 
 STREAM *STREAMServerAccept(STREAM *Serv)
 {
@@ -793,8 +895,8 @@ STREAM *STREAMServerAccept(STREAM *Serv)
     S=STREAMFromSock(fd, type, Tempstr, DestIP, DestPort);
     if (type==STREAM_TYPE_TCP_ACCEPT)
     {
-        //if TLS autodetection enabled, perform it now
-        if (Serv->Flags & SF_TLS_AUTO) OpenSSLAutoDetect(S);
+    	//if TLS autodetection enabled, perform it now
+    	if ((Serv->Flags & SF_TLS_AUTO) && OpenSSLAutoDetect(S)) DoSSLServerNegotiation(S, 0);
     }
 
     DestroyString(Tempstr);
@@ -934,24 +1036,24 @@ int IPReconnect(int sock, const char *Host, int Port, int Flags)
 
 int TCPConnectWithAttributes(const char *LocalHost, const char *Host, int Port, int Flags, int TTL, int ToS)
 {
-    const char *p_LocalHost=LocalHost;
-    int sock, result;
+const char *p_LocalHost=LocalHost;
+int sock, result;
 
-    if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
+if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
 
-    sock=BindSock(SOCK_STREAM, p_LocalHost, 0, 0);
+sock=BindSock(SOCK_STREAM, p_LocalHost, 0, 0);
 
-    if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
-    if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
+if (TTL > 0) setsockopt(sock, IPPROTO_IP, IP_TTL, &TTL, sizeof(int));
+if (ToS > 0) setsockopt(sock, IPPROTO_IP, IP_TOS, &ToS, sizeof(int));
 
-    result=IPReconnect(sock,Host,Port,Flags);
-    if (result==-1)
-    {
-        close(sock);
-        return(-1);
-    }
+result=IPReconnect(sock,Host,Port,Flags);
+if (result==-1)
+{
+  close(sock);
+  return(-1);
+}
 
-    return(sock);
+return(sock);
 }
 
 
@@ -1042,8 +1144,7 @@ int STREAMDoPostConnect(STREAM *S, int Flags)
     if (! S) return(FALSE);
     if ((S->in_fd > -1) && (S->Timeout > 0) )
     {
-        tv.tv_sec=S->Timeout;
-        tv.tv_usec=0;
+				MillisecsToTV(S->Timeout * 10, &tv);
         if (FDSelect(S->in_fd, SELECT_WRITE, &tv) != SELECT_WRITE)
         {
             close(S->in_fd);
@@ -1060,7 +1161,12 @@ int STREAMDoPostConnect(STREAM *S, int Flags)
 
         S->Type=STREAM_TYPE_TCP;
         STREAMSetFlushType(S,FLUSH_LINE,0,0);
-        if (Flags & CONNECT_SSL) DoSSLClientNegotiation(S, Flags);
+        if (Flags & CONNECT_SSL) 
+				{
+        	STREAMSetFlags(S, 0, SF_NONBLOCK);
+					DoSSLClientNegotiation(S, Flags);
+      //  	if (Flags & CONNECT_NONBLOCK) STREAMSetFlags(S, SF_NONBLOCK, 0);
+				}
 
         ptr=GetRemoteIP(S->in_fd);
 
@@ -1092,6 +1198,8 @@ int STREAMTCPConnect(STREAM *S, const char *Host, int Port, int TTL, int ToS, in
     ListNode *Curr;
     char *Token=NULL, *ptr;
     int result=FALSE;
+		struct timeval tv;
+		int ConnectFlags=0;
 
 
     S->Path=FormatStr(S->Path,"tcp:%s:%d/",Host,Port);
@@ -1107,24 +1215,29 @@ int STREAMTCPConnect(STREAM *S, const char *Host, int Port, int TTL, int ToS, in
 
     if (StrValid(Host))
     {
-        if (Flags & CONNECT_NONBLOCK) S->Flags |= SF_NONBLOCK;
+				//we may have to connect nonblocking if there is a timeout, so that we don't block in the 
+				//'connect' function call, but we don't want to confuse that with a stream that's actually
+				//intended to be non-blocking
+				ConnectFlags=Flags;
+				if (S->Timeout > 0) ConnectFlags |= CONNECT_NONBLOCK;
 
         //Flags are handled in this function
-        S->in_fd=TCPConnectWithAttributes(STREAMGetValue(S, "LocalAddress"), Host,Port,Flags,TTL,ToS);
+        S->in_fd=TCPConnectWithAttributes(STREAMGetValue(S, "LocalAddress"), Host,Port,ConnectFlags,TTL,ToS);
 
         S->out_fd=S->in_fd;
         if (S->in_fd > -1) result=TRUE;
+        if (Flags & CONNECT_NONBLOCK) S->Flags |= SF_NONBLOCK;
     }
 
 
     if (result==TRUE)
     {
-        if (Flags & CONNECT_NONBLOCK)
+        if (S->Flags & SF_NONBLOCK)
         {
             S->State |=SS_CONNECTING;
             S->Flags |=SF_NONBLOCK;
         }
-        else result=STREAMDoPostConnect(S, Flags);
+				else result=STREAMDoPostConnect(S, Flags);
     }
 
     return(result);
@@ -1198,22 +1311,30 @@ int STREAMConnect(STREAM *S, const char *URL, const char *Config)
 {
     int result=FALSE;
     char *Name=NULL, *Value=NULL;
-    const char *ptr;
+		TSockSettings Settings;
+    const char *ptr, *p_val;
+
     int Flags=0;
 
-    ptr=LibUsefulGetValue("TCP:Keepalives");
-    if ( StrValid(ptr) &&  (! strtobool(ptr)) ) Flags |= SOCK_NOKEEPALIVE;
+		ptr=GetToken(Config, "\\S", &Value, 0);
+		Flags=SocketParseConfig(Value, &Settings);
 
-    ptr=GetNameValuePair(Config," ","=",&Name,&Value);
+		p_val=LibUsefulGetValue("TCP:Keepalives");
+		if ( StrValid(p_val) &&  (! strtobool(p_val)) ) Flags |= SOCK_NOKEEPALIVE;
+
+    ptr=GetNameValuePair(ptr," ","=",&Name,&Value);
     while (ptr)
     {
-        if (strcmp("Name","E")==0) Flags |= CONNECT_ERROR;
-        if (strcmp("Name","k")==0) Flags |= SOCK_NOKEEPALIVE;
-        if (strcasecmp("Name","keepalive")==0)
+        if (strcasecmp(Name,"keepalive")==0)
         {
             if (StrLen(Value) && (strncasecmp(Value, "n",1)==0)) Flags |= SOCK_NOKEEPALIVE;
         }
-        STREAMSetValue(S, Name, Value);
+				else if (strcasecmp(Name,"timeout")==0)
+        {
+            S->Timeout=atoi(Value);
+        }
+        else STREAMSetValue(S, Name, Value);
+
         ptr=GetNameValuePair(ptr," ","=",&Name,&Value);
     }
 
@@ -1224,7 +1345,7 @@ int STREAMConnect(STREAM *S, const char *URL, const char *Config)
         result=STREAMProcessConnectHops(S, Value);
     }
     else if (strchr(URL, '|')) result=STREAMProcessConnectHops(S, URL);
-    else result=STREAMDirectConnect(S, URL, 0);
+    else result=STREAMDirectConnect(S, URL, Flags);
 
 
     DestroyString(Name);

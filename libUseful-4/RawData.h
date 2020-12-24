@@ -22,7 +22,7 @@ typedef struct
     size_t BuffLen;
     size_t DataLen;
     char *Buffer;
-    size_t pos;
+		size_t pos;
 } RAWDATA;
 
 

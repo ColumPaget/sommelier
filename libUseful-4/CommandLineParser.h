@@ -5,9 +5,9 @@
 
 typedef struct
 {
-    unsigned int argc;
-    unsigned int curr;
-    const char **argv;
+unsigned int argc;
+unsigned int curr;
+const char **argv;
 } CMDLINE;
 
 

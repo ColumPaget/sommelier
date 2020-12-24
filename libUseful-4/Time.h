@@ -30,7 +30,7 @@ uint64_t GetTime(int Flags);
 //return a string describing the current date/time, in a format described by 'DateFormat'. 'DateFormat' is an strftime/strptime style format string.
 char *GetDateStr(const char *DateFormat, const char *TimeZone);
 
-//in the next two functions 'epoch' is usually Jan 1 1970, but might be some other date on different systems.
+//in the next two functions 'epoch' is usually Jan 1 1970, but might be some other date on different systems. 
 //It's the date that all time is measured from in the operating system or hardware.
 
 //as GetDateStr except the 'Secs' argument (which is number of seconds since epoch, as returned by time(NULL)) specifies the time to format
@@ -45,6 +45,8 @@ time_t DateStrToSecs(const char *DateFormat, const char *Str, const char *TimeZo
 void SetTimeout(int timeout, SIGNAL_HANDLER_FUNC);
 
 long TimezoneOffset(const char *TimeZone);
+
+void MillisecsToTV(int millisecs, struct timeval *tv);
 
 #ifdef __cplusplus
 }
