@@ -25,8 +25,10 @@ FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64"
 Hacknet platform=gog:linux category='Game'
 Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 KingdomRush platform=gog:linux category='Game' exec="run.sh" 
+Overfall platform=gog:linux category='Game' exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
 RaceTheSun platform=gog:linux category='Game'
+Realpolitiks platform=gog:linux category='Game'
 ShadowrunReturns platform=gog:linux category='Game' exec="Shadowrun.sh"
 SlayTheSpire platform=gog:linux category='Game' exec="SlayTheSpire"
 SpaceCom platform=gog:linux category='Game' exec="SPACECOM.x86"
@@ -38,6 +40,8 @@ Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noar
 HardWest platform=gog:linux category='Game' 
 MotherRussiaBleeds platform=gog:linux category='Game' 
 CelestianTales platform=gog:linux category='Game'
+MiniMetro platform=gog:linux category='Game' exec="Mini Metro"
+QuestForInfamy platform=gog:linux category='Game'
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
@@ -87,7 +91,8 @@ Timelapse platform=gog:windos category='Game'
 LureOfTheTemptress platform=gog:scummvm category='Game' 
 BeneathASteelSky platform=gog:scummvm category='Game' 
 TeenAgent platform=gog:scummvm category='Game' 
-TheDig platform=gog:scummvm category='Game' 
+TheDig platform=gog:scummvm category='Game'
+GrimFandango platforms=gog:scummvm category='Game'
 
 # windows via wine
 99LevelsToHell platform=gog:windows category='Game'
@@ -102,19 +107,23 @@ ChaosReborn platform=gog:windows category='Game'
 ChaosOverlords platform=gog:windows category='Game'
 CrusaderKings platform=gog:windows category='Game'
 DarkestDungeon platform=gog:windows category='Game' 
+DarkQuest platform=gog:windows category='Game' 
+DarkQuest2 platform=gog:windows category='Game' 
 Darkstone platform=gog:windows category='Game' exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 Defcon platform=gog:windows category='Game' 
 DinsCurse platform=gog:windows category='Game' rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
+DivineDivinity platform=gog:windows category='Game' exec=div.exe
+Diluvion platform=gog:windows category='Game'
 DraculaTheResurrection platform=gog:windows category='Game'
 DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
 DungeonSiege platform=gog:windows category='Game' exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
 DungeonSiege2 platform=gog:windows category='Game' exec="DungeonSiege2.exe"
 DungeonSiege3 platform=gog:windows category='Game' exec="Dungeon Siege III.exe"
 DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
-DivineDivinity platform=gog:windows category='Game' exec=div.exe
 Duskers platform=gog:windows category='Game'
+EmperorOfTheFadingSuns platform=gog:windows category='Game' vdesk=y
 Etherlords platform=gog:windows category='Game'
-EuropaUniversalis  platform=gog:windows category='Game' exec=eu.exe
+EuropaUniversalis  platform=gog:windows category='Game' exec=europa.exe
 EuropaUniversalis2 platform=gog:windows category='Game' exec=eu2.exe
 FantasyWars platform=gog:windows category='Game' exec=fw.exe
 FreedomForce platform=gog:windows category='Game' exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
@@ -128,15 +137,19 @@ HaegemoniaSolonHeritage platform=gog:windows category='Game'
 HeroesOfMightAndMagic3 platform=gog:windows category='Game'
 HitmanCodename47 platform=gog:windows category='Game'
 KingdomRush platform=gog:windows category='Game'
+KingdomUnderFireHeroes platform=gog:windows category='Game'
+KingdomUnderFireCrusaders platform=gog:windows category='Game'
 KingsBounty platform=gog:windows category='Game'
 MagicMaker platform=gog:windows category='Game' 
 MoonbaseCommander platform=gog:windows category='Game' exec=moonbase.exe
 Nexus platform=gog:windows category='Game' exec=nexus.exe
 Nox platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 OffworldResourceBase platform=gog:windows category='Game' exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+Overfall platform=gog:windows category='Game'
 Parkan2 platform=gog:windows category='Game'
 Patrician3 platform=gog:windows category='Game' exec=Patrician3.exe
 Perimeter platform=gog:windows category='Game'
+Pod platform=gog:windows category='Game' exec=PODX3Dfx.exe
 PopulousTheBeginning platform=gog:windows category='Game' exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 PortRoyale platform=gog:windows category='Game' exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2 platform=gog:windows category='Game' exec=PR2.exe
@@ -145,6 +158,7 @@ RageOfMages platform=gog:windows category='Game' exec=rom.exe
 Reigns platform=gog:windows category='Game'
 RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows category='Game'
+ShadowWatch platform=gog:windows category='Game'
 SlayTheSpire platform=gog:windows category='Game' exec="SlayTheSpire"
 SmugglersV platform=gog:windows category='Game'
 SpaceCom platform=gog:windows category='Game' 
@@ -171,7 +185,8 @@ Torchlight platform=gog:windows category='Game' os-version=winxp
 Torchlight2 platform=gog:windows category='Game' os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
 TheWitcherAdventureGame platform=gog:windows category='Game' 
-Wizardry platform=gog:windows category='Game' exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Victoria platform=gog:windows
 VtmBloodlines platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 VtmRedemption platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
+Wizardry platform=gog:windows category='Game' exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"

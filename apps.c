@@ -15,6 +15,9 @@ int AppPlatformMatches(TAction *App, const char *Platforms)
 {
     if (! StrValid(Platforms)) return (TRUE);
     if (InList(App->Platform, Platforms)) return(TRUE);
+
+		if ( (PlatformType(App->Platform)==PLATFORM_WINDOWS) && InList("windows", Platforms) ) return(TRUE);
+
     return(FALSE);
 }
 

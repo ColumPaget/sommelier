@@ -110,6 +110,7 @@ static TPlatform *PlatformsParse(const char *Line)
         }
         if (strcmp(Name, "emu")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
         if (strcmp(Name, "emulator")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
+        if (strcmp(Name, "installer")==0) Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, Value);
         if (strcmp(Name, "dir")==0) Plt->WorkingDir=CopyStr(Plt->WorkingDir, Value);
         if (strcmp(Name, "unpack-dir")==0) Plt->UnpackDir=CopyStr(Plt->UnpackDir, Value);
         if (strcmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
@@ -297,6 +298,7 @@ char *PlatformSelect(char *RetStr, TAction *Act)
         else if (StrValid(Plt->InstallerPattern))
         {
             if (InList(p_filename, Plt->InstallerPattern)) RetStr=MCatStr(RetStr, Curr->Tag, ",", NULL);
+						printf("INSTALLER: [%s] [%s]\n", p_filename, Plt->InstallerPattern);
         }
 
         Curr=ListGetNext(Curr);
