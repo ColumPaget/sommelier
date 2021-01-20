@@ -5,44 +5,44 @@ exec_prefix=@exec_prefix@
 CFLAGS=@CFLAGS@ @DEFS@ -DINSTALL_PREFIX=\"@prefix@\"
 
 all: $(OBJ) main.c @STATIC_LIBS@
-	gcc $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
+	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
 libUseful-4/libUseful.a:
 	$(MAKE) -C libUseful-4
 
 common.o: common.h common.c
-	gcc $(CFLAGS) -c common.c
+	$(CC) $(CFLAGS) -c common.c
 
 config.o: config.h config.c
-	gcc $(CFLAGS) -c config.c
+	$(CC) $(CFLAGS) -c config.c
 
 apps.o: apps.h apps.c
-	gcc $(CFLAGS) -c apps.c
+	$(CC) $(CFLAGS) -c apps.c
 
 doom.o: doom.h doom.c
-	gcc $(CFLAGS) -c doom.c
+	$(CC) $(CFLAGS) -c doom.c
 
 platforms.o: platforms.h platforms.c
-	gcc $(CFLAGS) -c platforms.c
+	$(CC) $(CFLAGS) -c platforms.c
 
 command-line.o: command-line.h command-line.c
-	gcc $(CFLAGS) -c command-line.c
+	$(CC) $(CFLAGS) -c command-line.c
 
 desktopfiles.o: desktopfiles.h desktopfiles.c
-	gcc $(CFLAGS) -c desktopfiles.c
+	$(CC) $(CFLAGS) -c desktopfiles.c
 
 download.o: download.h download.c
-	gcc $(CFLAGS) -c download.c
+	$(CC) $(CFLAGS) -c download.c
 
 install.o: install.h install.c
-	gcc $(CFLAGS) -c install.c
+	$(CC) $(CFLAGS) -c install.c
 
 uninstall.o: uninstall.h uninstall.c
-	gcc $(CFLAGS) -c uninstall.c
+	$(CC) $(CFLAGS) -c uninstall.c
 
 
 regedit.o: regedit.h regedit.c
-	gcc $(CFLAGS) -c regedit.c
+	$(CC) $(CFLAGS) -c regedit.c
 
 
 clean:
