@@ -92,7 +92,6 @@ LureOfTheTemptress platform=gog:scummvm category='Game'
 BeneathASteelSky platform=gog:scummvm category='Game' 
 TeenAgent platform=gog:scummvm category='Game' 
 TheDig platform=gog:scummvm category='Game'
-GrimFandango platforms=gog:scummvm category='Game'
 
 # windows via wine
 99LevelsToHell platform=gog:windows category='Game'
@@ -156,6 +155,7 @@ PortRoyale2 platform=gog:windows category='Game' exec=PR2.exe
 RaceTheSun platform=gog:windows category='Game'
 RageOfMages platform=gog:windows category='Game' exec=rom.exe
 Reigns platform=gog:windows category='Game'
+Revolver360 platform=gog:windows category='Game'
 RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows category='Game'
 ShadowWatch platform=gog:windows category='Game'

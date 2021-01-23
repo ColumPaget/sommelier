@@ -1,6 +1,7 @@
 url=https://archive.org/download/* icon=$(url-path)/__ia_thumb.jpg
 
 * category='library'
+TimesNewRoman platform=windows url=https://sourceforge.net/projects/corefonts/files/the%20fonts/final/times32.exe/download
 MFC platform=windows url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe  installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe'  sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
 VB5 platform=windows url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe   sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
 VB6 platform=windows url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe  installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb'  
@@ -44,6 +45,7 @@ mIRC platform=windows url=https://www.mirc.com/get.php?mirror  comment='Popular 
 * category='2DGraphics;Graphics'
 AndreaMosaic platform=windows url=http://andreaplanet.com/andreamosaic/download.php?version=fullweb  version='3.36.0' exec='AndreaMosaic.exe' comment='Make Mosaics from images' 
 AniTuner platform=windows url=https://torry.net/files/tools/graph/cursor/anisetup.exe exec='AniTuner.exe' sha256='d687a406d361947fd42de13fde32f4746a39a0bd5ec25b262a416f712097d812'  comment='Create animated cursors' os-version=winxp
+ArtWeaver platform=windows url=http://www.artweaver.de/direct/Artweaver.exe requires=TimesNewRoman exec=Artweaver.exe
 BrickAtelier platform=windows url=http://koti.mbnet.fi/paulkp/brick/brickatelier085.zip  version='0.85' exec='brickatelier.exe' type='graphics' rating='platinum' sha256='cccbda19ef115a8b5b5d28c21fa2ddccc48548a6218af3a56f86cf2efc03fbf5'  
 Gimp platform=windows url=https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.18-setup-2.exe exec=gimp-2.10.exe 
 GraphicsGale platform=windows url=https://graphicsgale.com/files/setgaleus20801.exe  version='2.08.01' exec='setgaleus20801.exe' type='graphics' rating='platinum' sha256='5480944860c82f7b2fbd6af574119a4e46a27aadc32fe71681af3a656df15b10'  

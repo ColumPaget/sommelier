@@ -298,7 +298,6 @@ char *PlatformSelect(char *RetStr, TAction *Act)
         else if (StrValid(Plt->InstallerPattern))
         {
             if (InList(p_filename, Plt->InstallerPattern)) RetStr=MCatStr(RetStr, Curr->Tag, ",", NULL);
-						printf("INSTALLER: [%s] [%s]\n", p_filename, Plt->InstallerPattern);
         }
 
         Curr=ListGetNext(Curr);

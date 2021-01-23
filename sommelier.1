@@ -26,13 +26,18 @@ Sommelier is an installer for downloadable applications that can be run under a 
 Installed applications are stored under a \(aq.sommelier\(aq directory in the user\(aqs home directory, each in a subdirectory of their own (what\(aqs known as a \(aqwine bottle\(aq for wine apps). Also in this directory are stored \(aq.apps\(aq configuration files that describe the list of installable apps.
 .SH OPTIONS
 
-
+.TP
+.B -url <url>
+ install from a specified url or file path
 .TP
 .B -c <config file>
  specify a config (list of apps) file, rather than using the default search path
 .TP
 .B -f
  force install even if expected sha256 doesn\(aqt match the download
+.TP
+.B -install-name <name>
+ install an application under a different name
 .TP
 .B -proxy <url>
  use a proxy for downloading installs
@@ -45,6 +50,10 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 .TP
 .B -set
  set a value at install
+
+
+Use of the '-install-name' option allows the same app to be installed in different subdirectories and called under different names.
+
 
 .SH EXAMPLE USAGE
 

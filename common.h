@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "7.3"
+#define VERSION "7.4"
 
 
 #define INSTALL_RUN 0
@@ -49,6 +49,7 @@ typedef struct
     char *URL;
     char *Root;
     char *DownName;
+    char *InstallName;
     char *InstallPath;
     char *SrcPath;
     char *Exec;

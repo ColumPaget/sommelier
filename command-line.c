@@ -16,6 +16,7 @@ static void PrintUsage()
     printf("  -d                            print debugging (there will be a lot!)\n");
     printf("  -c <config file>              specify a config (list of apps) file, rather than using the default\n");
     printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)\n");
+    printf("  -install-name <name>          Name that program will be installed under and called/run under\n");
     printf("  -f                            force install even if expected sha256 doesn't match the download\n");
     printf("  -force                        force install even if expected sha256 doesn't match the download\n");
     printf("  -proxy <url>                  use a proxy for downloading installs\n");
@@ -62,6 +63,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-s")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-set")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
+    else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
     {
         Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
@@ -72,6 +74,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
     else if (strcmp(p_Opt, "-net")==0) Act->Flags &= ~FLAG_NET;
     else if (strcmp(p_Opt, "-url")==0) Act->URL=CopyStr(Act->URL, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-install-name")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-d")==0)
@@ -204,6 +207,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         Act->Flags |= Options->Flags;
         if (StrValid(Options->URL)) Act->URL=CopyStr(Act->URL, Options->URL);
         if (StrValid(Options->Platform)) Act->Platform=CopyStr(Act->Platform, Options->Platform);
+        if (StrValid(Options->InstallName)) Act->InstallName=CopyStr(Act->InstallName, Options->InstallName);
         CopyVars(Act->Vars, Options->Vars);
 
         if (! StrValid(Act->Platform)) Act->Platform=CopyStr(Act->Platform, PlatformDefault());

@@ -295,6 +295,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 
     case FILETYPE_ZIP:
         Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
+printf("unpack cmd: %s\n", Tempstr);
         printf("unpacking: %s\n",GetBasename(Path));
         RunProgramAndConsumeOutput(Tempstr, "noshell");
 
@@ -523,8 +524,13 @@ static void FinalizeExeInstall(TAction *Act)
 
 static void InstallSingleItemPreProcessInstall(TAction *Act)
 {
-    char *Token=NULL, *Tempstr=NULL;
-    const char *ptr;
+	char *Token=NULL, *Tempstr=NULL;
+	const char *ptr;
+
+	if (StrValid(Act->InstallName)) 
+	{
+		Act->Name=CopyStr(Act->Name, Act->InstallName);
+	}
 
 //if package supports both 32 and 64 bit architectures (or only 64, but the package type could support 32-bit, as with GOG games) then if we are running on a 64bit architecture we want to use the
 //64bit version
@@ -764,7 +770,8 @@ void InstallApp(TAction *Act)
     const char *ptr, *p_Requires;
     char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
-    Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
+		if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
+    else Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
     Tempstr=CopyStr(Tempstr, "");
 

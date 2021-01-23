@@ -69,6 +69,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             SetVar(Act->Vars, "url-path", Tempstr);
         }
         else if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+        else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
         else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
         else if (strcmp(Name,"platform")==0)
         {
@@ -357,6 +358,11 @@ int AppLoadConfig(TAction *App)
 
 //if no platform specified this will use the first matching app config it finds for any platform
     result=AppFindConfig(App, Tempstr);
+
+		if (StrValid(App->InstallName))
+		{
+			SetVar(App->Vars, "name", App->InstallName);
+		}
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
     if (result) Tempstr=AppFormatPath(Tempstr, App);
