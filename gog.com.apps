@@ -15,6 +15,7 @@ ChaosReborn platform=gog:linux category='Game' warn="This game has been seen to 
 Defcon platform=gog:linux category='Game' warn="This game has been seen to fail on some linux platforms"
 TIS100 platform=gog:linux category='Game' 
 Battlevoid platform=gog:linux category='Game' exec=harbinger
+CelestianTales platform=gog:linux category='Game'
 Convoy platform=gog:linux category='Game' exec="Convoy.x86" exec64="Convoy.x86_64"
 CryptOfTheNecrodancer platform=gog:linux category='Game' exec="NecroDancer.sh"
 DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
@@ -39,9 +40,10 @@ InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data
 Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux category='Game' 
 MotherRussiaBleeds platform=gog:linux category='Game' 
-CelestianTales platform=gog:linux category='Game'
 MiniMetro platform=gog:linux category='Game' exec="Mini Metro"
 QuestForInfamy platform=gog:linux category='Game'
+IratusLordOfTheDead platform=gog:linux category='Game' exec='Iratus'
+DoorKickers platform=gog:linux category='Game'
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
@@ -190,3 +192,6 @@ VtmBloodlines platform=gog:windows category='Game' exec="vampire.exe" warn="This
 VtmRedemption platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
 Wizardry platform=gog:windows category='Game' exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+
+
+OneFingerDeathPunch2 platform=gog:windows category='Game'
