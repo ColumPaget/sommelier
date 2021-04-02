@@ -1,5 +1,3 @@
-url=https://archive.org/download/* icon=$(url-path)/__ia_thumb.jpg
-
 * category='library'
 TimesNewRoman platform=windows url=https://sourceforge.net/projects/corefonts/files/the%20fonts/final/times32.exe/download
 MFC platform=windows url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe  installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe'  sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
