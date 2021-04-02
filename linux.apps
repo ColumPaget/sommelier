@@ -38,10 +38,10 @@ RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.
 TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec=vncviewer download-type=tar.gz
 TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec=vncviewer download-type=tar.gz
 
-# These applications should install, but the websites have done things to prevent it
-#Arduino platform=linux32 url=https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-linux32.tar.xz download-type=tar.xz category=Electronics comment="Arduino Programming IDE"
-#Arduino platform=linux64 url=https://www.arduino.cc/download_handler.php?f=/arduino-1.8.12-linux64.tar.xz download-type=tar.xz category=Electronics comment="Arduino Programming IDE"
-#FileZilla platform=linux32 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_i686-linux-gnu.tar.bz2?h=KayQi81p0mCOO6R_FIegNg&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
-#FileZilla platform=linux64 url=https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_x86_64-linux-gnu.tar.bz2?h=oJ8bq6m-ktw1yzn6U0UYVA&x=1590344247 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
+Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type=tar.xz exec=arduino category=Electronics comment="Arduino Programming IDE"
+Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type=tar.xz exec=arduino category=Electronics comment="Arduino Programming IDE"
+
+FileZilla platform=linux32 url=https://dl4.cdn.filezilla-project.org/client/FileZilla_3.53.1_i686-linux-gnu.tar.bz2?h=gmzE6KcR5KBpTHda_2XLOQ&x=1617370965 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
+FileZilla platform=linux64 url=https://dl2.cdn.filezilla-project.org/client/FileZilla_3.53.1_x86_64-linux-gnu.tar.bz2?h=BObZz_Dkx6yFErIIhEhmtA&x=1617371225 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
 
 
