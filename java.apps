@@ -11,6 +11,13 @@ ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%20
 * platform=java category=Audio
 SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from=soundboard_2.0.9 exec=SoundBoard.jar
 
+* platform=java category=Misc
+FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11.zip?download movefiles-from=freeplane-1.8.11 exec=freeplanelauncher.jar
+JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type=executable
+Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from=GloboNote/* exec=GloboNote.jar
+tvnc-jviewer url=https://www.tightvnc.com/download/2.8.3/tvnjviewer-2.8.3-bin-gnugpl.zip exec=tightvnc-jviewer.jar
+RText url=https://sourceforge.net/projects/rtext/files/rtext/2.5.6/rtext_2.5.6_unix_bin.tar.gz/download download-type=tar.gz
+
 * platform=java category=System;FileTools;FileManager
 MuCommander url=https://github.com/mucommander/mucommander/releases/download/0.9.6-1/mucommander-0.9.6-1.tar.gz category=System;FileTools;FileManager download-type=tar.gz exec=mucommander-0.9.6.jar 
 
@@ -33,7 +40,6 @@ DrashRL url=http://slashie.net/downloads/drashrl032.zip
 CastlevaniaRL url=http://slashie.net/downloads/cvrl073.zip
 
 
-* platform=java category=Misc
-FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11.zip?download movefiles-from=freeplane-1.8.11 exec=freeplanelauncher.jar
-JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type=executable
-Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from=GloboNote/* exec=GloboNote.jar
+* platform=java category=Games;BoardGame
+CGoban url=http://files.gokgs.com/javaBin/cgoban.jar install-type=executable
+Jago url=http://www.rene-grothmann.de/jago/jago.jar install-type=executable
