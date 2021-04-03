@@ -134,7 +134,7 @@ void DesktopFileGenerate(TAction *Act)
         //native apps
         case PLATFORM_LINUX32:
         case PLATFORM_LINUX64:
-				case PLATFORM_GOGLINUX:
+        case PLATFORM_GOGLINUX:
             ptr=GetVar(Act->Vars, "exec");
 
             if (StrValid(ptr))

@@ -294,23 +294,28 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         break;
 
     case FILETYPE_ZIP:
-        Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
-printf("unpack cmd: %s\n", Tempstr);
-        printf("unpacking: %s\n",GetBasename(Path));
-        RunProgramAndConsumeOutput(Tempstr, "noshell");
-
-        //for zipfiles and the like the installer has to be found. Either it's
-        //specified in the app config, as 'installer'
-        //or we go looking for certain common filenames
-
-        ptr=GetVar(Act->Vars, "installer");
-        if (! ptr) ptr="setup.exe,install.exe,*.msi";
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
-        if (StrValid(Tempstr))
+        //java .jar file are zips, but we don't want to unpack them
+        if (Act->InstallType == INSTALL_EXECUTABLE) SetVar(Act->Vars, "exec", GetBasename(Act->URL));
+        else
         {
-            printf("Found installer program: %s\n", Tempstr);
-            SetVar(Act->Vars, "installer-path", Tempstr);
-            RunInstallers(Act);
+            Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
+            printf("unpack cmd: %s\n", Tempstr);
+            printf("unpacking: %s\n",GetBasename(Path));
+            RunProgramAndConsumeOutput(Tempstr, "noshell");
+
+            //for zipfiles and the like the installer has to be found. Either it's
+            //specified in the app config, as 'installer'
+            //or we go looking for certain common filenames
+
+            ptr=GetVar(Act->Vars, "installer");
+            if (! ptr) ptr="setup.exe,install.exe,*.msi";
+            Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
+            if (StrValid(Tempstr))
+            {
+                printf("Found installer program: %s\n", Tempstr);
+                SetVar(Act->Vars, "installer-path", Tempstr);
+                RunInstallers(Act);
+            }
         }
         break;
 
@@ -524,13 +529,13 @@ static void FinalizeExeInstall(TAction *Act)
 
 static void InstallSingleItemPreProcessInstall(TAction *Act)
 {
-	char *Token=NULL, *Tempstr=NULL;
-	const char *ptr;
+    char *Token=NULL, *Tempstr=NULL;
+    const char *ptr;
 
-	if (StrValid(Act->InstallName)) 
-	{
-		Act->Name=CopyStr(Act->Name, Act->InstallName);
-	}
+    if (StrValid(Act->InstallName))
+    {
+        Act->Name=CopyStr(Act->Name, Act->InstallName);
+    }
 
 //if package supports both 32 and 64 bit architectures (or only 64, but the package type could support 32-bit, as with GOG games) then if we are running on a 64bit architecture we want to use the
 //64bit version
@@ -613,7 +618,7 @@ static void InstallSingleItem(TAction *Act)
 
         Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
         InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
-        printf("upack-dir: %s\n", InstallPath);
+        printf("unpack-dir: %s\n", InstallPath);
         if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
         mkdir(InstallPath, 0700);
         chdir(InstallPath);
@@ -770,7 +775,7 @@ void InstallApp(TAction *Act)
     const char *ptr, *p_Requires;
     char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
-		if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
+    if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
     else Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
     Tempstr=CopyStr(Tempstr, "");

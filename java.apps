@@ -1,0 +1,32 @@
+
+* platform=java category='2DGraphics;Graphics'
+
+Spade url=https://github.com/Spade-Editor/Spade/releases/download/v0.16.0-Beta/Spade.jar install-type=executable
+Alchemy url=https://al.chemy.org/files/Alchemy-008.tar.gz download-type=tar.gz movefiles-from=Alchemy/*
+Pixelitor url=https://prdownloads.sourceforge.net/pixelitor/Pixelitor-4.2.3.jar?download install-type=executable
+
+* platform=java category='3DGraphics;Graphics'
+ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%203.2.0%20no-install.zip?download
+
+* platform=java category=Audio
+SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from=soundboard_2.0.9 exec=SoundBoard.jar
+
+* platform=java category=System;FileTools;FileManager
+MuCommander url=https://github.com/mucommander/mucommander/releases/download/0.9.6-1/mucommander-0.9.6-1.tar.gz category=System;FileTools;FileManager download-type=tar.gz exec=mucommander-0.9.6.jar 
+
+* platform=java category=Games
+FreeCol url=https://prdownloads.sourceforge.net/freecol/freecol-0.11.6.zip?download movefiles-from=freecol/* exec=FreeCol.jar
+Javelin url=https://github.com/tukkek/javelin/releases/download/1.6/javelin.zip exec=javalin.jar movefiles-from=javelin/*
+Domination url=https://prdownloads.sourceforge.net/domination/Domination_1.2.3.zip?download movefiles-from=Domination/*
+InfiniteTux url=https://github.com/qbancoffee/infinite-tux/releases/download/1.1sfx/infinitetux.jar install-type=executable
+Stendhal url=https://jztkft.dl.sourceforge.net/project/arianne/stendhal/1.36/stendhal-1.36.zip exec=stendhal-starter.jar
+Clippers url=https://prdownloads.sourceforge.net/clippers/Clippers_Jar_1.3.9.zip?download exec=clippers.jar
+JSoko url=https://prdownloads.sourceforge.net/jsokoapplet/JSoko_1.97.zip?download
+DrashRL url=http://slashie.net/downloads/drashrl032.zip 
+CastlevaniaRL url=http://slashie.net/downloads/cvrl073.zip
+
+
+* platform=java category=Misc
+FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11.zip?download movefiles-from=freeplane-1.8.11 exec=freeplanelauncher.jar
+JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type=executable
+Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from=GloboNote/* exec=GloboNote.jar

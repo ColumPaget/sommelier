@@ -16,7 +16,7 @@ int AppPlatformMatches(TAction *App, const char *Platforms)
     if (! StrValid(Platforms)) return (TRUE);
     if (InList(App->Platform, Platforms)) return(TRUE);
 
-		if ( (PlatformType(App->Platform)==PLATFORM_WINDOWS) && InList("windows", Platforms) ) return(TRUE);
+    if ( (PlatformType(App->Platform)==PLATFORM_WINDOWS) && InList("windows", Platforms) ) return(TRUE);
 
     return(FALSE);
 }
@@ -359,10 +359,10 @@ int AppLoadConfig(TAction *App)
 //if no platform specified this will use the first matching app config it finds for any platform
     result=AppFindConfig(App, Tempstr);
 
-		if (StrValid(App->InstallName))
-		{
-			SetVar(App->Vars, "name", App->InstallName);
-		}
+    if (StrValid(App->InstallName))
+    {
+        SetVar(App->Vars, "name", App->InstallName);
+    }
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
     if (result) Tempstr=AppFormatPath(Tempstr, App);

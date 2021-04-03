@@ -41,7 +41,7 @@ int InList(const char *Item, const char *List)
     char *Match=NULL;
     const char *ptr;
 
-		if (! StrValid(Item)) return(FALSE);
+    if (! StrValid(Item)) return(FALSE);
     ptr=GetToken(List, ",", &Match, GETTOKEN_QUOTES);
     while (ptr)
     {
@@ -49,22 +49,22 @@ int InList(const char *Item, const char *List)
 
 //if match starts with ! this inverts the sense of the match, so anything
 //that *doesn't match* matches, and we have an exclusion
-				if (StrValid(Match))
-				{
-        if (*Match=='!')
+        if (StrValid(Match))
         {
-            if (fnmatch(Match+1, Item, 0) != 0)
+            if (*Match=='!')
+            {
+                if (fnmatch(Match+1, Item, 0) != 0)
+                {
+                    Destroy(Match);
+                    return(TRUE);
+                }
+            }
+            else if (fnmatch(Match, Item, 0) == 0)
             {
                 Destroy(Match);
                 return(TRUE);
             }
         }
-        else if (fnmatch(Match, Item, 0) == 0)
-        {
-            Destroy(Match);
-            return(TRUE);
-        }
-				}
 
         ptr=GetToken(ptr, ",", &Match, GETTOKEN_QUOTES);
     }
