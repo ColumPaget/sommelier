@@ -188,7 +188,7 @@ XmSol platform=windows url=https://sourceforge.net/projects/xmsol/files/xmsol.zi
 XCell platform=windows url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip  version='4.0a' exec='xcell.exe' comment='Freecell Clone' sha256='049615687199033dbab053d114213c37da6a3ac478de79b415b9fcc1ea4ebefe'
 Hearts platform=windows url=http://www.tucows.com/download/games/files2/thnoshearts.zip  installer-vdesk='Y' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe'
 
-* category='Roguelike;Game'
+* category='Roguelike;Roleplaying;Game'
 DesktopDungeons platform=windows url=http://www.qcfdesign.com/Files/DesktopDungeons/DesktopDungeons_v021.exe  exec='DesktopDungeons.exe' comment='Coffebreak Roguelike' sha256='2a6e2b339efebd2e13dec776baa36dda79b1de8c079ba1fccbc053a2f33df86e' 
 DungeonCrawlStoneSoup platform=windows url=http://crawl.develz.org/release/0.21/stone_soup-0.21.1-tiles-win32.zip  exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256='fec60ac700975e3bc1edb1d13c0e74d799bc5431cb6b0ef797bf960e3bb28198' 
 GearHead1 platform=windows url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/GH1-1.302-sdl-windows-i386.zip  movefiles-from='gearhead-1/*' exec='gharena.exe' comment='Mecha Roguelike' sha256='edfdd0c0682ba7e7bbbbc908ca2a092ddc66fd251bb7a6c72700f7d9d9768aa1' 

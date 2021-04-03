@@ -6,7 +6,7 @@ Alchemy url=https://al.chemy.org/files/Alchemy-008.tar.gz download-type=tar.gz m
 Pixelitor url=https://prdownloads.sourceforge.net/pixelitor/Pixelitor-4.2.3.jar?download install-type=executable
 
 * platform=java category='3DGraphics;Graphics'
-ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%203.2.0%20no-install.zip?download
+ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%203.2.0%20no-install.zip?download comment="3D Modeller"
 
 * platform=java category=Audio
 SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from=soundboard_2.0.9 exec=SoundBoard.jar
@@ -15,13 +15,20 @@ SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.
 MuCommander url=https://github.com/mucommander/mucommander/releases/download/0.9.6-1/mucommander-0.9.6-1.tar.gz category=System;FileTools;FileManager download-type=tar.gz exec=mucommander-0.9.6.jar 
 
 * platform=java category=Games
-FreeCol url=https://prdownloads.sourceforge.net/freecol/freecol-0.11.6.zip?download movefiles-from=freecol/* exec=FreeCol.jar
-Javelin url=https://github.com/tukkek/javelin/releases/download/1.6/javelin.zip exec=javalin.jar movefiles-from=javelin/*
-Domination url=https://prdownloads.sourceforge.net/domination/Domination_1.2.3.zip?download movefiles-from=Domination/*
 InfiniteTux url=https://github.com/qbancoffee/infinite-tux/releases/download/1.1sfx/infinitetux.jar install-type=executable
+Magarena url=https://github.com/magarena/magarena/releases/download/1.96/Magarena-1.96.zip movefiles-from=Magarena-1.96/* exec=Magarena.jar
+
+* platform=java category=Games;LogicGame
+JSoko url=https://prdownloads.sourceforge.net/jsokoapplet/JSoko_1.97.zip?download
+
+* platform=java category=Games;StrategyGame
+FreeCol url=https://prdownloads.sourceforge.net/freecol/freecol-0.11.6.zip?download movefiles-from=freecol/* exec=FreeCol.jar
+Domination url=https://prdownloads.sourceforge.net/domination/Domination_1.2.3.zip?download movefiles-from=Domination/* exec=Domination.jar 
 Stendhal url=https://jztkft.dl.sourceforge.net/project/arianne/stendhal/1.36/stendhal-1.36.zip exec=stendhal-starter.jar
 Clippers url=https://prdownloads.sourceforge.net/clippers/Clippers_Jar_1.3.9.zip?download exec=clippers.jar
-JSoko url=https://prdownloads.sourceforge.net/jsokoapplet/JSoko_1.97.zip?download
+
+* platform=java category=Games;RolePlaying;Roguelike
+Javelin url=https://github.com/tukkek/javelin/releases/download/1.6/javelin.zip exec=javalin.jar movefiles-from=javelin/*
 DrashRL url=http://slashie.net/downloads/drashrl032.zip 
 CastlevaniaRL url=http://slashie.net/downloads/cvrl073.zip
 
