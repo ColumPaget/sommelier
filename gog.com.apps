@@ -88,12 +88,15 @@ Stargunner platform=gog:windos category='Game' exec="STARGUN.EXE" emulator-args=
 SubWar2050 platform=gog:windos category='Game' exec="subwar.bat"
 Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 Timelapse platform=gog:windos category='Game'
+XComUFODefense platform=gog:windos category='Game'
+
 
 #SCUMMVM platform
 LureOfTheTemptress platform=gog:scummvm category='Game' 
 BeneathASteelSky platform=gog:scummvm category='Game' 
 TeenAgent platform=gog:scummvm category='Game' 
 TheDig platform=gog:scummvm category='Game'
+Bladerunner platform=gog:scummvm category='Game'
 
 # windows via wine
 99LevelsToHell platform=gog:windows category='Game'
@@ -154,6 +157,7 @@ Pod platform=gog:windows category='Game' exec=PODX3Dfx.exe
 PopulousTheBeginning platform=gog:windows category='Game' exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 PortRoyale platform=gog:windows category='Game' exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2 platform=gog:windows category='Game' exec=PR2.exe
+Praetorians platform=gog:windows category='Game'
 RaceTheSun platform=gog:windows category='Game'
 RageOfMages platform=gog:windows category='Game' exec=rom.exe
 Reigns platform=gog:windows category='Game'
@@ -161,6 +165,7 @@ Revolver360 platform=gog:windows category='Game'
 RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows category='Game'
 ShadowWatch platform=gog:windows category='Game'
+SherlockHolmesVsJackTheRipper platform=gog:windows category='Game'
 SlayTheSpire platform=gog:windows category='Game' exec="SlayTheSpire"
 SmugglersV platform=gog:windows category='Game'
 SpaceCom platform=gog:windows category='Game' 
@@ -187,6 +192,8 @@ Torchlight platform=gog:windows category='Game' os-version=winxp
 Torchlight2 platform=gog:windows category='Game' os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
 TheWitcherAdventureGame platform=gog:windows category='Game' 
+UFO:Aftermath platform=gog:windows category='Game'
+UFO:Aftershock platform=gog:windows category='Game'
 Victoria platform=gog:windows
 VtmBloodlines platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 VtmRedemption platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
