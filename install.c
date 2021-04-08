@@ -440,22 +440,22 @@ void InstallFindIcon(TAction *Act)
 
 void InstallCheckEnvironment(TAction *Act)
 {
-const char *ptr;
-char *Path=NULL, *Tempstr=NULL;
+    const char *ptr;
+    char *Path=NULL, *Tempstr=NULL;
 
-ptr=GetVar(Act->Vars, "warn-missingpath");
-if (StrValid(ptr))
-{
-	ptr=GetToken(ptr, ":", &Path, 0);
-	if (access(Path, F_OK) !=0) 
-	{
-	 Tempstr=MCopyStr(Tempstr, "~rWARN: ", ptr, "~0\n", NULL);
- 	TerminalPutStr(Tempstr, NULL);
-	}
-}
+    ptr=GetVar(Act->Vars, "warn-missingpath");
+    if (StrValid(ptr))
+    {
+        ptr=GetToken(ptr, ":", &Path, 0);
+        if (access(Path, F_OK) !=0)
+        {
+            Tempstr=MCopyStr(Tempstr, "~rWARN: ", ptr, "~0\n", NULL);
+            TerminalPutStr(Tempstr, NULL);
+        }
+    }
 
-Destroy(Tempstr);
-Destroy(Path);
+    Destroy(Tempstr);
+    Destroy(Path);
 }
 
 
@@ -523,7 +523,7 @@ static void FinalizeExeInstall(TAction *Act)
 
     if (StrValid(Path))
     {
-	InstallCheckEnvironment(Act);
+        InstallCheckEnvironment(Act);
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
         SetVar(Act->Vars, "exec-path", Path);

@@ -16,8 +16,8 @@ TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64
 DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager comment="Qt5 2-pane filemanager"
 DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager comment="Gtk2 2-pane filemanager"
 
-Zoom platform=linux32 url=https://zoom.us/client/latest/zoom_i686.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
-Zoom platform=linux64 url=https://zoom.us/client/latest/zoom_x86_64.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
+Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
+Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
 
 * category=WebBrowser;Internet;Network 
 PaleMoon platform=linux32 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-i686.tar.xz exec=palemoon comment="Browser using the old Gecko firefox engine" icon=default48.png download-type=tar.xz
