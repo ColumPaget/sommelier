@@ -438,6 +438,27 @@ void InstallFindIcon(TAction *Act)
 
 
 
+void InstallCheckEnvironment(TAction *Act)
+{
+const char *ptr;
+char *Path=NULL, *Tempstr=NULL;
+
+ptr=GetVar(Act->Vars, "warn-missingpath");
+if (StrValid(ptr))
+{
+	ptr=GetToken(ptr, ":", &Path, 0);
+	if (access(Path, F_OK) !=0) 
+	{
+	 Tempstr=MCopyStr(Tempstr, "~rWARN: ", ptr, "~0\n", NULL);
+ 	TerminalPutStr(Tempstr, NULL);
+	}
+}
+
+Destroy(Tempstr);
+Destroy(Path);
+}
+
+
 /*
 For DOS and windows executables that we might have downloaded as a Zip or an MSI file, we finalize here and setup
 the actual program that we're going to run to execute the application
@@ -502,6 +523,7 @@ static void FinalizeExeInstall(TAction *Act)
 
     if (StrValid(Path))
     {
+	InstallCheckEnvironment(Act);
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
         SetVar(Act->Vars, "exec-path", Path);
