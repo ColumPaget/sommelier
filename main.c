@@ -95,7 +95,7 @@ void RunApplication(TAction *Act)
 
 int RebuildApp(TAction *Act)
 {
-    if (Act->Type==ACT_REBUILD_HASHES)
+    if ((Act->Type==ACT_REBUILD_HASHES) && (! (Act->Flags & FLAG_FORCE)))
     {
         if (StrValid(GetVar(Act->Vars, "sha256"))) return(TRUE);
     }
@@ -127,6 +127,7 @@ void RebuildAppListFile(TAction *RebuildAct, const char *Path)
             if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
             {
                 Act=ActionCreate(RebuildAct->Type, "");
+		Act->Flags=RebuildAct->Flags;
                 ptr=GetToken(Tempstr, " ", &Act->Name, 0);
                 LoadAppConfigToAct(Act, ptr);
 

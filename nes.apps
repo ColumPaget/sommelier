@@ -1,13 +1,13 @@
 * platform=nes category=Game;Games/NES install-type=executable
 
-Assimilate url=https://github.com/retrobrews/nes-games/raw/master/assimilate.nes
-Bootee url=https://github.com/retrobrews/nes-games/raw/master/bootee.nes
-Indivisible url=https://github.com/retrobrews/nes-games/raw/master/indivisibleonnes.nes
-Invaders url=https://github.com/retrobrews/nes-games/raw/master/invaders.nes
-JetPaco url=https://github.com/retrobrews/nes-games/raw/master/jetpaco.nes
-Lala url=https://github.com/retrobrews/nes-games/raw/master/lala.nes
-Owlia url=https://github.com/retrobrews/nes-games/raw/master/owlia.nes
-TheMadWizard url=https://github.com/retrobrews/nes-games/raw/master/themadwizard.nes
-Yun url=https://github.com/retrobrews/nes-games/blob/master/yun.nes?raw=true
+Assimilate url=https://github.com/retrobrews/nes-games/raw/master/assimilate.nes sha256='891d331b06a1c3e14cadce7b621151d7c947e0be36dff150fdeb568faf8956a3' 
+Bootee url=https://github.com/retrobrews/nes-games/raw/master/bootee.nes sha256='9e3daee355eb56a80e73ce314feabe8f0bae380cb80a32468e0a1962e8c9c9ec' 
+Indivisible url=https://github.com/retrobrews/nes-games/raw/master/indivisibleonnes.nes sha256='904831dffab808eecb78b597675ff6f868978f385fbb52c1447ca04c9f9ad0df' 
+Invaders url=https://github.com/retrobrews/nes-games/raw/master/invaders.nes sha256='47808051322a9c21bc34ee86cc55aedc29948be8bb42ab58c27c3e78d4b6f020' 
+JetPaco url=https://github.com/retrobrews/nes-games/raw/master/jetpaco.nes sha256='45838d03dd83372d70b3636852e9eb0547a9493c7bbad7b5daf4eaa055a35b93' 
+Lala url=https://github.com/retrobrews/nes-games/raw/master/lala.nes sha256='c76222d50efee0ac625a43d0c39ed91870342c02b2a64bd3923698de9551e0eb' 
+Owlia url=https://github.com/retrobrews/nes-games/raw/master/owlia.nes sha256='2dc5b68bfe8c72cf187c3abd88fb2548b4c5ce92c2e173a250d510edff971e1c' 
+TheMadWizard url=https://github.com/retrobrews/nes-games/raw/master/themadwizard.nes sha256='b0e9f13a9d091fffd0565704730d13c3a07d6bc0ea27dac3e98458c0065519af' 
+Yun url=https://github.com/retrobrews/nes-games/blob/master/yun.nes?raw=true sha256='fb0026dd31b0433dd24e81b7c7bee1dbdaa76e2cde60c81a2cdf4778f8e4b4eb' 
 
-BladeBuster url=http://hlc6502.web.fc2.com/BB_20120301.zip install-type=zip
+BladeBuster url=http://hlc6502.web.fc2.com/BB_20120301.zip install-type='zip' sha256='b298c2c97dc6253f5ef1e2aeeb2f40d1ff1b72fd6cc68fb788b64b88b5de908a' 
