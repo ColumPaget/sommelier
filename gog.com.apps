@@ -1,204 +1,211 @@
+*category='Game'
+
 #Things available through gog.com
 
 #native linux. Very few gog games work for me in native linux. These commented-out ones all fail, mostly due to mono/c# errors
-# DungeonSouls platform=gog:linux category='Game' exec=runner warn="linux version of this game requires libcrypto.1.0.0"
-Cayne platform=gog:linux category='Game'
-SerialCleaner platform=gog:linux category='Game'
+# DungeonSouls platform=gog:linux exec=runner warn="linux version of this game requires libcrypto.1.0.0"
+Cayne platform=gog:linux 
+SerialCleaner platform=gog:linux 
 
-Gauntlet platform=gog:windows category='Game'
+Gauntlet platform=gog:windows 
 
 #these games have worked for me in native linux
 
-140 platform=gog:linux category='Game' exec="140Linux.x86" exec64="140Linux.x86_64"
-Spacechem platform=gog:linux category='Game' exec="spacechem-launcher.sh"
-ChaosReborn platform=gog:linux category='Game' warn="This game has been seen to have graphics issues on some linux platforms"
-Defcon platform=gog:linux category='Game' warn="This game has been seen to fail on some linux platforms"
-TIS100 platform=gog:linux category='Game' 
-Battlevoid platform=gog:linux category='Game' exec=harbinger
-CelestianTales platform=gog:linux category='Game'
-Convoy platform=gog:linux category='Game' exec="Convoy.x86" exec64="Convoy.x86_64"
-CryptOfTheNecrodancer platform=gog:linux category='Game' exec="NecroDancer.sh"
-DarkestDungeon platform=gog:linux category='Game' exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
-Deadnaut platform=gog:linux category='Game' exec="Deadnaut.x86"
-DeepSkyDerelicts platform=gog:linux category='Game'
-Duskers platform=gog:linux category='Game' exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
-FTL platform=gog:linux category='Game'  exec=FTL.x86 exec64="FTL.amd64" 
-Hacknet platform=gog:linux category='Game'
-Hammerwatch platform=gog:linux category='Game' exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
-KingdomRush platform=gog:linux category='Game' exec="run.sh" 
-Overfall platform=gog:linux category='Game' exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
-PapersPlease platform=gog:linux category='Game' exec=PapersPlease 
-RaceTheSun platform=gog:linux category='Game'
-Realpolitiks platform=gog:linux category='Game'
-ShadowrunReturns platform=gog:linux category='Game' exec="Shadowrun.sh"
-SlayTheSpire platform=gog:linux category='Game' exec="SlayTheSpire"
-SpaceCom platform=gog:linux category='Game' exec="SPACECOM.x86"
-Starcrawlers platform=gog:linux category='Game' exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
-SuperHexagon platform=gog:linux category='Game' exec="SuperHexagon"
-Jotun platform=gog:linux category='Game' exec='Jotun.x86' exec64="Jotun.x86_64"
-InvisibleInc platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
-Hacknet platform=gog:linux category='Game' working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
-HardWest platform=gog:linux category='Game' 
-MotherRussiaBleeds platform=gog:linux category='Game' 
-MiniMetro platform=gog:linux category='Game' exec="Mini Metro"
-QuestForInfamy platform=gog:linux category='Game'
-IratusLordOfTheDead platform=gog:linux category='Game' exec='Iratus'
-DoorKickers platform=gog:linux category='Game'
+140 platform=gog:linux exec="140Linux.x86" exec64="140Linux.x86_64"
+Spacechem platform=gog:linux exec="spacechem-launcher.sh"
+ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
+Defcon platform=gog:linux warn="This game has been seen to fail on some linux platforms"
+TIS100 platform=gog:linux 
+Battlevoid platform=gog:linux exec=harbinger
+CelestianTales platform=gog:linux 
+Convoy platform=gog:linux exec="Convoy.x86" exec64="Convoy.x86_64"
+CryptOfTheNecrodancer platform=gog:linux exec="NecroDancer.sh"
+DarkestDungeon platform=gog:linux exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
+Deadnaut platform=gog:linux exec="Deadnaut.x86"
+DeepSkyDerelicts platform=gog:linux 
+Duskers platform=gog:linux exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
+FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" 
+Hacknet platform=gog:linux 
+Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+KingdomRush platform=gog:linux exec="run.sh" 
+Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
+PapersPlease platform=gog:linux exec=PapersPlease 
+RaceTheSun platform=gog:linux 
+Realpolitiks platform=gog:linux 
+ShadowrunReturns platform=gog:linux exec="Shadowrun.sh"
+SlayTheSpire platform=gog:linux exec="SlayTheSpire"
+SpaceCom platform=gog:linux exec="SPACECOM.x86"
+Starcrawlers platform=gog:linux exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
+SuperHexagon platform=gog:linux exec="SuperHexagon"
+Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
+InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
+Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
+HardWest platform=gog:linux 
+MotherRussiaBleeds platform=gog:linux 
+QuestForInfamy platform=gog:linux 
+DoorKickers platform=gog:linux 
+MiniMetro platform=gog:linux64 exec="Mini Metro"
+IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
+Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
+KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
-AloneInTheDark platform=gog:windos category='Game' exec=INDARK.EXE 
-AnvilOfDawn platform=gog:windos category='Game' exec="ANVIL.EXE"
-BattleChess  platform=gog:lindos category='Game' exec="CHESS.EXE"
-BattleChess  platform=gog:windos category='Game' exec="CHESS.EXE"
-Castles  platform=gog:lindos category='Game' exec="CASTLES.BAT"
-Castles  platform=gog:windos category='Game' exec="CASTLES.BAT"
-ChineseChess platform=gog:lindos category='Game' exec="CHESSII.EXE"
-ChineseChess platform=gog:windos category='Game' exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab"
-Darklands platform=gog:lindos category='Game' exec="DARKLAND.EXE"
-Darklands platform=gog:windos category='Game' exec="DARKLAND.EXE"
-DungeonKeeperGold platform=gog:windos category='Game' exec="KEEPER.EXE"
-DungeonKeeperDeeper platform=gog:windos category='Game' exec="DEEPER.EXE" bundled=DungeonKeeperGold
-HocusPocus platform=gog:lindos category='Game' exec="hocus.exe"
-HocusPocus platform=gog:windos category='Game' exec="hocus.exe"
-Ishar platform=gog:windos category='Game' exec="start.exe"
-Ishar2 platform=gog:windos category='Game' exec="start.exe"
-ImperiumGalactica platform=gog:windos category='Game' exec="IMPERIUM.EXE"
-MasterOfMagic platform=gog:lindos category='Game' exec="MAGIC.EXE"
-MasterOfMagic platform=gog:windos category='Game' exec="MAGIC.EXE"
-MasterOfOrion platform=gog:lindos category='Game' exec="ORION.EXE"
-MasterOfOrion platform=gog:windos category='Game' exec="ORION.EXE"
-MasterOfOrion2 platform=gog:lindos category='Game' exec="Orion2.exe"
-MasterOfOrion2 platform=gog:windos category='Game' exec="Orion2.exe"
-MortalKombat platform=gog:windos category='Game' exec="MK1.EXE"
-Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
-MortalKombat2 platform=gog:windos category='Game' exec="MK2.EXE"
-Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
-RealmsOfChaos platform=gog:lindos category='Game' exec="ROC.EXE"
-RealmsOfChaos platform=gog:windos category='Game' exec="ROC.EXE"
-SidMeiersCovertAction platform=gog:lindos category='Game' exec="COVERT.BAT"
-SidMeiersCovertAction platform=gog:windos category='Game' exec="COVERT.BAT"
-SilentService platform=gog:lindos category='Game' exec="sservice.exe"
-SilentService2 platform=gog:lindos category='Game' exec="SILENT.BAT"
-SilentHunter platform=gog:lindos category='Game'
-Stargunner platform=gog:lindos category='Game' exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
-Stargunner platform=gog:windos category='Game' exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
-SubWar2050 platform=gog:windos category='Game' exec="subwar.bat"
-Tyrian2000 platform=gog:windos category='Game' exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
-Timelapse platform=gog:windos category='Game'
-XComUFODefense platform=gog:windos category='Game'
+AloneInTheDark platform=gog:windos exec=INDARK.EXE 
+AnvilOfDawn platform=gog:windos exec="ANVIL.EXE"
+BattleChess  platform=gog:lindos exec="CHESS.EXE"
+BattleChess  platform=gog:windos exec="CHESS.EXE"
+Castles  platform=gog:lindos exec="CASTLES.BAT"
+Castles  platform=gog:windos exec="CASTLES.BAT"
+ChineseChess platform=gog:lindos exec="CHESSII.EXE"
+ChineseChess platform=gog:windos exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab"
+Darklands platform=gog:lindos exec="DARKLAND.EXE"
+Darklands platform=gog:windos exec="DARKLAND.EXE"
+DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE"
+DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold
+HocusPocus platform=gog:lindos exec="hocus.exe"
+HocusPocus platform=gog:windos exec="hocus.exe"
+Ishar platform=gog:windos exec="start.exe"
+Ishar2 platform=gog:windos exec="start.exe"
+ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE"
+MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
+MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
+MasterOfOrion platform=gog:lindos exec="ORION.EXE"
+MasterOfOrion platform=gog:windos exec="ORION.EXE"
+MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
+MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
+MortalKombat platform=gog:windos exec="MK1.EXE"
+Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+MortalKombat2 platform=gog:windos exec="MK2.EXE"
+Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+RealmsOfChaos platform=gog:lindos exec="ROC.EXE"
+RealmsOfChaos platform=gog:windos exec="ROC.EXE"
+SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT"
+SidMeiersCovertAction platform=gog:windos exec="COVERT.BAT"
+SilentService platform=gog:lindos exec="sservice.exe"
+SilentService2 platform=gog:lindos exec="SILENT.BAT"
+SilentHunter platform=gog:lindos 
+Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
+Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
+SubWar2050 platform=gog:windos exec="subwar.bat"
+Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+Timelapse platform=gog:windos 
+XComUFODefense platform=gog:windos 
 
 
+* platform=gog:scummvm
 #SCUMMVM platform
-LureOfTheTemptress platform=gog:scummvm category='Game' 
-BeneathASteelSky platform=gog:scummvm category='Game' 
-TeenAgent platform=gog:scummvm category='Game' 
-TheDig platform=gog:scummvm category='Game'
-Bladerunner platform=gog:scummvm category='Game'
+LureOfTheTemptress
+BeneathASteelSky
+TeenAgent
+TheDig
+Bladerunner
 
+* platform=gog:windows
 # windows via wine
-99LevelsToHell platform=gog:windows category='Game'
-AgeOfWonders platform=gog:windows category='Game' exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
-ABCMurders platform=gog:windows category='Game'
-AnomalyWarzoneEarth platform=gog:windows category='Game' 
-AnomalyDefenders platform=gog:windows category='Game' 
-ArxFatalis platform=gog:windows category='Game' vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Battlevoid platform=gog:windows category='Game' 
-Caravan platform=gog:windows category='Game' 
-ChaosReborn platform=gog:windows category='Game' 
-ChaosOverlords platform=gog:windows category='Game'
-CrusaderKings platform=gog:windows category='Game'
-DarkestDungeon platform=gog:windows category='Game' 
-DarkQuest platform=gog:windows category='Game' 
-DarkQuest2 platform=gog:windows category='Game' 
-Darkstone platform=gog:windows category='Game' exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
-Defcon platform=gog:windows category='Game' 
-DinsCurse platform=gog:windows category='Game' rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
-DivineDivinity platform=gog:windows category='Game' exec=div.exe
-Diluvion platform=gog:windows category='Game'
-DraculaTheResurrection platform=gog:windows category='Game'
-DungeonKeeper2 platform=gog:windows category='Game' vdesk=y os-version=winxp exec=DKII.EXE 
-DungeonSiege platform=gog:windows category='Game' exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
-DungeonSiege2 platform=gog:windows category='Game' exec="DungeonSiege2.exe"
-DungeonSiege3 platform=gog:windows category='Game' exec="Dungeon Siege III.exe"
-DungeonSouls platform=gog:windows category='Game' exec="DungeonSouls.exe"
-Duskers platform=gog:windows category='Game'
-EmperorOfTheFadingSuns platform=gog:windows category='Game' vdesk=y
-Etherlords platform=gog:windows category='Game'
-EuropaUniversalis  platform=gog:windows category='Game' exec=europa.exe
-EuropaUniversalis2 platform=gog:windows category='Game' exec=eu2.exe
-FantasyWars platform=gog:windows category='Game' exec=fw.exe
-FreedomForce platform=gog:windows category='Game' exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
+99LevelsToHell platform=gog:windows 
+AgeOfWonders platform=gog:windows exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
+ABCMurders platform=gog:windows 
+AnomalyWarzoneEarth platform=gog:windows 
+AnomalyDefenders platform=gog:windows 
+ArxFatalis platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Battlevoid platform=gog:windows 
+Caravan platform=gog:windows 
+ChaosReborn platform=gog:windows 
+ChaosOverlords platform=gog:windows 
+CrusaderKings platform=gog:windows 
+DarkestDungeon platform=gog:windows 
+DarkQuest platform=gog:windows 
+DarkQuest2 platform=gog:windows 
+Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
+Defcon platform=gog:windows 
+DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
+DivineDivinity platform=gog:windows exec=div.exe
+Diluvion platform=gog:windows 
+DraculaTheResurrection platform=gog:windows 
+DungeonKeeper2 platform=gog:windows vdesk=y os-version=winxp exec=DKII.EXE 
+DungeonSiege platform=gog:windows exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
+DungeonSiege2 platform=gog:windows exec="DungeonSiege2.exe"
+DungeonSiege3 platform=gog:windows exec="Dungeon Siege III.exe"
+DungeonSouls platform=gog:windows exec="DungeonSouls.exe"
+Duskers platform=gog:windows 
+EmperorOfTheFadingSuns platform=gog:windows vdesk=y
+Etherlords platform=gog:windows 
+EuropaUniversalis  platform=gog:windows exec=europa.exe
+EuropaUniversalis2 platform=gog:windows exec=eu2.exe
+FantasyWars platform=gog:windows exec=fw.exe
+FreedomForce platform=gog:windows exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
-FTL platform=gog:windows category='Game'
-Hexplore platform=gog:windows category='Game' exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)"
-Imperialism platform=gog:windows category='Game'
-GalacticAssault platform=gog:windows category='Game'
-HaegemoniaLegionsOfIron platform=gog:windows category='Game'
-HaegemoniaSolonHeritage platform=gog:windows category='Game'
-HeroesOfMightAndMagic3 platform=gog:windows category='Game'
-HitmanCodename47 platform=gog:windows category='Game'
-KingdomRush platform=gog:windows category='Game'
-KingdomUnderFireHeroes platform=gog:windows category='Game'
-KingdomUnderFireCrusaders platform=gog:windows category='Game'
-KingsBounty platform=gog:windows category='Game'
-MagicMaker platform=gog:windows category='Game' 
-MoonbaseCommander platform=gog:windows category='Game' exec=moonbase.exe
-Nexus platform=gog:windows category='Game' exec=nexus.exe
-Nox platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-OffworldResourceBase platform=gog:windows category='Game' exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-Overfall platform=gog:windows category='Game'
-Parkan2 platform=gog:windows category='Game'
-Patrician3 platform=gog:windows category='Game' exec=Patrician3.exe
-Perimeter platform=gog:windows category='Game'
-Pod platform=gog:windows category='Game' exec=PODX3Dfx.exe
-PopulousTheBeginning platform=gog:windows category='Game' exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
-PortRoyale platform=gog:windows category='Game' exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
-PortRoyale2 platform=gog:windows category='Game' exec=PR2.exe
-Praetorians platform=gog:windows category='Game'
-RaceTheSun platform=gog:windows category='Game'
-RageOfMages platform=gog:windows category='Game' exec=rom.exe
-Reigns platform=gog:windows category='Game'
-Revolver360 platform=gog:windows category='Game'
-RiseOfTheMiddleKingdom platform=gog:windows category='Game' warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-ShadowrunReturns platform=gog:windows category='Game'
-ShadowWatch platform=gog:windows category='Game'
-SherlockHolmesVsJackTheRipper platform=gog:windows category='Game'
-SlayTheSpire platform=gog:windows category='Game' exec="SlayTheSpire"
-SmugglersV platform=gog:windows category='Game'
-SpaceCom platform=gog:windows category='Game' 
-SpaceEmpiresDeluxe4 platform=gog:windows category='Game' exec="Se4.exe"
-SpaceRangersHD platform=gog:windows category='Game' exec="Rangers.exe"
-SpaceRun platform=gog:windows category='Game' exec="oSpaceGame.exe"
-Spellforce platform=gog:windows category='Game' warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
-StarfleetCommand platform=gog:windows category='Game' vdesk=y os-version=winxp exec="sfc.exe"
-StarsInShadow platform=gog:windows category='Game'
-StarWolves platform=gog:windows category='Game' 
-StealthBastard platform=gog:windows category='Game' exec="Stealth Bastard Deluxe.exe"
-StreetFighterAlpha platform=gog:windows category='Game'
-SwordOfTheStars platform=gog:windows category='Game' exec="Sword of the Stars.exe" 
+FTL platform=gog:windows 
+Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)"
+Imperialism platform=gog:windows 
+GalacticAssault platform=gog:windows 
+GalacticCivilizations1 platform=gog:windows exec=galciv.exe vdesk=y
+HaegemoniaLegionsOfIron platform=gog:windows 
+HaegemoniaSolonHeritage platform=gog:windows 
+HeroesOfMightAndMagic3 platform=gog:windows 
+HitmanCodename47 platform=gog:windows 
+KingdomRush platform=gog:windows 
+KingdomUnderFireHeroes platform=gog:windows 
+KingdomUnderFireCrusaders platform=gog:windows 
+KingsBounty platform=gog:windows 
+Locomotion platform=gog:windows exec=LOCO.EXE vdesk=y
+MagicMaker platform=gog:windows 
+MoonbaseCommander platform=gog:windows exec=moonbase.exe
+Nexus platform=gog:windows exec=nexus.exe
+Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+OffworldResourceBase platform=gog:windows exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+Overfall platform=gog:windows 
+Parkan2 platform=gog:windows 
+Patrician3 platform=gog:windows exec=Patrician3.exe
+Perimeter platform=gog:windows 
+Pod platform=gog:windows exec=PODX3Dfx.exe
+PopulousTheBeginning platform=gog:windows exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
+PortRoyale platform=gog:windows exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
+PortRoyale2 platform=gog:windows exec=PR2.exe
+Praetorians platform=gog:windows 
+RaceTheSun platform=gog:windows 
+RageOfMages platform=gog:windows exec=rom.exe
+Reigns platform=gog:windows 
+Revolver360 platform=gog:windows 
+RiseOfTheMiddleKingdom platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+ShadowrunReturns platform=gog:windows 
+ShadowWatch platform=gog:windows 
+SherlockHolmesVsJackTheRipper platform=gog:windows 
+SlayTheSpire platform=gog:windows exec="SlayTheSpire"
+SmugglersV platform=gog:windows 
+SpaceCom platform=gog:windows 
+SpaceEmpiresDeluxe4 platform=gog:windows exec="Se4.exe"
+SpaceRangersHD platform=gog:windows exec="Rangers.exe"
+SpaceRun platform=gog:windows exec="oSpaceGame.exe"
+Spellforce platform=gog:windows warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
+StarfleetCommand platform=gog:windows vdesk=y os-version=winxp exec="sfc.exe"
+StarsInShadow platform=gog:windows 
+StarWolves platform=gog:windows 
+StealthBastard platform=gog:windows exec="Stealth Bastard Deluxe.exe"
+StreetFighterAlpha platform=gog:windows 
+SwordOfTheStars platform=gog:windows exec="Sword of the Stars.exe" 
 #rename="$(drive_c)/GOG\ Games/Sword\ of \ the\ Stars/Sword\ of\ the\ Stars.exe $(drive_c)/GOG\ Games/SwordoftheStars.exe"
-SystemShock2 platform=gog:windows category='Game' os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-TachyonFringe platform=gog:windows category='Game' exec=Tachyon.exe
-Tempest platform=gog:windows category='Game'
-TheGuild platform=gog:windows category='Game'
-Thief platform=gog:windows category='Game' exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Thief2 platform=gog:windows category='Game'
-Thief3 platform=gog:windows category='Game'
-ThisIsThePolice platform=gog:windows category='Game' 
-Torchlight platform=gog:windows category='Game' os-version=winxp
-Torchlight2 platform=gog:windows category='Game' os-version=winxp exec=Torchlight2.exe
-Uplink platform=gog:windows category='Game' exec=uplink.exe vdesk=y
-TheWitcherAdventureGame platform=gog:windows category='Game' 
-UFO:Aftermath platform=gog:windows category='Game'
-UFO:Aftershock platform=gog:windows category='Game'
+SystemShock2 platform=gog:windows os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+TachyonFringe platform=gog:windows exec=Tachyon.exe
+Tempest platform=gog:windows 
+TheGuild platform=gog:windows 
+Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Thief2 platform=gog:windows 
+Thief3 platform=gog:windows 
+ThisIsThePolice platform=gog:windows 
+Torchlight platform=gog:windows os-version=winxp
+Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
+Uplink platform=gog:windows exec=uplink.exe vdesk=y
+TheWitcherAdventureGame platform=gog:windows 
+UFO:Aftermath platform=gog:windows 
+UFO:Aftershock platform=gog:windows 
 Victoria platform=gog:windows
-VtmBloodlines platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-VtmRedemption platform=gog:windows category='Game' exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+VtmBloodlines platform=gog:windows exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+VtmRedemption platform=gog:windows exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
-Wizardry platform=gog:windows category='Game' exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 
 
-OneFingerDeathPunch2 platform=gog:windows category='Game'

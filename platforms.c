@@ -31,6 +31,7 @@ int PlatformType(const char *Platform)
     if (strcasecmp(Platform, "dos")==0) return(PLATFORM_DOS);
     if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
     if (strcasecmp(Platform, "gog.com:linux")==0) return(PLATFORM_GOGLINUX);
+    if (strcasecmp(Platform, "gog.com:linux64")==0) return(PLATFORM_GOGLINUX64);
     if (strcasecmp(Platform, "gog.com:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
     if (strcasecmp(Platform, "gog.com:lindos")==0) return(PLATFORM_GOGDOS);
     if (strcasecmp(Platform, "gog.com:windos")==0) return(PLATFORM_GOGWINDOS);
@@ -58,6 +59,7 @@ int PlatformBitWidth(const char *Platform)
 //and we assume 32 bit
     if (strcasecmp(Platform, "!linux64")==0) return(32);
 
+    if (strcasecmp(Platform, "gog:linux64")==0) return(64);
     if (strcasecmp(Platform, "gog:linux")==0)
     {
 #ifdef __x86_64__

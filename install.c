@@ -247,6 +247,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         break;
 
     case PLATFORM_GOGLINUX:
+    case PLATFORM_GOGLINUX64:
         ForcedFileType=FILETYPE_ZIP;
         FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* $(extra-files)", Act->Vars, 0);
         break;
