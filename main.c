@@ -92,53 +92,6 @@ void RunApplication(TAction *Act)
 
 
 
-int CheckDownload(TAction *Act)
-{
-    STREAM *S;
-    char *Hash=NULL;
-    const char *ptr;
-    int result;
-
-    S=STREAMOpen(Act->URL, "r");
-    if (! S)
-    {
-        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, Act->URL);
-        return(FALSE);
-    }
-
-    ptr=STREAMGetValue(S, "HTTP:ResponseCode");
-    if (*ptr != '2')
-    {
-        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, Act->URL);
-        STREAMClose(S);
-        return(FALSE);
-    }
-
-    result=HashSTREAM(&Hash, "sha256", S, ENCODE_HEX);
-    STREAMClose(S);
-
-    if (Hash)
-    {
-        ptr=GetVar(Act->Vars, "sha256");
-        if (StrValid(ptr))
-        {
-            if (strcmp(ptr, Hash) !=0)
-            {
-                fprintf(stderr,"ERROR: Hash mismatch for %s %s\n",Act->Name, Act->URL);
-            }
-        }
-        else SetVar(Act->Vars, "sha256", Hash);
-    }
-    else fprintf(stderr,"ERROR: No hash!\n");
-
-    waitpid(-1,NULL,WNOHANG);
-
-    DestroyString(Hash);
-    return(result);
-}
-
-
-
 
 int RebuildApp(TAction *Act)
 {
@@ -147,21 +100,24 @@ int RebuildApp(TAction *Act)
         if (StrValid(GetVar(Act->Vars, "sha256"))) return(TRUE);
     }
 
-    return(CheckDownload(Act));
+    return(DownloadCheck(Act));
 }
 
 
 
-void RebuildAppList(TAction *RebuildAct)
+
+void RebuildAppListFile(TAction *RebuildAct, const char *Path)
 {
     STREAM *In, *Out;
     char *Tempstr=NULL;
     const char *ptr;
     ListNode *Curr;
     TAction *Act;
+    const char *IgnoreVars[]={"name", "sommelier_root_template","prefix_template","homedir","url-basename","url-path",NULL};
+
 
     Out=STREAMFromFD(1);
-    In=STREAMOpen(Config->AppConfigPath, "r");
+    In=STREAMOpen(Path, "r");
     if (In)
     {
         Tempstr=STREAMReadLine(Tempstr, In);
@@ -175,22 +131,26 @@ void RebuildAppList(TAction *RebuildAct)
                 LoadAppConfigToAct(Act, ptr);
 
                 if (StrLen(GetVar(Act->Vars,"name"))==0) SetVar(Act->Vars, "name", Act->Name);
-
-                if (RebuildApp(Act))
+		if (! StrValid(Act->URL)) printf("%s\n", Tempstr);
+                else if (RebuildApp(Act))
                 {
-                    Tempstr=MCopyStr(Tempstr, Act->Name, " platform=", Act->Platform, " url=", Act->URL, " ", NULL);
+		    Tempstr=MCopyStr(Tempstr, Act->Name, " ", NULL);
+		    if (StrValid(Act->Platform)) Tempstr=MCatStr(Tempstr, "platform=", Act->Platform, " ", NULL);
+                    Tempstr=MCatStr(Tempstr, "url=", Act->URL, " ", NULL);
                     Curr=ListGetNext(Act->Vars);
                     while (Curr)
                     {
-                        Tempstr=MCatStr(Tempstr, Curr->Tag, "='", (char *) Curr->Item,"' ",NULL);
+                        if (MatchTokenFromList(Curr->Tag, IgnoreVars, 0) ==-1) Tempstr=MCatStr(Tempstr, Curr->Tag, "='", (char *) Curr->Item,"' ",NULL);
                         Curr=ListGetNext(Curr);
                     }
                     printf("%s\n",Tempstr);
                     fflush(NULL);
                 }
+		else printf("ERROR: Rebuild Failed: %s\n", Tempstr);
 
                 ActionDestroy(Act);
             }
+	    else printf("%s\n", Tempstr);
             Tempstr=STREAMReadLine(Tempstr, In);
         }
         STREAMClose(In);
@@ -202,6 +162,31 @@ void RebuildAppList(TAction *RebuildAct)
 
 
 
+void RebuildAppList(TAction *RebuildAct)
+{
+char *FileList=NULL, *Path=NULL;
+char *Tempstr=NULL;
+const char *ptr;
+
+ptr=GetToken(RebuildAct->Args, "\\S", &Path, GETTOKEN_QUOTES);
+while (ptr)
+{
+if (StrValid(Path)) Tempstr=MCatStr(Tempstr, Path, ",", NULL);
+ptr=GetToken(ptr, "\\S", &Path, GETTOKEN_QUOTES);
+}
+
+FileList=AppsListExpand(FileList, Tempstr);
+ptr=GetToken(FileList, ",", &Path, 0);
+while (ptr)
+{
+RebuildAppListFile(RebuildAct, Path);
+ptr=GetToken(ptr, ",", &Path, 0);
+}
+
+Destroy(Tempstr);
+Destroy(FileList);
+Destroy(Path);
+}
 
 
 int main(int argc, char *argv[])

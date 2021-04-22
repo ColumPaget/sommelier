@@ -8,6 +8,8 @@ static void PrintUsage()
     printf("sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform\n");
     printf("sommelier install <name> [<name>] [options]        install an application by name\n");
     printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
+    printf("sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
+    printf("sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
     printf("sommelier run <name>                               run an application by name\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
     printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");

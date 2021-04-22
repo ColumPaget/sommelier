@@ -5,6 +5,7 @@
 #include "platforms.h"
 
 ListNode *AppsGetList();
+char *AppsListExpand(char *FileList, const char *ConfigFiles);
 ListNode *AppsLoad(const char *ConfigFiles);
 int AppsOutputList(TAction *Act);
 void LoadAppConfigToAct(TAction *Act, const char *Config);

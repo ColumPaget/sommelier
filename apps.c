@@ -58,6 +58,9 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
     {
         StripQuotes(Name);
         StripQuotes(Value);
+        if (StrValid(Name)) 
+	{
+
         if (strcmp(Name,"url")==0)
         {
             Act->URL=CopyStr(Act->URL, Value);
@@ -68,9 +71,6 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             StrRTruncChar(Tempstr, '/');
             SetVar(Act->Vars, "url-path", Tempstr);
         }
-        else if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
-        else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
-        else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
         else if (strcmp(Name,"platform")==0)
         {
             Act->Platform=CopyStr(Act->Platform, Value);
@@ -81,8 +81,15 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
                 if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
             }
-            else printf("PLATFORM NOT FOUND: %s\n", Act->Platform);
+            else fprintf(stderr, "PLATFORM NOT FOUND: %s\n", Act->Platform);
         }
+	else SetVar(Act->Vars, Name, Value);
+
+
+
+        if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+        else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
+        else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
         else if (strcmp(Name,"install-type")==0)
         {
             if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
@@ -99,7 +106,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             Act->Flags |= FLAG_BUNDLED;
             SetVar(Act->Vars, "bundled-with", Value);
         }
-        else if (StrValid(Name)) SetVar(Act->Vars, Name, Value);
+	}
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
     }
@@ -228,28 +235,52 @@ void AppsProcessBundles(ListNode *Apps)
 }
 
 
-ListNode *AppsLoad(const char *ConfigFiles)
+
+char *AppsListExpand(char *FileList, const char *ConfigFiles)
 {
     char *Tempstr=NULL, *Token=NULL;
     const char *ptr;
     glob_t Glob;
     int i;
 
-    if (! Apps) Apps=ListCreate();
-
+    FileList=CopyStr(FileList, "");
     Tempstr=FormatPath(Tempstr, ConfigFiles);
     ptr=GetToken(Tempstr, ",", &Token, 0);
     while (ptr)
     {
         glob(Token, 0, 0, &Glob);
-        for (i=0; i < Glob.gl_pathc; i++) AppsLoadFromFile(Glob.gl_pathv[i], Apps);
+        for (i=0; i < Glob.gl_pathc; i++) FileList=MCatStr(FileList, Glob.gl_pathv[i], ",", NULL);
         globfree(&Glob);
+        ptr=GetToken(ptr, ",", &Token, 0);
+    }
+
+    Destroy(Tempstr);
+    Destroy(Token);
+
+    return(FileList);
+}
+
+
+
+ListNode *AppsLoad(const char *ConfigFiles)
+{
+    char *FileList=NULL, *Token=NULL;
+    const char *ptr;
+
+    if (! Apps) Apps=ListCreate();
+
+    FileList=AppsListExpand(FileList, ConfigFiles);
+
+    ptr=GetToken(FileList, ",", &Token, 0);
+    while (ptr)
+    {
+        AppsLoadFromFile(Token, Apps);
         ptr=GetToken(ptr, ",", &Token, 0);
     }
 
     AppsProcessBundles(Apps);
 
-    Destroy(Tempstr);
+    Destroy(FileList);
     Destroy(Token);
 
     return(Apps);

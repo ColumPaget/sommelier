@@ -1,47 +1,46 @@
-LazPaint platform=linux32 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux32_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics comment="Paint Program"
-LazPaint platform=linux64 url=https://sourceforge.net/projects/lazpaint/files/bin/lazpaint7.1.3_linux64_no_install.tar.gz/download exec=lazpaint download-type=tar.gz category=Graphics comment="Paint Program"
+LazPaint platform=linux32 url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint' sha256='7797ded45b5eca1e3fb8642eac50afe5dbfbd50d307d651e32019bcba16dc1e2' 
+LazPaint platform=linux64 url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_linux64_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint' sha256='7912bbe22c82b00cd8d25fb66d35e3486d3cacc64c830e74dd066d1b60f4a427' 
 
-Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type=tar.xz category=ebook comment="Ebook Management" exec="Calibre/calibre"
-Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type=tar.xz category=ebook comment="Ebook Management" exec="Calibre/calibre"
+Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre' name='Calibre' sha256='6ccdaff43d88e536582b7cdf3ba15d17e87920a99f3116df7489ffbb662390dc' 
+Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre' name='Calibre' sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
 
-Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type=tar.xz exec=Telegram category=Chat comment="Telegram Messenger"
-Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type=tar.xz exec=Telegram category=Chat comment="Telegram Messenger"
+Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' name='Telegram' sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
+Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' name='Telegram'
 
-Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type=tar.xz exec=teamviewer category='RemoteAccess'
-Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type=tar.xz exec=teamviewer category='RemoteAccess'
+Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' name='Teamviewer'
+Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' name='Teamviewer'
 
-TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type=tar.bz2 exec=t-engine category=Game comment="Roguelike RPG"
-TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type=tar.bz2 exec=t-engine category=Game comment="Roguelike RPG"
+TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG' name='TalesOfMajeyal' sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
+TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG' name='TalesOfMajeyal' sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
 
-DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager comment="Qt5 2-pane filemanager"
-DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type=tar.bz2 exec=doublecmd.sh category=FileManager comment="Gtk2 2-pane filemanager"
+DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Qt5 2-pane filemanager' name='DoubleCommanderQt5' sha256='c250011f7bb8c0c0de044f83bf968d0ccc213e5b28245db204d995398a94b376' 
+DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
 
-Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
-Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type=tar.xz exec=ZoomLauncher category=Chat warn-missingpath="/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?"
+Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?' name='Zoom' sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
+Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?' name='Zoom' sha256='7ed3b1610f80118649a93bddb017c954c9aa083c787cee9564cbb0cdf8f2c200' 
 
-* category=WebBrowser;Internet;Network 
-PaleMoon platform=linux32 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-i686.tar.xz exec=palemoon comment="Browser using the old Gecko firefox engine" icon=default48.png download-type=tar.xz
-PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64.tar.xz exec=palemoon comment="Browser using the old Gecko firefox engine" icon=default48.png download-type=tar.xz
+* category=WebBrowser;Internet;Network
+PaleMoon platform=linux32 url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoon' sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
+PaleMoonGTK2 platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk2.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
+PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk3.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoon'
 
-SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/en-US/seamonkey-2.53.2.en-US.linux-i686.tar.bz2 download-type=tar.xz exec=seamonkey icon=default48.png comment="Browser based on firefox"
-SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/en-US/seamonkey-2.53.2.en-US.linux-x86_64.tar.bz2 download-type=tar.xz exec=seamonkey icon=default48.png comment="Browser based on firefox"
-GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type=tar.bz2 exec=icecat comment="GNU version of firefox" icon=default48.png
-GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2 download-type=tar.bz2 exec=icecat comment="GNU version of firefox" icon=default48.png
+SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/en-US/seamonkey-2.53.2.en-US.linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' name='SeaMonkey' sha256='0e3dc36afe0a66e83e2d33687f0d2988704c2c2aac137ad1a4bcdb96e34d2f9e' 
+SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/en-US/seamonkey-2.53.2.en-US.linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' name='SeaMonkey' sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' 
+GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png' name='GnuIcecat' sha256='8d3e3038ec1a1f5b871c5c54b97fb13bc42eb10f85ecd3b096529ed7d290f571' 
+GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png' name='GnuIcecat' sha256='4f0dffe7ae5d98a63bd44b2b0dbd39f93d60056391214e8565892ab1ade36a85' 
 
-Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball download-type=tar.gz exec=frostwire category='AudioVideo;Player;Audio' comment="Bittorrent media downloader/player"
-Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type=tar.gz category='Bittorrent;Network' comment='Bittorrent app' exec=tixati icon=tixati.png
-Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type=tar.gz category='Bittorrent;Network' comment='Bittorrent app' exec=tixati icon=tixati.png
+Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball download-type='tar.gz' exec='frostwire' category='AudioVideo;Player;Audio' comment='Bittorrent media downloader/player' name='Frostwire'
+Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png' name='Tixati' sha256='e20950c7b6b07d6d4b46725238659e8ca4b504fb096c3b9cac4f207e4df3987a' 
+Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png' name='Tixati' sha256='d96596a54b67a9838571e5513144b200a575c067edfe0185a202b8c7097399d9' 
 
-RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 exec=VNC-Viewer-6.20.113-Linux-x86 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
-RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 exec=VNC-Viewer-6.20.113-Linux-x64 icon=realvnc.png comment="RealVNC Viewer" category="RemoteAccess" install-type="executable"
+RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 exec='VNC-Viewer-6.20.113-Linux-x86' icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='e47143186930480bc2260323b5330ebd7556ee2277bc4c20965438075d82eee0' 
+RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 exec='VNC-Viewer-6.20.113-Linux-x64' icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='4ac20464566dc6756325bb2476f82f495d7479eb7587f2dd65b3d3f1164d8648' 
 
-TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec=vncviewer download-type=tar.gz
-TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec=vncviewer download-type=tar.gz
+TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec='vncviewer' download-type='tar.gz' name='TigerVNCViewer' sha256='64415624118832054f6a4eea4026815741255c7d6b4a64926f683da2cb02c303' 
+TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec='vncviewer' download-type='tar.gz' name='TigerVNCViewer' sha256='c0f7417794dfa463a2aec9b14e50c8de0eadc1b393813ed6fd0389f143896bc3' 
 
-Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type=tar.xz exec=arduino category=Electronics comment="Arduino Programming IDE"
-Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type=tar.xz exec=arduino category=Electronics comment="Arduino Programming IDE"
+Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE' name='Arduino' sha256='2233c2fd7cbb01997fabb094c69ec4ef11f70fa4ee532d857e376c7e79e2fa55' 
+Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE' name='Arduino' sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
 
-FileZilla platform=linux32 url=https://dl4.cdn.filezilla-project.org/client/FileZilla_3.53.1_i686-linux-gnu.tar.bz2?h=gmzE6KcR5KBpTHda_2XLOQ&x=1617370965 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
-FileZilla platform=linux64 url=https://dl2.cdn.filezilla-project.org/client/FileZilla_3.53.1_x86_64-linux-gnu.tar.bz2?h=BObZz_Dkx6yFErIIhEhmtA&x=1617371225 download-type=tar.bz2 exec=filezilla comment="FTP/SFTP/FTPS file transfer" icon=filezilla.png
-
-
+FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' name='FileZilla'
+FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' name='FileZilla'

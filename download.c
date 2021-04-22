@@ -68,6 +68,14 @@ static void DownloadShowSSLStatus(STREAM *S)
 }
 
 
+
+static int DownloadOpen(TAction *Act, const char *Path)
+{
+
+
+}
+
+
 static int DownloadCopyFile(TAction *Act)
 {
     char *Tempstr=NULL, *cwd=NULL;
@@ -136,7 +144,7 @@ static int DownloadCopyFile(TAction *Act)
 
 
 
-char *ExtractURLFromHRef(char *RetStr, const char *Data)
+static char *ExtractURLFromHRef(char *RetStr, const char *Data)
 {
     char *Key=NULL, *Value=NULL;
     const char *ptr;
@@ -159,7 +167,7 @@ char *ExtractURLFromHRef(char *RetStr, const char *Data)
 }
 
 
-void ExtractURLFromWebsite(TAction *Act)
+static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
 {
     char *Tempstr=NULL, *SrcPage=NULL, *Template=NULL, *Tag=NULL, *Data=NULL, *URL=NULL;
     char *Proto=NULL, *Host=NULL, *Port=NULL;
@@ -172,8 +180,6 @@ void ExtractURLFromWebsite(TAction *Act)
     ptr=GetToken(ptr, ":", &Template, GETTOKEN_QUOTES);
 
     ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, NULL, NULL);
-
-    printf("extracting download url from %s\n", SrcPage);
 
     S=STREAMOpen(SrcPage, "");
     if (S)
@@ -188,11 +194,11 @@ void ExtractURLFromWebsite(TAction *Act)
         if (strcmp(Tag, "a")==0)
         {
             URL=ExtractURLFromHRef(URL, Data);
+//printf("EXTR: [%s] [%s]\n", URL, Template);
             if (fnmatch(Template, URL, 0)==0)
             {
-                if (*URL=='/') Act->URL=FormatStr(Act->URL, "%s://%s:%s/%s", Proto, Host, Port, URL);
-                else Act->URL=CopyStr(Act->URL, URL);
-                printf("download url found: %s\n", Act->URL);
+                if (*URL=='/') RetStr=FormatStr(RetStr, "%s://%s:%s/%s", Proto, Host, Port, URL);
+                else RetStr=CopyStr(RetStr, URL);
                 break;
             }
         }
@@ -208,6 +214,69 @@ void ExtractURLFromWebsite(TAction *Act)
     Destroy(Data);
     Destroy(Tag);
     Destroy(URL);
+
+    return(RetStr);
+}
+
+
+
+
+int DownloadCheck(TAction *Act)
+{
+    STREAM *S;
+    char *Hash=NULL, *URL=NULL;
+    const char *ptr;
+    int result;
+
+    if (strncmp(Act->URL, "extracted:", 10) ==0) URL=ExtractURLFromWebsite(URL, Act);
+    else URL=CopyStr(URL, Act->URL);
+
+
+    if (! StrValid(URL)) 
+    {
+        fprintf(stderr, "ERROR: FAILED URL %s %s\n", Act->Name, Act->URL);
+	Destroy(URL);
+        return(FALSE);
+    }
+	
+    S=STREAMOpen(URL, "r");
+    if (! S)
+    {
+        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
+	Destroy(URL);
+        return(FALSE);
+    }
+
+    ptr=STREAMGetValue(S, "HTTP:ResponseCode");
+    if (*ptr != '2')
+    {
+        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
+        STREAMClose(S);
+	Destroy(URL);
+        return(FALSE);
+    }
+
+    result=HashSTREAM(&Hash, "sha256", S, ENCODE_HEX);
+    STREAMClose(S);
+
+    if (Hash)
+    {
+        ptr=GetVar(Act->Vars, "sha256");
+        if (StrValid(ptr))
+        {
+            if (strcmp(ptr, Hash) !=0)
+            {
+                fprintf(stderr,"ERROR: Hash mismatch for %s %s\n",Act->Name, Act->URL);
+            }
+        }
+        else SetVar(Act->Vars, "sha256", Hash);
+    }
+    else fprintf(stderr,"ERROR: No hash!\n");
+
+    waitpid(-1,NULL,WNOHANG);
+
+    DestroyString(Hash);
+    return(result);
 }
 
 
@@ -222,7 +291,7 @@ int Download(TAction *Act)
 
     if (StrValid(Act->URL))
     {
-        if (strncmp(Act->URL, "extracted:", 10) ==0) ExtractURLFromWebsite(Act);
+        if (strncmp(Act->URL, "extracted:", 10) ==0) Act->URL=ExtractURLFromWebsite(Act->URL, Act);
 
         //must do this even if url proves to be a file on disk, as we will want to ignore it
         //if it's an .exe file, so that we don't mistake it for and installed exectuable
