@@ -246,8 +246,14 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         ForcedFileType=FILETYPE_ZIP;
         break;
 
+		case PLATFORM_GOGLINUX64:
+				if (strcmp(PlatformDefault(), "!linux64")==0) 
+				{
+            Tempstr=MCopyStr(Tempstr, "~rWARN: Program to be installed may be 64-bit only, and you seem to be installing it on a 32-bit linux system.~0\n", NULL);
+            TerminalPutStr(Tempstr, NULL);
+				}
+
     case PLATFORM_GOGLINUX:
-    case PLATFORM_GOGLINUX64:
         ForcedFileType=FILETYPE_ZIP;
         FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* $(extra-files)", Act->Vars, 0);
         break;

@@ -44,3 +44,6 @@ Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64
 
 FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' name='FileZilla'
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' name='FileZilla'
+HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz'
+HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
+

@@ -152,8 +152,9 @@ static char *ExtractURLFromHRef(char *RetStr, const char *Data)
     ptr=GetNameValuePair(Data, "\\S", "=", &Key, &Value);
     while (ptr)
     {
-        if (strcmp(Key, "href")==0)
+        if (strcasecmp(Key, "href")==0)
         {
+						if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found HREF: %s\n", Value);
             RetStr=CopyStr(RetStr, Value);
             break;
         }
@@ -170,7 +171,7 @@ static char *ExtractURLFromHRef(char *RetStr, const char *Data)
 static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
 {
     char *Tempstr=NULL, *SrcPage=NULL, *Template=NULL, *Tag=NULL, *Data=NULL, *URL=NULL;
-    char *Proto=NULL, *Host=NULL, *Port=NULL;
+    char *Proto=NULL, *Host=NULL, *Port=NULL, *Path=NULL;
     const char *ptr;
     STREAM *S;
 
@@ -179,7 +180,11 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
     SrcPage=UnQuoteStr(SrcPage, Tempstr);
     ptr=GetToken(ptr, ":", &Template, GETTOKEN_QUOTES);
 
-    ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, NULL, NULL);
+    ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, &Path, NULL);
+
+		//do this late in the process so that we can say Act->URL=ExtractURLFromWebsite(Act->URL, Act);
+		//and copy over Act->URL after we've extracted the SrcPage from it
+		RetStr=CopyStr(RetStr, "");
 
     S=STREAMOpen(SrcPage, "");
     if (S)
@@ -191,13 +196,21 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
     ptr=XMLGetTag(Tempstr, NULL, &Tag, &Data);
     while (ptr)
     {
-        if (strcmp(Tag, "a")==0)
+        if (strcasecmp(Tag, "a")==0)
         {
+						if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extract url from 'a' tag: %s\n", Data);
             URL=ExtractURLFromHRef(URL, Data);
-//printf("EXTR: [%s] [%s]\n", URL, Template);
-            if (fnmatch(Template, URL, 0)==0)
+            if (StrValid(URL) && (fnmatch(Template, URL, 0)==0))
             {
+								if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found URL [%s] matching template [%s]\n", URL, Template);
+
                 if (*URL=='/') RetStr=FormatStr(RetStr, "%s://%s:%s/%s", Proto, Host, Port, URL);
+								else if (strncmp(URL, "../", 3)==0) 
+								{
+									StrRTruncChar(Path, '/');
+									StrRTruncChar(Path, '/');
+									RetStr=FormatStr(RetStr, "%s://%s:%s/%s/%s", Proto, Host, Port, Path, URL+3);
+								}
                 else RetStr=CopyStr(RetStr, URL);
                 break;
             }
@@ -205,12 +218,14 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
         ptr=XMLGetTag(ptr, NULL, &Tag, &Data);
     }
 
+		if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extracted url: [%s]\n", RetStr);
 
     Destroy(Tempstr);
     Destroy(SrcPage);
     Destroy(Template);
     Destroy(Proto);
     Destroy(Host);
+    Destroy(Path);
     Destroy(Data);
     Destroy(Tag);
     Destroy(URL);
