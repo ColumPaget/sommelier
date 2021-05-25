@@ -112,6 +112,7 @@ AnomalyWarzoneEarth platform=gog:windows
 AnomalyDefenders platform=gog:windows 
 ArxFatalis platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Battlevoid platform=gog:windows 
+BloodrayneBetrayal platform=gog:windows
 Caravan platform=gog:windows 
 ChaosReborn platform=gog:windows 
 ChaosOverlords platform=gog:windows 
@@ -169,6 +170,7 @@ Praetorians platform=gog:windows
 RaceTheSun platform=gog:windows 
 RageOfMages platform=gog:windows exec=rom.exe
 Reigns platform=gog:windows 
+Revenant platform=gog:windows exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360 platform=gog:windows 
 RiseOfTheMiddleKingdom platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 ShadowrunReturns platform=gog:windows 

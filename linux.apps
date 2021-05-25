@@ -1,5 +1,5 @@
-LazPaint platform=linux32 url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint' sha256='7797ded45b5eca1e3fb8642eac50afe5dbfbd50d307d651e32019bcba16dc1e2' 
-LazPaint platform=linux64 url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_linux64_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint' sha256='7912bbe22c82b00cd8d25fb66d35e3486d3cacc64c830e74dd066d1b60f4a427' 
+LazPaint platform=linux32 url=extracted:https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint' 
+LazPaint platform=linux64 url=https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux64_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' name='LazPaint'
 
 Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre' name='Calibre' sha256='6ccdaff43d88e536582b7cdf3ba15d17e87920a99f3116df7489ffbb662390dc' 
 Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre' name='Calibre' sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
@@ -24,6 +24,10 @@ PaleMoon platform=linux32 url=http://archive.palemoon.org/palemoon/28.x/28.16.0/
 PaleMoonGTK2 platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk2.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
 PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk3.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoon'
 
+* category=System;Terminals
+KittyTerminal platform=linux32 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-i686.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
+KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-x86_64.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
+
 SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/en-US/seamonkey-2.53.2.en-US.linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' name='SeaMonkey' sha256='0e3dc36afe0a66e83e2d33687f0d2988704c2c2aac137ad1a4bcdb96e34d2f9e' 
 SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/en-US/seamonkey-2.53.2.en-US.linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' name='SeaMonkey' sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' 
 GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.en-US.gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png' name='GnuIcecat' sha256='8d3e3038ec1a1f5b871c5c54b97fb13bc42eb10f85ecd3b096529ed7d290f571' 
@@ -46,4 +50,5 @@ FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' name='FileZilla'
 HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz'
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
+
 

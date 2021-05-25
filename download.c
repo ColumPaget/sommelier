@@ -218,7 +218,9 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
         ptr=XMLGetTag(ptr, NULL, &Tag, &Data);
     }
 
-		if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extracted url: [%s]\n", RetStr);
+		if (StrValid(RetStr)) Tempstr=MCopyStr(Tempstr, "~eExtracted URL From Webpage: ~b", RetStr, "~0\n", NULL);
+		else Tempstr=MCopyStr(Tempstr, "~rInstall is configured for URL extracted from website, but no matching URL found:~0\n", NULL);
+		TerminalPutStr(Tempstr, NULL);
 
     Destroy(Tempstr);
     Destroy(SrcPage);
