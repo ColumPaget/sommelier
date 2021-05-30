@@ -294,12 +294,12 @@ char *AppFormatPath(char *Path, TAction *Act)
     const char *ptr;
 
 //first generate sommelier root (usually ~/.sommelier) if it doesn't exist
+
     ptr=GetVar(Act->Vars, "sommelier_root");
     if (! StrValid(ptr))
     {
-        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root_template"));
-        Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
-        Path=SlashTerminateDirectoryPath(Path);
+				if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+				else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
         SetVar(Act->Vars, "sommelier_root",Path);
     }
 

@@ -24,6 +24,8 @@ static void PrintUsage()
     printf("  -proxy <url>                  use a proxy for downloading installs\n");
     printf("  -platform <platform>          platform to use when displaying lists of apps\n");
     printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
+    printf("  -S                            install app system-wide under /opt, to be run as a normal native app\n");
+    printf("  -system                       install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
     printf("  -hash                         hash downloads even if they have no expected hash value\n");
     printf("\n");
@@ -65,6 +67,8 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-s")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-set")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
+    else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
+    else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
     {

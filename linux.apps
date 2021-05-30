@@ -37,8 +37,8 @@ Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball do
 Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png' name='Tixati' sha256='e20950c7b6b07d6d4b46725238659e8ca4b504fb096c3b9cac4f207e4df3987a' 
 Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png' name='Tixati' sha256='d96596a54b67a9838571e5513144b200a575c067edfe0185a202b8c7097399d9' 
 
-RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 exec='VNC-Viewer-6.20.113-Linux-x86' icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='e47143186930480bc2260323b5330ebd7556ee2277bc4c20965438075d82eee0' 
-RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 exec='VNC-Viewer-6.20.113-Linux-x64' icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='4ac20464566dc6756325bb2476f82f495d7479eb7587f2dd65b3d3f1164d8648' 
+RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='e47143186930480bc2260323b5330ebd7556ee2277bc4c20965438075d82eee0'  install-type=executable
+RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 icon='realvnc.png' comment='RealVNC Viewer' category='RemoteAccess' name='RealVNCViewer' sha256='4ac20464566dc6756325bb2476f82f495d7479eb7587f2dd65b3d3f1164d8648'  install-type=executable
 
 TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec='vncviewer' download-type='tar.gz' name='TigerVNCViewer' sha256='64415624118832054f6a4eea4026815741255c7d6b4a64926f683da2cb02c303' 
 TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec='vncviewer' download-type='tar.gz' name='TigerVNCViewer' sha256='c0f7417794dfa463a2aec9b14e50c8de0eadc1b393813ed6fd0389f143896bc3' 
@@ -51,4 +51,29 @@ FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download
 HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz'
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
 
+DropBox platform=linux32 url=https://www.dropbox.com/download?plat=lnx.x86 download-type=tar.gz download-file=download movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
+DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 download-type=tar.gz download-file=download movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
 
+RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone
+RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
+
+
+* category=Development
+OpenJDK8 platform=linux32 url=https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x32.tar.gz download-type=tar.gz comment="Java programming language and SDK"
+OpenJDK8 platform=linux64 url=https://builds.openlogic.com/downloadJDK/openlogic-openjdk/8u262-b10/openlogic-openjdk-8u262-b10-linux-x64.tar.gz download-type=tar.gz comment="Java programming language and SDK"
+OpenJDK11 platform=linux64 url=https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.8%2B10/openlogic-openjdk-11.0.8%2B10-linux-x64.tar.gz download-type=tar.gz comment="Java programming language and SDK"
+
+
+
+Julia platform=linux32 url=https://julialang-s3.julialang.org/bin/linux/x86/1.6/julia-1.6.1-linux-i686.tar.gz download-type=tar.gz exec=julia movefiles-from=julia-1.6.1/* comment="Julia programming language"
+Julia platform=linux64 url=https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.1-linux-x86_64.tar.gz download-type=tar.gz exec=julia movefiles-from=julia-1.6.1/* comment="Julia programming language"
+
+
+Golang platform=linux32 url=https://golang.org/dl/go1.16.4.linux-386.tar.gz download-type=tar.gz exec=go movefiles-from=go/* comment="Googles 'Go' programming language"
+Golang platform=linux64 url=https://golang.org/dl/go1.16.4.linux-amd64.tar.gz download-type=tar.gz exec=go movefiles-from=go/* comment="Googles 'Go' programming language"
+
+GHC platform=linux32 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-i386-deb9-linux.tar.xz download-type=tar.xz comment="Glasgow Haskell Compiler"
+GHC platform=linux64 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-x86_64-deb10-linux.tar.xz download-type=tar.xz comment="Glasgow Haskell Compiler"
+
+7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
+7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz

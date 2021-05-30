@@ -4,72 +4,12 @@
 #include "download.h"
 #include "apps.h"
 #include "platforms.h"
+#include "packages.h"
+#include "find_files.h"
 #include "config.h"
 
 
 
-
-
-static void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions, ListNode *Founds)
-{
-    char *Tempstr=NULL;
-    struct stat FStat;
-    glob_t Glob;
-    int i;
-    const char *IgnoreDirs[]= {"windows", "Windows NT", "Internet Explorer", "Windows Media Player", NULL};
-    const char *ptr, *p_Basename;
-
-    Tempstr=CopyStr(Tempstr, Path);
-    Tempstr=SlashTerminateDirectoryPath(Tempstr);
-    Tempstr=CatStr(Tempstr, "*");
-
-    glob(Tempstr, 0, 0, &Glob);
-    for (i=0; i < Glob.gl_pathc; i++)
-    {
-        lstat(Glob.gl_pathv[i], &FStat);
-        p_Basename=GetBasename(Glob.gl_pathv[i]);
-        if (p_Basename)
-        {
-            if (S_ISLNK(FStat.st_mode)) /*Do nothing, don't follow links */ ;
-            else if (S_ISDIR(FStat.st_mode))
-            {
-                if (MatchTokenFromList(p_Basename, IgnoreDirs, 0) == -1) FindFiles(Glob.gl_pathv[i], Inclusions, Exclusions, Founds);
-            }
-            else
-            {
-                Tempstr=CopyStr(Tempstr, p_Basename);
-                //must strlwr here, as InList will do so to Inclusions and Exclusions
-                strlwr(Tempstr);
-                if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) )
-                {
-                    //can't use 'SetVar' here as multiple files might have the same basename, but different paths
-                    ListAddNamedItem(Founds, p_Basename, CopyStr(NULL, Glob.gl_pathv[i]));
-                }
-            }
-        }
-    }
-    globfree(&Glob);
-    Destroy(Tempstr);
-}
-
-
-
-char *FindSingleFile(char *RetStr, const char *Root, const char *File)
-{
-    ListNode *Files, *Curr;
-
-    RetStr=CopyStr(RetStr, "");
-    Files=ListCreate();
-
-
-    FindFiles(Root, File, "", Files);
-
-    Curr=ListGetNext(Files);
-    if (Curr) RetStr=CopyStr(RetStr, Curr->Item);
-
-    ListDestroy(Files, Destroy);
-    return(RetStr);
-}
 
 
 static char *FindProgramGoFishing(char *RetStr, TAction *Act)
@@ -265,98 +205,11 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         break;
     }
 
-    //we can force the type of the downloaded file, which allows us to override things like .zip files that have
-    //a self-extracting program stub on the front
-    ptr=GetVar(Act->Vars, "download-type");
-    if (StrValid(ptr))
-    {
-        if (strcasecmp(ptr, "zip")==0) ForcedFileType=FILETYPE_ZIP;
-        else if (strcasecmp(ptr, "7z")==0) ForcedFileType=FILETYPE_7ZIP;
-        else if (strcasecmp(ptr, "tar.gz")==0) ForcedFileType=FILETYPE_TGZ;
-        else if (strcasecmp(ptr, "tar.bz2")==0) ForcedFileType=FILETYPE_TBZ;
-        else if (strcasecmp(ptr, "tar.xz")==0) ForcedFileType=FILETYPE_TXZ;
-    }
+		PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
 
-
-    switch (IdentifyFileType(Path, ForcedFileType))
-    {
-    case FILETYPE_7ZIP:
-        Tempstr=MCopyStr(Tempstr, "7za x '",Path, "' ", FilesToExtract, NULL);
-        printf("unpacking: %s\n",GetBasename(Path));
-        RunProgramAndConsumeOutput(Tempstr, "noshell");
-
-        //for zipfiles and the like the installer has to be found. Either it's
-        //specified in the app config, as 'installer'
-        //or we go looking for certain common filenames
-
-        ptr=GetVar(Act->Vars, "installer");
-        if (! ptr) ptr="setup.exe,install.exe,*.msi";
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
-        if (StrValid(Tempstr))
-        {
-            printf("Found installer program: %s\n", Tempstr);
-            SetVar(Act->Vars, "installer-path", Tempstr);
-            RunInstallers(Act);
-        }
-        break;
-
-    case FILETYPE_ZIP:
-        //java .jar file are zips, but we don't want to unpack them
-        if (Act->InstallType == INSTALL_EXECUTABLE) SetVar(Act->Vars, "exec", GetBasename(Act->URL));
-        else
-        {
-            Tempstr=MCopyStr(Tempstr, "unzip -o '",Path, "' ", FilesToExtract, NULL);
-            printf("unpack cmd: %s\n", Tempstr);
-            printf("unpacking: %s\n",GetBasename(Path));
-            RunProgramAndConsumeOutput(Tempstr, "noshell");
-
-            //for zipfiles and the like the installer has to be found. Either it's
-            //specified in the app config, as 'installer'
-            //or we go looking for certain common filenames
-
-            ptr=GetVar(Act->Vars, "installer");
-            if (! ptr) ptr="setup.exe,install.exe,*.msi";
-            Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), ptr);
-            if (StrValid(Tempstr))
-            {
-                printf("Found installer program: %s\n", Tempstr);
-                SetVar(Act->Vars, "installer-path", Tempstr);
-                RunInstallers(Act);
-            }
-        }
-        break;
-
-    case FILETYPE_TGZ:
-    case FILETYPE_TBZ:
-    case FILETYPE_TXZ:
-        Tempstr=MCopyStr(Tempstr, "tar -xf '",Path, "' ", FilesToExtract, NULL);
-        printf("unpacking: %s\n",GetBasename(Path));
-        RunProgramAndConsumeOutput(Tempstr, "noshell");
-        break;
-
-    case FILETYPE_PE:
-    case FILETYPE_MZ:
-        if (Act->InstallType == INSTALL_EXECUTABLE)
-        {
-            //if file has no installer, is just an executable, then do nothing
-            SetVar(Act->Vars, "exec", GetBasename(Act->URL));
-        }
-        else
-        {
-            //else file is an installer, set the install-path to point to it
-            SetVar(Act->Vars, "installer-path", Path);
-            RunInstallers(Act);
-        }
-        break;
-
-    case FILETYPE_MSI:
-        //wine msiexec /i whatever.msi
-        Tempstr=MCopyStr(Tempstr, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
-        RunProgramAndConsumeOutput(Tempstr, "");
-        break;
-    }
-
-
+		//if the package contained an installer program within it then  we run that
+    ptr=GetVar(Act->Vars, "installer-path");
+    if (StrValid(ptr)) RunInstallers(Act);
 
     Destroy(Tempstr);
     Destroy(FilesToExtract);
@@ -391,8 +244,8 @@ static void PostProcessInstall(TAction *Act)
     ptr=GetVar(Act->Vars, "movefiles-from");
     if (StrValid(ptr))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-        glob(Tempstr, 0, 0, &Glob);
+        From=SubstituteVarsInString(From, ptr, Act->Vars, 0);
+        glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
             if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
@@ -400,6 +253,24 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
+    ptr=GetVar(Act->Vars, "movefiles-to");
+    if (StrValid(ptr))
+    {
+				ptr=GetToken(ptr, ":", &Tempstr, 0);
+        From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
+
+        To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
+				To=SlashTerminateDirectoryPath(To);
+
+				MakeDirPath(To, 0766);
+        glob(From, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+						Tempstr=MCopyStr(Tempstr, To, "/", GetBasename(Glob.gl_pathv[i]), NULL);
+            if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
+            rename(Glob.gl_pathv[i], Tempstr);
+        }
+    }
 
     ptr=GetVar(Act->Vars, "rename");
     if (StrValid(ptr))

@@ -2,17 +2,44 @@
 #include "platforms.h"
 #include "config.h"
 
-#define DESKTOP_PATH "$(homedir)/.local//share/applications/"
 
-static char *DesktopFileMakePath(char *RetStr, TAction *Act)
+static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
 {
     char *Tempstr=NULL;
 
-    Tempstr=SubstituteVarsInString(Tempstr, DESKTOP_PATH, Act->Vars, 0);
+		if (Config->Flags & FLAG_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
+		else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local//share/applications/", Act->Vars, 0);
+
     SetVar(Act->Vars, "desktop-path", Tempstr);
     RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name).desktop",Act->Vars, 0);
 
     Destroy(Tempstr);
+
+    return(RetStr);
+}
+
+
+static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
+{
+    char *Tempstr=NULL, *Path=NULL;
+		const char *SearchPath="$(homedir)/.local/share/applications/$(name).desktop:/opt/share/applications/$(name).desktop";
+		const char *ptr;
+
+		RetStr=CopyStr(RetStr, "");
+		ptr=GetToken(SearchPath, ":", &Path, 0);
+		while (ptr)
+		{
+		Tempstr=SubstituteVarsInString(Tempstr, Path, Act->Vars, 0);
+		if (access(Tempstr, F_OK)==0) 
+		{
+			RetStr=CopyStr(RetStr, Tempstr);
+			break;
+		}
+		ptr=GetToken(ptr, ":", &Path, 0);
+		}
+
+    Destroy(Tempstr);
+    Destroy(Path);
 
     return(RetStr);
 }
@@ -23,7 +50,7 @@ int DesktopFileDelete(TAction *Act)
     char *Tempstr=NULL;
     int result;
 
-    Tempstr=DesktopFileMakePath(Tempstr, Act);
+    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act);
     result=unlink(Tempstr);
 
     Destroy(Tempstr);
@@ -38,7 +65,9 @@ int DesktopFileRead(TAction *Act)
     int result=FALSE;
     STREAM *S;
 
-    Tempstr=DesktopFileMakePath(Tempstr, Act);
+		Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
+		if (StrValid(Tempstr))
+		{
     S=STREAMOpen(Tempstr, "r");
     if (S)
     {
@@ -75,6 +104,8 @@ int DesktopFileRead(TAction *Act)
         STREAMClose(S);
     }
     else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
+		}
+    else fprintf(stderr, "ERROR: Failed to find .desktop file '%s' for application\n", Tempstr);
 
 //if we didn't find a 'SommelierExec' entry then we must be dealing with
 //a setup that doesn't use sommelier to run the app. Thus the 'Exec' entry
@@ -107,7 +138,7 @@ void DesktopFileGenerate(TAction *Act)
     const char *ptr;
 
 
-    Tempstr=DesktopFileMakePath(Tempstr, Act);
+    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act);
     printf("Generating desktop File %s\n", Tempstr);
     MakeDirPath(Tempstr, 0744);
     S=STREAMOpen(Tempstr, "w mode=0744");
