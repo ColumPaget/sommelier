@@ -100,6 +100,8 @@ static TPlatform *PlatformsParse(const char *Line)
     char *Aliases=NULL, *Name=NULL, *Value=NULL;
     const char *ptr;
 
+		if (StrValid(Line) && (Line[0] != '#'))
+		{
     Plt=(TPlatform *) calloc(1, sizeof(TPlatform));
     ptr=GetToken(Line, "\\S", &Aliases, GETTOKEN_QUOTES);
     ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
@@ -122,6 +124,7 @@ static TPlatform *PlatformsParse(const char *Line)
     }
 
     ListAddNamedItem(Platforms, Aliases, Plt);
+		}
 
     Destroy(Name);
     Destroy(Value);
@@ -279,6 +282,7 @@ char *PlatformSelect(char *RetStr, TAction *Act)
     TPlatform *Plt;
     const char *p_filename;
 
+		printf("PS: %s\n", Act->Platform); fflush(NULL);
     if (StrValid(Act->Platform) && (Act->Platform[0] != '!') ) return(CopyStr(RetStr, Act->Platform));
 
     RetStr=CopyStr(RetStr, "");
@@ -288,6 +292,7 @@ char *PlatformSelect(char *RetStr, TAction *Act)
     Curr=ListGetNext(Platforms);
     while (Curr)
     {
+printf("CONS: %s\n", Curr->Tag); fflush(NULL);
         Plt=(TPlatform *) Curr->Item;
         if (
             StrValid(Act->Platform) &&

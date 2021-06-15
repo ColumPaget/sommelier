@@ -27,7 +27,7 @@ uname -v = #6 SMP Sun Apr 19 22:31:45 BST 2020
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
-PATH: /root/bin
+PATH: /home/colum/bin
 PATH: /usr/prebin
 PATH: /usr/local/bin
 PATH: /usr/bin
@@ -35,12 +35,10 @@ PATH: /usr/X11R7/bin
 PATH: /bin
 PATH: /usr/games/bin
 PATH: .
-PATH: /opt/7zip/bin
 PATH: /opt/Csound-6.05/bin
 PATH: /opt/Drawing/bin
 PATH: /opt/FLTK/bin
 PATH: /opt/GTK/bin
-PATH: /opt/Julia/bin
 PATH: /opt/LibreCAD/bin
 PATH: /opt/Python-3.5.6/bin
 PATH: /opt/Python-3.7.1/bin

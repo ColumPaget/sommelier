@@ -41,6 +41,7 @@ Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
 InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
 Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux 
+HandOfFate platform=gog:linux
 MotherRussiaBleeds platform=gog:linux 
 QuestForInfamy platform=gog:linux 
 DoorKickers platform=gog:linux 
