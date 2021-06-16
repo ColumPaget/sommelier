@@ -86,3 +86,6 @@ GHC platform=linux64 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-x86_
 
 7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
+
+XnViewMP platform=linux32 url=https://download.xnview.com/XnViewMP-linux.tgz download-type=tar.gz exec=xnview.sh
+XnViewMP platform=linux64 url=https://download.xnview.com/XnViewMP-linux-x64.tgz download-type=tar.gz exec=xnview.sh

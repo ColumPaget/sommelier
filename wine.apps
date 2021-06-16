@@ -67,7 +67,13 @@ Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_
 * category='ImageViewer;Viewer;Graphics'
 IfranView platform=windows url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
 Faststone platform=windows url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
-
+XnView platform=windows exec=XnView.exe url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
+XnViewMP platform=windows exec=XnView.exe url=https://download.xnview.com/XnViewMP-win.zip 
+WildBitViewer platform=windows url=https://mhieta.mbnet.fi/download/dev/6_6/Viewerportable.zip exec=Viewer.exe
+VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.exe
+PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
+FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
+DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe
 
 * category='FileManager;FileTools;System'
 MultiCommander platform=windows url=http://multicommander.com/files/updates/MultiCommander_win32_(9.6.1.2582).exe sha256='8534750838a8094a9ed89b86643a7777db74ac688943b61817cd4cc64530452d' exec='MultiCommander.exe' 
