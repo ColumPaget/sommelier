@@ -7,7 +7,7 @@
 #include "packages.h"
 #include "find_files.h"
 #include "config.h"
-
+#include "native.h"
 
 
 
@@ -321,6 +321,14 @@ void InstallCheckEnvironment(TAction *Act)
     const char *ptr;
     char *Path=NULL, *Tempstr=NULL;
 
+		switch (Act->PlatformID)
+		{
+		case PLATFORM_LINUX32:
+		case PLATFORM_LINUX64:
+				NativeExecutableCheckLibs(GetVar(Act->Vars, "exec-path"));
+		break; 
+		}
+
     ptr=GetVar(Act->Vars, "warn-missingpath");
     if (StrValid(ptr))
     {
@@ -401,11 +409,11 @@ static void FinalizeExeInstall(TAction *Act)
 
     if (StrValid(Path))
     {
-        InstallCheckEnvironment(Act);
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
         SetVar(Act->Vars, "exec-path", Path);
 
+        InstallCheckEnvironment(Act);
         //must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
         //desktop file as command-line args passed to the emulator
         PlatformApplySettings(Act);
