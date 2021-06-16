@@ -1,11 +1,17 @@
 Ayam platform=linux32 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux32.tar.gz/download exec=ayam category='Graphics' comment='3D Modeller' download-type='tar.gz'
 Ayam platform=linux64 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux64.tar.gz/download exec=ayam category='Graphics' comment='3D Modeller' download-type='tar.gz'
 
+
 LazPaint platform=linux32 url=extracted:https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program'  
 LazPaint platform=linux64 url=https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux64_no_install.tar.gz exec='lazpaint' download-type='tar.gz' category='Graphics' comment='Paint Program' 
 
 Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='6ccdaff43d88e536582b7cdf3ba15d17e87920a99f3116df7489ffbb662390dc' 
 Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
+
+
+#FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz
+#FreeOffice platform=linux64 url=https://www.softmaker.net/down/softmaker-freeoffice-982-amd64.tgz
+
 
 Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger'  sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
 Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 

@@ -82,7 +82,7 @@ FileZilla platform=windows url=extracted:https\://filezilla-project.org/download
 * category='Office'
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
 OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' 
-
+AtlantisWordProcessor platform=windows url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 
 
 * category='Viewer;Office'
