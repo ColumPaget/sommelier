@@ -13,18 +13,21 @@ Gauntlet platform=gog:windows
 
 140 platform=gog:linux exec="140Linux.x86" exec64="140Linux.x86_64"
 Spacechem platform=gog:linux exec="spacechem-launcher.sh"
-ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
-Defcon platform=gog:linux warn="This game has been seen to fail on some linux platforms"
 TIS100 platform=gog:linux 
 Battlevoid platform=gog:linux exec=harbinger
 CelestianTales platform=gog:linux 
+ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
 Convoy platform=gog:linux exec="Convoy.x86" exec64="Convoy.x86_64"
 CryptOfTheNecrodancer platform=gog:linux exec="NecroDancer.sh"
 DarkestDungeon platform=gog:linux exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
+Darwinia platform=gog:linux
+Defcon platform=gog:linux warn="This game has been seen to fail on some linux platforms"
 Deadnaut platform=gog:linux exec="Deadnaut.x86"
 DeepSkyDerelicts platform=gog:linux 
+DoorKickers platform=gog:linux 
 Duskers platform=gog:linux exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
 FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" 
+GalaxySquad platform=gog:linux
 Hacknet platform=gog:linux 
 Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 KingdomRush platform=gog:linux exec="run.sh" 
@@ -44,10 +47,10 @@ HardWest platform=gog:linux
 HandOfFate platform=gog:linux
 MotherRussiaBleeds platform=gog:linux 
 QuestForInfamy platform=gog:linux 
-DoorKickers platform=gog:linux 
 MiniMetro platform=gog:linux64 exec="Mini Metro"
 IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
+Tangledeep platform=gog:linux
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 
 #MSDOS platform 
@@ -195,6 +198,7 @@ SystemShock2 platform=gog:windows os-version=winxp vdesk=y warn="This game insta
 TachyonFringe platform=gog:windows exec=Tachyon.exe
 Tempest platform=gog:windows 
 TheGuild platform=gog:windows 
+TheSwindle platform=gog:windows
 Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Thief2 platform=gog:windows 
 Thief3 platform=gog:windows 
@@ -210,5 +214,5 @@ VtmBloodlines platform=gog:windows exec="vampire.exe" warn="This game installs i
 VtmRedemption platform=gog:windows exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-
+WizardsAndWarriors platform=gog:windows
 
