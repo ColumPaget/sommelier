@@ -33,6 +33,7 @@ LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe e
 * category='VOIP;Telephony;Chat;Internet;Network'
 MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname='MicroSIP-3.19.10.exe' winmanager='N' comment='MicroSIP SIP communicator' sha256='d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5' 
 Teamspeak platform=windows url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
+Ekiga platform=windows url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe
 
 * category='IRCClient;Chat;Internet;Network'
 IceChat platform=windows url=https://github.com/icechat/IceChat/releases/download/9.50P/icechat-portable.zip exec='IceChat2009.exe' comment='IRC Client' 
@@ -57,6 +58,7 @@ Krita platform=windows url=https://download.kde.org/stable/krita/4.2.9/krita-x86
 PaintBuster platform=windows url=https://archive.org/download/tucows_362047_PaintBuster/PB7Setup.exe licence='Shareware' sha256='83c9aa3dc2a32cc3e24304bf06c82f6043d97b60c0ada9b1d15409a8a7951b03' 
 LazPaint platform=windows url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_setup_win32_win64.exe sha256='698905dd3483fc5c45c7e6a2e1793e2673d95d97776a4e51bd97c1e28ff20b6b' 
 MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type='zip' exec='MSPAINT.EXE' sha256='4fb2f77a898fa6ff8e2fd62a28d10001a916ed8facd02f11f580ed9d92c66e2b' 
+Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
