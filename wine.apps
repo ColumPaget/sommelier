@@ -77,6 +77,7 @@ VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.ex
 PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
 DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe
+JPEGView platform=windows url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download
 
 * category='FileManager;FileTools;System'
 MultiCommander platform=windows url=http://multicommander.com/files/updates/MultiCommander_win32_(9.6.1.2582).exe sha256='8534750838a8094a9ed89b86643a7777db74ac688943b61817cd4cc64530452d' exec='MultiCommander.exe' 
