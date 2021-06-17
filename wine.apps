@@ -59,6 +59,7 @@ PaintBuster platform=windows url=https://archive.org/download/tucows_362047_Pain
 LazPaint platform=windows url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_setup_win32_win64.exe sha256='698905dd3483fc5c45c7e6a2e1793e2673d95d97776a4e51bd97c1e28ff20b6b' 
 MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type='zip' exec='MSPAINT.EXE' sha256='4fb2f77a898fa6ff8e2fd62a28d10001a916ed8facd02f11f580ed9d92c66e2b' 
 Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
+FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
