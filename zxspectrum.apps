@@ -1,5 +1,5 @@
 * platform=spectrum category=Game;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
-3DChess url=https://archive.org/compress/zx_3D_Chess_1986_Psion_Software sha256='61e26c12dc11199e821f15fdb90df672339f70efebcd1918a29f59aa7d31077b' 
+
 3DCombatZone url=https://archive.org/compress/zx_3D_Combat_Zone_1983_Artic_Computing sha256='f5039cddc075c42dd0ba624a2330484f255bc47db7a24e962df54e272d3e90f5' 
 3DSpaceWars url=https://archive.org/compress/zx_3D_Space_Wars_1983_Hewson_Consultants_16K sha256='349893d0d27555ca763ca91f0503808c97428f3a1cf9389aa326a292c1666e70' 
 3DSeddiabAttack url=https://archive.org/compress/zx_3D_Seiddab_Attack_1983_Hewson_Consultants_16K sha256='dc9210b78ecad60a6da0cff6f35e347ffc1047faa79b181d8c13179f8af40b7c' 
@@ -19,7 +19,6 @@ Battlezone url=https://archive.org/compress/zx_Battle_Zone_1984_Quicksilva sha25
 BubbleBobble url=https://archive.org/compress/zx_Bubble_Bobble_1987_Firebird_Software sha256='8e8cd8c0f767f8bc6520b389b3e27c63cb94133384ecfaa5e121f01f8e208830' 
 dkCentipede url=https://archive.org/compress/zx_Centipede_1982_DKTronics sha256='aacd9e65d0ac81ce1dd7e2d31964ffe4c3f761d1c3fdd11d21936eb2cf04bc85' 
 DarkStar url=https://archive.org/compress/zx_Dark_Star_1985_Design_Design_Software sha256='2072f77b29d51168b86b392102179e1bd18cc3a30b3cac9d48ad7e7dfac07091' 
-SinclairChess url=https://archive.org/compress/zx_Chess_1982_Sinclair_Research sha256='1c205c08b6ad7da97e1511d47a7231fb5e02f95e9ba6e4ded0f4cba7ad8a9700' 
 ChuckieEgg url=https://archive.org/compress/zx_Chuckie_Egg_1983_A_F_Software_a2 sha256='bfd7615fb490bfdbb5e3f53940780aa29195464a2893a000790de3bc2accfadf' 
 Elite url=https://archive.org/compress/zx_Elite_1985_Firebird_Software sha256='42f57735260fd49f6fe63e75c89105ffddca0bab9f4402f4d973346fd47b08df' 
 Earthlight url=https://archive.org/compress/zx_Earthlight_1988_Firebird_Software_128K sha256='ee6b243e4d6c2f70d1b96502af98055ebf2f9215dfb41449452596a0f824e068' 
@@ -59,3 +58,10 @@ Underwurlde url=https://archive.org/compress/zx_Underwurlde_1984_Ultimate_Play_T
 Uridium url=https://archive.org/compress/zx_Uridium_1985_Hewson_Consultants sha256='56af2eaae9aa81b53a35872814b85adf750f91a1fd138af77aeac646a19ab0f9' 
 Vulcan url=https://archive.org/compress/zx_Vulcan_1987_CCS_128K sha256='0378a0ad02016b3d085009f787143f93577ab10242271f3d6a8b29b2c7d75a7b' 
 Zynaps url=https://archive.org/compress/zx_Zynaps_1987_Hewson_Consultants sha256='77a6bf198c1e6467f0eec48a4a21dce56fc5558160193431dea5084a881e0e0c' 
+
+
+
+
+* platform=spectrum category=Chess;Game;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+3DChess url=https://archive.org/compress/zx_3D_Chess_1986_Psion_Software sha256='61e26c12dc11199e821f15fdb90df672339f70efebcd1918a29f59aa7d31077b' 
+SinclairChess url=https://archive.org/compress/zx_Chess_1982_Sinclair_Research sha256='1c205c08b6ad7da97e1511d47a7231fb5e02f95e9ba6e4ded0f4cba7ad8a9700' 

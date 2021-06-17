@@ -59,12 +59,12 @@ KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64
 # for many of these either of the windows or linux packages can be used
 AloneInTheDark platform=gog:windos exec=INDARK.EXE 
 AnvilOfDawn platform=gog:windos exec="ANVIL.EXE"
-BattleChess  platform=gog:lindos exec="CHESS.EXE"
-BattleChess  platform=gog:windos exec="CHESS.EXE"
+BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
+BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
 Castles  platform=gog:lindos exec="CASTLES.BAT"
 Castles  platform=gog:windos exec="CASTLES.BAT"
-ChineseChess platform=gog:lindos exec="CHESSII.EXE"
-ChineseChess platform=gog:windos exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab"
+ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=Chess;BoardGame;Game
+ChineseChess platform=gog:windos exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab" category=Chess;BoardGame;Game
 Darklands platform=gog:lindos exec="DARKLAND.EXE"
 Darklands platform=gog:windos exec="DARKLAND.EXE"
 DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE"

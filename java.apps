@@ -1,6 +1,6 @@
 
-* platform=java category='2DGraphics;Graphics'
 
+* platform=java category='2DGraphics;Graphics'
 Spade url=https://github.com/Spade-Editor/Spade/releases/download/v0.16.0-Beta/Spade.jar install-type='executable' sha256='4a67f0ce2dbb93ada78b01ed5d998a2db1203798244f20113df778771147fc2d' 
 Alchemy url=https://al.chemy.org/files/Alchemy-008.tar.gz download-type='tar.gz' movefiles-from='Alchemy/*' sha256='911e1c7440f19500ba041a0f51c0104d6c4bf49f6c05cd2d96a13fc6da5e8910' 
 Pixelitor url=https://prdownloads.sourceforge.net/pixelitor/Pixelitor-4.2.3.jar?download install-type='executable' sha256='a768831ea4e0fe04b5d1553ccd6ca8e59ee76d3609ede7f390e927af7ffe4eac' 
@@ -11,40 +11,45 @@ ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%20
 * platform=java category=Audio
 SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from='soundboard_2.0.9' exec='SoundBoard.jar' sha256='bb81bae5c8c7ae01fca0f06e27eca024fd12d10890cbd78a549db1041ecb6797' 
 
-* platform=java category=Misc
-FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11.zip?download movefiles-from='freeplane-1.8.11' exec='freeplanelauncher.jar' sha256='62af2083c5dccb44e4f3386483dce497eb5699c49cd3f027ecd7cd7160495f86' 
-JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type='executable' sha256='d42a99918f55073736fc6c67efc0d59ec37a864cb9f6a516ff0a4a008c72ba5b' 
-Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from='GloboNote/*' exec='GloboNote.jar' sha256='3a557e7cd4c7cce72e4fa5f628635ac23ff123b876900218acac2d560dc81b06' 
-tvnc-jviewer url=https://www.tightvnc.com/download/2.8.3/tvnjviewer-2.8.3-bin-gnugpl.zip exec='tightvnc-jviewer.jar' sha256='4a5b23a19a74cd34d562ff389c8a36fa83c958297707bf32d9f05da53ba91d28' 
-RText url=https://sourceforge.net/projects/rtext/files/rtext/2.5.6/rtext_2.5.6_unix_bin.tar.gz/download download-type='tar.gz' sha256='7a2380f495d3156f5a99b3323012fef3d6980c9f4a2a58e492b57cf7508a14f5' 
+
+
 
 * platform=java category=System;FileTools;FileManager
 MuCommander url=https://github.com/mucommander/mucommander/releases/download/0.9.6-1/mucommander-0.9.6-1.tar.gz category='System;FileTools;FileManager' download-type='tar.gz' exec='mucommander-0.9.6.jar' sha256='0ef7893c1514b1f36c846442803d57308df57ccfdf89dbfd5f44ee7f9f426704' 
 
-* platform=java category=Games
+* platform=java category=Game
 InfiniteTux url=https://github.com/qbancoffee/infinite-tux/releases/download/1.1sfx/infinitetux.jar install-type='executable' sha256='e638061cfecf79f39edf5706e6e9e813b88630f5ad40b2a21eb873767e62caf9' 
 Magarena url=https://github.com/magarena/magarena/releases/download/1.96/Magarena-1.96.zip movefiles-from='Magarena-1.96/*' exec='Magarena.jar' sha256='355010fba4e14dbc30415749ec96e69557ac2d3829e32b90da629cf91f173438' 
 
-* platform=java category=Games;LogicGame
+* platform=java category=LogicGame;Game
 JSoko url=https://prdownloads.sourceforge.net/jsokoapplet/JSoko_1.97.zip?download sha256='ff62382384712fbd06aced49a3fa2ac053d4868d755f5c369362521d641249ef' 
 
-* platform=java category=Games;StrategyGame
+* platform=java category=StrategyGame;Game
 FreeCol url=https://prdownloads.sourceforge.net/freecol/freecol-0.11.6.zip?download movefiles-from='freecol/*' exec='FreeCol.jar' sha256='5f545278caf518ef51bae0b8141966cdfc3ca24f3f4446af5be693942f3d8e6b' 
 Domination url=https://prdownloads.sourceforge.net/domination/Domination_1.2.3.zip?download movefiles-from='Domination/*' exec='Domination.jar' sha256='e2b2526048123cc838eec1dc96f594b7ae16fce95757fdaadbaaac07a4531a7d' 
 Stendhal url=https://jztkft.dl.sourceforge.net/project/arianne/stendhal/1.36/stendhal-1.36.zip exec='stendhal-starter.jar' sha256='91d9fd648cd0ad3216688c24dd8a899777f5ec6e569a63a9d2fc664084db8c36' 
 Clippers url=https://prdownloads.sourceforge.net/clippers/Clippers_Jar_1.3.9.zip?download exec='clippers.jar' sha256='ae89b6f5b6f41c01bdf5818b13eb1e2bef60aa4c7caa8d5075a77aecca3dcffe' 
 
-* platform=java category=Games;RolePlaying;Roguelike
+* platform=java category=Roguelike;RolePlaying;RPG;Game
 Javelin url=https://github.com/tukkek/javelin/releases/download/1.6/javelin.zip exec='javalin.jar' movefiles-from='javelin/*' sha256='01413b62a4d4f1e75fee0529824c30fc7e12ce5b99b00e3c961a099747fb91c1' 
 DrashRL url=http://slashie.net/downloads/drashrl032.zip sha256='4d4f33032e1dd8291a1d99711201dc1f6a47ed89014f647df3cc917cfad10e20' 
 CastlevaniaRL url=http://slashie.net/downloads/cvrl073.zip sha256='5c6d8d7e5b2c68f4425aad1eaea82e781721881a5f606e9a17ca4558923d4b74' 
 
 
-* platform=java category=Games;BoardGame
+* platform=java category=Go;Wei-Chi;BoardGame;Game
 CGoban url=http://files.gokgs.com/javaBin/cgoban.jar install-type='executable' sha256='9be59cad85f4bc29bfd1d0df3601916ac7748d1470b9a75aca2fdf94310c3c6b' 
 Jago url=http://www.rene-grothmann.de/jago/jago.jar install-type='executable' sha256='6200ffa1ba04b323046c7fb87d293c6f686c10795d3a02f733213cf10c99d4c7' 
 
-atunes platform=java-cmdline url=https://sourceforge.net/projects/atunes/files/atunes/aTunes%203.1.2/atunes-3.1.2-bin.tar.gz/download download-type=tar.gz movefiles-from=atunes*/*  emulator_args='-Dsubstancelaf.windowRoundedCorners=false -Dinsubstantial.looseTableCellRenderers=true -Djava.library.path=./ -Xms128m -Xmx256m -splash:splash.gif -cp aTunes.jar:lib/* net.sourceforge.atunes.Main' exec=aTunes.jar
+* platform=java category=RemoteAccess
+tvnc-jviewer url=https://www.tightvnc.com/download/2.8.3/tvnjviewer-2.8.3-bin-gnugpl.zip exec='tightvnc-jviewer.jar' sha256='4a5b23a19a74cd34d562ff389c8a36fa83c958297707bf32d9f05da53ba91d28' 
 
+* platform=java category=Misc
+FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11.zip?download movefiles-from='freeplane-1.8.11' exec='freeplanelauncher.jar' sha256='62af2083c5dccb44e4f3386483dce497eb5699c49cd3f027ecd7cd7160495f86' 
+JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type='executable' sha256='d42a99918f55073736fc6c67efc0d59ec37a864cb9f6a516ff0a4a008c72ba5b' 
+Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from='GloboNote/*' exec='GloboNote.jar' sha256='3a557e7cd4c7cce72e4fa5f628635ac23ff123b876900218acac2d560dc81b06' 
+RText url=https://sourceforge.net/projects/rtext/files/rtext/2.5.6/rtext_2.5.6_unix_bin.tar.gz/download download-type='tar.gz' sha256='7a2380f495d3156f5a99b3323012fef3d6980c9f4a2a58e492b57cf7508a14f5' 
+atunes platform=java-cmdline url=https://sourceforge.net/projects/atunes/files/atunes/aTunes%203.1.2/atunes-3.1.2-bin.tar.gz/download download-type=tar.gz movefiles-from=atunes*/*  emulator_args='-Dsubstancelaf.windowRoundedCorners=false -Dinsubstantial.looseTableCellRenderers=true -Djava.library.path=./ -Xms128m -Xmx256m -splash:splash.gif -cp aTunes.jar:lib/* net.sourceforge.atunes.Main' exec=aTunes.jar
 QRCodeGenerator url=https://sites.google.com/site/qrcodeforwn/downloads/qrcodegen_1.14.2.zip?attredirects=0&d=1
 ImageJ url=https://wsr.imagej.net/distros/cross-platform/ij153.zip
+
+
