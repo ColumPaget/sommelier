@@ -9,9 +9,11 @@ Pixelitor url=https://prdownloads.sourceforge.net/pixelitor/Pixelitor-4.2.3.jar?
 ArtOfIllusion url=https://prdownloads.sourceforge.net/aoi/Art%20of%20Illusion%203.2.0%20no-install.zip?download comment='3D Modeller' sha256='ac8fd7201a0f6acaab39562d0ccd9163c687e41c81a0318fc29e31e9246ce98f' 
 
 * platform=java category=Audio
-SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from='soundboard_2.0.9' exec='SoundBoard.jar' sha256='bb81bae5c8c7ae01fca0f06e27eca024fd12d10890cbd78a549db1041ecb6797' 
+SoundBoard url=https://prdownloads.sourceforge.net/soundboard/soundboard_v2.0.9.zip?download movefiles-from='soundboard_2.0.9/*' exec='SoundBoard.jar' sha256='bb81bae5c8c7ae01fca0f06e27eca024fd12d10890cbd78a549db1041ecb6797' 
 
 
+*platform=java category=VOIP;Telephony;Chat;Internet;Network
+PeersPhone url=http://sourceforge.net/projects/peers/files/peers/0.5/peers-gui-0.5-bin.zip/download movefiles-from='peers-gui-0.5/*'
 
 
 * platform=java category=System;FileTools;FileManager
