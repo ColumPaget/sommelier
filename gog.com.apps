@@ -48,6 +48,7 @@ HandOfFate platform=gog:linux
 MotherRussiaBleeds platform=gog:linux 
 QuestForInfamy platform=gog:linux 
 MiniMetro platform=gog:linux64 exec="Mini Metro"
+NeoScavenger platform=gog:linux exec="NEOScavenger"
 IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 Tangledeep platform=gog:linux
@@ -116,6 +117,7 @@ AnomalyWarzoneEarth platform=gog:windows
 AnomalyDefenders platform=gog:windows 
 ArxFatalis platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Battlevoid platform=gog:windows 
+Bloodrayne platform=gog:windows
 BloodrayneBetrayal platform=gog:windows
 Caravan platform=gog:windows 
 ChaosReborn platform=gog:windows 
@@ -144,10 +146,11 @@ FantasyWars platform=gog:windows exec=fw.exe
 FreedomForce platform=gog:windows exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
 FTL platform=gog:windows 
-Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)"
+Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 Imperialism platform=gog:windows 
 GalacticAssault platform=gog:windows 
 GalacticCivilizations1 platform=gog:windows exec=galciv.exe vdesk=y
+HardTruck2 platform=gog:windows exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HaegemoniaLegionsOfIron platform=gog:windows 
 HaegemoniaSolonHeritage platform=gog:windows 
 HeroesOfMightAndMagic3 platform=gog:windows 
@@ -158,9 +161,11 @@ KingdomUnderFireCrusaders platform=gog:windows
 KingsBounty platform=gog:windows 
 Locomotion platform=gog:windows exec=LOCO.EXE vdesk=y
 MagicMaker platform=gog:windows 
+MegaRace3 platform=gog:windows exec=Megarace3.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 MoonbaseCommander platform=gog:windows exec=moonbase.exe
 Nexus platform=gog:windows exec=nexus.exe
-Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+NeoScavenger platform=gog:windows
+Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 OffworldResourceBase platform=gog:windows exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 Overfall platform=gog:windows 
 Parkan2 platform=gog:windows 

@@ -30,6 +30,7 @@ Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbir
 #uTox platform=windows url=https://downloads.utox.io/stable/uTox_win32.exe  winmanager='N' install-type=executable comment='uTox chat app'
 LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758' 
 
+
 * category='VOIP;Telephony;Chat;Internet;Network'
 MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname='MicroSIP-3.19.10.exe' winmanager='N' comment='MicroSIP SIP communicator' sha256='d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5' 
 Teamspeak platform=windows url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
@@ -61,6 +62,7 @@ MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http:
 Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
 FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
 Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
+Inkscape platform=windows url=https://inkscape.org/release/1.1/windows/32-bit/
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -133,7 +135,6 @@ XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
 Spotify platform=windows url=https://download.scdn.co/SpotifySetup.exe sha256='e20ad890fe3047e67a12125f5775128f8ec3ba12d4af4a22a46cb94851b62bb1' 
-MediaMonkey platform=windows url=https://www.mediamonkey.com/MediaMonkey-5_Setup.exe exec=MediaMonkey.exe
 
 
 * comment='AudioVideoEditor;Audio'
@@ -149,6 +150,9 @@ Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro
 Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467' 
 WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 
+
+VSDC platform=windows url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
+Movavi platform=windows url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe
 
 * category='Clock;Utility'
 DSClock platform=windows url=http://www.dualitysoft.com/download/dsc302r-x86.exe comment='Desktop clock with alarm' sha256='bbaf2f87fb03b5cc189bb2225f1e3fa6bc7c56143e3ee1cd220f2e4b056695c6' 
@@ -177,6 +181,7 @@ GetRight platform=windows url=http://download.getright.com/getright-download.exe
 IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
 Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn='Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work' exec='sync-taskbar.exe' comment='Desktop app for Sync.com storage service' sha256='c6644943f4dc495e38af4a5187ad40e192bb2f0706a6ee9e2200c9fa48c07826' 
 KeyPass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
+Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe
 
 * category='Chess;BoardGame;Game'
 ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
