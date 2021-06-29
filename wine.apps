@@ -60,6 +60,7 @@ LazPaint platform=windows url=https://github.com/bgrabitmap/lazpaint/releases/do
 MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type='zip' exec='MSPAINT.EXE' sha256='4fb2f77a898fa6ff8e2fd62a28d10001a916ed8facd02f11f580ed9d92c66e2b' 
 Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
 FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
+Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -132,6 +133,8 @@ XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
 Spotify platform=windows url=https://download.scdn.co/SpotifySetup.exe sha256='e20ad890fe3047e67a12125f5775128f8ec3ba12d4af4a22a46cb94851b62bb1' 
+MediaMonkey platform=windows url=https://www.mediamonkey.com/MediaMonkey-5_Setup.exe exec=MediaMonkey.exe
+
 
 * comment='AudioVideoEditor;Audio'
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
