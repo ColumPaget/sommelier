@@ -7,8 +7,8 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
 {
     char *Tempstr=NULL;
 
-		if (Config->Flags & FLAG_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
-		else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local//share/applications/", Act->Vars, 0);
+    if (Config->Flags & FLAG_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
+    else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local//share/applications/", Act->Vars, 0);
 
     SetVar(Act->Vars, "desktop-path", Tempstr);
     RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name).desktop",Act->Vars, 0);
@@ -22,21 +22,21 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
 static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
 {
     char *Tempstr=NULL, *Path=NULL;
-		const char *SearchPath="$(homedir)/.local/share/applications/$(name).desktop:/opt/share/applications/$(name).desktop";
-		const char *ptr;
+    const char *SearchPath="$(homedir)/.local/share/applications/$(name).desktop:/opt/share/applications/$(name).desktop";
+    const char *ptr;
 
-		RetStr=CopyStr(RetStr, "");
-		ptr=GetToken(SearchPath, ":", &Path, 0);
-		while (ptr)
-		{
-		Tempstr=SubstituteVarsInString(Tempstr, Path, Act->Vars, 0);
-		if (access(Tempstr, F_OK)==0) 
-		{
-			RetStr=CopyStr(RetStr, Tempstr);
-			break;
-		}
-		ptr=GetToken(ptr, ":", &Path, 0);
-		}
+    RetStr=CopyStr(RetStr, "");
+    ptr=GetToken(SearchPath, ":", &Path, 0);
+    while (ptr)
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, Path, Act->Vars, 0);
+        if (access(Tempstr, F_OK)==0)
+        {
+            RetStr=CopyStr(RetStr, Tempstr);
+            break;
+        }
+        ptr=GetToken(ptr, ":", &Path, 0);
+    }
 
     Destroy(Tempstr);
     Destroy(Path);
@@ -65,46 +65,46 @@ int DesktopFileRead(TAction *Act)
     int result=FALSE;
     STREAM *S;
 
-		Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
-		if (StrValid(Tempstr))
-		{
-    S=STREAMOpen(Tempstr, "r");
-    if (S)
+    Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
+    if (StrValid(Tempstr))
     {
-        result=TRUE;
-        Tempstr=STREAMReadLine(Tempstr, S);
-        while (Tempstr)
+        S=STREAMOpen(Tempstr, "r");
+        if (S)
         {
-            StripTrailingWhitespace(Tempstr);
-            ptr=GetToken(Tempstr, "=", &Token, 0);
-            if (strcasecmp(Token,"SommelierExec")==0)
-            {
-                Act->Exec=CopyStr(Act->Exec, ptr);
-                StripQuotes(Act->Exec);
-            }
-            else if (strcasecmp(Token,"Exec")==0)
-            {
-                Exec=CopyStr(Exec, ptr);
-                StripQuotes(Exec);
-            }
-            else if (strcasecmp(Token,"Icon")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "icon", Token);
-            }
-            else if (strcasecmp(Token,"Path")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "working-dir", Token);
-            }
+            result=TRUE;
             Tempstr=STREAMReadLine(Tempstr, S);
+            while (Tempstr)
+            {
+                StripTrailingWhitespace(Tempstr);
+                ptr=GetToken(Tempstr, "=", &Token, 0);
+                if (strcasecmp(Token,"SommelierExec")==0)
+                {
+                    Act->Exec=CopyStr(Act->Exec, ptr);
+                    StripQuotes(Act->Exec);
+                }
+                else if (strcasecmp(Token,"Exec")==0)
+                {
+                    Exec=CopyStr(Exec, ptr);
+                    StripQuotes(Exec);
+                }
+                else if (strcasecmp(Token,"Icon")==0)
+                {
+                    Token=CopyStr(Token, ptr);
+                    StripQuotes(Token);
+                    SetVar(Act->Vars, "icon", Token);
+                }
+                else if (strcasecmp(Token,"Path")==0)
+                {
+                    Token=CopyStr(Token, ptr);
+                    StripQuotes(Token);
+                    SetVar(Act->Vars, "working-dir", Token);
+                }
+                Tempstr=STREAMReadLine(Tempstr, S);
+            }
+            STREAMClose(S);
         }
-        STREAMClose(S);
+        else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
     }
-    else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
-		}
     else fprintf(stderr, "ERROR: Failed to find .desktop file '%s' for application\n", Tempstr);
 
 //if we didn't find a 'SommelierExec' entry then we must be dealing with
@@ -171,8 +171,9 @@ void DesktopFileGenerate(TAction *Act)
 
             if (StrValid(ptr))
             {
-                //Tempstr=SubstituteVarsInString(Tempstr, "$(exec-dir)/$(exec)", Act->Vars, 0);
-                Tempstr=SubstituteVarsInString(Tempstr, "WHATEVER= $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
+								Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
+								SetVar(Act->Vars, "ld_preload", Tempstr);
+                Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
                 StripLeadingWhitespace(Tempstr);
                 StripTrailingWhitespace(Tempstr);
 

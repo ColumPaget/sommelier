@@ -3,6 +3,8 @@
 
 #include "common.h"
 
-int NativeExecutableCheckLibs(const char *Path);
+char *NativeLoadLibPath(char *RetStr);
+char *NativeFindLib(char *RetStr, const char *Lib);
+int NativeExecutableCheckLibs(const char *Path, char **Missing);
 
 #endif

@@ -154,7 +154,7 @@ static char *ExtractURLFromHRef(char *RetStr, const char *Data)
     {
         if (strcasecmp(Key, "href")==0)
         {
-						if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found HREF: %s\n", Value);
+            if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found HREF: %s\n", Value);
             RetStr=CopyStr(RetStr, Value);
             break;
         }
@@ -182,9 +182,9 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
 
     ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, &Path, NULL);
 
-		//do this late in the process so that we can say Act->URL=ExtractURLFromWebsite(Act->URL, Act);
-		//and copy over Act->URL after we've extracted the SrcPage from it
-		RetStr=CopyStr(RetStr, "");
+    //do this late in the process so that we can say Act->URL=ExtractURLFromWebsite(Act->URL, Act);
+    //and copy over Act->URL after we've extracted the SrcPage from it
+    RetStr=CopyStr(RetStr, "");
 
     S=STREAMOpen(SrcPage, "");
     if (S)
@@ -198,19 +198,19 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
     {
         if (strcasecmp(Tag, "a")==0)
         {
-						if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extract url from 'a' tag: %s\n", Data);
+            if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extract url from 'a' tag: %s\n", Data);
             URL=ExtractURLFromHRef(URL, Data);
             if (StrValid(URL) && (fnmatch(Template, URL, 0)==0))
             {
-								if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found URL [%s] matching template [%s]\n", URL, Template);
+                if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found URL [%s] matching template [%s]\n", URL, Template);
 
                 if (*URL=='/') RetStr=FormatStr(RetStr, "%s://%s:%s/%s", Proto, Host, Port, URL);
-								else if (strncmp(URL, "../", 3)==0) 
-								{
-									StrRTruncChar(Path, '/');
-									StrRTruncChar(Path, '/');
-									RetStr=FormatStr(RetStr, "%s://%s:%s/%s/%s", Proto, Host, Port, Path, URL+3);
-								}
+                else if (strncmp(URL, "../", 3)==0)
+                {
+                    StrRTruncChar(Path, '/');
+                    StrRTruncChar(Path, '/');
+                    RetStr=FormatStr(RetStr, "%s://%s:%s/%s/%s", Proto, Host, Port, Path, URL+3);
+                }
                 else RetStr=CopyStr(RetStr, URL);
                 break;
             }
@@ -218,9 +218,9 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
         ptr=XMLGetTag(ptr, NULL, &Tag, &Data);
     }
 
-		if (StrValid(RetStr)) Tempstr=MCopyStr(Tempstr, "~eExtracted URL From Webpage: ~b", RetStr, "~0\n", NULL);
-		else Tempstr=MCopyStr(Tempstr, "~rInstall is configured for URL extracted from website, but no matching URL found:~0\n", NULL);
-		TerminalPutStr(Tempstr, NULL);
+    if (StrValid(RetStr)) Tempstr=MCopyStr(Tempstr, "~eExtracted URL From Webpage: ~b", RetStr, "~0\n", NULL);
+    else Tempstr=MCopyStr(Tempstr, "~rInstall is configured for URL extracted from website, but no matching URL found:~0\n", NULL);
+    TerminalPutStr(Tempstr, NULL);
 
     Destroy(Tempstr);
     Destroy(SrcPage);
@@ -249,18 +249,18 @@ int DownloadCheck(TAction *Act)
     else URL=CopyStr(URL, Act->URL);
 
 
-    if (! StrValid(URL)) 
+    if (! StrValid(URL))
     {
         fprintf(stderr, "ERROR: FAILED URL %s %s\n", Act->Name, Act->URL);
-	Destroy(URL);
+        Destroy(URL);
         return(FALSE);
     }
-	
+
     S=STREAMOpen(URL, "r");
     if (! S)
     {
         fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
-	Destroy(URL);
+        Destroy(URL);
         return(FALSE);
     }
 
@@ -269,7 +269,7 @@ int DownloadCheck(TAction *Act)
     {
         fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
         STREAMClose(S);
-	Destroy(URL);
+        Destroy(URL);
         return(FALSE);
     }
 

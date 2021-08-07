@@ -77,7 +77,7 @@ Faststone platform=windows url=http://www.faststonesoft.net/DN/FSViewerSetup65.e
 XnView platform=windows exec=XnView.exe url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
 XnViewMP platform=windows exec=XnView.exe url=https://download.xnview.com/XnViewMP-win.zip 
 WildBitViewer platform=windows url=https://mhieta.mbnet.fi/download/dev/6_6/Viewerportable.zip exec=Viewer.exe
-VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.exe
+VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
 PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
 DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe
@@ -116,12 +116,16 @@ Juice platform=windows url=http://prdownloads.sourceforge.net/juicereceiver/Juic
 ICProg platform=windows url=http://www.ic-prog.com/icprog106C.zip sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
 PicPick platform=windows url=http://ngwin.com/download/latest/picpick_inst.exe exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk='y' 
 ElectronicsAssistant platform=windows url=https://www.electronics2000.co.uk/assist/assist.exe sha256='c69620e62647f2868ae2e6ade93d93a320fd1307074d61e49fc928bab33c8d2d' 
+LTSpice platform=windows url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe 
 
+* category='Astronomy'
+RegiStax platform=windows url=http://www.astronomie.be/registax/setupregistax6.exe
 
 * category='TextEditor;Utility'
 SublimeText platform=windows url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe version='3143' exec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6' 
 Notepad++ platform=windows url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898' 
 CherryTree platform=windows url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec='cherrytree.exe' 
+EditPadLite platform=windows url=http://download.jgsoft.com/editpad/SetupEditPadLite.exe warn='This app is only free for personal/non-commercial use. App auto-runs on install, so you'll need to close it for sommelier to complete the installation.'
 
 * category='RemoteAccess;Utility'
 TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
@@ -136,7 +140,6 @@ Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
 Spotify platform=windows url=https://download.scdn.co/SpotifySetup.exe sha256='e20ad890fe3047e67a12125f5775128f8ec3ba12d4af4a22a46cb94851b62bb1' 
 
-
 * comment='AudioVideoEditor;Audio'
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
 AudioLab platform=windows url=http://www.completelyfreesoftware.com/software/alab11d.zip type='WAV editor' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' comment='Editor for WAV files' 
@@ -150,6 +153,7 @@ Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro
 Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467' 
 WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 
+WavePad platform=windows url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
 
 VSDC platform=windows url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
 Movavi platform=windows url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe

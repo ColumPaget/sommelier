@@ -105,8 +105,11 @@ static char *FindProgram(char *RetStr, TAction *Act)
 static void RunInstallers(TAction *Act)
 {
     const char *ptr;
-    char *Tempstr=NULL, *Cmd=NULL;
+    char *Tempstr=NULL, *Cmd=NULL, *CmdConfig=NULL;
     int RegFlags=0;
+
+		if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
+		else CmdConfig=CopyStr(CmdConfig, "outnull");
 
     ptr=GetVar(Act->Vars, "installer-vdesk");
     if (StrValid(ptr))
@@ -127,7 +130,7 @@ static void RunInstallers(TAction *Act)
             Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
             printf("RUN INSTALLER: %s\n",Tempstr);
             Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-            RunProgramAndConsumeOutput(Cmd, "+stderr");
+            RunProgramAndConsumeOutput(Cmd, CmdConfig);
             break;
 
         case PLATFORM_WINDOWS:
@@ -139,7 +142,7 @@ static void RunInstallers(TAction *Act)
 
             printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
             Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-            RunProgramAndConsumeOutput(Cmd, "+stderr");
+            RunProgramAndConsumeOutput(Cmd, CmdConfig);
             break;
         }
     }
@@ -151,7 +154,7 @@ static void RunInstallers(TAction *Act)
         SetVar(Act->Vars, "installer-path", Tempstr);
         Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
         printf("RUN INSTALL STAGE2: %s\n", Cmd);
-        RunProgramAndConsumeOutput(Cmd, "+stderr");
+        RunProgramAndConsumeOutput(Cmd, CmdConfig);
     }
 
     if (Act->PlatformID==PLATFORM_WINDOWS)
@@ -165,6 +168,7 @@ static void RunInstallers(TAction *Act)
         RegEdit(Act, RegFlags, NULL, NULL, NULL);
     }
 
+    Destroy(CmdConfig);
     Destroy(Tempstr);
     Destroy(Cmd);
 }
@@ -186,12 +190,12 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         ForcedFileType=FILETYPE_ZIP;
         break;
 
-		case PLATFORM_GOGLINUX64:
-				if (strcmp(PlatformDefault(), "!linux64")==0) 
-				{
+    case PLATFORM_GOGLINUX64:
+        if (strcmp(PlatformDefault(), "!linux64")==0)
+        {
             Tempstr=MCopyStr(Tempstr, "~rWARN: Program to be installed may be 64-bit only, and you seem to be installing it on a 32-bit linux system.~0\n", NULL);
             TerminalPutStr(Tempstr, NULL);
-				}
+        }
 
     case PLATFORM_GOGLINUX:
         ForcedFileType=FILETYPE_ZIP;
@@ -205,9 +209,9 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         break;
     }
 
-		PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
+    PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
 
-		//if the package contained an installer program within it then  we run that
+    //if the package contained an installer program within it then  we run that
     ptr=GetVar(Act->Vars, "installer-path");
     if (StrValid(ptr)) RunInstallers(Act);
 
@@ -233,11 +237,16 @@ static void PostProcessInstall(TAction *Act)
     if (StrValid(ptr))
     {
         Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-        glob(Tempstr, 0, 0, &Glob);
-        for (i=0; i < Glob.gl_pathc; i++)
+        ptr=GetToken(Tempstr, ",", &Value, GETTOKEN_QUOTES);
+        while (ptr)
         {
-            if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
-            unlink(Glob.gl_pathv[i]);
+            glob(Value, 0, 0, &Glob);
+            for (i=0; i < Glob.gl_pathc; i++)
+            {
+                if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
+                unlink(Glob.gl_pathv[i]);
+            }
+            ptr=GetToken(ptr, ",", &Value, GETTOKEN_QUOTES);
         }
     }
 
@@ -256,17 +265,17 @@ static void PostProcessInstall(TAction *Act)
     ptr=GetVar(Act->Vars, "movefiles-to");
     if (StrValid(ptr))
     {
-				ptr=GetToken(ptr, ":", &Tempstr, 0);
+        ptr=GetToken(ptr, ":", &Tempstr, 0);
         From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
 
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
-				To=SlashTerminateDirectoryPath(To);
+        To=SlashTerminateDirectoryPath(To);
 
-				MakeDirPath(To, 0766);
+        MakeDirPath(To, 0766);
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
-						Tempstr=MCopyStr(Tempstr, To, "/", GetBasename(Glob.gl_pathv[i]), NULL);
+            Tempstr=MCopyStr(Tempstr, To, "/", GetBasename(Glob.gl_pathv[i]), NULL);
             if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
             rename(Glob.gl_pathv[i], Tempstr);
         }
@@ -319,15 +328,17 @@ void InstallFindIcon(TAction *Act)
 void InstallCheckEnvironment(TAction *Act)
 {
     const char *ptr;
-    char *Path=NULL, *Tempstr=NULL;
+    char *Path=NULL, *Tempstr=NULL, *Libs=NULL;
 
-		switch (Act->PlatformID)
-		{
-		case PLATFORM_LINUX32:
-		case PLATFORM_LINUX64:
-				NativeExecutableCheckLibs(GetVar(Act->Vars, "exec-path"));
-		break; 
-		}
+    switch (Act->PlatformID)
+    {
+    case PLATFORM_LINUX32:
+    case PLATFORM_LINUX64:
+        NativeExecutableCheckLibs(GetVar(Act->Vars, "exec-path"), &Libs);
+        Tempstr=FormatStr(Tempstr, "~yWARN: Executable requires missing libraries:~0 '%s'. Sommelier will attempt to find substitutes at runtime.\n", Libs);
+        TerminalPutStr(Tempstr, NULL);
+        break;
+    }
 
     ptr=GetVar(Act->Vars, "warn-missingpath");
     if (StrValid(ptr))
@@ -342,6 +353,7 @@ void InstallCheckEnvironment(TAction *Act)
 
     Destroy(Tempstr);
     Destroy(Path);
+    Destroy(Libs);
 }
 
 
@@ -526,7 +538,6 @@ static void InstallSingleItem(TAction *Act)
 
         Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
         InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
-        printf("unpack-dir: %s\n", InstallPath);
         if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
         mkdir(InstallPath, 0700);
         chdir(InstallPath);
@@ -732,7 +743,8 @@ void InstallApp(TAction *Act)
         InstallRequiredDependancies(Act);
 
         InstallSingleItem(Act);
-        printf("%s install complete\n", Act->Name);
+        Tempstr=MCopyStr(Tempstr, "~e~g", Act->Name, " install complete~0\n", NULL);
+        TerminalPutStr(Tempstr, NULL);
     }
 
     Destroy(Emulator);
@@ -778,7 +790,6 @@ void InstallReconfigure(TAction *Act)
 
         Path=AppFormatPath(Path, Act);
         MakeDirPath(Path, 0700);
-
 
         InstallSingleItemPreProcessInstall(Act);
         Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));

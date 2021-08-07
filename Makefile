@@ -1,10 +1,10 @@
-OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o packages.o native.o install.o uninstall.o
-LIBS= -lssl -lcrypto -lUseful  
+OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o packages.o native.o install.o uninstall.o run-application.o
+LIBS=libUseful-4/libUseful.a -lssl -lcrypto  
 prefix=/usr/local
 exec_prefix=${prefix}
-CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_LIBUSEFUL=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
 
-all: $(OBJ) main.c 
+all: $(OBJ) patches-subdir main.c libUseful-4/libUseful.a
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
 libUseful-4/libUseful.a:
@@ -49,10 +49,14 @@ install.o: install.h install.c
 uninstall.o: uninstall.h uninstall.c
 	$(CC) $(CFLAGS) -c uninstall.c
 
-
 regedit.o: regedit.h regedit.c
 	$(CC) $(CFLAGS) -c regedit.c
 
+run-application.o: run-application.h run-application.c
+	$(CC) $(CFLAGS) -c run-application.c
+
+patches-subdir:
+	- $(MAKE) -C patches
 
 clean:
 	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a
@@ -60,8 +64,10 @@ clean:
 install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
+	mkdir -p $(HOME)/.sommelier/patches
 	cp sommelier $(HOME)/bin/
 	cp *.apps *.conf $(HOME)/.sommelier/
+	cp patches/*.so $(HOME)/.sommelier/patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin

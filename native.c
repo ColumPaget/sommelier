@@ -1,31 +1,71 @@
 #include "native.h"
 
-int NativeExecutableCheckLibs(const char *Path)
-{
-char *Tempstr=NULL, *LibName=NULL;
-const char *ptr;
-STREAM *S;
 
-Tempstr=MCopyStr(Tempstr, "cmd:ldd ", Path, NULL);
-S=STREAMOpen(Tempstr, "");
-if (S)
+
+char *NativeLoadLibPath(char *RetStr)
 {
-Tempstr=STREAMReadLine(Tempstr, S);
-while (Tempstr)
-{
-StripLeadingWhitespace(Tempstr);
-StripTrailingWhitespace(Tempstr);
-ptr=GetToken(Tempstr, " => ", &LibName, 0);
-if (strcmp(ptr, "not found")==0)
-{
-Tempstr=FormatStr(Tempstr, "~rERROR: Executable requires library~0 '~e%s~0'\n", LibName);
-TerminalPutStr(Tempstr, NULL);
-}
-Tempstr=STREAMReadLine(Tempstr, S);
-}
-STREAMClose(S);
+    STREAM *S;
+    char *Tempstr=NULL;
+
+    S=STREAMOpen("/etc/ld.so.conf", "r");
+    if (S)
+    {
+        Tempstr=STREAMReadLine(Tempstr, S);
+        while (Tempstr)
+        {
+            StripTrailingWhitespace(Tempstr);
+            RetStr=MCatStr(RetStr, Tempstr, ":", NULL);
+            Tempstr=STREAMReadLine(Tempstr, S);
+        }
+        STREAMClose(S);
+    }
+
+    RetStr=CatStr(RetStr, getenv("LD_LIBRARY_PATH"));
+
+    Destroy(Tempstr);
+    return(RetStr);
 }
 
-Destroy(LibName);
-Destroy(Tempstr);
+
+char *NativeFindLib(char *RetStr, const char *Lib)
+{
+    char *Tempstr=NULL;
+
+    RetStr=CopyStr(RetStr, "");
+    Tempstr=NativeLoadLibPath(Tempstr);
+    RetStr=FindFileInPath(RetStr, Lib, Tempstr);
+
+    Destroy(Tempstr);
+    return(RetStr);
+}
+
+
+int NativeExecutableCheckLibs(const char *Path, char **Missing)
+{
+    char *Tempstr=NULL, *LibName=NULL;
+    const char *ptr;
+    STREAM *S;
+
+    if (Missing) *Missing=CopyStr(*Missing, "");
+    Tempstr=MCopyStr(Tempstr, "cmd:ldd ", Path, NULL);
+    S=STREAMOpen(Tempstr, "");
+    if (S)
+    {
+        Tempstr=STREAMReadLine(Tempstr, S);
+        while (Tempstr)
+        {
+            StripLeadingWhitespace(Tempstr);
+            StripTrailingWhitespace(Tempstr);
+            ptr=GetToken(Tempstr, " => ", &LibName, 0);
+            if (strcmp(ptr, "not found")==0)
+            {
+                if (Missing) *Missing=MCatStr(*Missing, LibName, " ", NULL);
+            }
+            Tempstr=STREAMReadLine(Tempstr, S);
+        }
+        STREAMClose(S);
+    }
+
+    Destroy(LibName);
+    Destroy(Tempstr);
 }

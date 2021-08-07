@@ -1,10 +1,10 @@
-OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o packages.o native.o install.o uninstall.o
+OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o packages.o native.o install.o uninstall.o run-application.o
 LIBS=@STATIC_LIBS@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 CFLAGS=@CFLAGS@ @DEFS@ -DINSTALL_PREFIX=\"@prefix@\"
 
-all: $(OBJ) main.c @STATIC_LIBS@
+all: $(OBJ) patches-subdir main.c @STATIC_LIBS@
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
 libUseful-4/libUseful.a:
@@ -49,10 +49,14 @@ install.o: install.h install.c
 uninstall.o: uninstall.h uninstall.c
 	$(CC) $(CFLAGS) -c uninstall.c
 
-
 regedit.o: regedit.h regedit.c
 	$(CC) $(CFLAGS) -c regedit.c
 
+run-application.o: run-application.h run-application.c
+	$(CC) $(CFLAGS) -c run-application.c
+
+patches-subdir:
+	- $(MAKE) -C patches
 
 clean:
 	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a
@@ -60,8 +64,10 @@ clean:
 install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
+	mkdir -p $(HOME)/.sommelier/patches
 	cp sommelier $(HOME)/bin/
 	cp *.apps *.conf $(HOME)/.sommelier/
+	cp patches/*.so $(HOME)/.sommelier/patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin

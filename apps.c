@@ -58,55 +58,55 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
     {
         StripQuotes(Name);
         StripQuotes(Value);
-        if (StrValid(Name)) 
-	{
+        if (StrValid(Name))
+        {
 
-        if (strcmp(Name,"url")==0)
-        {
-            Act->URL=CopyStr(Act->URL, Value);
-            Tempstr=URLBasename(Tempstr, Act->URL);
-            SetVar(Act->Vars, "url-basename", Tempstr);
-            Tempstr=CopyStr(Tempstr, Act->URL);
-            StrRTruncChar(Tempstr, '?');
-            StrRTruncChar(Tempstr, '/');
-            SetVar(Act->Vars, "url-path", Tempstr);
-        }
-        else if (strcmp(Name,"platform")==0)
-        {
-            Act->Platform=CopyStr(Act->Platform, Value);
-            Plt=PlatformFind(Act->Platform);
-            if (Plt)
+            if (strcmp(Name,"url")==0)
             {
-                Act->PlatformID=Plt->ID;
-                if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
-                if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
+                Act->URL=CopyStr(Act->URL, Value);
+                Tempstr=URLBasename(Tempstr, Act->URL);
+                SetVar(Act->Vars, "url-basename", Tempstr);
+                Tempstr=CopyStr(Tempstr, Act->URL);
+                StrRTruncChar(Tempstr, '?');
+                StrRTruncChar(Tempstr, '/');
+                SetVar(Act->Vars, "url-path", Tempstr);
             }
-            else fprintf(stderr, "PLATFORM NOT FOUND: %s\n", Act->Platform);
-        }
-	else SetVar(Act->Vars, Name, Value);
+            else if (strcmp(Name,"platform")==0)
+            {
+                Act->Platform=CopyStr(Act->Platform, Value);
+                Plt=PlatformFind(Act->Platform);
+                if (Plt)
+                {
+                    Act->PlatformID=Plt->ID;
+                    if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
+                    if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
+                }
+                else fprintf(stderr, "PLATFORM NOT FOUND: %s\n", Act->Platform);
+            }
+            else SetVar(Act->Vars, Name, Value);
 
 
 
-        if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
-        else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
-        else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
-        else if (strcmp(Name,"install-type")==0)
-        {
-            if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
-            if (strcasecmp(Value,"executable")==0) Act->InstallType=INSTALL_EXECUTABLE;
+            if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+            else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
+            else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
+            else if (strcmp(Name,"install-type")==0)
+            {
+                if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
+                if (strcasecmp(Value,"executable")==0) Act->InstallType=INSTALL_EXECUTABLE;
+            }
+            else if (strcmp(Name,"sha256")==0)
+            {
+                strlwr(Value);
+                SetVar(Act->Vars, Name, Value);
+            }
+            else if (strcmp(Name,"bundled")==0)
+            {
+                //app is bundled with another app! Set the bundled flag, and set a variable
+                Act->Flags |= FLAG_BUNDLED;
+                SetVar(Act->Vars, "bundled-with", Value);
+            }
         }
-        else if (strcmp(Name,"sha256")==0)
-        {
-            strlwr(Value);
-            SetVar(Act->Vars, Name, Value);
-        }
-        else if (strcmp(Name,"bundled")==0)
-        {
-            //app is bundled with another app! Set the bundled flag, and set a variable
-            Act->Flags |= FLAG_BUNDLED;
-            SetVar(Act->Vars, "bundled-with", Value);
-        }
-	}
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
     }
@@ -298,11 +298,13 @@ char *AppFormatPath(char *Path, TAction *Act)
     ptr=GetVar(Act->Vars, "sommelier_root");
     if (! StrValid(ptr))
     {
-				if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
-				else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
+        if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+        else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
         SetVar(Act->Vars, "sommelier_root",Path);
     }
 
+    Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root"), "/patches", NULL);
+    SetVar(Act->Vars, "sommelier_patches_dir", Tempstr);
 
     ptr=GetVar(Act->Vars, "prefix");
     if (! StrValid(ptr))
