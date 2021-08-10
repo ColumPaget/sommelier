@@ -17,6 +17,8 @@ static int PackageTypeFromExtn(const char *extn)
     else if (strcasecmp(extn, "txz")==0) FT=FILETYPE_TXZ;
     else if (strcasecmp(extn, "zip")==0) FT=FILETYPE_ZIP;
     else if (strcasecmp(extn, "7z")==0) FT=FILETYPE_7ZIP;
+    else if (strcasecmp(extn, "7za")==0) FT=FILETYPE_7ZIP;
+    else if (strcasecmp(extn, "7zip")==0) FT=FILETYPE_7ZIP;
     else if (strcasecmp(extn, "tar.gz")==0) FT=FILETYPE_TGZ;
     else if (strcasecmp(extn, "tar.bz2")==0) FT=FILETYPE_TBZ;
     else if (strcasecmp(extn, "tar.xz")==0) FT=FILETYPE_TXZ;
@@ -89,7 +91,7 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
     switch (PackageType)
     {
     case FILETYPE_7ZIP:
-        CmdLine=MCopyStr(CmdLine, "7za x '",Path, "' ", FilesToExtract, NULL);
+        CmdLine=MCopyStr(CmdLine, "7za x -y '",Path, "' ", FilesToExtract, NULL);
         break;
 
 

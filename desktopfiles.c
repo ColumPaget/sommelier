@@ -171,8 +171,8 @@ void DesktopFileGenerate(TAction *Act)
 
             if (StrValid(ptr))
             {
-								Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
-								SetVar(Act->Vars, "ld_preload", Tempstr);
+                Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
+                SetVar(Act->Vars, "ld_preload", Tempstr);
                 Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
                 StripLeadingWhitespace(Tempstr);
                 StripTrailingWhitespace(Tempstr);

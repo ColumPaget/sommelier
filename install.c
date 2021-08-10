@@ -76,7 +76,6 @@ static char *FindProgram(char *RetStr, TAction *Act)
     ptr=GetVar(Act->Vars, "exec");
     if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
 
-
 //full path given to executable, so it must exist at this path
     if (StrValid(Exec) && *Exec == '/')
     {
@@ -108,8 +107,8 @@ static void RunInstallers(TAction *Act)
     char *Tempstr=NULL, *Cmd=NULL, *CmdConfig=NULL;
     int RegFlags=0;
 
-		if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
-		else CmdConfig=CopyStr(CmdConfig, "outnull");
+    if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
+    else CmdConfig=CopyStr(CmdConfig, "outnull");
 
     ptr=GetVar(Act->Vars, "installer-vdesk");
     if (StrValid(ptr))
@@ -210,6 +209,12 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     }
 
     PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
+    ptr=GetVar(Act->Vars, "inner-package");
+    if (StrValid(ptr))
+    {
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
+        if (StrValid(Tempstr)) PackageUnpack(Act, ptr, ForcedFileType, FilesToExtract);
+    }
 
     //if the package contained an installer program within it then  we run that
     ptr=GetVar(Act->Vars, "installer-path");

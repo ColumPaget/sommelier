@@ -58,6 +58,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
     {
         StripQuotes(Name);
         StripQuotes(Value);
+
         if (StrValid(Name))
         {
 

@@ -17,8 +17,8 @@ Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.
 Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
 
 
-#FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz
-#FreeOffice platform=linux64 url=https://www.softmaker.net/down/softmaker-freeoffice-982-amd64.tgz
+FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz
+FreeOffice platform=linux64 url=https://www.softmaker.net/down/softmaker-freeoffice-982-amd64.tgz
 
 
 * category='InstantMessaging;Chat'
@@ -47,7 +47,6 @@ DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublec
 *category='Compression;Utilities'
 7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
-
 
 Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
 Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='7ed3b1610f80118649a93bddb017c954c9aa083c787cee9564cbb0cdf8f2c200' 

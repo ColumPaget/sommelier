@@ -17,7 +17,7 @@ FireFox platform=windows url=https://download.mozilla.org/?product=firefox-lates
 * category='Email;Office;Network'
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird platform=windows url=https://download.mozilla.org/?product=thunderbird-52.9.1-SSL&os=win&lang=en-GB comment='Mozilla's email client' sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' 
+Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-78.12.0-SSL&os=win&lang=en-US" comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' exec='thunderbird.exe'
 SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey exec='seamonkey.exe'
 
 * category='InstantMessaging;Chat;Internet;Network'
@@ -29,6 +29,8 @@ Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbir
 #seems like utox team haven't paid the bill for their hosting
 #uTox platform=windows url=https://downloads.utox.io/stable/uTox_win32.exe  winmanager='N' install-type=executable comment='uTox chat app'
 LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758' 
+WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
+
 
 
 * category='VOIP;Telephony;Chat;Internet;Network'
@@ -97,7 +99,9 @@ FileZilla platform=windows url=extracted:https\://filezilla-project.org/download
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
 OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' 
 AtlantisWordProcessor platform=windows url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
-
+FreeOfficeTextMaker platform=windows url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
+FreeOfficePlanMaker platform=windows exec=PlanMaker.exe bundled=FreeOfficeTextMaker
+FreeOfficePresentations platform=windows exec=Presentations.exe bundled=FreeOfficeTextMaker
 
 * category='Viewer;Office'
 SumatraPDF platform=windows url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 

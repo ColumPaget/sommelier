@@ -17,7 +17,7 @@ static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
     {
         Lib=CopyStr(Lib, Token);
         StrTruncChar(Lib, '.');
-				Lib=CatStr(Lib, ".so");
+        Lib=CatStr(Lib, ".so");
 
         Src=FindFileInPath(Src, Lib, LibPath);
         if (StrValid(Src))
