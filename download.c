@@ -78,12 +78,13 @@ static int DownloadOpen(TAction *Act, const char *Path)
 
 static int DownloadCopyFile(TAction *Act)
 {
-    char *Tempstr=NULL, *cwd=NULL;
+    char *Tempstr=NULL, *URL=NULL, *cwd=NULL;
     const char *ptr;
     STREAM *S;
     int bytes=0;
 
-    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", Act->URL, "~0\n", NULL);
+		URL=SubstituteVarsInString(URL, Act->URL, Act->Vars, 0);
+    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
 
     if (StrValid(Act->DownName))
@@ -96,13 +97,16 @@ static int DownloadCopyFile(TAction *Act)
             STREAMClose(S);
 
             Tempstr=MCopyStr(Tempstr, "r Referer=", ptr, NULL);
-            S=STREAMOpen(Act->URL, Tempstr);
+            S=STREAMOpen(URL, Tempstr);
         }
-        else S=STREAMOpen(Act->URL, "r");
+        else S=STREAMOpen(URL, "r");
 
         if (S)
         {
-            if (strncasecmp(Act->URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+						ptr=STREAMGetValue(S, "HTTP:ResponseCode");
+						if (StrValid(ptr) && *ptr=='2')
+						{
+            if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
             STREAMAddProgressCallback(S, DownloadCallback);
 
             if (StrValid(Config->InstallerCache))
@@ -118,11 +122,12 @@ static int DownloadCopyFile(TAction *Act)
             }
             Act->Flags |= FLAG_DOWNLOADED;
             bytes=STREAMCopy(S,  Act->SrcPath);
+						}
             STREAMClose(S);
         }
         else
         {
-            Tempstr=MCopyStr(Tempstr, "~rERROR: failed to download:~0  ", Act->URL, NULL);
+            Tempstr=MCopyStr(Tempstr, "~rERROR: failed to download:~0  ", URL, NULL);
             TerminalPutStr(Tempstr, NULL);
         }
 
@@ -132,11 +137,12 @@ static int DownloadCopyFile(TAction *Act)
     }
     else
     {
-        Tempstr=MCopyStr(Tempstr, "~rERROR: failed to extract basename from:~0  ", Act->URL, NULL);
+        Tempstr=MCopyStr(Tempstr, "~rERROR: failed to extract basename from:~0  ", URL, NULL);
         TerminalPutStr(Tempstr, NULL);
     }
 
     DestroyString(Tempstr);
+    DestroyString(URL);
     DestroyString(cwd);
 
     return(bytes);
@@ -321,8 +327,16 @@ int Download(TAction *Act)
             Act->SrcPath=CopyStr(Act->SrcPath, Act->URL);
             bytes=Stat.st_size;
         }
-        else bytes=DownloadCopyFile(Act);
+        else 
+				{
+					bytes=DownloadCopyFile(Act);
+					if (bytes < 1) TerminalPutStr("~rERROR: URL download failed. Trying again with default lang/locale setting~0\n",NULL);
+					AppSetLocale(Act, "en_US");
+					bytes=DownloadCopyFile(Act);
+				}
 
+				if (bytes > 0)
+				{
         //having downloaded the app, we might also download an icon for it
         ptr=GetVar(Act->Vars, "icon");
         if (StrValid(ptr))
@@ -340,6 +354,8 @@ int Download(TAction *Act)
                 SetVar(Act->Vars, "app-icon", Dest);
             }
         }
+				}
+				else TerminalPutStr("~rERROR: URL download failed.~0\n",NULL);
     }
     else
     {

@@ -136,8 +136,10 @@ Defcon platform=gog:windows
 DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
 DivineDivinity platform=gog:windows exec=div.exe
 Diluvion platform=gog:windows 
+Downwell platform=gog:windows
 DraculaTheResurrection platform=gog:windows 
 DungeonKeeper2 platform=gog:windows vdesk=y os-version=winxp exec=DKII.EXE 
+DungeonRats platform=gog:windows exec=DR.EXE
 DungeonSiege platform=gog:windows exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
 DungeonSiege2 platform=gog:windows exec="DungeonSiege2.exe"
 DungeonSiege3 platform=gog:windows exec="Dungeon Siege III.exe"

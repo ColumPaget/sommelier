@@ -6,26 +6,26 @@ VB6 platform=windows url=https://download.microsoft.com/download/5/a/d/5ad868a0-
 MSXML3 platform=windows url=http://repository.playonlinux.com/divers/msxml3.msi dll-overrides='msxml3' sha256='f9c678f8217e9d4f9647e8a1f6d89a7c26a57b9e9e00d39f7487493dd7b4e36c' 
 MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi sha256='1b71b104d7491a719ba360f5fa5b07b50255153c4ce20e35ae13ce151b95b01e' 
 
-* category='WebBrowser;Internet;Network'
+* category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
 Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/en-US/seamonkey-2.53.1.en-US.win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
+SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/$(locale)/seamonkey-2.53.1.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
 PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' 
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
-FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=en-US os-version='win7' exec='firefox.exe' sha256='3392e22212fd0f1e6f3cf2ec2002a024529402c43c7fdbe15d3f8254d03f26c5' 
+FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe'
 
-* category='Email;Office;Network'
+* category='Email;Office;Network' locale='$(lang)-$(country)' 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-78.12.0-SSL&os=win&lang=en-US" comment="Mozilla's email client" sha256='fa3efff905aded11c7d3cf37574fe921e6c73af8bf12c3635b87678243d8e2e0' exec='thunderbird.exe'
+Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-78.12.0-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
 SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey exec='seamonkey.exe'
 
-* category='InstantMessaging;Chat;Internet;Network'
+* category='InstantMessaging;Chat;Internet;Network' locale='$(lang)-$(country)' 
 Telegram platform=windows url=https://telegram.org/dl/desktop/win winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.' sha256='232eb4e8825cd02bd23c4155731180f2f7579fb4bc32bf5d07e0f906cc61b751' 
 qTox platform=windows url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
 MirandaIM platform=windows url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
 #MirandaNG platform=windows url=https://miranda-ng.org/distr/stable/miranda-ng-v0.95.10.exe  comment='Multiprotocol messenger'
-Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.en-US.win32.installer.exe comment='Multiprotocol Messenger' sha256='363d98dc34d5b3eb525ed16cc3678afac70fac84e93addbc81be08407be6eb90' 
+Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
 #seems like utox team haven't paid the bill for their hosting
 #uTox platform=windows url=https://downloads.utox.io/stable/uTox_win32.exe  winmanager='N' install-type=executable comment='uTox chat app'
 LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758' 
@@ -95,9 +95,9 @@ XenonFM platform=windows url=https://sourceforge.net/projects/xenon-portable/fil
 DoubleCommander platform=windows url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7' 
 FileZilla platform=windows url=extracted:https\://filezilla-project.org/download.php?show_all=1:*win32-setup.exe?h=* exec='filezilla.exe' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' sha256='f7c5be12cab910e2ed55b79b6f1b5314c5d9c1909a62216c882c8c6dc406f241' 
 
-* category='Office'
+* category='Office' locale='$(lang)-$(country)'
 AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
-OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/en-US/Apache_OpenOffice_4.1.7_Win_x86_install_en-US.exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' 
+OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/$(locale)/Apache_OpenOffice_4.1.7_Win_x86_install_$(locale).exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' 
 AtlantisWordProcessor platform=windows url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 FreeOfficeTextMaker platform=windows url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
 FreeOfficePlanMaker platform=windows exec=PlanMaker.exe bundled=FreeOfficeTextMaker
@@ -142,7 +142,6 @@ CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolpl
 XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc, etc=' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
-Spotify platform=windows url=https://download.scdn.co/SpotifySetup.exe sha256='e20ad890fe3047e67a12125f5775128f8ec3ba12d4af4a22a46cb94851b62bb1' 
 
 * comment='AudioVideoEditor;Audio'
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
