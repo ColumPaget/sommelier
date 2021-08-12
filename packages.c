@@ -22,6 +22,8 @@ static int PackageTypeFromExtn(const char *extn)
     else if (strcasecmp(extn, "tar.gz")==0) FT=FILETYPE_TGZ;
     else if (strcasecmp(extn, "tar.bz2")==0) FT=FILETYPE_TBZ;
     else if (strcasecmp(extn, "tar.xz")==0) FT=FILETYPE_TXZ;
+    else if (strcasecmp(extn, "msi")==0) FT=FILETYPE_MSI;
+    else if (strcasecmp(extn, "cab")==0) FT=FILETYPE_CAB;
 
     return(FT);
 }
@@ -85,9 +87,11 @@ static int PackageResolveType(TAction *Act, const char *Path, int ForcedType)
 
 static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, const char *FilesToExtract)
 {
-    char *CmdLine=NULL, *Tempstr=NULL;
+    char *CmdLine=NULL, *Tempstr=NULL, *CmdConfig=NULL;
+    const char *ptr;
 
 
+    CmdConfig=CopyStr(CmdConfig, "noshell");
     switch (PackageType)
     {
     case FILETYPE_7ZIP:
@@ -108,7 +112,7 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
     case FILETYPE_MSI:
         //wine msiexec /i whatever.msi
         CmdLine=MCopyStr(CmdLine, "WINEPREFIX=", GetVar(Act->Vars, "prefix"), " wine msiexec /i '", Path, "'", NULL);
-        RunProgramAndConsumeOutput(CmdLine, "");
+        CmdConfig=CopyStr(CmdConfig, "");
         break;
 
     case FILETYPE_DEB:
@@ -120,16 +124,24 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
         if (StrValid(Tempstr)) CmdLine=MCopyStr(CmdLine, "tar -xf '",Path, "' ", FilesToExtract, NULL);
         else CmdLine=CopyStr(CmdLine, "");
         break;
+
+    case FILETYPE_CAB:
+        ptr=GetVar(Act->Vars, "extract-filter");
+        if (StrValid(ptr)) Tempstr=MCopyStr(Tempstr, " -F '", ptr, "' ", NULL);
+        else Tempstr=CopyStr(Tempstr, "");
+        CmdLine=MCopyStr(CmdLine, "cabextract ", Tempstr, " '", Path, "'", NULL);
+        break;
     }
 
     if (StrValid(CmdLine))
     {
         printf("unpacking: %s\n",GetBasename(Path));
         printf("unpacking: %s into %s\n",CmdLine, get_current_dir_name());
-        RunProgramAndConsumeOutput(CmdLine, "noshell");
+        RunProgramAndConsumeOutput(CmdLine, CmdConfig);
     }
 
     Destroy(CmdLine);
+    Destroy(CmdConfig);
     Destroy(Tempstr);
 }
 
@@ -157,6 +169,28 @@ static void PackageFindAndRunInstaller(TAction *Act)
     Destroy(Tempstr);
 }
 
+
+//This function handles situations where a package contains another package, possibly in a different format
+void PackageUnpackInner(TAction *Act, const char *Path, int ForcedFileType, const char *FilesToExtract)
+{
+    const char *ptr;
+    char *Tempstr=NULL, *PkgType=NULL;
+
+    ptr=GetVar(Act->Vars, "inner-package");
+    if (StrValid(ptr))
+    {
+        if (strchr(ptr, ':')) ptr=GetToken(ptr, ":", &PkgType, GETTOKEN_QUOTES);
+        if (StrValid(PkgType)) ForcedFileType=PackageTypeFromExtn(PkgType);
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
+        if (StrValid(Tempstr))
+        {
+            PackageUnpack(Act, Tempstr, ForcedFileType, FilesToExtract);
+        }
+    }
+
+    Destroy(Tempstr);
+    Destroy(PkgType);
+}
 
 
 void PackageUnpack(TAction *Act, const char *Path, int ForcedFileType, const char *FilesToExtract)
@@ -196,5 +230,6 @@ void PackageUnpack(TAction *Act, const char *Path, int ForcedFileType, const cha
 
         }
     }
-
 }
+
+

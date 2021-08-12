@@ -1,5 +1,6 @@
 #include "download.h"
 #include "config.h"
+#include "apps.h"
 #include <fnmatch.h>
 
 static void DownloadCallback(const char *URL, int bytes, int total)
@@ -83,7 +84,7 @@ static int DownloadCopyFile(TAction *Act)
     STREAM *S;
     int bytes=0;
 
-		URL=SubstituteVarsInString(URL, Act->URL, Act->Vars, 0);
+    URL=SubstituteVarsInString(URL, Act->URL, Act->Vars, 0);
     Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
 
@@ -103,26 +104,26 @@ static int DownloadCopyFile(TAction *Act)
 
         if (S)
         {
-						ptr=STREAMGetValue(S, "HTTP:ResponseCode");
-						if (StrValid(ptr) && *ptr=='2')
-						{
-            if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
-            STREAMAddProgressCallback(S, DownloadCallback);
+            ptr=STREAMGetValue(S, "HTTP:ResponseCode");
+            if (StrValid(ptr) && *ptr=='2')
+            {
+                if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+                STREAMAddProgressCallback(S, DownloadCallback);
 
-            if (StrValid(Config->InstallerCache))
-            {
-                Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
-                MakeDirPath(Act->SrcPath, 0770);
+                if (StrValid(Config->InstallerCache))
+                {
+                    Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
+                    MakeDirPath(Act->SrcPath, 0770);
+                }
+                else
+                {
+                    //this function allocs memory
+                    cwd=get_current_dir_name();
+                    Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
+                }
+                Act->Flags |= FLAG_DOWNLOADED;
+                bytes=STREAMCopy(S,  Act->SrcPath);
             }
-            else
-            {
-                //this function allocs memory
-                cwd=get_current_dir_name();
-                Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
-            }
-            Act->Flags |= FLAG_DOWNLOADED;
-            bytes=STREAMCopy(S,  Act->SrcPath);
-						}
             STREAMClose(S);
         }
         else
@@ -327,35 +328,38 @@ int Download(TAction *Act)
             Act->SrcPath=CopyStr(Act->SrcPath, Act->URL);
             bytes=Stat.st_size;
         }
-        else 
-				{
-					bytes=DownloadCopyFile(Act);
-					if (bytes < 1) TerminalPutStr("~rERROR: URL download failed. Trying again with default lang/locale setting~0\n",NULL);
-					AppSetLocale(Act, "en_US");
-					bytes=DownloadCopyFile(Act);
-				}
-
-				if (bytes > 0)
-				{
-        //having downloaded the app, we might also download an icon for it
-        ptr=GetVar(Act->Vars, "icon");
-        if (StrValid(ptr))
+        else
         {
-            Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
-            GetToken(Tempstr, ":", &Token, 0);
-            if (
-                (strcasecmp(Token, "https")==0) ||
-                (strcasecmp(Token, "http")==0) ||
-                (strcasecmp(Token, "ssh")==0)
-            )
+            bytes=DownloadCopyFile(Act);
+            if (bytes < 1)
             {
-                FileCopy(Tempstr, GetBasename(Tempstr));
-                Dest=MCopyStr(Dest, GetVar(Act->Vars, "install-dir"), "/", GetBasename(Tempstr), NULL);
-                SetVar(Act->Vars, "app-icon", Dest);
+                TerminalPutStr("~rERROR: URL download failed. Trying again with default lang/locale setting~0\n",NULL);
+                AppSetLocale(Act, "en_US");
+                bytes=DownloadCopyFile(Act);
             }
         }
-				}
-				else TerminalPutStr("~rERROR: URL download failed.~0\n",NULL);
+
+        if (bytes > 0)
+        {
+            //having downloaded the app, we might also download an icon for it
+            ptr=GetVar(Act->Vars, "icon");
+            if (StrValid(ptr))
+            {
+                Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+                GetToken(Tempstr, ":", &Token, 0);
+                if (
+                    (strcasecmp(Token, "https")==0) ||
+                    (strcasecmp(Token, "http")==0) ||
+                    (strcasecmp(Token, "ssh")==0)
+                )
+                {
+                    FileCopy(Tempstr, GetBasename(Tempstr));
+                    Dest=MCopyStr(Dest, GetVar(Act->Vars, "install-dir"), "/", GetBasename(Tempstr), NULL);
+                    SetVar(Act->Vars, "app-icon", Dest);
+                }
+            }
+        }
+        else TerminalPutStr("~rERROR: URL download failed.~0\n",NULL);
     }
     else
     {

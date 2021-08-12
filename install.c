@@ -117,7 +117,7 @@ static void RunInstallers(TAction *Act)
         RegFlags |= REG_VDESK;
     }
 
-    if (RegFlags)	RegEdit(Act, RegFlags, NULL, NULL, NULL);
+    if (RegFlags) RegEdit(Act, RegFlags, NULL, NULL, NULL);
 
     ptr=GetVar(Act->Vars, "installer-path");
     printf("INSTALLER PATH: %s\n", ptr);
@@ -209,12 +209,8 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     }
 
     PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
-    ptr=GetVar(Act->Vars, "inner-package");
-    if (StrValid(ptr))
-    {
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
-        if (StrValid(Tempstr)) PackageUnpack(Act, ptr, ForcedFileType, FilesToExtract);
-    }
+    //if there's a package within the package, this will unpack it
+    PackageUnpackInner(Act, Path, ForcedFileType, FilesToExtract);
 
     //if the package contained an installer program within it then  we run that
     ptr=GetVar(Act->Vars, "installer-path");
@@ -276,7 +272,9 @@ static void PostProcessInstall(TAction *Act)
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
         To=SlashTerminateDirectoryPath(To);
 
+        if (Config->Flags & FLAG_DEBUG) printf("movefiles-to: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
+
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
@@ -540,7 +538,6 @@ static void InstallSingleItem(TAction *Act)
     {
         InstallSingleItemPreProcessInstall(Act);
 
-
         Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
         InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
         if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
@@ -583,7 +580,9 @@ static void InstallSingleItem(TAction *Act)
             unlink(Act->SrcPath);
         }
 
-        if (Act->Flags |= FLAG_ABORT) _exit(1);
+        if (Act->Flags & FLAG_ABORT) _exit(1);
+				PostProcessInstall(Act);
+
         _exit(0);
     }
 
@@ -594,8 +593,7 @@ static void InstallSingleItem(TAction *Act)
         Tempstr=MCopyStr(Tempstr, "~r~eInstall Aborted for ~0", Act->Name, "\n", NULL);
         TerminalPutStr(Tempstr, NULL);
     }
-
-
+		
 
     DestroyString(Tempstr);
     DestroyString(InstallPath);

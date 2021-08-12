@@ -6,5 +6,6 @@
 #include "common.h"
 
 void PackageUnpack(TAction *Act, const char *Path, int ForcedFileType, const char *FilesToExtract);
+void PackageUnpackInner(TAction *Act, const char *Path, int ForcedFileType, const char *FilesToExtract);
 
 #endif

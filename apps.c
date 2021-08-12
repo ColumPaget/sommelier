@@ -84,13 +84,13 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 }
                 else fprintf(stderr, "PLATFORM NOT FOUND: %s\n", Act->Platform);
             }
-						//locale is a special case, we want to be able to use 'locale=' to set a locale string, but we
-						//also want to be able to use $(locale) as a variable in config. Further, we want to be able to say 
-						//'locale="$(lang):$(country)". But when we do the substitution and set locale to it's final value, we
-						//destroy the variables by subsituting them. So if we want to try a different locale in future, we now
-						//can't do that. Thus we set 'locale_template' and use that as the template to substitute into 'locale', 
-						//so 'locale_template' always reamins unchanged.
-						else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
+            //locale is a special case, we want to be able to use 'locale=' to set a locale string, but we
+            //also want to be able to use $(locale) as a variable in config. Further, we want to be able to say
+            //'locale="$(lang):$(country)". But when we do the substitution and set locale to it's final value, we
+            //destroy the variables by subsituting them. So if we want to try a different locale in future, we now
+            //can't do that. Thus we set 'locale_template' and use that as the template to substitute into 'locale',
+            //so 'locale_template' always reamins unchanged.
+            else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
             else SetVar(Act->Vars, Name, Value);
 
 
@@ -392,26 +392,26 @@ int AppFindConfig(TAction *App, const char *Platforms)
 
 void AppSetLocale(TAction *App, const char *LocaleStr)
 {
-		char *Lang=NULL, *Country=NULL;
-		const char *ptr;
+    char *Lang=NULL, *Country=NULL;
+    const char *ptr;
 
-		ptr=GetToken(LocaleStr, "_", &Lang, 0);
-		Country=CopyStr(Country, ptr);
+    ptr=GetToken(LocaleStr, "_", &Lang, 0);
+    Country=CopyStr(Country, ptr);
 
-		SetVar(App->Vars, "lang", Lang);
-		SetVar(App->Vars, "country", Country);
-		strlwr(Country);
-		SetVar(App->Vars, "country:lwr", Country);
+    SetVar(App->Vars, "lang", Lang);
+    SetVar(App->Vars, "country", Country);
+    strlwr(Country);
+    SetVar(App->Vars, "country:lwr", Country);
 
-		ptr=GetVar(App->Vars, "locale_template");
-		if (StrValid(ptr))
-		{
-			Lang=SubstituteVarsInString(Lang, ptr, App->Vars, 0);
-			SetVar(App->Vars, "locale", Lang);
-		}
-	
-		Destroy(Country);
-		Destroy(Lang);
+    ptr=GetVar(App->Vars, "locale_template");
+    if (StrValid(ptr))
+    {
+        Lang=SubstituteVarsInString(Lang, ptr, App->Vars, 0);
+        SetVar(App->Vars, "locale", Lang);
+    }
+
+    Destroy(Country);
+    Destroy(Lang);
 }
 
 
@@ -420,7 +420,7 @@ int AppLoadConfig(TAction *App)
 {
     int result=FALSE;
     char *Tempstr=NULL;
-		const char *ptr;
+    const char *ptr;
 
     Tempstr=PlatformSelect(Tempstr, App);
     if (StrValid(Tempstr)) printf("Selected Platforms: %s\n", Tempstr);
@@ -433,9 +433,9 @@ int AppLoadConfig(TAction *App)
         SetVar(App->Vars, "name", App->InstallName);
     }
 
-		ptr=getenv("LANGUAGE");
-		if (! StrValid(ptr)) ptr="en_US";
-		AppSetLocale(App, ptr);
+    ptr=getenv("LANGUAGE");
+    if (! StrValid(ptr)) ptr="en_US";
+    AppSetLocale(App, ptr);
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
     if (result) Tempstr=AppFormatPath(Tempstr, App);
