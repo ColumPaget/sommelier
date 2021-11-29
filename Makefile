@@ -59,7 +59,7 @@ patches-subdir:
 	- $(MAKE) -C patches
 
 clean:
-	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a
+	rm -f sommelier *.o libUseful-4/*.o libUseful-4/*.so libUseful-4/*.a patches/*.so
 
 install:
 	mkdir -p $(HOME)/bin
