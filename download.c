@@ -88,6 +88,13 @@ static int DownloadCopyFile(TAction *Act)
     Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
 
+
+    //must do this even if url proves to be a file on disk, as we will want to ignore it
+    //if it's an .exe file, so that we don't mistake it for and installed exectuable
+    if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, URL);
+    if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
+
+
     if (StrValid(Act->DownName))
     {
         ptr=GetVar(Act->Vars, "referer");
@@ -316,11 +323,6 @@ int Download(TAction *Act)
     if (StrValid(Act->URL))
     {
         if (strncmp(Act->URL, "extracted:", 10) ==0) Act->URL=ExtractURLFromWebsite(Act->URL, Act);
-
-        //must do this even if url proves to be a file on disk, as we will want to ignore it
-        //if it's an .exe file, so that we don't mistake it for and installed exectuable
-        if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, Act->URL);
-        if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
 
         if (stat(Act->URL, &Stat)==0)
         {

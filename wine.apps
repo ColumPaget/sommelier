@@ -12,7 +12,8 @@ DotNet48 platform=windows url=https://download.visualstudio.microsoft.com/downlo
 * category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
 Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/$(locale)/seamonkey-2.53.1.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
+#SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/$(locale)/seamonkey-2.53.1.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
+SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.9/win32/$(locale)/seamonkey-2.53.9.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
 PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' 
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe'
@@ -29,10 +30,11 @@ Telegreat platform=windows url=https://telegre.at/tsetup/tportable.1.9.8.7z winm
 Kotatogram platform=windows url=https://github.com/kotatogram/kotatogram-desktop/releases/download/k1.4.1/1.4.1-win32-portable.zip winmanager='N' exec='Kotatogram.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='58f229acdf5f5e69697040bf9b3f215a1db4497034af86e0626796c6656c7d27' 
 
 qTox platform=windows url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
+isotoxin platform=windows url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' 
 MirandaIM platform=windows url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
 Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
-LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758' 
-
+LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758'
+NHeko platform=windows url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe
 WeChat platform=windows url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
 WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
 
@@ -123,7 +125,7 @@ FBReader platform=windows url=https://fbreader.org/files/win32/FBReaderSetup-0.1
 IcecreamEbookReader platform=windows url=https://icecreamapps.com/download/ebook_reader_setup.exe sha256='c57e05e81bf922e5b77e2e5dd444420d3fa2e9e1152f1b1061245c71839256e8' 
 
 * category='Feed;RSS;Internet;Network'
-FeedRoller platform=windows url=https://sector-seven.com/assets/downloads/feedroller.zip comment='RSS/News Desktop Ticker' sha256='5ad7d0680de77e68b3c9a63b8b2bfba5789016b41757c0e24e0adde60b8a6968' 
+FeedRoller platform=windows url=https://sector-seven.com/assets/downloads/feedroller.zip comment='RSS/News Desktop Ticker' sha256='5ad7d0680de77e68b3c9a63b8b2bfba5789016b41757c0e24e0adde60b8a6968'
 QuiteRSS platform=windows url=https://quiterss.org/files/0.18.12/QuiteRSS-0.18.12-Setup.exe comment='RSS Feed Reader' sha256='cb23f619b351b54a34d3bb21a7a37265f21baa2af4e8b614374eee61055b97d3' 
 GPodder platform=windows url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8' 
 Juice platform=windows url=http://prdownloads.sourceforge.net/juicereceiver/Juice22Setup.exe?download comment='Podcast Watcher/Downloader' sha256='9235ca5cc0720ea09b61df61f546453a98afa10e86d7f02f1f70e234253ca31c' 
@@ -154,6 +156,7 @@ CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolpl
 XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc, etc=' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
+QMMP platform=windows url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.2-win32.exe sha256='3822419fa36e247426c76720911e38e879b04fefe3a83d362b6f0f566345eb58' exec=qmmp.exe
 
 * comment='AudioVideoEditor;Audio'
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
@@ -164,11 +167,12 @@ FLStudio platform=windows url=https://support.image-line.com/redirect/FLStudio_I
 MadTracker platform=windows url=http://www.tucows.com/download/windows/files/mt261_full.exe version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' comment='Another Modtracker' 
 Mixxx platform=windows url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' 
 Mobius platform=windows url=http://www.circularlabs.com/mobius-2-5.exe version='2.5' exec='mobius-2-5.exe' sha256='85236a14167ef3b1febf23444c350130cbe6a2f8c7c48330b74b54e12536a80d' comment='Sound looper application for music' 
-Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c' 
-Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
-QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467' 
+OpenShot platform=windows url=https://github.com/OpenShot/openshot-qt/releases/download/v2.6.1/OpenShot-v2.6.1-x86.exe sha256=bc9fe41b693d207e60b037f3a1148b9d81b307ebca7122b699447b6e923ab99e exec=openshot-qt.exe
+Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c'
+QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467'
 WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 
 WavePad platform=windows url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
+Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 
 VSDC platform=windows url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
 Movavi platform=windows url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe
@@ -188,6 +192,7 @@ AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/insta
 
 * category=Bittorrent;Network
 FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
+qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe
 
 * category='Utility'
 CDex platform=windows url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
@@ -200,7 +205,8 @@ ImageBurn platform=windows url=http://download.imgburn.com/SetupImgBurn_2.5.8.0.
 GetRight platform=windows url=http://download.getright.com/getright-download.exe sha256='77f08faacf8433dd9912e49c80d0e0668a0f451036a5a9ab4abf15220c17f2e5' comment='Download manager' 
 IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
 Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn='Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work' exec='sync-taskbar.exe' comment='Desktop app for Sync.com storage service' sha256='c6644943f4dc495e38af4a5187ad40e192bb2f0706a6ee9e2200c9fa48c07826' 
-KeyPass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
+KeePass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
+KeePassXC platform=windows url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi
 Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe
 
 * category='Chess;BoardGame;Game'

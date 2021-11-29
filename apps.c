@@ -397,6 +397,7 @@ void AppSetLocale(TAction *App, const char *LocaleStr)
 
     ptr=GetToken(LocaleStr, "_", &Lang, 0);
     Country=CopyStr(Country, ptr);
+    StrRTruncChar(Country, '.');
 
     SetVar(App->Vars, "lang", Lang);
     SetVar(App->Vars, "country", Country);
@@ -434,6 +435,7 @@ int AppLoadConfig(TAction *App)
     }
 
     ptr=getenv("LANGUAGE");
+    if (! StrValid(ptr)) ptr=getenv("LANG");
     if (! StrValid(ptr)) ptr="en_US";
     AppSetLocale(App, ptr);
 
