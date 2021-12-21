@@ -4,6 +4,7 @@
 
 #these games have worked for me in native linux
 
+
 140 platform=gog:linux exec="140Linux.x86" exec64="140Linux.x86_64"
 Spacechem platform=gog:linux exec="spacechem-launcher.sh"
 TIS100 platform=gog:linux 
@@ -27,9 +28,11 @@ FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64"
 GalaxySquad platform=gog:linux
 Hacknet platform=gog:linux 
 Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
 KingdomRush platform=gog:linux exec="run.sh" 
 Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 Monolith platform=gog:linux exec=runner
+MotherRussiaBleeds platform=gog:linux 
 PapersPlease platform=gog:linux exec=PapersPlease 
 RaceTheSun platform=gog:linux 
 Realpolitiks platform=gog:linux 
@@ -37,21 +40,26 @@ ShadowrunReturns platform=gog:linux exec="Shadowrun.sh"
 SlayTheSpire platform=gog:linux exec="SlayTheSpire"
 SpaceCom platform=gog:linux exec="SPACECOM.x86"
 Starcrawlers platform=gog:linux exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
-SuperHexagon platform=gog:linux exec="SuperHexagon"
-Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
+StarVikingsForever platform=gog:linux
+SuperHexagon platform=gog:linux exec="SuperHexagon" exec64="SuperHexagon"
 InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
 Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux 
 HandOfFate platform=gog:linux
-MotherRussiaBleeds platform=gog:linux 
 QuestForInfamy platform=gog:linux 
-MiniMetro platform=gog:linux64 exec="Mini Metro"
 NeoScavenger platform=gog:linux exec="NEOScavenger"
-IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
-Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 Tangledeep platform=gog:linux
-KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 WayOfTheSamurai platform=gog:linux
+
+
+
+#64-bit only linux gog games
+IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
+KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
+MiniMetro platform=gog:linux64 exec="Mini Metro"
+OpenTTD platform=gog:linux64 exec=openttd
+StardewValley platform=gog:linux64 exec=StardewValley
+Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
@@ -163,6 +171,7 @@ HeroesOfMightAndMagic3 platform=gog:windows
 Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HitmanCodename47 platform=gog:windows 
 Imperialism platform=gog:windows 
+InfestedPlanet platform=gog:windows
 KingdomRush platform=gog:windows 
 KingdomUnderFireHeroes platform=gog:windows 
 KingdomUnderFireCrusaders platform=gog:windows 
@@ -177,6 +186,7 @@ NeoScavenger platform=gog:windows
 Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 OffworldResourceBase platform=gog:windows exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 Overfall platform=gog:windows 
+OpenTTD platform=gog:windows exec=openttd.exe
 Parkan2 platform=gog:windows 
 Patrician3 platform=gog:windows exec=Patrician3.exe
 Perimeter platform=gog:windows 
@@ -203,6 +213,7 @@ SpaceEmpiresDeluxe4 platform=gog:windows exec="Se4.exe"
 SpaceRangersHD platform=gog:windows exec="Rangers.exe"
 SpaceRun platform=gog:windows exec="oSpaceGame.exe"
 Spellforce platform=gog:windows warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
+StardewValley platform=windows exec=StardewValley
 StarfleetCommand platform=gog:windows vdesk=y os-version=winxp exec="sfc.exe"
 StarsInShadow platform=gog:windows 
 StarWolves platform=gog:windows 
@@ -220,6 +231,7 @@ Thief2 platform=gog:windows
 Thief3 platform=gog:windows 
 ThisIsThePolice platform=gog:windows 
 Tangledeep platform=gog:windows
+TalismanOrigins platform=gog:windows
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows exec=uplink.exe vdesk=y

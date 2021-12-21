@@ -12,11 +12,12 @@ DotNet48 platform=windows url=https://download.visualstudio.microsoft.com/downlo
 * category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
 Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-#SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.1/win32/$(locale)/seamonkey-2.53.1.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
-SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.9/win32/$(locale)/seamonkey-2.53.9.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' 
+SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.10/win32/$(locale)/seamonkey-2.53.10.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' os-version=winxp warn='This program crashes under wine 6.x'
+SlimBrowser platform=windows url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
 PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' 
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
-FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe'
+FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
+Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
 
 * category='Email;Office;Network' locale='$(lang)-$(country)' 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
@@ -60,7 +61,7 @@ mIRC platform=windows url=https://www.mirc.com/get.php?mirror comment='Popular I
 * category='2DGraphics;Graphics'
 AndreaMosaic platform=windows url=http://andreaplanet.com/andreamosaic/download.php?version=fullweb version='3.36.0' exec='AndreaMosaic.exe' comment='Make Mosaics from images' sha256='bb5e0287db029b530f812e0c7faf64ebfe5329480bf84c535ce820825d1c6145' 
 AniTuner platform=windows url=https://torry.net/files/tools/graph/cursor/anisetup.exe exec='AniTuner.exe' sha256='d687a406d361947fd42de13fde32f4746a39a0bd5ec25b262a416f712097d812' comment='Create animated cursors' os-version='winxp' 
-ArtWeaver platform=windows url=http://www.artweaver.de/direct/Artweaver.exe requires='TimesNewRoman' exec='Artweaver.exe' sha256='62433cd3235faa87158825aa9151dc578833c65fb3859838ac1d85996cfd0e06' 
+ArtWeaver platform=windows url=https://www.artweaver.de/direct/Artweaver.exe requires='TimesNewRoman' exec='Artweaver.exe' sha256='62433cd3235faa87158825aa9151dc578833c65fb3859838ac1d85996cfd0e06' exec=Artweaver.exe
 BrickAtelier platform=windows url=http://koti.mbnet.fi/paulkp/brick/brickatelier085.zip version='0.85' exec='brickatelier.exe' type='graphics' rating='platinum' sha256='cccbda19ef115a8b5b5d28c21fa2ddccc48548a6218af3a56f86cf2efc03fbf5' 
 Gimp platform=windows url=https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.18-setup-2.exe exec='gimp-2.10.exe' sha256='bf6ce59587e63e1e8bab923e7dfdaa0f2c8bd3ac4d0ced602f3c063f9e32465c' 
 GraphicsGale platform=windows url=extracted:https\://graphicsgale.com/us/download.html:../files/setgaleus*.exe exec='Gale.exe' type='graphics' rating='platinum' sha256='7402ec89ff58c9635c7974bf792e8e4494c07a5e076ab4a3343c23d4bf841027' 
