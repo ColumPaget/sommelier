@@ -55,7 +55,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             STREAMWriteLine("\"Desktop\"=\"Default\"\r\n", S);
 
             STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops]\r\n", S);
-            Tempstr=MCopyStr(Tempstr, "\"Default\"=\"", Resolution, "\"\r\n", S);
+            Tempstr=MCopyStr(Tempstr, "\"Default\"=\"", Resolution, "\"\r\n", NULL);
             STREAMWriteLine(Tempstr, S);
             if (Config->Flags & FLAG_DEBUG) printf("Configure: Use virtual desktop, resolution %s\n", Resolution);
         }

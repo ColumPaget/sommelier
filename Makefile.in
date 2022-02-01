@@ -67,7 +67,7 @@ install:
 	mkdir -p $(HOME)/.sommelier/patches
 	cp sommelier $(HOME)/bin/
 	cp *.apps *.conf $(HOME)/.sommelier/
-	cp patches/*.so $(HOME)/.sommelier/patches
+	-cp patches/*.so $(HOME)/.sommelier/patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin

@@ -790,7 +790,7 @@ int OpenSSLSTREAMCheckForBytes(STREAM *S)
 }
 
 
-int OpenSSLSTREAMReadBytes(STREAM *S, const char *Data, int len)
+int OpenSSLSTREAMReadBytes(STREAM *S, char *Data, int len)
 {
     int bytes_read=0;
 #ifdef HAVE_LIBSSL
@@ -850,6 +850,8 @@ void OpenSSLClose(STREAM *S)
         ListDeleteNode(Node);
     }
 #endif
+
+    S->State &= ~SS_SSL;
 }
 
 
