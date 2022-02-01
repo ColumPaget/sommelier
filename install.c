@@ -338,8 +338,11 @@ void InstallCheckEnvironment(TAction *Act)
     case PLATFORM_LINUX32:
     case PLATFORM_LINUX64:
         NativeExecutableCheckLibs(GetVar(Act->Vars, "exec-path"), &Libs);
+	if (StrValid(Libs))
+	{
         Tempstr=FormatStr(Tempstr, "~yWARN: Executable requires missing libraries:~0 '%s'. Sommelier will attempt to find substitutes at runtime.\n", Libs);
         TerminalPutStr(Tempstr, NULL);
+	}
         break;
     }
 

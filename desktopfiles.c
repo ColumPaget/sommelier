@@ -123,6 +123,7 @@ int DesktopFileRead(TAction *Act)
         ptr=GetToken(ptr,"\\S",&Token, GETTOKEN_HONOR_QUOTES);
     }
 
+    DestroyString(Exec);
     DestroyString(Token);
     DestroyString(Tempstr);
 
