@@ -45,6 +45,7 @@ int NativeExecutableCheckLibs(const char *Path, char **Missing)
     char *Tempstr=NULL, *LibName=NULL;
     const char *ptr;
     STREAM *S;
+    int RetVal=TRUE; //false if missing libs
 
     if (Missing) *Missing=CopyStr(*Missing, "");
     Tempstr=MCopyStr(Tempstr, "cmd:ldd ", Path, NULL);
@@ -60,6 +61,7 @@ int NativeExecutableCheckLibs(const char *Path, char **Missing)
             if (strcmp(ptr, "not found")==0)
             {
                 if (Missing) *Missing=MCatStr(*Missing, LibName, " ", NULL);
+                RetVal=FALSE;
             }
             Tempstr=STREAMReadLine(Tempstr, S);
         }
@@ -68,4 +70,6 @@ int NativeExecutableCheckLibs(const char *Path, char **Missing)
 
     Destroy(LibName);
     Destroy(Tempstr);
+
+    return(RetVal);
 }

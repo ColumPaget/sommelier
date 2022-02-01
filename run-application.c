@@ -2,6 +2,8 @@
 #include "platforms.h"
 #include "config.h"
 #include "native.h"
+#include "apps.h"
+#include "desktopfiles.h"
 
 
 
@@ -81,7 +83,6 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
 
 void RunSandboxed(TAction *Act)
 {
-    const char *ptr;
     char *SpawnConfig=NULL, *Tempstr=NULL;
 
 
@@ -124,8 +125,8 @@ void RunSandboxed(TAction *Act)
 
 void RunNormal(TAction *Act)
 {
-    const char *ptr;
     char *SpawnConfig=NULL, *Tempstr=NULL;
+    const char *ptr;
 
 
     ptr=GetVar(Act->Vars, "working-dir");
@@ -149,7 +150,6 @@ void RunNormal(TAction *Act)
 void RunApplication(TAction *Act)
 {
     char *Tempstr=NULL;
-    const char *ptr;
 
     if (DesktopFileRead(Act))
     {

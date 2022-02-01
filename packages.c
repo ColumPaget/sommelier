@@ -89,7 +89,7 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
 {
     char *CmdLine=NULL, *Tempstr=NULL, *CmdConfig=NULL;
     const char *ptr;
-
+    int RetVal=FALSE;
 
     CmdConfig=CopyStr(CmdConfig, "noshell");
     switch (PackageType)
@@ -138,11 +138,14 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
         printf("unpacking: %s\n",GetBasename(Path));
         printf("unpacking: %s into %s\n",CmdLine, get_current_dir_name());
         RunProgramAndConsumeOutput(CmdLine, CmdConfig);
+        RetVal=TRUE;
     }
 
     Destroy(CmdLine);
     Destroy(CmdConfig);
     Destroy(Tempstr);
+
+    return(RetVal);
 }
 
 

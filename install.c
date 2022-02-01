@@ -338,11 +338,11 @@ void InstallCheckEnvironment(TAction *Act)
     case PLATFORM_LINUX32:
     case PLATFORM_LINUX64:
         NativeExecutableCheckLibs(GetVar(Act->Vars, "exec-path"), &Libs);
-	if (StrValid(Libs))
-	{
-        Tempstr=FormatStr(Tempstr, "~yWARN: Executable requires missing libraries:~0 '%s'. Sommelier will attempt to find substitutes at runtime.\n", Libs);
-        TerminalPutStr(Tempstr, NULL);
-	}
+        if (StrValid(Libs))
+        {
+            Tempstr=FormatStr(Tempstr, "~yWARN: Executable requires missing libraries:~0 '%s'. Sommelier will attempt to find substitutes at runtime.\n", Libs);
+            TerminalPutStr(Tempstr, NULL);
+        }
         break;
     }
 
@@ -371,7 +371,6 @@ static void FinalizeExeInstall(TAction *Act)
 {
     char *Path=NULL, *Tempstr=NULL, *WorkDir=NULL;
     const char *ptr;
-    char *wptr;
     int len;
 
     PostProcessInstall(Act);
@@ -531,7 +530,6 @@ static void InstallBundledItems(TAction *Parent)
 static void InstallSingleItem(TAction *Act)
 {
     char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
-    const char *p_URL, *ptr;
     int InstallResult=FALSE, exitval;
     pid_t pid;
 
@@ -584,7 +582,7 @@ static void InstallSingleItem(TAction *Act)
         }
 
         if (Act->Flags & FLAG_ABORT) _exit(1);
-				PostProcessInstall(Act);
+        PostProcessInstall(Act);
 
         _exit(0);
     }
@@ -596,7 +594,7 @@ static void InstallSingleItem(TAction *Act)
         Tempstr=MCopyStr(Tempstr, "~r~eInstall Aborted for ~0", Act->Name, "\n", NULL);
         TerminalPutStr(Tempstr, NULL);
     }
-		
+
 
     DestroyString(Tempstr);
     DestroyString(InstallPath);
@@ -691,13 +689,14 @@ static int InstallRequiredDependancies(TAction *Act)
         }
     }
     Destroy(Name);
+    return(TRUE);
 }
 
 
 
 void InstallApp(TAction *Act)
 {
-    const char *ptr, *p_Requires;
+    const char *ptr;
     char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
 
     if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
@@ -763,7 +762,6 @@ void InstallApp(TAction *Act)
 
 void InstallReconfigure(TAction *Act)
 {
-    const char *ptr, *p_Requires;
     char *Name=NULL, *Path=NULL, *Tempstr=NULL;
 
     Tempstr=MCopyStr(Tempstr, "\n~e##### Reconfigure ", Act->Name, " #########~0\n", NULL);

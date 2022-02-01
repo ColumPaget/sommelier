@@ -70,12 +70,6 @@ static void DownloadShowSSLStatus(STREAM *S)
 
 
 
-static int DownloadOpen(TAction *Act, const char *Path)
-{
-
-
-}
-
 
 static int DownloadCopyFile(TAction *Act)
 {
