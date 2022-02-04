@@ -28,7 +28,7 @@ static const char *ParseHostDetailsExtractAuth(const char *Data, char **User, ch
 
 const char *ParseHostDetails(const char *Data, char **Host,char **Port,char **User, char **Password)
 {
-    char *Token=NULL, *wptr;
+    char *Token=NULL;
     const char *ptr, *tptr;
 
     if (Port) *Port=CopyStr(*Port, "");

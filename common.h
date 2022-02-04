@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "8.10"
+#define VERSION "8.11"
 
 
 #define INSTALL_RUN 0
@@ -19,6 +19,7 @@
 #define ACT_UNINSTALL 2
 #define ACT_RUN 3
 #define ACT_LIST 5
+#define ACT_LIST_PLATFORMS 6
 #define ACT_SET 8
 #define ACT_REBUILD 13
 #define ACT_REBUILD_HASHES 14

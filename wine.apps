@@ -80,6 +80,7 @@ FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4A
 Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
 Inkscape platform=windows url=https://inkscape.org/release/1.1/windows/32-bit/
 Paint.net platform=windows url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40
+CinePaint platform=windows url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -99,6 +100,8 @@ PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
 DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe
 JPEGView platform=windows url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download
+QView platform=windows url=https://github.com/jurplel/qView/releases/download/5.0/qView-5.0-win32.zip exec=qView.exe
+
 
 * category='FileManager;FileTools;System'
 MultiCommander platform=windows url=http://multicommander.com/files/updates/MultiCommander_win32_(9.6.1.2582).exe sha256='8534750838a8094a9ed89b86643a7777db74ac688943b61817cd4cc64530452d' exec='MultiCommander.exe' 

@@ -54,6 +54,8 @@ char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);
 char *PlatformFindEmulator(char *RetStr, char *Name);
 char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);
 char *PlatformSelect(char *RetStr, TAction *Act);
+void PlatformsList();
+
 
 void PlatformApplySettings(TAction *Act);
 void PlatformsInit(const char *Path);

@@ -103,6 +103,7 @@ static TPlatform *PlatformsParse(const char *Line)
     if (StrValid(Line) && (Line[0] != '#'))
     {
         Plt=(TPlatform *) calloc(1, sizeof(TPlatform));
+	Plt->Emulators=CopyStr(Plt->Emulators, "");
         ptr=GetToken(Line, "\\S", &Aliases, GETTOKEN_QUOTES);
         ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
         while (ptr)
@@ -161,6 +162,31 @@ TPlatform *PlatformFind(const char *Name)
 
     return(NULL);
 }
+
+
+void PlatformsList()
+{
+    ListNode *Curr;
+    TPlatform *Plat;
+    char *EmuList=NULL, *Name=NULL;
+    const char *ptr;
+	
+
+    Curr=ListGetNext(Platforms);
+    while (Curr)
+    {
+	Plat=(TPlatform *) Curr->Item;
+        ptr=GetToken(Curr->Tag, ",", &Name, 0);
+	EmuList=PlatformFindEmulatorNames(EmuList, Name);
+	printf("%-15s  aliases: %-20s   emulators: %s\n", Name, ptr, EmuList);
+        Curr=ListGetNext(Curr);
+    }
+
+    Destroy(EmuList);
+    Destroy(Name);
+    return(NULL);
+}
+
 
 
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info)

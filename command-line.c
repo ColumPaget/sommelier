@@ -5,6 +5,7 @@
 static void PrintUsage()
 {
     printf("\n");
+    printf("sommelier platforms                                print list of supported platforms\n");
     printf("sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform\n");
     printf("sommelier install <name> [<name>] [options]        install an application by name\n");
     printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
@@ -109,22 +110,22 @@ static TAction *CommandLineParseOptions(CMDLINE *CmdLine)
 }
 
 
-TAction *ParseSimpleAction(ListNode *Acts, int Type, const char *Arg, CMDLINE *CmdLine)
+TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
 {
     TAction *Act=NULL;
     const char *arg;
 
-    Act=ActionCreate(Type, Arg);
 
-    if (Act)
+    arg=CommandLineNext(CmdLine);
+    while (arg)
     {
-        ListAddItem(Acts, Act);
-        arg=CommandLineNext(CmdLine);
-        while (arg)
-        {
-            ParseCommandLineOption(Act, CmdLine);
+	    if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
+	    else 
+	    {
+		Act=ActionCreate(Type, arg);
+		ListAddItem(Acts, Act);
+	    }
             arg=CommandLineNext(CmdLine);
-        }
     }
     return(Act);
 }
@@ -195,10 +196,11 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         }
         else
         {
-            if (strcmp(arg, "run")==0) ParseSimpleAction(Acts, ACT_RUN, CommandLineNext(CmdLine), CmdLine);
-            else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, "", CmdLine);
-            else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, "", CmdLine);
-            else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, "", CmdLine);
+            if (strcmp(arg, "run")==0) ParseSimpleAction(Acts, ACT_RUN, CmdLine);
+            else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, CmdLine);
+            else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
+            else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
+            else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
             else if (strcmp(arg, "version")==0) printf("sommelier version %s\n", VERSION);
             else if (strcmp(arg, "-version")==0) printf("sommelier version %s\n", VERSION);
             else if (strcmp(arg, "--version")==0) printf("sommelier version %s\n", VERSION);

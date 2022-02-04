@@ -176,6 +176,10 @@ int main(int argc, char *argv[])
                 AppsOutputList(Act);
                 break;
 
+	    case ACT_LIST_PLATFORMS:
+		PlatformsList();
+		break;
+
             case ACT_DOWNLOAD:
                 if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
                 else Download(Act);
