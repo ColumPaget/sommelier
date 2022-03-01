@@ -312,8 +312,8 @@ char *PlatformSelect(char *RetStr, TAction *Act)
 
     RetStr=CopyStr(RetStr, "");
     p_filename=GetBasename(Act->URL);
-    if (! StrValid(p_filename)) return(RetStr);
-
+    if (StrValid(p_filename)) 
+    {
     Curr=ListGetNext(Platforms);
     while (Curr)
     {
@@ -333,7 +333,9 @@ char *PlatformSelect(char *RetStr, TAction *Act)
 
         Curr=ListGetNext(Curr);
     }
+    }
 
+    if (! StrValid(RetStr)) RetStr=CopyStr(RetStr, PlatformDefault());
     return(RetStr);
 }
 

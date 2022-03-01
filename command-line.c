@@ -53,6 +53,14 @@ static void PrintUsage()
 }
 
 
+void PrintVersion()
+{
+printf("sommelier version %s\n", VERSION);
+printf("compiled: %s %s\n", __DATE__, __TIME__);
+printf("default platform: %s\n", PlatformDefault()); 
+}
+
+
 static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 {
     const char *p_Opt;
@@ -201,9 +209,9 @@ ListNode *ParseCommandLine(int argc, char *argv[])
             else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
             else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
             else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
-            else if (strcmp(arg, "version")==0) printf("sommelier version %s\n", VERSION);
-            else if (strcmp(arg, "-version")==0) printf("sommelier version %s\n", VERSION);
-            else if (strcmp(arg, "--version")==0) printf("sommelier version %s\n", VERSION);
+            else if (strcmp(arg, "version")==0) PrintVersion();
+            else if (strcmp(arg, "-version")==0) PrintVersion();
+            else if (strcmp(arg, "--version")==0) PrintVersion();
             else PrintUsage();
         }
     }
