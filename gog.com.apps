@@ -54,6 +54,7 @@ WayOfTheSamurai platform=gog:linux
 
 
 #64-bit only linux gog games
+DiceyDungeons platform=gog:linux64
 IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 MiniMetro platform=gog:linux64 exec="Mini Metro"
@@ -105,6 +106,7 @@ SpaceRogue platform=gog:windos
 Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
 Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
 SubWar2050 platform=gog:windos exec="subwar.bat"
+ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 Timelapse platform=gog:windos 
 XComUFODefense platform=gog:windos 
@@ -124,6 +126,7 @@ Bladerunner
 AgarestGenerationsOfWar platform=gog:windows
 AgeOfWonders platform=gog:windows exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
 ABCMurders platform=gog:windows 
+AncientEnemy platform=gog:windows 
 AnomalyWarzoneEarth platform=gog:windows 
 AnomalyDefenders platform=gog:windows 
 ArxFatalis platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
@@ -135,12 +138,15 @@ Caravan platform=gog:windows
 Carcassonne platform=gog:windows
 ChaosReborn platform=gog:windows 
 ChaosOverlords platform=gog:windows 
+CombatChess platform=gog:windows
+CovidTheOutbreak platform=gog:windows
 CrusaderKings platform=gog:windows 
 DarkestDungeon platform=gog:windows 
 DarkQuest platform=gog:windows 
 DarkQuest2 platform=gog:windows 
 Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 Defcon platform=gog:windows 
+DiceyDungeons platform=gog:windows
 DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
 DivineDivinity platform=gog:windows exec=div.exe
 Diluvion platform=gog:windows 
@@ -217,21 +223,22 @@ StardewValley platform=windows exec=StardewValley
 StarfleetCommand platform=gog:windows vdesk=y os-version=winxp exec="sfc.exe"
 StarsInShadow platform=gog:windows 
 StarWolves platform=gog:windows 
+StarVikingsForever platform=gog:windows
 StealthBastard platform=gog:windows exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha platform=gog:windows 
 SwordOfTheStars platform=gog:windows exec="Sword of the Stars.exe" 
 #rename="$(drive_c)/GOG\ Games/Sword\ of \ the\ Stars/Sword\ of\ the\ Stars.exe $(drive_c)/GOG\ Games/SwordoftheStars.exe"
 SystemShock2 platform=gog:windows os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Tangledeep platform=gog:windows
+TalismanOrigins platform=gog:windows
 TachyonFringe platform=gog:windows exec=Tachyon.exe
-Tempest platform=gog:windows 
+Tempest platform=gog:windows
 TheGuild platform=gog:windows 
 TheSwindle platform=gog:windows
 Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Thief2 platform=gog:windows 
 Thief3 platform=gog:windows 
 ThisIsThePolice platform=gog:windows 
-Tangledeep platform=gog:windows
-TalismanOrigins platform=gog:windows
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows exec=uplink.exe vdesk=y
