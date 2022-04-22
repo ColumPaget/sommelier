@@ -49,6 +49,7 @@ HandOfFate platform=gog:linux
 QuestForInfamy platform=gog:linux 
 NeoScavenger platform=gog:linux exec="NEOScavenger"
 Tangledeep platform=gog:linux
+Transistor platform=gog:linux exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
 WayOfTheSamurai platform=gog:linux
 
 
@@ -59,6 +60,7 @@ IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 MiniMetro platform=gog:linux64 exec="Mini Metro"
 OpenTTD platform=gog:linux64 exec=openttd
+IntoTheBreach platform=gog:linux64 exec=Breach
 StardewValley platform=gog:linux64 exec=StardewValley
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 
@@ -91,6 +93,7 @@ MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
 MegaRace platform=gog:windos exec=MEGARACE.exe  
 MortalKombat platform=gog:windos exec="MK1.EXE"
+TombRaider platform=gog:windos exec=tomb.exe
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 MortalKombat2 platform=gog:windos exec="MK2.EXE"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
@@ -123,6 +126,7 @@ Bladerunner
 * platform=gog:windows
 # windows via wine
 99LevelsToHell platform=gog:windows 
+Ascendant platform=gog:windows
 AgarestGenerationsOfWar platform=gog:windows
 AgeOfWonders platform=gog:windows exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
 ABCMurders platform=gog:windows 
@@ -147,9 +151,10 @@ DarkQuest2 platform=gog:windows
 Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 Defcon platform=gog:windows 
 DiceyDungeons platform=gog:windows
+DistantWorlds platform=gog:windows
 DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
-DivineDivinity platform=gog:windows exec=div.exe
 Diluvion platform=gog:windows 
+DivineDivinity platform=gog:windows exec=div.exe
 Downwell platform=gog:windows
 DraculaTheResurrection platform=gog:windows 
 DungeonKeeper2 platform=gog:windows vdesk=y os-version=winxp exec=DKII.EXE 
@@ -178,6 +183,7 @@ Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a 
 HitmanCodename47 platform=gog:windows 
 Imperialism platform=gog:windows 
 InfestedPlanet platform=gog:windows
+IntoTheBreach platform=gog:windows
 KingdomRush platform=gog:windows 
 KingdomUnderFireHeroes platform=gog:windows 
 KingdomUnderFireCrusaders platform=gog:windows 
@@ -221,6 +227,7 @@ SpaceRun platform=gog:windows exec="oSpaceGame.exe"
 Spellforce platform=gog:windows warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
 StardewValley platform=windows exec=StardewValley
 StarfleetCommand platform=gog:windows vdesk=y os-version=winxp exec="sfc.exe"
+StarfleetAcademy platform=gog:windows vdesk=y os-version=winxp exec="sfa.exe"
 StarsInShadow platform=gog:windows 
 StarWolves platform=gog:windows 
 StarVikingsForever platform=gog:windows
@@ -239,6 +246,11 @@ Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in 
 Thief2 platform=gog:windows 
 Thief3 platform=gog:windows 
 ThisIsThePolice platform=gog:windows 
+TombRaider2 platform=gog:windows
+TombRaider3 platform=gog:windows
+TombRaider4 platform=gog:windows
+TombRaider5 platform=gog:windows
+TombRaider6 platform=gog:windows
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows exec=uplink.exe vdesk=y
@@ -249,6 +261,7 @@ Victoria platform=gog:windows
 VtmBloodlines platform=gog:windows exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 VtmRedemption platform=gog:windows exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
+Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows
 

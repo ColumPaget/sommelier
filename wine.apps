@@ -81,6 +81,7 @@ Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setu
 Inkscape platform=windows url=https://inkscape.org/release/1.1/windows/32-bit/
 Paint.net platform=windows url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40
 CinePaint platform=windows url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe
+PaintToolSAI platform=windows url=https://www.systemax.jp/bin/sai2-20210706-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -212,6 +213,7 @@ Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-inst
 KeePass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
 KeePassXC platform=windows url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi
 Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe
+BeerSmith platform=windows url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode"
 
 * category='Chess;BoardGame;Game'
 ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
