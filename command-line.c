@@ -1,6 +1,7 @@
 #include "command-line.h"
 #include "apps.h"
 #include "config.h"
+#include <stdlib.h>
 
 static void PrintUsage()
 {
@@ -88,7 +89,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
     else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
     else if (strcmp(p_Opt, "-net")==0) Act->Flags &= ~FLAG_NET;
-    else if (strcmp(p_Opt, "-url")==0) Act->URL=CopyStr(Act->URL, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-url")==0) Act->URL=realpath(CommandLineNext(CmdLine), NULL);
     else if (strcmp(p_Opt, "-install-name")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));

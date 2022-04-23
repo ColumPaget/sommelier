@@ -72,6 +72,7 @@ AloneInTheDark platform=gog:windos exec=INDARK.EXE
 AnvilOfDawn platform=gog:windos exec="ANVIL.EXE"
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
+BattleIsle platform=gog:windos exec="BI.EXE"
 Castles  platform=gog:lindos exec="CASTLES.BAT"
 Castles  platform=gog:windos exec="CASTLES.BAT"
 ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=Chess;BoardGame;Game
@@ -93,7 +94,6 @@ MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
 MegaRace platform=gog:windos exec=MEGARACE.exe  
 MortalKombat platform=gog:windos exec="MK1.EXE"
-TombRaider platform=gog:windos exec=tomb.exe
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 MortalKombat2 platform=gog:windos exec="MK2.EXE"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
@@ -246,11 +246,6 @@ Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in 
 Thief2 platform=gog:windows 
 Thief3 platform=gog:windows 
 ThisIsThePolice platform=gog:windows 
-TombRaider2 platform=gog:windows
-TombRaider3 platform=gog:windows
-TombRaider4 platform=gog:windows
-TombRaider5 platform=gog:windows
-TombRaider6 platform=gog:windows
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
 Uplink platform=gog:windows exec=uplink.exe vdesk=y
@@ -264,4 +259,5 @@ W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
 Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows
+X:BeyondTheFrontier platform=gog:windows
 
