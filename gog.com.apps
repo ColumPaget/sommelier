@@ -1,5 +1,4 @@
-*category='Game'
-
+*category='Game' 
 #Things available through gog.com
 
 #these games have worked for me in native linux
@@ -209,6 +208,7 @@ PortRoyale2 platform=gog:windows exec=PR2.exe
 Praetorians platform=gog:windows 
 RaceTheSun platform=gog:windows 
 RageOfMages platform=gog:windows exec=rom.exe
+RebelGalaxy platform=gog:windows
 Reigns platform=gog:windows 
 Revenant platform=gog:windows exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360 platform=gog:windows 
@@ -260,4 +260,3 @@ Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows
 X:BeyondTheFrontier platform=gog:windows
-
