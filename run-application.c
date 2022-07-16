@@ -135,7 +135,7 @@ void RunNormal(TAction *Act)
         if (chdir(ptr) !=0) perror("ERROR switching to directory: ");
     }
 
-    printf("Running '%s' (%s)\n", Act->Name, Act->Exec);
+    printf("Running '%s' (%s) in dir %s\n", Act->Name, Act->Exec, ptr);
     Tempstr=GenerateApplicationCommandLine(Tempstr, Act);
 
     if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");

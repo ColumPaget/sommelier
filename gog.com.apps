@@ -10,6 +10,7 @@ TIS100 platform=gog:linux
 AnomalyWarzoneEarth platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
 Anomaly2 platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=Anomaly2
 AnomalyKorea platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=AnomalyKorea
+AIWarFleetCommand platform=gog:linux exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
 Battlevoid platform=gog:linux exec=harbinger
 CelestianTales platform=gog:linux 
 ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
@@ -24,9 +25,11 @@ DoorKickers platform=gog:linux
 Duskers platform=gog:linux exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
 DungeonSouls platform=gog:linux exec=runner 
 FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" 
+FistPuncher platform=gog:linux  warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
 GalaxySquad platform=gog:linux
 Hacknet platform=gog:linux 
 Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+Huniepop platform=gog:linux warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
 Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
 KingdomRush platform=gog:linux exec="run.sh" 
 Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
@@ -50,6 +53,7 @@ NeoScavenger platform=gog:linux exec="NEOScavenger"
 Tangledeep platform=gog:linux
 Transistor platform=gog:linux exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
 WayOfTheSamurai platform=gog:linux
+
 
 
 
@@ -142,6 +146,7 @@ Carcassonne platform=gog:windows
 ChaosReborn platform=gog:windows 
 ChaosOverlords platform=gog:windows 
 CombatChess platform=gog:windows
+CorsairsGold platform=gog:windows exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
 CovidTheOutbreak platform=gog:windows
 CrusaderKings platform=gog:windows 
 DarkestDungeon platform=gog:windows 
@@ -180,6 +185,7 @@ HaegemoniaSolonHeritage platform=gog:windows
 HeroesOfMightAndMagic3 platform=gog:windows 
 Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HitmanCodename47 platform=gog:windows 
+Huniepop platform=gog:windows
 Imperialism platform=gog:windows 
 InfestedPlanet platform=gog:windows
 IntoTheBreach platform=gog:windows
@@ -239,6 +245,7 @@ SystemShock2 platform=gog:windows os-version=winxp vdesk=y warn="This game insta
 Tangledeep platform=gog:windows
 TalismanOrigins platform=gog:windows
 TachyonFringe platform=gog:windows exec=Tachyon.exe
+TelltaleTexasHoldem platform=gog:windows DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem"
 Tempest platform=gog:windows
 TheGuild platform=gog:windows 
 TheSwindle platform=gog:windows
@@ -260,3 +267,4 @@ Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows
 X:BeyondTheFrontier platform=gog:windows
+
