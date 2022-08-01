@@ -18,6 +18,7 @@ PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bi
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
+Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="-no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 
 * category='Email;Office;Network' locale='$(lang)-$(country)' 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
