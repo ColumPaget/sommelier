@@ -373,6 +373,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
                 App->Flags |= AppConfig->Flags;
                 App->InstallType |= AppConfig->InstallType;
                 App->Platform=CopyStr(App->Platform, AppConfig->Platform);
+                App->DownName=CopyStr(App->DownName, AppConfig->DownName);
                 App->PlatformID=AppConfig->PlatformID;
                 if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
                 CopyVars(App->Vars, AppConfig->Vars);

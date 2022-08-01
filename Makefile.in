@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o packages.o native.o install.o uninstall.o run-application.o
+OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
 LIBS=@STATIC_LIBS@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -36,6 +36,9 @@ download.o: download.h download.c
 
 find_files.o: find_files.h find_files.c
 	$(CC) $(CFLAGS) -c find_files.c
+
+find_program.o: find_program.h find_program.c
+	$(CC) $(CFLAGS) -c find_program.c
 
 packages.o: packages.h packages.c
 	$(CC) $(CFLAGS) -c packages.c

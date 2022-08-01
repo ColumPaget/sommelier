@@ -82,7 +82,6 @@ static int DownloadCopyFile(TAction *Act)
     Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
 
-
     //must do this even if url proves to be a file on disk, as we will want to ignore it
     //if it's an .exe file, so that we don't mistake it for and installed exectuable
     if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, URL);

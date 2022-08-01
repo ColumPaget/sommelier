@@ -7,16 +7,18 @@ Ayam platform=linux64 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/
 * category='Graphics;2DGraphics'
 LazPaint platform=linux32 url=extracted:https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' comment='Paint Program'  
 LazPaint platform=linux64 url=https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux64_no_install.tar.gz exec='lazpaint' download-type='tar.gz' comment='Paint Program' 
+TikZit platform=linux64 url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-linux.tar.gz exec=tikzit
 
 * category='ImageViewer;Graphics;Viewer'
 XnViewMP platform=linux32 url=https://download.xnview.com/XnViewMP-linux.tgz download-type=tar.gz exec=xnview.sh
 XnViewMP platform=linux64 url=https://download.xnview.com/XnViewMP-linux-x64.tgz download-type=tar.gz exec=xnview.sh
 
 
+* category='Viewer;Office'
 Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='6ccdaff43d88e536582b7cdf3ba15d17e87920a99f3116df7489ffbb662390dc' 
 Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
 
-
+* category='Office' locale='$(lang)-$(country)'
 FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz
 FreeOffice platform=linux64 url=https://www.softmaker.net/down/softmaker-freeoffice-982-amd64.tgz
 
@@ -37,19 +39,9 @@ RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.
 TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='64415624118832054f6a4eea4026815741255c7d6b4a64926f683da2cb02c303' 
 TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='c0f7417794dfa463a2aec9b14e50c8de0eadc1b393813ed6fd0389f143896bc3' 
 
-
-TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
-TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
-
-DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Qt5 2-pane filemanager' name='DoubleCommanderQt5' sha256='c250011f7bb8c0c0de044f83bf968d0ccc213e5b28245db204d995398a94b376' 
-DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
-
 *category='Compression;Utilities'
 7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
-
-Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
-Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='7ed3b1610f80118649a93bddb017c954c9aa083c787cee9564cbb0cdf8f2c200' 
 
 * category=System;Terminals
 KittyTerminal platform=linux32 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-i686.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
@@ -70,9 +62,6 @@ Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball do
 Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='e20950c7b6b07d6d4b46725238659e8ca4b504fb096c3b9cac4f207e4df3987a' 
 Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='d96596a54b67a9838571e5513144b200a575c067edfe0185a202b8c7097399d9' 
 
-Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='2233c2fd7cbb01997fabb094c69ec4ef11f70fa4ee532d857e376c7e79e2fa55' 
-Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
-
 * category='FileTransfer;Network'
 FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
@@ -80,6 +69,15 @@ DropBox platform=linux32 url=https://www.dropbox.com/download?plat=lnx.x86 downl
 DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 download-type=tar.gz download-file=download movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
 RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
+
+* category='Conferencing;VOIP;Telephony;Chat;Internet;Network'
+Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
+Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='7ed3b1610f80118649a93bddb017c954c9aa083c787cee9564cbb0cdf8f2c200' 
+
+
+*category=Electronics
+Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='2233c2fd7cbb01997fabb094c69ec4ef11f70fa4ee532d857e376c7e79e2fa55' 
+Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
 
 
 * category=Development
@@ -93,4 +91,16 @@ Golang platform=linux64 url=https://golang.org/dl/go1.16.4.linux-amd64.tar.gz do
 GHC platform=linux32 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-i386-deb9-linux.tar.xz download-type=tar.xz comment="Glasgow Haskell Compiler"
 GHC platform=linux64 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-x86_64-deb10-linux.tar.xz download-type=tar.xz comment="Glasgow Haskell Compiler"
 
+* category=FileManager;FileTools;System
+DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Qt5 2-pane filemanager' name='DoubleCommanderQt5' sha256='c250011f7bb8c0c0de044f83bf968d0ccc213e5b28245db204d995398a94b376' 
+DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
+
+* category='Roguelike;Roleplaying;Game'
+TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
+TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
+
+
+* category='Notes;Office;Utility'
+SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz
+SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-x64.tar.gz exec=simplenote download-type=tar.gz
 

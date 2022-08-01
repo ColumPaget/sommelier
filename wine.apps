@@ -31,11 +31,11 @@ Telegreat platform=windows url=https://telegre.at/tsetup/tportable.1.9.8.7z winm
 Kotatogram platform=windows url=https://github.com/kotatogram/kotatogram-desktop/releases/download/k1.4.1/1.4.1-win32-portable.zip winmanager='N' exec='Kotatogram.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='58f229acdf5f5e69697040bf9b3f215a1db4497034af86e0626796c6656c7d27' 
 
 qTox platform=windows url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
-isotoxin platform=windows url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' 
+isotoxin platform=windows url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' sha256=135945ee38c9e92ea0a6130570a27562d856d479c7d160edf432e447a61547ed
 MirandaIM platform=windows url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
 Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
 LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758'
-NHeko platform=windows url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe
+NHeko platform=windows url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe sha256=1b62c4840711eefa4f07664507367fd324419209d4be8922e069d47321cc9712
 WeChat platform=windows url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
 WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
 
@@ -48,7 +48,7 @@ WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/i
 * category='VOIP;Telephony;Chat;Internet;Network'
 MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname='MicroSIP-3.19.10.exe' winmanager='N' comment='MicroSIP SIP communicator' sha256='d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5' 
 Teamspeak platform=windows url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
-Ekiga platform=windows url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe
+Ekiga platform=windows url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe sha256=334044d5b5f4e37631adcb0dca2bf13b3bede4e60bb0f0ffaea318ef73b34e6b
 Webex platform=windows url=https://binaries.webex.com/WebexTeamsDesktop-Windows-Gold/Webex_x86.msi 
 Zoom platform=windows url=https://cdn.zoom.us/prod/5.7.4.804/ZoomInstaller.exe download-type=7za inner-package=7za:Zoom.msi exec=Zoom.exe requires=MSFTEDIT
 
@@ -78,10 +78,10 @@ MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http:
 Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
 FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
 Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
-Inkscape platform=windows url=https://inkscape.org/release/1.1/windows/32-bit/
-Paint.net platform=windows url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40
-CinePaint platform=windows url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe
-PaintToolSAI platform=windows url=https://www.systemax.jp/bin/sai2-20210706-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
+Paint.net platform=windows url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40 sha256=fbe4a86a352154397405ff4e04a3f649a58f8e0c25cab26c6c4fbdfa2ec877dd
+CinePaint platform=windows url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe sha256=617946e6e683b1474de0d1fe801a335c527884b09cf5224171f7408bd3689b2a
+PaintToolSAI platform=windows url=https://www.systemax.jp/bin/sai2-20220527-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
+TikZit platform=windows url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-win.zip exec=tikzit.exe warn="program takes a while to initialize and start responding after displaying initial screen" sha256=e97bc93434b719d891e1c24bafb025d9176b94f24b32d675bc1c73fe4aaf0375
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -90,18 +90,18 @@ K-3d platform=windows url=https://downloads.sourceforge.net/project/k3d/K-3D%20W
 OpenFX platform=windows url=http://openfx.org/download/install.msi exec='openfx.exe' sha256='446c7c63a3e940aaa1057e1a417995b4e28554a1b5ac938392782d5c8152d5cb' 
 Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' 
 
+
 * category='ImageViewer;Viewer;Graphics'
 IfranView platform=windows url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
 Faststone platform=windows url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
 XnView platform=windows exec=XnView.exe url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
 XnViewMP platform=windows exec=XnView.exe url=https://download.xnview.com/XnViewMP-win.zip 
-WildBitViewer platform=windows url=https://mhieta.mbnet.fi/download/dev/6_6/Viewerportable.zip exec=Viewer.exe
 VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
 PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
-DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe
-JPEGView platform=windows url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download
-QView platform=windows url=https://github.com/jurplel/qView/releases/download/5.0/qView-5.0-win32.zip exec=qView.exe
+DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe sha256=40f3075f3aa15e246e734f22a09159534962c9fb5d637b61992b2bedafd5a709
+JPEGView platform=windows url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download sha256=f0d6c62bc7c5aa49a7a8f45294d8199355d7c1a940df5a322dc163effad22591
+QView platform=windows url=https://github.com/jurplel/qView/releases/download/5.0/qView-5.0-win32.zip exec=qView.exe sha256=ae01ed2c7c9df553f737f148f3acda24ad01362595bfc9964474b382205f4e79
 
 
 * category='FileManager;FileTools;System'
@@ -139,7 +139,7 @@ Juice platform=windows url=http://prdownloads.sourceforge.net/juicereceiver/Juic
 ICProg platform=windows url=http://www.ic-prog.com/icprog106C.zip sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
 PicPick platform=windows url=http://ngwin.com/download/latest/picpick_inst.exe exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk='y' 
 ElectronicsAssistant platform=windows url=https://www.electronics2000.co.uk/assist/assist.exe sha256='c69620e62647f2868ae2e6ade93d93a320fd1307074d61e49fc928bab33c8d2d' 
-LTSpice platform=windows url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe 
+LTSpice platform=windows url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe  sha256=8d71504400002da9597c649f544966a0ea7952c7004d26e6fe71cda863383f2f
 
 * category='Astronomy'
 RegiStax platform=windows url=http://www.astronomie.be/registax/setupregistax6.exe
@@ -197,7 +197,7 @@ AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/insta
 
 * category=Bittorrent;Network
 FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
-qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe
+qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe sha256=01487a0e2594a5065e4d780eb012dcd0dafadc218d1b6aba69528bd6ede6afb5
 
 * category='Utility'
 CDex platform=windows url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
@@ -211,9 +211,11 @@ GetRight platform=windows url=http://download.getright.com/getright-download.exe
 IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
 Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn='Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work' exec='sync-taskbar.exe' comment='Desktop app for Sync.com storage service' sha256='c6644943f4dc495e38af4a5187ad40e192bb2f0706a6ee9e2200c9fa48c07826' 
 KeePass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
-KeePassXC platform=windows url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi
-Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe
-BeerSmith platform=windows url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode"
+KeePassXC platform=windows url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi sha256=4b48f83dd63d9388c8d982037a671832e72767dfc296ff5b91d2e76049095fed
+Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe 
+BeerSmith platform=windows url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode" sha256=83f0fcf2e7e4d07ada6700462915c2827ca5ec7b797c7fb6542a0c85eba72f53
+SimpleNote platform=windows url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-win-2.21.0.exe exec=Simplenote.exe sha256=a3f26f4d0d196b152da5cfcafb72ac2f3e82e5041009a20f6958c43f9f478cd8
+EssentialPIM platform=windows url=https://www.essentialpim.com/download/EssentialPIM.exe dlname=EssentialPIMInstaller.exe exec=EssentialPIM.exe sha256=a780d775936fe73c19af8d39bc5dda5e2ebc15cc54f3f0f7243d7af1a97f8e1e
 
 * category='Chess;BoardGame;Game'
 ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
