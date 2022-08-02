@@ -30,12 +30,18 @@ GalaxySquad platform=gog:linux
 Hacknet platform=gog:linux 
 Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 Huniepop platform=gog:linux warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
+InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
 Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
 KingdomRush platform=gog:linux exec="run.sh" 
 Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 Monolith platform=gog:linux exec=runner
 MotherRussiaBleeds platform=gog:linux 
 PapersPlease platform=gog:linux exec=PapersPlease 
+Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
+HardWest platform=gog:linux 
+HandOfFate platform=gog:linux
+QuestForInfamy platform=gog:linux 
+NeoScavenger platform=gog:linux exec="NEOScavenger"
 RaceTheSun platform=gog:linux 
 Realpolitiks platform=gog:linux 
 ShadowrunReturns platform=gog:linux exec="Shadowrun.sh"
@@ -44,16 +50,10 @@ SpaceCom platform=gog:linux exec="SPACECOM.x86"
 Starcrawlers platform=gog:linux exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
 StarVikingsForever platform=gog:linux
 SuperHexagon platform=gog:linux exec="SuperHexagon" exec64="SuperHexagon"
-InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
-Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
-HardWest platform=gog:linux 
-HandOfFate platform=gog:linux
-QuestForInfamy platform=gog:linux 
-NeoScavenger platform=gog:linux exec="NEOScavenger"
 Tangledeep platform=gog:linux
+TheWestportIndependent platform=gog:linux exec=the_westport_independent
 Transistor platform=gog:linux exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
 WayOfTheSamurai platform=gog:linux
-
 
 
 
@@ -63,6 +63,7 @@ IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 MiniMetro platform=gog:linux64 exec="Mini Metro"
 OpenTTD platform=gog:linux64 exec=openttd
+PrisonArchitect platform=gog:linux64 exec="PrisonArchitect.sh"
 IntoTheBreach platform=gog:linux64 exec=Breach
 StardewValley platform=gog:linux64 exec=StardewValley
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
@@ -212,6 +213,7 @@ PopulousTheBeginning platform=gog:windows exec="popTB.exe" vdesk=y warn="This ga
 PortRoyale platform=gog:windows exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2 platform=gog:windows exec=PR2.exe
 Praetorians platform=gog:windows 
+PrisonArchitect platform=gog:windows exec="Prison Architect.exe"
 RaceTheSun platform=gog:windows 
 RageOfMages platform=gog:windows exec=rom.exe
 RebelGalaxy platform=gog:windows
@@ -219,6 +221,7 @@ Reigns platform=gog:windows
 Revenant platform=gog:windows exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360 platform=gog:windows 
 RiseOfTheMiddleKingdom platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+RollerCoasterTychoon platform=gog:windows
 ShadowrunReturns platform=gog:windows 
 ShadowWatch platform=gog:windows 
 SherlockHolmesVsJackTheRipper platform=gog:windows 
@@ -255,6 +258,8 @@ Thief3 platform=gog:windows
 ThisIsThePolice platform=gog:windows 
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
+Tropico platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Tropico2 platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Uplink platform=gog:windows exec=uplink.exe vdesk=y
 TheWitcherAdventureGame platform=gog:windows 
 UFO:Aftermath platform=gog:windows 
@@ -267,4 +272,5 @@ Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows
 X:BeyondTheFrontier platform=gog:windows
+
 

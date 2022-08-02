@@ -7,10 +7,13 @@ static char *FindProgramGoFishing(char *RetStr, TAction *Act)
     ListNode *Exes, *Curr;
     char *Tempstr=NULL, *SearchPatterns=NULL, *IgnorePatterns=NULL;
     const char *ptr;
+		int BitWidth;
 
 
     RetStr=CopyStr(RetStr, "");
     Exes=ListCreate();
+    BitWidth=PlatformBitWidth(Act->Platform);
+
 
 //this needs to be configured in 'platforms.c' eventually
     IgnorePatterns=MCopyStr(IgnorePatterns, "setup*.exe,unin*.exe,dosbox.exe,crash*.exe,",NULL);
@@ -31,12 +34,12 @@ static char *FindProgramGoFishing(char *RetStr, TAction *Act)
     ptr=GetVar(Act->Vars, "exec");
     SearchPatterns=MCopyStr(SearchPatterns, ptr, ",", NULL);
 
-    if (PlatformBitWidth(Act->Platform)==64) Tempstr=PlatformGetExe64SearchPattern(Tempstr, Act->Platform);
+    if (BitWidth == 64) Tempstr=PlatformGetExe64SearchPattern(Tempstr, Act->Platform);
     else Tempstr=PlatformGetExeSearchPattern(Tempstr, Act->Platform);
 
     SearchPatterns=CatStr(SearchPatterns, Tempstr);
 
-    FindFiles(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, Exes);
+    FindItems(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, BitWidth, Exes);
     if (Config->Flags & FLAG_DEBUG) printf("Find: [%s] [%s] [%s]\n", GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns);
 
     Curr=NULL;

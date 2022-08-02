@@ -1,6 +1,19 @@
 #include "find_files.h"
+#include "elf.h"
 
-void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions, ListNode *Founds)
+static int FindCheckBitWidth(const char *Path, int BitWidth)
+{
+int FileWidth;
+
+FileWidth=ELFFileGetBitWidth(Path);
+if ( (BitWidth==32) && (FileWidth==64)) return(FALSE);
+if ( (BitWidth==64) && (FileWidth==32)) return(FALSE);
+
+return(TRUE);
+}
+
+
+void FindItems(const char *Path, const char *Inclusions, const char *Exclusions, int BitWidth, ListNode *Founds)
 {
     char *Tempstr=NULL;
     struct stat FStat;
@@ -13,6 +26,7 @@ void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions,
     Tempstr=SlashTerminateDirectoryPath(Tempstr);
     Tempstr=CatStr(Tempstr, "*");
 
+
     glob(Tempstr, 0, 0, &Glob);
     for (i=0; i < Glob.gl_pathc; i++)
     {
@@ -23,14 +37,14 @@ void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions,
             if (S_ISLNK(FStat.st_mode)) /*Do nothing, don't follow links */ ;
             else if (S_ISDIR(FStat.st_mode))
             {
-                if (MatchTokenFromList(p_Basename, IgnoreDirs, 0) == -1) FindFiles(Glob.gl_pathv[i], Inclusions, Exclusions, Founds);
+                if (MatchTokenFromList(p_Basename, IgnoreDirs, 0) == -1) FindItems(Glob.gl_pathv[i], Inclusions, Exclusions, BitWidth, Founds);
             }
             else
             {
                 Tempstr=CopyStr(Tempstr, p_Basename);
                 //must strlwr here, as InList will do so to Inclusions and Exclusions
                 strlwr(Tempstr);
-                if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) )
+                if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) && FindCheckBitWidth(Glob.gl_pathv[i], BitWidth))
                 {
                     //can't use 'SetVar' here as multiple files might have the same basename, but different paths
                     ListAddNamedItem(Founds, p_Basename, CopyStr(NULL, Glob.gl_pathv[i]));
@@ -42,6 +56,11 @@ void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions,
     Destroy(Tempstr);
 }
 
+
+void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions, ListNode *Founds)
+{
+return(FindItems(Path, Inclusions, Exclusions, 0, Founds));
+}
 
 
 char *FindSingleFile(char *RetStr, const char *Root, const char *File)

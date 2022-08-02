@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "8.12"
+#define VERSION "8.13"
 
 
 #define INSTALL_RUN 0

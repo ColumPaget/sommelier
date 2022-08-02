@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
+OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
 LIBS=libUseful-4/libUseful.a -lssl -lcrypto  
 prefix=/usr/local
 exec_prefix=${prefix}
@@ -21,6 +21,9 @@ apps.o: apps.h apps.c
 
 doom.o: doom.h doom.c
 	$(CC) $(CFLAGS) -c doom.c
+
+elf.o: elf.h elf.c
+	$(CC) $(CFLAGS) -c elf.c
 
 platforms.o: platforms.h platforms.c
 	$(CC) $(CFLAGS) -c platforms.c
