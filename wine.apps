@@ -19,7 +19,8 @@ PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bi
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
-Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="-no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
+Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
+BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 
 * category='Email;Office;Network' locale='$(lang)-$(country)' 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
@@ -163,7 +164,7 @@ EditPadLite platform=windows url=http://download.jgsoft.com/editpad/SetupEditPad
 * category='RemoteAccess;Utility'
 TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
 TurboVNC platform=windows url=https://sourceforge.net/projects/turbovnc/files/2.2.5/TurboVNC-2.2.5-x86.exe/download exec='vncviewer.exe' sha256='5b0c5f2ccb3ab031d75bc38a8ff68fa6414ba61826ffe02d8216742eef5dc047' 
-Teamviewer platform=windows url=https://download.teamviewer.com/download/TeamViewer_Setup.exe comment='Official Teamviewer client' sha256='4b51bf80e68ee7788a6860de00a80433497d630ffa69b83852d175adddd34cb7' 
+Teamviewer platform=windows url=https://download.teamviewer.com/download/version_14x/TeamViewerPortable.zip comment='Official Teamviewer client' 
 
 * comment='Player;Audio'
 AIMP platform=windows url=https://www.aimp.ru/?do=download.file&id=4 sha256='41070175804131607f907e359f1268ee0863a6493d8c94ce14a4be11ba7c978c' 
@@ -188,6 +189,7 @@ MadTracker platform=windows url=http://www.tucows.com/download/windows/files/mt2
 Mixxx platform=windows url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' 
 Mobius platform=windows url=http://www.circularlabs.com/mobius-2-5.exe version='2.5' exec='mobius-2-5.exe' sha256='85236a14167ef3b1febf23444c350130cbe6a2f8c7c48330b74b54e12536a80d' comment='Sound looper application for music' 
 OpenShot platform=windows url=https://github.com/OpenShot/openshot-qt/releases/download/v2.6.1/OpenShot-v2.6.1-x86.exe sha256=bc9fe41b693d207e60b037f3a1148b9d81b307ebca7122b699447b6e923ab99e exec=openshot-qt.exe
+OcenAudio platform=windows url=https://www.ocenaudio.com/downloads/index.php/ocenaudio_portable.zip? exec=ocenaudio.exe
 Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c'
 QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467'
 WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 

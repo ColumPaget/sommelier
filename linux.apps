@@ -32,8 +32,11 @@ HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.
 
 
 category='RemoteAccess'
-Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
-Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
+Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/version_14x/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
+Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/version_14x/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
+
+#Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
+#Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
 RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 icon='realvnc.png' comment='RealVNC Viewer' sha256='e47143186930480bc2260323b5330ebd7556ee2277bc4c20965438075d82eee0'  install-type=executable
 RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 icon='realvnc.png' comment='RealVNC Viewer' sha256='4ac20464566dc6756325bb2476f82f495d7479eb7587f2dd65b3d3f1164d8648'  install-type=executable
 TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='64415624118832054f6a4eea4026815741255c7d6b4a64926f683da2cb02c303' 
