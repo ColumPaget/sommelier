@@ -16,9 +16,12 @@ K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-me
 SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.10/win32/$(locale)/seamonkey-2.53.10.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' os-version=winxp warn='This program crashes under wine 6.x'
 SlimBrowser platform=windows url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
 PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' 
-OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2' 
+OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
+
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
+Waterfox platform=windows url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
+Librewolf platform=windows url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
 Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 

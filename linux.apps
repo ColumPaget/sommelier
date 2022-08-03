@@ -28,6 +28,7 @@ Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-t
 Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 
 HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz'
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
+Discord platform=linux64 url=https://discord.com/api/download?platform=linux&format=tar.gz download-type=tar.gz exec=Discord exec-args="--no-sandbox" sha256=0417389fa437c6e044d77252de0cffe8473074e596e7b34ba76b1a3a5c0e80c2 warn="This program installs in 'no sandbox' mode." 
 
 
 
@@ -59,6 +60,11 @@ SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/release
 SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/$(locale)/seamonkey-2.53.2.$(locale).linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' 
 GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='8d3e3038ec1a1f5b871c5c54b97fb13bc42eb10f85ecd3b096529ed7d290f571' 
 GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-x86_64.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='4f0dffe7ae5d98a63bd44b2b0dbd39f93d60056391214e8565892ab1ade36a85' 
+Waterfox platform=linux64 url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/waterfox-G4.1.4.en-US.linux-x86_64.tar.bz2 download-type='tar.bz2' exec=waterfox sha256=1748266754bb35bbaa47042a6ee208f345d3b5da4b65adf7675f85980fe97de4
+Librewolf platform=linux64 url=https://gitlab.com/api/v4/projects/12829184/packages/generic/librewolf/103.0-3/LibreWolf-103.0-3.x86_64.tar.bz2 download-type=tar.bz2 exec=librewolf sha256=635710c32092491bd3e34490f245296171dc04a81dc236110ac0989bbe0ad593
+Vivaldi platform=linux64 url=https://downloads.vivaldi.com/stable/vivaldi-stable_5.3.2679.73-1_amd64.deb download-type=deb exec=vivaldi exec-args="--no-sandbox" sha256=c0444c4a8955c3d20e9c72aa8e97a365eb8500b5414d0ac1cf958c84b861cb7b warn="This program installs in 'no sandbox' mode."
+Brave platform=linux64 url=https://github.com/brave/brave-browser/releases/download/v1.43.57/brave-browser-beta_1.43.57_amd64.deb download-type=deb exec=brave exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode."
+Opera platform=linux64 url=https://download5.operacdn.com/pub/opera/desktop/89.0.4447.83/linux/opera-stable_89.0.4447.83_amd64.deb download-type=deb exec=opera exec-args="--no-sandbox" sha256=2fc3c70a757b007b9f85ea20721abcd7d1d5ec183a0a8905f4ef85c26f835344 warn="This program installs in 'no sandbox' mode."
 
 * category=Bittorent;Network
 Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball download-type='tar.gz' exec='frostwire' category='Bittorrent;AudioVideo;Player;Audio' comment='Bittorrent media downloader/player' 

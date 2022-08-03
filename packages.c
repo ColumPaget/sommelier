@@ -121,7 +121,7 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
         RunProgramAndConsumeOutput(CmdLine, "noshell");
 
         Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), "data.tar,data.tar.gz,data.bz2,data.tar.xz");
-        if (StrValid(Tempstr)) CmdLine=MCopyStr(CmdLine, "tar -xf '",Path, "' ", FilesToExtract, NULL);
+        if (StrValid(Tempstr)) CmdLine=MCopyStr(CmdLine, "tar -xf '",Tempstr, "' ", FilesToExtract, NULL);
         else CmdLine=CopyStr(CmdLine, "");
         break;
 
