@@ -160,6 +160,7 @@ DistantWorlds platform=gog:windows
 DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
 Diluvion platform=gog:windows 
 DivineDivinity platform=gog:windows exec=div.exe
+DoomdarksRevenge platform=gog:windows exec=Revenge.exe
 Downwell platform=gog:windows
 DraculaTheResurrection platform=gog:windows 
 DungeonKeeper2 platform=gog:windows vdesk=y os-version=winxp exec=DKII.EXE 
@@ -176,6 +177,7 @@ EuropaUniversalis2 platform=gog:windows exec=eu2.exe
 FantasyWars platform=gog:windows exec=fw.exe
 FreedomForce platform=gog:windows exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 Flatout platform=gog:windows Category='Game'
+FrozenSynapse platform=gog:windows exec=FrozenSynapse.exe
 FTL platform=gog:windows 
 GalacticAssault platform=gog:windows 
 GalacticCivilizations1 platform=gog:windows exec=galciv.exe vdesk=y
@@ -195,6 +197,7 @@ KingdomUnderFireHeroes platform=gog:windows
 KingdomUnderFireCrusaders platform=gog:windows 
 KingsBounty platform=gog:windows 
 Locomotion platform=gog:windows exec=LOCO.EXE vdesk=y
+LordsOfMidnight platform=gog:windows exec=Midnight.exe
 MagicMaker platform=gog:windows 
 MegaRace3 platform=gog:windows exec=Megarace3.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 Monolith platform=gog:windows exec=Monolith.exe
