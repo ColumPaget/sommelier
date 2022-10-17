@@ -310,6 +310,7 @@ SimpleTetris platform=windows url=https://archive.org/download/SimpleTetris/Simp
 Sokoban++ platform=windows url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' 
 LaserTank platform=windows url=https://laser-tank.com/game/LaserTank.zip sha256='4c1361a82600ab40390d8c09bd43756b59e9c1d61d2e0e6c47a012cee785a6b3' 
 Sentry platform=windows url=https://archive.org/download/Sentry_1020/sentry.zip exec='Sentry.exe' comment='PC Remake of the Classic 'Sentinel' game from the ZX Spectrum/C64 era' sha256='4caeb80c3bd43e138338e2aa0a98f3d11759c5e70e3fd2939ddb0e2bda405727' 
+Augmentinel platform=windows url=https://simonowen.com/spectrum/augmentinel/Augmentinel-15.zip comment="Another remake of the classic 'Sentinel' game from the ZX Spectrum/C64 era" sha256=5ff6173f7c1813dbd8618b824eb4120a115ce447622126445cec94cd8dd2dd2f exec=Augmentinel.exe
 VVVVVV platform=windows url=http://www.flibitijibibo.com/VVVVVV-MP-10202016.zip comment='Spikes! Why are there always spikes?' sha256='39fbe76e8b7ce8bc8a37b64a7170e9e7e011c9585876bda89c04df7a472bcd91' 
 TinyHeist platform=windows url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' 
 PlasmaWorm platform=windows url=http://digital-eel.com/plasmaworm/files/plasmaworm_free.exe sha256='c8354e264d32b1ba8bdfd0c543cca99719707ac1135bbb56485a27f589f23be9' comment='Snake game' 
@@ -320,6 +321,7 @@ GeneRally platform=windows url=http://gene-rally.com/download/latest/ comment='l
 KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
 Transcendance platform=windows url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' 
 Glest platform=windows url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' 
-
+Windle platform=windows url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
 
 PrivateerRemake platform=windows url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
+
