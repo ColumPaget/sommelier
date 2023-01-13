@@ -47,6 +47,8 @@ LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe e
 NHeko platform=windows url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe sha256=1b62c4840711eefa4f07664507367fd324419209d4be8922e069d47321cc9712
 WeChat platform=windows url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
 WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
+MushClient platform=windows url=http://www.gammon.com.au/files/mushclient/mushclient506.exe exec=MUSHclient.exe sha256=d6ee92d30eb6e73875283e78826787cdc5309563c1688469c1128ffac0469f07
+
 
 
 #Not working yet
@@ -177,6 +179,7 @@ Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
 QMMP platform=windows url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.2-win32.exe sha256='3822419fa36e247426c76720911e38e879b04fefe3a83d362b6f0f566345eb58' exec=qmmp.exe
 WinAmp platform=windows url=http://www.meggamusic.co.uk/winamp/winamp5666_full_all_redux.exe exec=winamp.exe os-version=winxp
+Clementine platform=windows url=https://github.com/clementine-player/Clementine/releases/download/1.4.0rc1-869-gccf4f75c3/ClementineSetup-1.4.0rc1-869-gccf4f75c3.exe exec=clementine.exe sha256=ce1cba9a430418e7cdd03116f05efbca17b046d39cb70b42a120d7b73051931a
 
 * comment='Player;Video'
 MediaPlayerClassic platform=windows url=https://downloads.sourceforge.net/project/mpc-hc/MPC%20HomeCinema%20-%20Win32/MPC-HC_v1.7.5_x86/MPC-HC.1.7.5.x86.exe sha256=1d690da5b330f723aea4a294d478828395d321b59fc680f2b971e8b16b8bd33d exec=mpc-hc.exe
@@ -218,7 +221,6 @@ AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/insta
 * category=Bittorrent;Network
 FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
 qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe sha256=01487a0e2594a5065e4d780eb012dcd0dafadc218d1b6aba69528bd6ede6afb5
-
 
 * category='Utility'
 CDex platform=windows url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
@@ -323,6 +325,6 @@ KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=do
 Transcendance platform=windows url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' 
 Glest platform=windows url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' 
 Windle platform=windows url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
-
 PrivateerRemake platform=windows url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
-
+Oolite platform=windows url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite-1.90_x86.exe exec=oolite.exe sha256=9bafc8389115dd551300ef0e807c7580cd57b010d31fad0af148ebaaefc08b37
+TrackManiaForever platform=windows url=http://files.trackmaniaforever.com/tmnationsforever_setup.exe exec=TmForeverLauncher.exe

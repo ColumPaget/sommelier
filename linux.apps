@@ -47,6 +47,10 @@ TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download
 7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 
+*category='Network;Utilities;Nettools'
+OoklaSpeedtest platform=linux32 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-i386.tgz download-type=tar.gz exec=speedtest
+OoklaSpeedtest platform=linux64 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz download-type=tar.gz exec=speedtest
+
 * category=System;Terminals
 KittyTerminal platform=linux32 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-i686.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
 KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-x86_64.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
@@ -107,6 +111,10 @@ DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublec
 * category='Roguelike;Roleplaying;Game'
 TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
 TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
+
+
+* categoary='Game'
+TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' comment='Game requires specific version of libc++"
 
 
 * category='Notes;Office;Utility'
