@@ -13,6 +13,7 @@ static void PrintUsage()
     printf("sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
     printf("sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
     printf("sommelier run <name>                               run an application by name\n");
+    printf("sommelier winecfg <name>                           run 'winecfg' for named wine application\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
     printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");
     printf("\n");
@@ -210,6 +211,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
             else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
             else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
             else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
+            else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);
             else if (strcmp(arg, "version")==0) PrintVersion();
             else if (strcmp(arg, "-version")==0) PrintVersion();
             else if (strcmp(arg, "--version")==0) PrintVersion();

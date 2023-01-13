@@ -184,6 +184,10 @@ int main(int argc, char *argv[])
                 if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
                 else Download(Act);
                 break;
+
+	    case ACT_WINECFG:
+		RunWineCfg(Act);
+		break;
             }
         }
 

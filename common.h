@@ -25,6 +25,7 @@
 #define ACT_REBUILD_HASHES 14
 #define ACT_DOWNLOAD 15
 #define ACT_RECONFIGURE 16
+#define ACT_WINECFG 17
 
 #define FLAG_DEBUG 1
 #define FLAG_FORCE 2

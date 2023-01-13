@@ -219,6 +219,7 @@ AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/insta
 FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
 qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe sha256=01487a0e2594a5065e4d780eb012dcd0dafadc218d1b6aba69528bd6ede6afb5
 
+
 * category='Utility'
 CDex platform=windows url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
 7-Zip platform=windows url=http://www.7-zip.org/a/7z1602.exe exec='7zFM.exe' sha256='629ce3c424bd884e74aed6b7d87d8f0d75274fb87143b8d6360c5eec41d5f865' comment='Graphical Archive App' 

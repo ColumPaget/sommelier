@@ -105,6 +105,7 @@ sommelier uninstall <name> [<name>]                uninstall an application by n
 sommelier reconfigure <name> [<name>]              reconfigure an application by name
 sommelier download <name> [<name>]                 download installers/packages to the current directory
 sommelier run <name> [<options>]                   run an application by name
+sommelier winecfg <name> [<options>]               run winecfg for named wine application
 sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
 
 options are:

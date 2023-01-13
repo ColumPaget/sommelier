@@ -166,3 +166,17 @@ void RunApplication(TAction *Act)
 }
 
 
+void RunWineCfg(TAction *Act)
+{
+    char *Tempstr=NULL;
+
+    if (DesktopFileRead(Act))
+    {
+        Tempstr=AppFormatPath(Tempstr,  Act);
+        Act->Exec=CopyStr(Act->Exec, "winecfg");
+        RunNormal(Act);
+    }
+    else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
+
+    Destroy(Tempstr);
+}
