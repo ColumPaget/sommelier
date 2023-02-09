@@ -63,14 +63,15 @@ WayOfTheSamurai platform=gog:linux
 
 #64-bit only linux gog games
 DiceyDungeons platform=gog:linux64
+IntoTheBreach platform=gog:linux64 exec=Breach
 IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 MiniMetro platform=gog:linux64 exec="Mini Metro"
 OpenTTD platform=gog:linux64 exec=openttd
 OutThere platform=gog:linux64 exec="outthereomega.x86"
-RadioCommander platform=gog:linux64 exec="RC.x86_64"
 PrisonArchitect platform=gog:linux64 exec="PrisonArchitect.sh"
-IntoTheBreach platform=gog:linux64 exec=Breach
+RadioCommander platform=gog:linux64 exec="RC.x86_64"
+Shing platform=gog:linux64 exec="Shing!.x86_64"
 StardewValley platform=gog:linux64 exec=StardewValley
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 
@@ -291,4 +292,4 @@ X:BeyondTheFrontier platform=gog:windows
 # 64-bit windows/wine only
 RadioCommander platform=gog:windows64
 OutThere platform=gog:windows64 exec=outthereomega.exe
-PanzerDragoon platform=gog:windows
+PanzerDragoon platform=gog:windows64

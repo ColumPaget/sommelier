@@ -187,6 +187,10 @@ nes
  : nintendo entertainment system games run under the dnes or mednafen emulators
 3ds
  : 3ds games run under the citra emulator
+vectrex
+ : vectrex games run using the 'vecx' emulator
+
+
 
 
 PROXY URLS
