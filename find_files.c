@@ -3,13 +3,13 @@
 
 static int FindCheckBitWidth(const char *Path, int BitWidth)
 {
-int FileWidth;
+    int FileWidth;
 
-FileWidth=ELFFileGetBitWidth(Path);
-if ( (BitWidth==32) && (FileWidth==64)) return(FALSE);
-if ( (BitWidth==64) && (FileWidth==32)) return(FALSE);
+    FileWidth=ELFFileGetBitWidth(Path);
+    if ( (BitWidth==32) && (FileWidth==64)) return(FALSE);
+    if ( (BitWidth==64) && (FileWidth==32)) return(FALSE);
 
-return(TRUE);
+    return(TRUE);
 }
 
 
@@ -59,7 +59,7 @@ void FindItems(const char *Path, const char *Inclusions, const char *Exclusions,
 
 void FindFiles(const char *Path, const char *Inclusions, const char *Exclusions, ListNode *Founds)
 {
-return(FindItems(Path, Inclusions, Exclusions, 0, Founds));
+    return(FindItems(Path, Inclusions, Exclusions, 0, Founds));
 }
 
 

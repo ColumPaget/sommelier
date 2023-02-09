@@ -1,17 +1,18 @@
 #include "Process.h"
 #include "errno.h"
 #include "includes.h"
-#include "Time.h"
 #include <pwd.h>
+#include <sched.h>
 #include <sys/mount.h>
 #include <sys/resource.h>
-#include "FileSystem.h"
-#include "Log.h"
-#include <sched.h>
+#include <sys/mman.h>
 #include <sys/wait.h>
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <glob.h>
+#include "Log.h"
+#include "Time.h"
+#include "FileSystem.h"
 
 //needed for 'flock' used by CreatePidFile and CreateLockFile
 #include <sys/file.h>
@@ -260,6 +261,14 @@ int SwitchUID(int uid)
 {
     struct passwd *pw;
 
+    pw=getpwuid(uid);
+
+    //must initgroups before switch user, as the user we switch too
+    //may not have permission to do so
+#ifdef HAVE_INITGROUPS
+    if (pw) initgroups(pw->pw_name, 0);
+#endif
+
 #ifdef HAVE_SETRESUID
     if ((uid==-1) || (setresuid(uid,uid,uid) !=0))
 #else
@@ -270,13 +279,13 @@ int SwitchUID(int uid)
         if (LibUsefulGetBool("SwitchUserAllowFail")) return(FALSE);
         exit(1);
     }
-    pw=getpwuid(uid);
+
     if (pw)
     {
         setenv("HOME",pw->pw_dir,TRUE);
         setenv("USER",pw->pw_name,TRUE);
-    }
 
+    }
     return(TRUE);
 }
 
@@ -719,8 +728,8 @@ int ProcessContainer(const char *Config)
 
             if (result)
             {
-                if (! (LibUsefulFlags & LU_ATEXIT_REGISTERED)) atexit(LibUsefulAtExit);
-                LibUsefulFlags |= LU_CONTAINER | LU_ATEXIT_REGISTERED;
+                LibUsefulSetupAtExit();
+                LibUsefulFlags |= LU_CONTAINER;
 
                 if (StrValid(Dir)) chdir(Dir);
             }
@@ -800,6 +809,18 @@ int ProcessApplyConfig(const char *Config)
         else if (strcasecmp(Name,"namespace")==0) Flags |= PROC_CONTAINER;
         else if (strcasecmp(Name,"capabilities")==0) Capabilities=CopyStr(Capabilities, Value);
         else if (strcasecmp(Name,"caps")==0) Capabilities=CopyStr(Capabilities, Value);
+        else if (strcasecmp(Name,"mlock")==0)
+				{
+					LibUsefulFlags |= LU_MLOCKALL;
+					mlockall(MCL_FUTURE);
+          if (! (LibUsefulFlags & LU_ATEXIT_REGISTERED)) atexit(LibUsefulAtExit);
+				}
+        else if (strcasecmp(Name,"memlock")==0)
+				{
+					LibUsefulFlags |= LU_MLOCKALL;
+					mlockall(MCL_FUTURE);
+          LibUsefulSetupAtExit();
+				}
         else if (strcasecmp(Name,"mem")==0)
         {
             val=(rlim_t) FromMetric(Value, 0);
@@ -838,7 +859,6 @@ int ProcessApplyConfig(const char *Config)
 
         ptr=GetNameValuePair(ptr,"\\S","=",&Name,&Value);
     }
-
 
 //set all signal handlers to default
     if (Flags & PROC_SIGDEF)

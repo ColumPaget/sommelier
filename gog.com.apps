@@ -17,6 +17,10 @@ ChaosReborn platform=gog:linux warn="This game has been seen to have graphics is
 Convoy platform=gog:linux exec="Convoy.x86" exec64="Convoy.x86_64"
 CryptOfTheNecrodancer platform=gog:linux exec="NecroDancer.sh"
 DarkestDungeon platform=gog:linux exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
+DarkestDungeon:Sheildbreaker platform=gog:linux dlc parent=DarkestDungeon
+DarkestDungeon:Musketeer platform=gog:linux dlc parent=DarkestDungeon
+DarkestDungeon:CrimsonCourt platform=gog:linux dlc parent=DarkestDungeon
+DarkestDungeon:ColorOfMadness platform=gog:linux dlc parent=DarkestDungeon
 Darwinia platform=gog:linux
 Defcon platform=gog:linux warn="This game has been seen to fail on some linux platforms"
 Deadnaut platform=gog:linux exec="Deadnaut.x86"
@@ -63,6 +67,8 @@ IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
 MiniMetro platform=gog:linux64 exec="Mini Metro"
 OpenTTD platform=gog:linux64 exec=openttd
+OutThere platform=gog:linux64 exec="outthereomega.x86"
+RadioCommander platform=gog:linux64 exec="RC.x86_64"
 PrisonArchitect platform=gog:linux64 exec="PrisonArchitect.sh"
 IntoTheBreach platform=gog:linux64 exec=Breach
 StardewValley platform=gog:linux64 exec=StardewValley
@@ -130,14 +136,14 @@ Bladerunner
 * platform=gog:windows
 # windows via wine
 99LevelsToHell platform=gog:windows 
-Ascendant platform=gog:windows
+ABCMurders platform=gog:windows 
 AgarestGenerationsOfWar platform=gog:windows
 AgeOfWonders platform=gog:windows exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
-ABCMurders platform=gog:windows 
 AncientEnemy platform=gog:windows 
-AnomalyWarzoneEarth platform=gog:windows 
 AnomalyDefenders platform=gog:windows 
+AnomalyWarzoneEarth platform=gog:windows 
 ArxFatalis platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Ascendant platform=gog:windows
 Battlevoid platform=gog:windows 
 Bloodrayne platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 platform=gog:windows
@@ -154,6 +160,7 @@ DarkestDungeon platform=gog:windows
 DarkQuest platform=gog:windows 
 DarkQuest2 platform=gog:windows 
 Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
+DeadSpace platform=gog:windows exec="Dead Space.exe"
 Defcon platform=gog:windows 
 DiceyDungeons platform=gog:windows
 DistantWorlds platform=gog:windows
@@ -198,14 +205,17 @@ KingdomUnderFireCrusaders platform=gog:windows
 KingsBounty platform=gog:windows 
 Locomotion platform=gog:windows exec=LOCO.EXE vdesk=y
 LordsOfMidnight platform=gog:windows exec=Midnight.exe
+MainLining platform=gog:windows
 MagicMaker platform=gog:windows 
 MegaRace3 platform=gog:windows exec=Megarace3.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
+MiniMetro platform=gog:windows exec="Mini Metro.exe"
 Monolith platform=gog:windows exec=Monolith.exe
 MoonbaseCommander platform=gog:windows exec=moonbase.exe
 Nexus platform=gog:windows exec=nexus.exe
 NeoScavenger platform=gog:windows
 Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 OffworldResourceBase platform=gog:windows exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+OriginalWar platform=gog:windows exec=Owar.exe
 Overfall platform=gog:windows 
 OpenTTD platform=gog:windows exec=openttd.exe
 Parkan2 platform=gog:windows 
@@ -225,6 +235,7 @@ Revenant platform=gog:windows exec=Launcher.exe warn="This game only runs in ful
 Revolver360 platform=gog:windows 
 RiseOfTheMiddleKingdom platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 RollerCoasterTychoon platform=gog:windows
+RogueLegacy platform=gog:windows
 ShadowrunReturns platform=gog:windows 
 ShadowWatch platform=gog:windows 
 SherlockHolmesVsJackTheRipper platform=gog:windows 
@@ -277,3 +288,7 @@ WizardsAndWarriors platform=gog:windows
 X:BeyondTheFrontier platform=gog:windows
 
 
+# 64-bit windows/wine only
+RadioCommander platform=gog:windows64
+OutThere platform=gog:windows64 exec=outthereomega.exe
+PanzerDragoon platform=gog:windows

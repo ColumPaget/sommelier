@@ -95,25 +95,27 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
 
 
 
-            if (strcmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
-            else if (strcmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
-            else if (strcmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
-            else if (strcmp(Name,"install-type")==0)
+            if (strcasecmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+            else if (strcasecmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
+            else if (strcasecmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
+            else if (strcasecmp(Name,"install-type")==0)
             {
                 if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
                 if (strcasecmp(Value,"executable")==0) Act->InstallType=INSTALL_EXECUTABLE;
             }
-            else if (strcmp(Name,"sha256")==0)
+            else if (strcasecmp(Name,"sha256")==0)
             {
                 strlwr(Value);
                 SetVar(Act->Vars, Name, Value);
             }
-            else if (strcmp(Name,"bundled")==0)
+            else if (strcasecmp(Name,"bundled")==0)
             {
                 //app is bundled with another app! Set the bundled flag, and set a variable
                 Act->Flags |= FLAG_BUNDLED;
                 SetVar(Act->Vars, "bundled-with", Value);
             }
+            else if (strcasecmp(Name,"parent")==0) Act->Parent=CopyStr(Act->Parent, Value);
+            else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
@@ -322,7 +324,7 @@ char *AppFormatPath(char *Path, TAction *Act)
         Path=SlashTerminateDirectoryPath(Path);
         SetVar(Act->Vars, "prefix",Path);
     }
-    else Path=CopyStr(Path,ptr);
+    else Path=CopyStr(Path, ptr);
 
 
 //for dos and golang/go path==prefix
@@ -374,6 +376,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
                 App->InstallType |= AppConfig->InstallType;
                 App->Platform=CopyStr(App->Platform, AppConfig->Platform);
                 App->DownName=CopyStr(App->DownName, AppConfig->DownName);
+                App->Parent=CopyStr(App->Parent, AppConfig->Parent);
                 App->PlatformID=AppConfig->PlatformID;
                 if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
                 CopyVars(App->Vars, AppConfig->Vars);
@@ -430,7 +433,11 @@ int AppLoadConfig(TAction *App)
 //if no platform specified this will use the first matching app config it finds for any platform
     result=AppFindConfig(App, Tempstr);
 
-    if (StrValid(App->InstallName))
+    if (StrValid(App->Parent))
+    {
+        SetVar(App->Vars, "name", App->Parent);
+    }
+    else if (StrValid(App->InstallName))
     {
         SetVar(App->Vars, "name", App->InstallName);
     }

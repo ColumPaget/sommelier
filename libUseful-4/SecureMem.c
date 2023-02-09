@@ -212,7 +212,7 @@ void *SecureStoreAdd(SECURESTORE *Store, void *Data, uint32_t Size)
 }
 
 
-int SecureStoreGetNext(SECURESTORE *Store, unsigned char **ptr)
+int SecureStoreGetNext(SECURESTORE *Store, const unsigned char **ptr)
 {
     uint32_t len=0;
 
@@ -344,11 +344,7 @@ char *CredsStoreWriteField(char *Dest, const char *Field)
 SECURESTORE *CredsStoreCreate()
 {
     CredsStore=SecureStoreCreate(0);
-    if (! (LibUsefulFlags & LU_ATEXIT_REGISTERED))
-    {
-        atexit(LibUsefulAtExit);
-        LibUsefulFlags |= LU_ATEXIT_REGISTERED;
-    }
+    LibUsefulSetupAtExit();
 
     return(CredsStore);
 }
@@ -410,14 +406,14 @@ int SecureStoreFieldMatch(SECURESTORE *SS, const char **Input, const char *Match
 
 int CredsStoreLookup(const char *Realm, const char *User, const char **Pass)
 {
-    unsigned char *p_Line, *p_Data, *end;
+    const char *p_Line, *p_Data, *end;
     int len, result=0;
 
     *Pass=NULL;
     if (! CredsStore) return(0);
     SecureLockMem(CredsStore->Data, CredsStore->Size, SMEM_RDONLY);
     p_Line=NULL;
-    len=SecureStoreGetNext(CredsStore, &p_Line);
+    len=SecureStoreGetNext(CredsStore, (const unsigned char **) &p_Line);
     while (len > 0)
     {
         p_Data=p_Line;
@@ -432,7 +428,7 @@ int CredsStoreLookup(const char *Realm, const char *User, const char **Pass)
             break;
         }
         p_Line+=len;
-        len=SecureStoreGetNext(CredsStore, &p_Line);
+        len=SecureStoreGetNext(CredsStore,  (const unsigned char **) &p_Line);
     }
 
     return(result);

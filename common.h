@@ -7,7 +7,7 @@
 #include <glob.h>
 
 
-#define VERSION "8.15"
+#define VERSION "8.16"
 
 
 #define INSTALL_RUN 0
@@ -39,6 +39,7 @@
 #define FLAG_ABORT 2048
 #define FLAG_BUNDLED 4096
 #define FLAG_NOEXEC 8192
+#define FLAG_DLC 16384
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR, FILETYPE_TGZ, FILETYPE_TBZ, FILETYPE_TXZ, FILETYPE_7ZIP, FILETYPE_DEB, FILETYPE_CAB} TEnumFileTypes;
 
@@ -60,6 +61,7 @@ typedef struct
     char *Args;
     char *Platform;
     char *OSVersion;
+		char *Parent;
     ListNode *Vars;
 } TAction;
 

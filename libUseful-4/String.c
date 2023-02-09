@@ -128,6 +128,8 @@ void StrLenCacheUpdate(const char *Str, int incr)
 {
     int i;
 
+		if (LibUsefulFlags & LU_STRLEN_NOCACHE) return;
+
     for (i=0; i < StrLenCacheSize; i++)
     {
         if (StrLenCache[i].Str == Str) StrLenCache[i].len+=incr;
@@ -139,6 +141,8 @@ void StrLenCacheAdd(const char *Str, size_t len)
 {
     int i, emptyslot=-1;
 
+		if (LibUsefulFlags & LU_STRLEN_NOCACHE) return;
+
     if (! StrLenCache)
     {
         StrLenCache=(TStrLenCacheEntry *) calloc(20, sizeof(TStrLenCacheEntry));
@@ -146,22 +150,22 @@ void StrLenCacheAdd(const char *Str, size_t len)
         StrLenCacheMinLen=100;
     }
 
+    //is string already in cache?
+    for (i=0; i < StrLenCacheSize; i++)
+    {
+        if (StrLenCache[i].Str == NULL) emptyslot=i;
+        else if (StrLenCache[i].Str == Str)
+        {
+            StrLenCache[i].len=len;
+            return;
+        }
+    }
+
 //strlen caching has been seen to give a benefit with very large strings, but modern processors with built-in strlen
 //functions are proabably faster.
-    //don't pollute cache with short strings that don't take long to look up
+//don't pollute cache with short strings that don't take long to look up
     if (len > StrLenCacheMinLen)
     {
-        //is string already in cache?
-        for (i=0; i < StrLenCacheSize; i++)
-        {
-            if (StrLenCache[i].Str == NULL) emptyslot=i;
-            else if (StrLenCache[i].Str == Str)
-            {
-                StrLenCache[i].len=len;
-                return;
-            }
-        }
-
         //if we get here than string isn't in cache and we add it
         if (emptyslot == -1) emptyslot=rand() % StrLenCacheSize;
 
@@ -268,7 +272,7 @@ char *CatStrLen(char *Dest, const char *Src, size_t len)
     int dstlen;
 
     dstlen=StrLenFromCache(Dest);
-    Dest=SetStrLen(Dest,dstlen+len);
+    Dest=SetStrLen(Dest, dstlen+len);
     dst=Dest+dstlen;
     src=Src;
     end=src+len;
@@ -672,8 +676,9 @@ char *StripCRLF(char *Str)
 char *StripQuotes(char *Str)
 {
     int len;
-    char *ptr, StartQuote='\0';
+    char *ptr, *end, StartQuote='\0';
 
+    if (! Str) return(Str);
     ptr=Str;
     while (isspace(*ptr)) ptr++;
 
@@ -681,10 +686,14 @@ char *StripQuotes(char *Str)
     {
         StartQuote=*ptr;
         len=StrLenFromCache(ptr);
-        if ((len > 0) && (StartQuote != '\0') && (ptr[len-1]==StartQuote))
+
+        end=ptr+len-1;
+
+        if ((len > 0) && (StartQuote != '\0') && (*end==StartQuote))
         {
-            if (ptr[len-1]==StartQuote) ptr[len-1]='\0';
-            memmove(Str,ptr+1,len);
+            *end='\0';
+            len--;
+            memmove(Str, ptr+1,len);
             StrLenCacheAdd(Str, len);
         }
     }

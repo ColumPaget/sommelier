@@ -9,7 +9,6 @@ char *AppsListExpand(char *FileList, const char *ConfigFiles);
 ListNode *AppsLoad(const char *ConfigFiles);
 int AppsOutputList(TAction *Act);
 void LoadAppConfigToAct(TAction *Act, const char *Config);
-TAction *AppActionCreate(int Action, const char *AppName, const char *Platform);
 char *AppFormatPath(char *Path, TAction *Act);
 int AppLoadConfig(TAction *App);
 void AppSetLocale(TAction *App, const char *LocaleStr);

@@ -7,7 +7,7 @@ static char *FindProgramGoFishing(char *RetStr, TAction *Act)
     ListNode *Exes, *Curr;
     char *Tempstr=NULL, *SearchPatterns=NULL, *IgnorePatterns=NULL;
     const char *ptr;
-		int BitWidth;
+    int BitWidth;
 
 
     RetStr=CopyStr(RetStr, "");

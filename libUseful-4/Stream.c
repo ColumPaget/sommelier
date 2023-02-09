@@ -56,7 +56,7 @@ static void *SelectAddFD(TSelectSet *Set, int type, int fd)
 static int SelectWait(TSelectSet *Set, struct timeval *tv)
 {
     long long timeout, next;
-    double start, diff, val;
+    uint64_t start, diff;
     int result;
 
 
@@ -557,8 +557,7 @@ int STREAMFlush(STREAM *S)
     //if nothing left in stream (There shouldn't be) then wipe data because
     //there might have been passwords sent on the stream, and we don't want
     //that hanging about in memory
-    if (S->OutEnd==0) xmemset(S->OutputBuff,0,S->BuffSize);
-
+		if (S->OutputBuff && (S->OutEnd==0)) xmemset(S->OutputBuff,0,S->BuffSize);
     return(val);
 }
 
@@ -569,7 +568,7 @@ void STREAMClear(STREAM *S)
     S->InEnd=0;
     //clear input buffer, because anything might be hanging about in there and
     //we don't want sensitive data persisiting in memory
-    xmemset(S->InputBuff,0,S->BuffSize);
+    if (S->InputBuff) xmemset(S->InputBuff,0,S->BuffSize);
 }
 
 
@@ -877,10 +876,12 @@ int STREAMParseConfig(const char *Config)
 
     if (StrValid(Config))
     {
+        //first read fopen-style 'open' flags like 'rw'
         ptr=Config;
         while (*ptr != '\0')
         {
-            if (*ptr==' ') break;
+            //any space indicates end of open flags
+            if (isspace(*ptr)) break;
             switch (*ptr)
             {
             case 'c':
@@ -983,15 +984,12 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     const char *ptr;
     int Port=0, Flags=0;
 
-
     Proto=CopyStr(Proto,"");
     ptr=STREAMExtractMasterURL(URL);
     ParseURL(ptr, &Proto, &Host, &Token, &User, &Pass, &Path, &Args);
     if (StrValid(Token)) Port=strtoul(Token,NULL,10);
 
-    ptr=GetToken(Config,"\\S",&Token,0);
-    Flags=STREAMParseConfig(Token);
-
+    Flags=STREAMParseConfig(Config);
 
     switch (*Proto)
     {
@@ -1044,9 +1042,9 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     case 't':
     case 's':
     case 'u':
-        if ( (strcmp(URL,"-")==0) || (strcasecmp(URL,"stdio:")==0) ) S=STREAMFromDualFD(0,1);
-        else if (strcasecmp(URL,"stdin:")==0) S=STREAMFromFD(0);
-        else if (strcasecmp(URL,"stdout:")==0) S=STREAMFromFD(1);
+        if ( (strcmp(URL,"-")==0) || (strcasecmp(URL,"stdio:")==0) ) S=STREAMFromDualFD(dup(0), dup(1));
+        else if (strcasecmp(URL,"stdin:")==0) S=STREAMFromFD(dup(0));
+        else if (strcasecmp(URL,"stdout:")==0) S=STREAMFromFD(dup(1));
         else if (strcasecmp(Proto,"ssh")==0) S=SSHOpen(Host, Port, User, Pass, Path, Flags);
         else if (strcasecmp(Proto,"tty")==0)
         {
@@ -1070,7 +1068,7 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
         break;
 
     default:
-        if (strcmp(URL,"-")==0) S=STREAMFromDualFD(0,1);
+        if (strcmp(URL,"-")==0) S=STREAMFromDualFD(dup(0),dup(1));
         else S=STREAMFileOpen(URL, Flags);
         break;
     }
@@ -1247,7 +1245,7 @@ void STREAMShutdown(STREAM *S)
         if (strncmp(Curr->Tag,"HelperPID",9)==0)
         {
             val=atoi(Curr->Item);
-            if (val > 1) kill(val, SIGKILL);
+            if (val > 1) kill(0-val, SIGKILL);
         }
         Curr=ListGetNext(Curr);
     }
@@ -1265,7 +1263,7 @@ void STREAMShutdown(STREAM *S)
         close(S->in_fd);
         S->in_fd=-1;
     }
-   
+
     S->State=0;
 }
 
@@ -1273,7 +1271,6 @@ void STREAMShutdown(STREAM *S)
 void STREAMClose(STREAM *S)
 {
     STREAMShutdown(S);
-
     STREAMDestroy(S);
 }
 
@@ -1312,6 +1309,7 @@ int STREAMReadCharsToBuffer(STREAM *S)
         S->InEnd=0;
         S->InStart=0;
     }
+
 
 //if buffer is half full, or full 'cept for space at the start, then make room
     if (
@@ -2344,6 +2342,18 @@ int STREAMCommit(STREAM *S)
     {
         if (HTTPTransact((HTTPInfoStruct *) Item) != NULL) return(TRUE);
     }
+
+    //for streams where we are talking to someting on pipes
+    //(usually cmd: type streams where we are talking to a command on it's stdin)
+    // close our stdout
+    if (S->Type==STREAM_TYPE_PIPE)
+    {
+        STREAMFlush(S);
+        close(S->out_fd);
+        S->out_fd=-1;
+        return(TRUE);
+    }
+
 
     return(FALSE);
 }

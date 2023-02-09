@@ -24,7 +24,7 @@ const char *PlatformDefault()
 
 int PlatformType(const char *Platform)
 {
-    const char *WindowsPlatforms[]= {"win","win16","win32","win64","windows","gog:win","gog:windows","wine", NULL};
+    const char *WindowsPlatforms[]= {"win","win16","win32","win64","windows","gog:win","gog:windows","gog:windows64","wine", NULL};
 
     if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
     if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
@@ -60,6 +60,7 @@ int PlatformBitWidth(const char *Platform)
     if (strcasecmp(Platform, "!linux64")==0) return(32);
 
     if (strcasecmp(Platform, "gog:linux64")==0) return(64);
+    if (strcasecmp(Platform, "gog:windows64")==0) return(64);
     if (strcasecmp(Platform, "gog:linux")==0)
     {
 #ifdef __x86_64__
@@ -103,7 +104,7 @@ static TPlatform *PlatformsParse(const char *Line)
     if (StrValid(Line) && (Line[0] != '#'))
     {
         Plt=(TPlatform *) calloc(1, sizeof(TPlatform));
-	Plt->Emulators=CopyStr(Plt->Emulators, "");
+        Plt->Emulators=CopyStr(Plt->Emulators, "");
         ptr=GetToken(Line, "\\S", &Aliases, GETTOKEN_QUOTES);
         ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
         while (ptr)
@@ -170,21 +171,20 @@ void PlatformsList()
     TPlatform *Plat;
     char *EmuList=NULL, *Name=NULL;
     const char *ptr;
-	
+
 
     Curr=ListGetNext(Platforms);
     while (Curr)
     {
-	Plat=(TPlatform *) Curr->Item;
+        Plat=(TPlatform *) Curr->Item;
         ptr=GetToken(Curr->Tag, ",", &Name, 0);
-	EmuList=PlatformFindEmulatorNames(EmuList, Name);
-	printf("%-15s  aliases: %-20s   emulators: %s\n", Name, ptr, EmuList);
+        EmuList=PlatformFindEmulatorNames(EmuList, Name);
+        printf("%-15s  aliases: %-20s   emulators: %s\n", Name, ptr, EmuList);
         Curr=ListGetNext(Curr);
     }
 
     Destroy(EmuList);
     Destroy(Name);
-    return(NULL);
 }
 
 
@@ -312,27 +312,27 @@ char *PlatformSelect(char *RetStr, TAction *Act)
 
     RetStr=CopyStr(RetStr, "");
     p_filename=GetBasename(Act->URL);
-    if (StrValid(p_filename)) 
+    if (StrValid(p_filename))
     {
-    Curr=ListGetNext(Platforms);
-    while (Curr)
-    {
-        Plt=(TPlatform *) Curr->Item;
-        if (
-            StrValid(Act->Platform) &&
-            (*Act->Platform=='!') &&
-            (strcmp(Curr->Tag, Act->Platform+1)==0)
-        )
+        Curr=ListGetNext(Platforms);
+        while (Curr)
         {
-            /*do nothing */
-        }
-        else if (StrValid(Plt->InstallerPattern))
-        {
-            if (InList(p_filename, Plt->InstallerPattern)) RetStr=MCatStr(RetStr, Curr->Tag, ",", NULL);
-        }
+            Plt=(TPlatform *) Curr->Item;
+            if (
+                StrValid(Act->Platform) &&
+                (*Act->Platform=='!') &&
+                (strcmp(Curr->Tag, Act->Platform+1)==0)
+            )
+            {
+                /*do nothing */
+            }
+            else if (StrValid(Plt->InstallerPattern))
+            {
+                if (InList(p_filename, Plt->InstallerPattern)) RetStr=MCatStr(RetStr, Curr->Tag, ",", NULL);
+            }
 
-        Curr=ListGetNext(Curr);
-    }
+            Curr=ListGetNext(Curr);
+        }
     }
 
     if (! StrValid(RetStr)) RetStr=CopyStr(RetStr, PlatformDefault());

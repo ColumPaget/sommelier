@@ -57,9 +57,9 @@ static void PrintUsage()
 
 void PrintVersion()
 {
-printf("sommelier version %s\n", VERSION);
-printf("compiled: %s %s\n", __DATE__, __TIME__);
-printf("default platform: %s\n", PlatformDefault()); 
+    printf("sommelier version %s\n", VERSION);
+    printf("compiled: %s %s\n", __DATE__, __TIME__);
+    printf("default platform: %s\n", PlatformDefault());
 }
 
 
@@ -129,13 +129,13 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     arg=CommandLineNext(CmdLine);
     while (arg)
     {
-	    if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
-	    else 
-	    {
-		Act=ActionCreate(Type, arg);
-		ListAddItem(Acts, Act);
-	    }
-            arg=CommandLineNext(CmdLine);
+        if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
+        else
+        {
+            Act=ActionCreate(Type, arg);
+            ListAddItem(Acts, Act);
+        }
+        arg=CommandLineNext(CmdLine);
     }
     return(Act);
 }

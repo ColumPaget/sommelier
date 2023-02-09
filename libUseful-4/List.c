@@ -212,6 +212,7 @@ void ListThreadNode(ListNode *Prev, ListNode *Node)
 // item in list, so update Head node accordingly
     if (Next) Next->Prev=Node;
     else Head->Prev=Node;
+
     ListIncrNoOfItems(Prev);
 }
 
@@ -280,6 +281,7 @@ void ListClear(ListNode *ListStart, LIST_ITEM_DESTROY_FUNC ItemDestroyer)
     }
 
     ListStart->Next=NULL;
+    ListStart->Side=NULL;
     ListStart->Head=ListStart;
     ListStart->Prev=ListStart;
     ListSetNoOfItems(ListStart,0);
@@ -462,7 +464,6 @@ ListNode *ListFindTypedItem(ListNode *Root, int Type, const char *Name)
 
     if (! Root) return(NULL);
     Node=ListFindNamedItemInsert(Root, Name);
-
     if ((! Node) || (Node==Node->Head) || (! Node->Tag)) return(NULL);
 
     //'Root' can be a Map head, rather than a list head, so we call 'ListFindNamedItemInsert' to get the correct
@@ -475,6 +476,8 @@ ListNode *ListFindTypedItem(ListNode *Root, int Type, const char *Name)
         {
             if (Head->Flags & LIST_FLAG_CASE) result=strcmp(Node->Tag,Name);
             else result=strcasecmp(Node->Tag,Name);
+
+            if (result !=0) return(NULL);
 
             if (
                 (result==0) &&
@@ -526,7 +529,7 @@ ListNode *InsertItemIntoSortedList(ListNode *List, void *Item, int (*LessThanFun
 //list get next is just a macro that either calls this for maps, or returns Node->next
 ListNode *MapChainGetNext(ListNode *CurrItem)
 {
-    ListNode *SubNode, *Head;
+    ListNode *SubNode;
 
     if (! CurrItem) return(NULL);
 
@@ -572,7 +575,7 @@ ListNode *MapGetNext(ListNode *CurrItem)
 //'Head' here points to a BUCKET HEADER. These are marked with this flag, except the last one
 //so we know when we've reached the end
     Head=ListGetHead(CurrItem);
-    while (Head->Flags & LIST_FLAG_MAP_CHAIN)
+    while (Head && (Head->Flags & LIST_FLAG_MAP_CHAIN))
     {
         Head++;
         if (Head->Next) return(Head->Next);

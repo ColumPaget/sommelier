@@ -113,7 +113,11 @@ typedef enum {ANSI_NONE, ANSI_BLACK, ANSI_RED, ANSI_GREEN, ANSI_YELLOW, ANSI_BLU
 
 
 
+
 //These flags are mostly used internally
+
+#define TERM_AUTODETECT -1
+
 #define TERM_HIDETEXT  1   //hide text (default is show it)
 #define TERM_SHOWSTARS 2   //show stars instead of text (for passwords)
 #define TERM_SHOWTEXTSTARS 4 //show stars+last character typed
@@ -121,12 +125,13 @@ typedef enum {ANSI_NONE, ANSI_BLACK, ANSI_RED, ANSI_GREEN, ANSI_YELLOW, ANSI_BLU
 #define TERM_RAWKEYS 64      //switch a terminal into 'raw' mode rather than canonical (usually you want this)
 #define TERMBAR_UPPER 128
 #define TERMBAR_LOWER 256
-#define TERM_SAVEATTRIBS 512
-#define TERM_SAVE_ATTRIBS 512
-#define TERM_MOUSE        1024 //send xterm mouse events for buttons 1 2 and 3
-#define TERM_WHEELMOUSE   2048 //send xterm mouse events for buttons 1 2 and 3, and wheel buttons (4 and 5)
+#define TERM_SAVEATTRIBS  512    // save terminal attributes to they can be reset by TerminalReset (you usually want this)
+#define TERM_SAVE_ATTRIBS 512    // save terminal attributes to they can be reset by TerminalReset (you usually want this)
+#define TERM_MOUSE        1024   //send xterm mouse events for buttons 1 2 and 3
+#define TERM_WHEELMOUSE   2048   //send xterm mouse events for buttons 1 2 and 3, and wheel buttons (4 and 5)
 #define TERM_ALIGN_CENTER 4096
 #define TERM_ALIGN_RIGHT  8192
+#define TERM_FOCUS_EVENTS 16384  //send window focusin/focusout events (these appear as keystrokes XTERM_FOCUS_IN and XTERM_FOCUS_OUT)
 
 //These flags can be passed in the Flags argument of ANSICode
 #define ANSI_HIDE			65536
@@ -160,10 +165,16 @@ char *ANSICode(int Color, int BgColor, int Flags);
 //parse a color name ('red', 'yellow' etc) and return the equivalent ANSI_ flag
 int ANSIParseColor(const char *Str);
 
+char *TerminalStripControlSequences(char *RetStr, const char *Str);
+
+
 // initialize STREAM to be a terminal. This captures terminal width and height (rows and columns) and sets up the scrolling area.
 // Flags can include TERM_HIDECURSOR, to start with cursor hidden, TERM_RAWKEYS to disable 'canonical' mode and get raw keystrokes
 // and TERM_BOTTOMBAR to create a region at the bottom of the screen to hold an information or input bar
 int TerminalInit(STREAM *S, int Flags);
+
+// Initalize stream to be a terminal using 'Config' 
+void TerminalSetup(STREAM *S, const char *Config);
 
 // Specify if system supports utf8. This is global for all terminals. 'level' can be
 //   0 - not supported
@@ -221,6 +232,31 @@ void TerminalReset(STREAM *S);
 #define XtermUnFullscreen(S) ((void) STREAMWriteLine("\x1[10;0t", (S)))
 
 
+//Xterm clipboard functions. Should work with any terminal that supports OSC52 clipboard query.
+//With Xterm this feature has to be turned on by the 'allowWindowOps' resource, e.g.:
+// xterm -xrm "*allowWindowOps: true"
+//Applications that read keystrokes can call 'XtermRequestClipboard' or 'XtermRequestSelection'
+//and then wait for the XTERM_CLIPBOARD or XTERM_SELECTION 'keystrokes'. When these are received
+//call 'XtermReadClipboard' or 'XtermReadSelection' to get the Clipboard or selection data
+
+#define XtermRequestClipboard(S) ( XtermStringCommand("\x1b]52;", "c;?", "\007", (S)) )
+#define XtermRequestSelection(S) ( XtermStringCommand("\x1b]52;", "p;?", "\007", (S)) )
+#define XtermReadClipboard(S) ( STREAMGetValue((S), "LU_XTERM_CLIPBOARD") )
+#define XtermReadSelection(S) ( STREAMGetValue((S), "LU_XTERM_SELECTION") )
+#define XtermSetClipboard(S, Data) ( XtermStringBase64Command("\x1b]52;c;", (Data), "\007", (S)) )
+#define XtermSetSelection(S, Data) ( XtermStringBase64Command("\x1b]52;p;", (Data), "\007", (S)) )
+
+//These function request the clipboard or the primary seleciton, and wait until it is recieved.
+//For Terminals that don't support this function, the program will hang until the stream
+//times out, so it's likely a good idea to use STREAMTimeout(S, 5); so it only hangs for 5
+//centisecs. Any keypresses queued when this function is called will be lost.
+char *XtermGetClipboard(char *RetStr, STREAM *S);
+char *XtermGetSelection(char *RetStr, STREAM *S);
+
+#define XTermSetTerminalSize(S, wide, high) XtermSetTerminalSize(S, wide, high)
+void XtermSetTerminalSize(STREAM *S, int wide, int high);
+
+//generic function for building xterm query escape sequences
 void XtermStringCommand(const char *Prefix, const char *Str, const char *Postfix, STREAM *S);
 
 //put a character. Char can be a value outside the ANSI range which will result in an xterm unicode character string being output
@@ -234,6 +270,7 @@ const char *TerminalFormatSubStr(const char *Str, char **RetStr, STREAM *Term);
 
 //'Str' is a format string with 'tilde commands' in it. The ANSI coded result is output to stream S
 void TerminalPutStr(const char *Str, STREAM *S);
+
 
 
 //step past a single character. Understands tilde-strings and (some) unicode, consuming them as one character
