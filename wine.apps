@@ -13,11 +13,10 @@ DotNet48 platform=windows url=https://download.visualstudio.microsoft.com/downlo
 * category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
 Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.10/win32/$(locale)/seamonkey-2.53.10.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' sha256='48d5614fd9b81c1a0a318cac091fe09f7fdb84ec2000ce44c2cd8174b6e710a8' os-version=winxp warn='This program crashes under wine 6.x'
+SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x'
 SlimBrowser platform=windows url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
 PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' 
 OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
-
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
 Waterfox platform=windows url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
@@ -28,7 +27,7 @@ BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releas
 * category='Email;Office;Network' locale='$(lang)-$(country)' 
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-78.12.0-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
+Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
 SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey exec='seamonkey.exe'
 EmClient platform=windows os-version=win81
 MailSpring platform=windows os-version=win81 requires=DotNet45
