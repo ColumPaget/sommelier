@@ -608,14 +608,14 @@ static int InstallRequiredDependancies(TAction *Act)
 
 static int CheckDLC(TAction *Act)
 {
-TAction *Parent;
-int result=FALSE;
+    TAction *Parent;
+    int result=FALSE;
 
-Parent=ActionCreate(ACT_INSTALL, Act->Parent);
-result=DesktopFileRead(Parent);
-ActionDestroy(Parent);
+    Parent=ActionCreate(ACT_INSTALL, Act->Parent);
+    result=DesktopFileRead(Parent);
+    ActionDestroy(Parent);
 
-return(result);
+    return(result);
 }
 
 
@@ -639,11 +639,11 @@ void InstallApp(TAction *Act)
         Tempstr=FormatStr(Tempstr, "~r~eERROR: Unknown platform type '%s'~0 Cannot install.\n", Act->Platform);
         TerminalPutStr(Tempstr, NULL);
     }
-		else if ( (Act->Flags & FLAG_DLC) && (! CheckDLC(Act)))
-		{
-	     Tempstr=FormatStr(Tempstr, "~r~eERROR: '%s' is DLC for '%s', but parent package is not installed.~0\n", Act->Name, Act->Parent);
-       TerminalPutStr(Tempstr, NULL);
-		}
+    else if ( (Act->Flags & FLAG_DLC) && (! CheckDLC(Act)))
+    {
+        Tempstr=FormatStr(Tempstr, "~r~eERROR: '%s' is DLC for '%s', but parent package is not installed.~0\n", Act->Name, Act->Parent);
+        TerminalPutStr(Tempstr, NULL);
+    }
     else
     {
         //is an emulator installed for this platform? NULL means one is required by can't be found,

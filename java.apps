@@ -51,7 +51,7 @@ FreePlane url=https://prdownloads.sourceforge.net/freeplane/freeplane_bin-1.8.11
 JNetMap url=https://prdownloads.sourceforge.net/jnetmap/jNetMap-0.5.4.jar?download install-type='executable' sha256='d42a99918f55073736fc6c67efc0d59ec37a864cb9f6a516ff0a4a008c72ba5b' 
 Globonote url=https://prdownloads.sourceforge.net/globonote/globonote-1.6.zip?download movefiles-from='GloboNote/*' exec='GloboNote.jar' sha256='3a557e7cd4c7cce72e4fa5f628635ac23ff123b876900218acac2d560dc81b06' 
 RText url=https://sourceforge.net/projects/rtext/files/rtext/2.5.6/rtext_2.5.6_unix_bin.tar.gz/download download-type='tar.gz' sha256='7a2380f495d3156f5a99b3323012fef3d6980c9f4a2a58e492b57cf7508a14f5' 
-atunes platform=java-cmdline url=https://sourceforge.net/projects/atunes/files/atunes/aTunes%203.1.2/atunes-3.1.2-bin.tar.gz/download download-type=tar.gz movefiles-from=atunes*/*  emulator_args='-Dsubstancelaf.windowRoundedCorners=false -Dinsubstantial.looseTableCellRenderers=true -Djava.library.path=./ -Xms128m -Xmx256m -splash:splash.gif -cp aTunes.jar:lib/* net.sourceforge.atunes.Main' exec=aTunes.jar
+atunes platform=java-cmdline url=https://sourceforge.net/projects/atunes/files/atunes/aTunes%203.1.2/atunes-3.1.2-bin.tar.gz/download download-type=tar.gz movefiles-from=atunes*/*  emulator-args='-Dsubstancelaf.windowRoundedCorners=false -Dinsubstantial.looseTableCellRenderers=true -Djava.library.path=./ -Xms128m -Xmx256m -splash:splash.gif -cp aTunes.jar:lib/* net.sourceforge.atunes.Main' exec=aTunes.jar
 QRCodeGenerator url=https://sites.google.com/site/qrcodeforwn/downloads/qrcodegen_1.14.2.zip?attredirects=0&d=1
 ImageJ url=https://wsr.imagej.net/distros/cross-platform/ij153.zip
 

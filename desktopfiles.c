@@ -132,10 +132,81 @@ int DesktopFileRead(TAction *Act)
 
 
 
+//setup configuration for a native linux app
+static void DesktopFileConfigureNative(TAction *Act)
+{
+    const char *ptr;
+    char *Tempstr=NULL;
+    ptr=GetVar(Act->Vars, "exec");
+
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
+        SetVar(Act->Vars, "ld_preload", Tempstr);
+        Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
+        StripLeadingWhitespace(Tempstr);
+        StripTrailingWhitespace(Tempstr);
+
+        SetVar(Act->Vars, "invocation", Tempstr);
+    }
+
+    ptr=GetVar(Act->Vars, "exec64");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, "'$(exec-dir)/$(exec64)'", Act->Vars, 0);
+        StripLeadingWhitespace(Tempstr);
+        StripTrailingWhitespace(Tempstr);
+
+        SetVar(Act->Vars, "invocation64", Tempstr);
+    }
+    SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+
+    Destroy(Tempstr);
+}
+
+
+//setup configuration for a windows app run via WINE
+static void DesktopFileConfigureWine(TAction *Act)
+{
+    char *Tempstr=NULL;
+    //for windows we must override the found exec-path to be in windows format
+    Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
+    strrep(Tempstr, '/', '\\');
+    SetVar(Act->Vars,"exec-path", Tempstr);
+
+    if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
+    else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
+    else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)' $(exec-args)", Act->Vars, 0);
+
+    SetVar(Act->Vars, "invocation", Tempstr);
+    SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+
+    Destroy(Tempstr);
+}
+
+
+//setup configuration for an app run via an emulator
+static void DesktopFileConfigureEmulator(TAction *Act)
+{
+    char *EmuInvoke=NULL, *Tempstr=NULL;
+
+
+    EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
+    Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
+    StripLeadingWhitespace(Tempstr);
+    StripTrailingWhitespace(Tempstr);
+    SetVar(Act->Vars, "invocation", Tempstr);
+    SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+
+    Destroy(EmuInvoke);
+    Destroy(Tempstr);
+}
+
+
 void DesktopFileGenerate(TAction *Act)
 {
     STREAM *S;
-    char *Tempstr=NULL, *EmuInvoke=NULL, *Hash=NULL;
+    char *Tempstr=NULL, *Hash=NULL;
     const char *ptr;
 
 
@@ -150,17 +221,7 @@ void DesktopFileGenerate(TAction *Act)
         switch (Act->PlatformID)
         {
         case PLATFORM_WINDOWS:
-            //for windows we must override the found exec-path to be in windows format
-            Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
-            strrep(Tempstr, '/', '\\');
-            SetVar(Act->Vars,"exec-path", Tempstr);
-
-            if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
-            else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
-            else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)' $(exec-args)", Act->Vars, 0);
-
-            SetVar(Act->Vars, "invocation", Tempstr);
-            SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+            DesktopFileConfigureWine(Act);
             break;
 
         //native apps
@@ -168,29 +229,7 @@ void DesktopFileGenerate(TAction *Act)
         case PLATFORM_LINUX64:
         case PLATFORM_GOGLINUX:
         case PLATFORM_GOGLINUX64:
-            ptr=GetVar(Act->Vars, "exec");
-
-            if (StrValid(ptr))
-            {
-                Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
-                SetVar(Act->Vars, "ld_preload", Tempstr);
-                Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
-                StripLeadingWhitespace(Tempstr);
-                StripTrailingWhitespace(Tempstr);
-
-                SetVar(Act->Vars, "invocation", Tempstr);
-            }
-
-            ptr=GetVar(Act->Vars, "exec64");
-            if (StrValid(ptr))
-            {
-                Tempstr=SubstituteVarsInString(Tempstr, "'$(exec-dir)/$(exec64)'", Act->Vars, 0);
-                StripLeadingWhitespace(Tempstr);
-                StripTrailingWhitespace(Tempstr);
-
-                SetVar(Act->Vars, "invocation64", Tempstr);
-            }
-            SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+            DesktopFileConfigureNative(Act);
             break;
 
         default:
@@ -201,12 +240,7 @@ void DesktopFileGenerate(TAction *Act)
         case PLATFORM_GOGDOS:
         case PLATFORM_GOGWINDOS:
         case PLATFORM_DOOM:
-            EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
-            Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
-            StripLeadingWhitespace(Tempstr);
-            StripTrailingWhitespace(Tempstr);
-            SetVar(Act->Vars, "invocation", Tempstr);
-            SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
+            DesktopFileConfigureEmulator(Act);
             break;
 
 
@@ -239,6 +273,5 @@ void DesktopFileGenerate(TAction *Act)
     }
 
     DestroyString(Tempstr);
-    DestroyString(EmuInvoke);
     DestroyString(Hash);
 }

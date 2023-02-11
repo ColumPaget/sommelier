@@ -53,11 +53,11 @@ void UnInstallApp(TAction *Act)
 {
     char *Tempstr=NULL;
 
-		if (Act->Flags & FLAG_DLC)
-		{
-			TerminalPutStr("~rERROR: DLC items cannot be uninstalled~0\n", NULL);
-			return;
-		}
+    if (Act->Flags & FLAG_DLC)
+    {
+        TerminalPutStr("~rERROR: DLC items cannot be uninstalled~0\n", NULL);
+        return;
+    }
 
     printf("Uninstall: %s\n", Act->Name);
 //We don't need this path, but this function also sets the 'prefix' var,

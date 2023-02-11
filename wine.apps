@@ -95,7 +95,7 @@ TikZit platform=windows url=https://github.com/tikzit/tikzit/releases/download/v
 
 * category='3DGraphics;Graphics'
 Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
-Anim8or platform=windows url=http://anim8or.com/download/files/animv100.zip version1.0='' exec='Anim8or.exe' type='3D-modeller' rating='platinum' sha256='fc3c3bcca04aba801ca79258529f17472aec9661e2b169570e7528c7be3bb5e6' comment='3D animation/modelling package' 
+Anim8or platform=windows url=http://anim8or.com/download/files/animv100.zip exec='Anim8or.exe' type='3D-modeller' rating='platinum' sha256='fc3c3bcca04aba801ca79258529f17472aec9661e2b169570e7528c7be3bb5e6' comment='3D animation/modelling package' 
 K-3d platform=windows url=https://downloads.sourceforge.net/project/k3d/K-3D%20Win32%20Binaries/K-3D%200.8.0.1/k3d-setup-0.8.0.1.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fk3d%2Ffiles%2FK-3D%2520Win32%2520Binaries%2FK-3D%25200.8.0.1%2Fk3d-setup-0.8.0.1.exe%2Fdownload&ts=1524089236 version='0.8.0.1' installer='k3d-setup-0.8.0.1.exe' exec='k3d.exe' type='3D-modeller' rating='platinum' sha256='66c0bb0a85bd1ebf6bad4dc7356eaf0f062c35b21aa9487a37a4e8443f21e205' comment='3D modelling package' 
 OpenFX platform=windows url=http://openfx.org/download/install.msi exec='openfx.exe' sha256='446c7c63a3e940aaa1057e1a417995b4e28554a1b5ac938392782d5c8152d5cb' 
 Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' 
@@ -173,7 +173,7 @@ Teamviewer platform=windows url=https://download.teamviewer.com/download/version
 * comment='Player;Audio'
 AIMP platform=windows url=https://www.aimp.ru/?do=download.file&id=4 sha256='41070175804131607f907e359f1268ee0863a6493d8c94ce14a4be11ba7c978c' 
 CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolplayer/Coolplayer/219/CoolPlayer219_Bin.zip?r=&amp;ts=1532774479 version='219' exec='coolplayer.exe' sha256='a6a7c42c3b2aa45df8d02a6c98a0aec6dd67bab1be835d09d4ef1b1861002337' winmanager='N' comment='MP3 player' 
-XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc, etc=' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
+XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
 Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
 RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
 QMMP platform=windows url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.2-win32.exe sha256='3822419fa36e247426c76720911e38e879b04fefe3a83d362b6f0f566345eb58' exec=qmmp.exe
@@ -290,7 +290,7 @@ HexPlus platform=windows url=https://archive.org/download/Clipboard2015053001/he
 Codex platform=windows url=https://archive.org/download/Codex_1020/codex.zip requires='VB5' comment='Mastermind 'guess the code' game' sha256='707a137e0c5dbe013ceb9c9a8c9c1fe29878ab41e1eeedcef635674c9b6a7f37' 
 Ruckingenur2 platform=windows url=http://www.zachtronics.com/images/ruckingenur2-installer.exe sha256='c8631d5902930e3563a8195edf0980c4d05b944fda2cefa7630905261ab28400' comment='Hardware Hacking Game. A little strange' 
 RuckingenurCE platform=windows url=http://www.zachtronics.com/images/ruckingenur-ce-installer.exe sha256='47a1a4094d5dda86130e5085aa46e3c494e90af084a919848abff6501204a97c' comment='Community Edition of Ruckingenur2 hardware hacking game, with new levels created by players' 
-7Colors platform=windows url=https://archive.org/download/7Colors_1020/7colors95.zip exec='7colors.exe' requries='VB5' sha256='bd04d53d18cdb58bd6b4b622c4eb624fd709d610e01dd3591c8cdffb748ad66f' 
+7Colors platform=windows url=https://archive.org/download/7Colors_1020/7colors95.zip exec='7colors.exe' requires='VB5' sha256='bd04d53d18cdb58bd6b4b622c4eb624fd709d610e01dd3591c8cdffb748ad66f' 
 
 * category='StrategyGame;Game'
 AgeOfConquest platform=windows url=http://www.ageofconquest.com/download/user_aoc/setup_conquest_win32_4.18.221_auto.exe comment='Risk style conquest game' sha256='6b5b3fbb0e08c821e0541edc91c71c3740dbe0dc9b66e062fd98a34bb58df5fe' 

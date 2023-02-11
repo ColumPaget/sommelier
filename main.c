@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_UNINSTALL:
-								AppLoadConfig(Act);
+                AppLoadConfig(Act);
                 UnInstallApp(Act);
                 break;
 

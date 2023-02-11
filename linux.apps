@@ -78,8 +78,8 @@ Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.
 * category='FileTransfer;Network'
 FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
-DropBox platform=linux32 url=https://www.dropbox.com/download?plat=lnx.x86 download-type=tar.gz download-file=download movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
-DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 download-type=tar.gz download-file=download movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
+DropBox platform=linux32 url=https://www.dropbox.com/download?plat=lnx.x86 download-type=tar.gz movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
+DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 download-type=tar.gz movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
 RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
@@ -113,7 +113,7 @@ TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32
 TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
 
 
-* categoary='Game'
+* category='Game'
 TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' comment='Game requires specific version of libc++"
 
 

@@ -233,6 +233,78 @@ grab=y/n                DOOM only: grab mouse, or not
 For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style `vdesk=600x300`.
 
 
+
+ADDING APPLICATIONS
+===================
+
+Application config files for each platform are stored in `¬¬¬melier` and named `<platform>.apps`. Each app is configured with a line that looks like:
+
+
+```
+Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
+```
+
+These config lines can contain the following values:
+
+```
+platform               platform that this app runs on. Required.
+category               program category for desktop files.
+url                    download url if one exists.
+exec                   the executable file (or emulator rom file) that should be run. If not supplied sommelier will try to auto-find one. Optional
+exec64                 the executable file (or emulator rom file) that should be run for 64bit systems. If not supplied sommelier will try to auto-find one. Optional
+sha256                 sha256 sum/hash of the installer or package file.
+installer              if the downloaded package contains an installer or setup program, then sets its name.
+requires               if another package must be installed for this to run, then this is the name of that package.
+referer                if a website only allows downloads referred from a specific webpage. e.g. referer='http://www.singlecellsoftware.com/caustic'
+exec-args              Command-line arguments to be supplied to app. e.g. Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
+emulator-args          Command-line arguments to be supplied to the emulator or vm that runs this app. e.g. Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+installer-args         Args to pass to the installer program.
+exec-dir               Directory that contains the executable. Used to distinguish between multiple executables with the same name.
+working-dir            Directory to run the program in if it needs to be run in a directory other than the one it was installed in. e.g.  working-dir="$(install-dir)/data/noarch/game"
+dlc                    this package is DownLoadable Content for another package. e.g. 'ColorOfMadness platform=gog:linux dlc parent=DarkestDungeon'
+parent                 for DLC this is the parent app. e.g. 'ColorOfMadness platform=gog:linux dlc parent=DarkestDungeon'
+os-version             WINE only. Set the version of windows to emulate for this app.
+winmanager             WINE only. Allow system window manager to manage this app. 'y' or 'n'. Default 'y'.
+vdesk                  WINE and DOOM, run within a virtual desktop, 'y', 'n' or '<geometry>'. Default 'n'.
+installer-vdesk        run the installer within a virtual desktop, 'y', 'n'. Default 'n'.
+download-type          filetype of downloaded file.
+dlname                 name of downloaded file. Used when the url path does not include the correct filename.
+warn                   warnings to be displayed when the program is installed.
+warn-missingpath       warning to be displayed if a path is missing on the system. e.g.  exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb'
+bundled                If this app is bundled with another one, then this is the name of the other one.
+delete                 After install delete these files. e.g. "delete='tmpfiles/*'"       
+movefiles-from         After install move files to the install directory. e.g. movefiles-from='gearhead-1/*'
+movefiles-to           After install move files from install directory. e.g. movefiles-to=*/msftedit.dll:$(drive_c)/windows/system32
+ld_preload             libraries to preload before running exectuable. e.g. ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so"
+type                   type of program.
+comment                comment.
+```
+
+
+
+PLATFORMS/EMULATORS
+====================
+
+You can add new platforms to the 'platforms.conf' file that's installed into the .sommelier directory. Each of these platforms can have multiple emulators added with the 'emu' variable.
+
+
+
+EMULATOR ROMS
+=============
+
+Some emulators require a rom file. For these you'll have to make a script that runs the emulator with the correct args. E.g. for 'vecx' we'd need a script like:
+
+
+```
+#!/bin/sh
+  
+vecx --bios /usr/share/vecx/bios.bin "$@"
+```
+
+and change the 'emu' entry in platforms.conf to run the script instead of the emulator directly.
+
+
+
 ENVIRONMENT VARIABLES
 =====================
 
