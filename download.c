@@ -73,7 +73,7 @@ static void DownloadShowSSLStatus(STREAM *S)
 
 static int DownloadCopyFile(TAction *Act)
 {
-    char *Tempstr=NULL, *URL=NULL, *cwd=NULL;
+    char *Tempstr=NULL, *URL=NULL, *Args=NULL, *cwd=NULL;
     const char *ptr;
     STREAM *S;
     int bytes=0;
@@ -90,18 +90,18 @@ static int DownloadCopyFile(TAction *Act)
 
     if (StrValid(Act->DownName))
     {
+				Args=MCopyStr(Args, "r User-Agent=Sommelier-", VERSION, " ", NULL);
         ptr=GetVar(Act->Vars, "referer");
         if (StrValid(ptr))
         {
-            S=STREAMOpen(ptr, "r");
+            S=STREAMOpen(ptr, Args);
             Tempstr=STREAMReadDocument(Tempstr, S);
             STREAMClose(S);
 
-            Tempstr=MCopyStr(Tempstr, "r Referer=", ptr, NULL);
-            S=STREAMOpen(URL, Tempstr);
+            Args=MCatStr(Args, "Referer=", ptr, NULL);
         }
-        else S=STREAMOpen(URL, "r");
 
+        S=STREAMOpen(URL, Args);
         if (S)
         {
             ptr=STREAMGetValue(S, "HTTP:ResponseCode");
@@ -143,6 +143,7 @@ static int DownloadCopyFile(TAction *Act)
     }
 
     DestroyString(Tempstr);
+    DestroyString(Args);
     DestroyString(URL);
     DestroyString(cwd);
 

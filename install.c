@@ -680,6 +680,8 @@ void InstallApp(TAction *Act)
 
         InstallSingleItem(Act);
         Tempstr=MCopyStr(Tempstr, "~e~g", Act->Name, " install complete~0\n", NULL);
+				ptr=GetVar(Act->Vars, "donate");
+				if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "~y~eDONATE~0: if you like this software, please consider donating at ~e", ptr, "~0\n", NULL);
         TerminalPutStr(Tempstr, NULL);
     }
 

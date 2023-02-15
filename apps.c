@@ -93,8 +93,6 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
             else SetVar(Act->Vars, Name, Value);
 
-
-
             if (strcasecmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
             else if (strcasecmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
             else if (strcasecmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
@@ -449,7 +447,7 @@ int AppLoadConfig(TAction *App)
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
     if (result) Tempstr=AppFormatPath(Tempstr, App);
-
+		
     Destroy(Tempstr);
 
     return(result);
