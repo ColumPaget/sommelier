@@ -12,7 +12,8 @@ int UninstallDir(TAction *Act, const char *Dir)
     int i;
 
     FileSystemUnMount(Dir, "");
-    Tempstr=MCatStr(Tempstr, Dir, "/*", NULL);
+		Tempstr=QuoteCharsInStr(Tempstr, Dir, "[]?*");
+    Tempstr=CatStr(Tempstr, "/*");
     glob(Tempstr, GLOB_PERIOD, 0, &Glob);
     for (i=0; i < Glob.gl_pathc; i++)
     {

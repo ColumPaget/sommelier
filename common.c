@@ -1,6 +1,6 @@
-
 #include "common.h"
 #include "config.h"
+#include <fnmatch.h>
 
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
 

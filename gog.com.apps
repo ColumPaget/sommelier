@@ -28,7 +28,7 @@ DeepSkyDerelicts platform=gog:linux
 DoorKickers platform=gog:linux 
 Duskers platform=gog:linux exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
 DungeonSouls platform=gog:linux exec=runner 
-FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" 
+FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
 FistPuncher platform=gog:linux  warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
 GalaxySquad platform=gog:linux
 Hacknet platform=gog:linux 
@@ -37,6 +37,7 @@ Huniepop platform=gog:linux warn="Linux version of this game has been seen to cr
 InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
 Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
 KingdomRush platform=gog:linux exec="run.sh" 
+LegendOfGrimrock platform=gog:linux exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
 Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 Monolith platform=gog:linux exec=runner
 MotherRussiaBleeds platform=gog:linux 
@@ -164,9 +165,9 @@ Darkstone platform=gog:windows exec=Darkstone.exe exec-args="-nointro" warn="Int
 DeadSpace platform=gog:windows exec="Dead Space.exe"
 Defcon platform=gog:windows 
 DiceyDungeons platform=gog:windows
-DistantWorlds platform=gog:windows
-DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
 Diluvion platform=gog:windows 
+DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
+DistantWorlds platform=gog:windows
 DivineDivinity platform=gog:windows exec=div.exe
 DoomdarksRevenge platform=gog:windows exec=Revenge.exe
 Downwell platform=gog:windows
@@ -190,6 +191,7 @@ FTL platform=gog:windows
 GalacticAssault platform=gog:windows 
 GalacticCivilizations1 platform=gog:windows exec=galciv.exe vdesk=y
 GalaxySquad platform=gog:windows
+GroundControl platform=gog:windows
 HardTruck2 platform=gog:windows exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HaegemoniaLegionsOfIron platform=gog:windows 
 HaegemoniaSolonHeritage platform=gog:windows 

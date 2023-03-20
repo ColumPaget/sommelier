@@ -1,6 +1,7 @@
 #include "find_program.h"
 #include "config.h"
 #include "platforms.h"
+#include "find_files.h"
 
 static char *FindProgramGoFishing(char *RetStr, TAction *Act)
 {

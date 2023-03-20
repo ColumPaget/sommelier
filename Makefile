@@ -1,14 +1,14 @@
 OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
-LIBS=libUseful-4/libUseful.a -lssl -lcrypto  
+LIBS=libUseful-5/libUseful.a -lssl -lcrypto  
 prefix=/usr/local
 exec_prefix=${prefix}
-CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_LIBUSEFUL5=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
 
-all: $(OBJ) patches-subdir main.c libUseful-4/libUseful.a
+all: $(OBJ) patches-subdir main.c libUseful-5/libUseful.a
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
-libUseful-4/libUseful.a:
-	$(MAKE) -C libUseful-4
+libUseful-5/libUseful.a:
+	$(MAKE) -C libUseful-5
 
 common.o: common.h common.c
 	$(CC) $(CFLAGS) -c common.c

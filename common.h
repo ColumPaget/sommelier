@@ -2,7 +2,12 @@
 #ifndef SOMMELIER_COMMON_H
 #define SOMMELIER_COMMON_H
 
+#ifdef HAVE_LIBUSEFUL5
+#include "libUseful-5/libUseful.h"
+#else
 #include "libUseful-4/libUseful.h"
+#endif
+
 #include <wait.h>
 #include <glob.h>
 

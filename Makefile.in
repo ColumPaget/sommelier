@@ -1,14 +1,14 @@
 OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
-LIBS=@STATIC_LIBS@ @LIBS@ 
+LIBS=@LIBUSEFUL_BUNDLED@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 CFLAGS=@CFLAGS@ @DEFS@ -DINSTALL_PREFIX=\"@prefix@\"
 
-all: $(OBJ) patches-subdir main.c @STATIC_LIBS@
+all: $(OBJ) patches-subdir main.c @LIBUSEFUL_BUNDLED@
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
-libUseful-4/libUseful.a:
-	$(MAKE) -C libUseful-4
+libUseful-5/libUseful.a:
+	$(MAKE) -C libUseful-5
 
 common.o: common.h common.c
 	$(CC) $(CFLAGS) -c common.c
