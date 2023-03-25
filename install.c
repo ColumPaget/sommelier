@@ -276,44 +276,61 @@ void InstallCheckEnvironment(TAction *Act)
 }
 
 
+
+char *OffsetPathFromDir(char *Path, const char *Dir)
+{
+    char *Tempstr=NULL;
+    int len;
+
+    len=StrLen(Dir);
+    if ( (len > 0) && (strncmp(Path, Dir, len)==0) )
+    {
+        Tempstr=CopyStr(Tempstr, Path+len);
+        Path=CopyStr(Path, Tempstr);
+    }
+
+    return(Path);
+}
+
+
 /*
 For DOS and windows executables that we might have downloaded as a Zip or an MSI file, we finalize here and setup
 the actual program that we're going to run to execute the application
 */
 static void FinalizeExeInstall(TAction *Act)
 {
-    char *Path=NULL, *Tempstr=NULL, *WorkDir=NULL;
+    char *Path=NULL, *Tempstr=NULL, *ExecDir=NULL, *WorkDir=NULL;
     const char *ptr;
     int len;
 
     PostProcessInstall(Act);
 
     Path=FindProgram(Path, Act);
+    SetVar(Act->Vars, "exec-path", Path);
+
+    //if no exec-dir is set, then set this to the path that we found the executable in
+    ExecDir=CopyStr(ExecDir, GetVar(Act->Vars,"exec-dir"));
+    if (! StrValid(ExecDir))
+    {
+        ExecDir=CopyStr(ExecDir, Path);
+        StrRTruncChar(ExecDir, '/');
+        SetVar(Act->Vars, "exec-dir", ExecDir);
+    }
+
     switch (Act->PlatformID)
     {
     case PLATFORM_WINDOWS:
         //reconfigure path to be from our wine 'drive_c' rather than from system root
-        ptr=GetVar(Act->Vars, "drive_c");
-        len=StrLen(ptr);
-        if ( (len > 0) && (strncmp(Path, ptr, len)==0) )
-        {
-            Tempstr=CopyStr(Tempstr, Path+len);
-            Path=CopyStr(Path, Tempstr);
-        }
+        Path=OffsetPathFromDir(Path, GetVar(Act->Vars, "drive_c"));
 
-        ptr=GetVar(Act->Vars,"exec-dir");
-        if (! StrValid(ptr))
-        {
-            Tempstr=CopyStr(Tempstr, Path);
-            StrRTruncChar(Tempstr, '/');
-            SetVar(Act->Vars, "exec-dir", Tempstr);
-        }
-        Tempstr=SubstituteVarsInString(Tempstr, "$(drive_c)$(exec-dir)", Act->Vars, 0);
-        SetVar(Act->Vars, "working-dir", Tempstr);
+        Tempstr=CopyStr(Tempstr, ExecDir);
+        Tempstr=OffsetPathFromDir(Tempstr, GetVar(Act->Vars, "drive_c"));
+        SetVar(Act->Vars, "exec-dir", Tempstr);
+        SetVar(Act->Vars, "working-dir", ExecDir);
         break;
 
     case PLATFORM_GOGSCUMMVM:
-        Path=MCopyStr(Path, GetVar(Act->Vars, "exec-dir"), "/data/noarch/data", NULL);
+        Path=MCopyStr(Path, GetVar(Act->Vars, "install-dir"), "/data/noarch/data", NULL);
         SetVar(Act->Vars, "working-dir", Path);
         break;
 
@@ -341,7 +358,6 @@ static void FinalizeExeInstall(TAction *Act)
     {
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
-        SetVar(Act->Vars, "exec-path", Path);
 
         InstallCheckEnvironment(Act);
         //must do this before DesktopFileGenerate, because some of the settings for some platforms are stored in the
@@ -361,6 +377,7 @@ static void FinalizeExeInstall(TAction *Act)
 
     Destroy(Tempstr);
     Destroy(WorkDir);
+    Destroy(ExecDir);
     Destroy(Path);
 }
 
@@ -680,8 +697,8 @@ void InstallApp(TAction *Act)
 
         InstallSingleItem(Act);
         Tempstr=MCopyStr(Tempstr, "~e~g", Act->Name, " install complete~0\n", NULL);
-				ptr=GetVar(Act->Vars, "donate");
-				if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "~y~eDONATE~0: if you like this software, please consider donating at ~e", ptr, "~0\n", NULL);
+        ptr=GetVar(Act->Vars, "donate");
+        if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "~y~eDONATE~0: if you like this software, please consider donating at ~e", ptr, "~0\n", NULL);
         TerminalPutStr(Tempstr, NULL);
     }
 

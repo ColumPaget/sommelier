@@ -338,7 +338,6 @@ char *AppFormatPath(char *Path, TAction *Act)
     else
     {
         SetVar(Act->Vars, "drive_c",Path);
-        SetVar(Act->Vars, "exec-dir", Path);
     }
 
     Path=SlashTerminateDirectoryPath(Path);
@@ -447,7 +446,7 @@ int AppLoadConfig(TAction *App)
 
 //we don't need the path that is returned here, but this function sets a lot of default variables and paths
     if (result) Tempstr=AppFormatPath(Tempstr, App);
-		
+
     Destroy(Tempstr);
 
     return(result);

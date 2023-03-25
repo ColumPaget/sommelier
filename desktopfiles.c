@@ -169,6 +169,7 @@ static void DesktopFileConfigureNative(TAction *Act)
 static void DesktopFileConfigureWine(TAction *Act)
 {
     char *Tempstr=NULL;
+
     //for windows we must override the found exec-path to be in windows format
     Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
     strrep(Tempstr, '/', '\\');

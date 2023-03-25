@@ -12,7 +12,8 @@ static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
     char *Token=NULL, *Src=NULL, *Dest=NULL, *Lib=NULL, *LibPath=NULL;
     const char *ptr;
 
-    printf("Executable requires missing libs: %s\n", MissingLibs);
+    Token=FormatStr(Token,"~rExecutable requires missing libs: %s~0\n", MissingLibs);
+		TerminalPutStr(Token, NULL);
     LibPath=NativeLoadLibPath(LibPath);
     ptr=GetToken(MissingLibs, " ", &Token, 0);
     while (ptr)

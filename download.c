@@ -90,7 +90,7 @@ static int DownloadCopyFile(TAction *Act)
 
     if (StrValid(Act->DownName))
     {
-				Args=MCopyStr(Args, "r User-Agent=Sommelier-", VERSION, " ", NULL);
+        Args=MCopyStr(Args, "r User-Agent=Sommelier-", VERSION, " ", NULL);
         ptr=GetVar(Act->Vars, "referer");
         if (StrValid(ptr))
         {

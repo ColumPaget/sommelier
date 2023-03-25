@@ -5,13 +5,15 @@
 
 
 140 platform=gog:linux exec="140Linux.x86" exec64="140Linux.x86_64"
-Spacechem platform=gog:linux exec="spacechem-launcher.sh"
-TIS100 platform=gog:linux 
 AnomalyWarzoneEarth platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
 Anomaly2 platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=Anomaly2
 AnomalyKorea platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=AnomalyKorea
 AIWarFleetCommand platform=gog:linux exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
+Ascendant platform=gog:linux
 Battlevoid platform=gog:linux exec=harbinger
+Braveland platform=gog:linux exec="Braveland.x86" exec64="Braveland.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandWizard platform=gog:linux exec="Braveland Wizard.x86" exec64="Braveland Wizard.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandPirate platform=gog:linux exec="Braveland Pirate.x86" exec64="Braveland Pirate.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
 CelestianTales platform=gog:linux 
 ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
 Convoy platform=gog:linux exec="Convoy.x86" exec64="Convoy.x86_64"
@@ -31,30 +33,33 @@ DungeonSouls platform=gog:linux exec=runner
 FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
 FistPuncher platform=gog:linux  warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
 GalaxySquad platform=gog:linux
-Hacknet platform=gog:linux 
-Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
-Huniepop platform=gog:linux warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
-InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
-Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
-KingdomRush platform=gog:linux exec="run.sh" 
-LegendOfGrimrock platform=gog:linux exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
-Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
-Monolith platform=gog:linux exec=runner
-MotherRussiaBleeds platform=gog:linux 
-PapersPlease platform=gog:linux exec=PapersPlease 
 Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest platform=gog:linux 
 HandOfFate platform=gog:linux
-QuestForInfamy platform=gog:linux 
+Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+HotlineMiami platform=gog:linux exec="hotline_launcher"
+Huniepop platform=gog:linux warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
+InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
+Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
+LegendOfGrimrock platform=gog:linux exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
+LostSea platform=gog:linux
+Monolith platform=gog:linux exec=runner
+MotherRussiaBleeds platform=gog:linux 
 NeoScavenger platform=gog:linux exec="NEOScavenger"
+PapersPlease platform=gog:linux exec="PapersPlease "
+Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
+QuestForInfamy platform=gog:linux 
 RaceTheSun platform=gog:linux 
 Realpolitiks platform=gog:linux 
+RogueLegacy platform=gog:linux
 ShadowrunReturns platform=gog:linux exec="Shadowrun.sh"
-SlayTheSpire platform=gog:linux exec="SlayTheSpire"
+Silver platform=gog:linux exec="silver_launcher.sh"
 SpaceCom platform=gog:linux exec="SPACECOM.x86"
+Spacechem platform=gog:linux exec="spacechem-launcher.sh"
 Starcrawlers platform=gog:linux exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
 StarVikingsForever platform=gog:linux
-SuperHexagon platform=gog:linux exec="SuperHexagon" exec64="SuperHexagon"
+SuperHexagon platform=gog:linux exec="SuperHexagon.x86" exec64="SuperHexagon.x86_64" working-dir="$(exec-dir)"
+TIS100 platform=gog:linux 
 Tangledeep platform=gog:linux
 TheWestportIndependent platform=gog:linux exec=the_westport_independent
 Transistor platform=gog:linux exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
@@ -67,12 +72,16 @@ DiceyDungeons platform=gog:linux64
 IntoTheBreach platform=gog:linux64 exec=Breach
 IratusLordOfTheDead platform=gog:linux64 exec='Iratus'
 KerbalSpaceProgram platform=gog:linux64 category='Game' exec="KSPLauncher.x86_64"
+KingdomRush platform=gog:linux64 exec="run.sh" 
+MainframeDefenders platform=gog:linux64
 MiniMetro platform=gog:linux64 exec="Mini Metro"
+Loria platform=gog:linux64
 OpenTTD platform=gog:linux64 exec=openttd
 OutThere platform=gog:linux64 exec="outthereomega.x86"
 PrisonArchitect platform=gog:linux64 exec="PrisonArchitect.sh"
 RadioCommander platform=gog:linux64 exec="RC.x86_64"
 Shing platform=gog:linux64 exec="Shing!.x86_64"
+SlayTheSpire platform=gog:linux exec64="SlayTheSpire"
 StardewValley platform=gog:linux64 exec=StardewValley
 Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
 
@@ -124,6 +133,8 @@ SubWar2050 platform=gog:windos exec="subwar.bat"
 ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 Timelapse platform=gog:windos 
+Witchaven platform=gog:windows exec="run-game.bat"
+Witchaven2 platform=gog:windows exec="run-game.bat"
 XComUFODefense platform=gog:windos 
 
 
@@ -154,6 +165,7 @@ Caravan platform=gog:windows
 Carcassonne platform=gog:windows
 ChaosReborn platform=gog:windows 
 ChaosOverlords platform=gog:windows 
+Civilization3 platform=gog:windows exec="Civ3Launcher.exe"
 CombatChess platform=gog:windows
 CorsairsGold platform=gog:windows exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
 CovidTheOutbreak platform=gog:windows
@@ -198,6 +210,7 @@ HaegemoniaSolonHeritage platform=gog:windows
 HeroesOfMightAndMagic3 platform=gog:windows 
 Hexplore platform=gog:windows exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HitmanCodename47 platform=gog:windows 
+HotlineMiami platform=gog:windows exec="HotlineLauncher.exe"
 Huniepop platform=gog:windows
 Imperialism platform=gog:windows 
 InfestedPlanet platform=gog:windows
@@ -205,8 +218,10 @@ IntoTheBreach platform=gog:windows
 KingdomRush platform=gog:windows 
 KingdomUnderFireHeroes platform=gog:windows 
 KingdomUnderFireCrusaders platform=gog:windows 
+KingOfDragonPass1999 platform=gog:windows vdesk=y exec=KoDP.exe warn="This installer is for the 1999 original version distributed with the remaster on gog"
 KingsBounty platform=gog:windows 
-Locomotion platform=gog:windows exec=LOCO.EXE vdesk=y
+KnightShift platform=gog:windows exec="KnightShift.exe"
+Locomotion platform=gog:windows exec="LOCO.EXE" vdesk=y
 LordsOfMidnight platform=gog:windows exec=Midnight.exe
 MainLining platform=gog:windows
 MagicMaker platform=gog:windows 
@@ -243,7 +258,7 @@ ShadowrunReturns platform=gog:windows
 ShadowWatch platform=gog:windows 
 SherlockHolmesVsJackTheRipper platform=gog:windows 
 SimCity3000 platform=gog:windows
-SlayTheSpire platform=gog:windows exec="SlayTheSpire"
+SlayTheSpire platform=gog:windows exec="SlayTheSpire.exe"
 SmugglersV platform=gog:windows 
 SpaceColony platform=gog:windows 
 SpaceCom platform=gog:windows 
@@ -259,6 +274,8 @@ StarWolves platform=gog:windows
 StarVikingsForever platform=gog:windows
 StealthBastard platform=gog:windows exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha platform=gog:windows 
+StrongholdHD platform=gog:windows
+SubmarineTitans platform=gog:windows exec="ST.exe"
 SwordOfTheStars platform=gog:windows exec="Sword of the Stars.exe" 
 #rename="$(drive_c)/GOG\ Games/Sword\ of \ the\ Stars/Sword\ of\ the\ Stars.exe $(drive_c)/GOG\ Games/SwordoftheStars.exe"
 SystemShock2 platform=gog:windows os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
@@ -273,6 +290,7 @@ Thief platform=gog:windows exec="THIEF.EXE" vdesk=y warn="This game installs in 
 Thief2 platform=gog:windows 
 Thief3 platform=gog:windows 
 ThisIsThePolice platform=gog:windows 
+ThroneOfDarkness platform=gog:windows
 Torchlight platform=gog:windows os-version=winxp
 Torchlight2 platform=gog:windows os-version=winxp exec=Torchlight2.exe
 Tropico platform=gog:windows vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
@@ -287,7 +305,7 @@ VtmRedemption platform=gog:windows exec="vampire.exe" warn="This game installs i
 W4kRitesOfWar platform=gog:windows vdesk=y exec=RoW.exe
 Westerado platform=gog:windows exec=WesteradoDB.exe
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-WizardsAndWarriors platform=gog:windows
+WizardsAndWarriors platform=gog:windows vdesk=y
 X:BeyondTheFrontier platform=gog:windows
 
 
