@@ -4,7 +4,7 @@
 #include "native.h"
 #include "apps.h"
 #include "desktopfiles.h"
-
+#include "xrandr.h"
 
 
 static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
@@ -82,9 +82,10 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
 
 
 
-void RunSandboxed(TAction *Act)
+pid_t RunSandboxed(TAction *Act)
 {
     char *SpawnConfig=NULL, *Tempstr=NULL;
+		pid_t pid;
 
 
     seteuid(0);
@@ -116,18 +117,21 @@ void RunSandboxed(TAction *Act)
 
     Tempstr=CopyStr(Tempstr, Act->Exec);
     if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
-    Spawn(Tempstr, SpawnConfig);
+    pid=Spawn(Tempstr, SpawnConfig);
 
     Destroy(Tempstr);
     Destroy(SpawnConfig);
+
+	return(pid);
 }
 
 
 
-void RunNormal(TAction *Act)
+pid_t RunNormal(TAction *Act)
 {
     char *SpawnConfig=NULL, *Tempstr=NULL;
     const char *ptr;
+		pid_t pid=-1;
 
 
     ptr=GetVar(Act->Vars, "working-dir");
@@ -141,24 +145,35 @@ void RunNormal(TAction *Act)
 
     if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
     SpawnConfig=CopyStr(SpawnConfig, "+stderr");
-    Spawn(Tempstr, SpawnConfig);
+    pid=Spawn(Tempstr, SpawnConfig);
 
     Destroy(Tempstr);
     Destroy(SpawnConfig);
+
+return(pid);
 }
 
 
 void RunApplication(TAction *Act)
 {
     char *Tempstr=NULL;
+		int width, height;
+		pid_t pid;
 
     if (DesktopFileRead(Act))
     {
         Tempstr=AppFormatPath(Tempstr,  Act);
         if (StrValid(Act->Exec))
         {
+						XRandrGetResolution(&width, &height);
             if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
-            else RunNormal(Act);
+            else pid=RunNormal(Act);
+
+						if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+						{
+						waitpid(pid, NULL, 0);
+						XRandrSetResolution(width, height);
+						}
         }
         else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
     }

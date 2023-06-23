@@ -61,7 +61,7 @@ MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-
 Teamspeak platform=windows url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
 Ekiga platform=windows url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe sha256=334044d5b5f4e37631adcb0dca2bf13b3bede4e60bb0f0ffaea318ef73b34e6b
 Webex platform=windows url=https://binaries.webex.com/WebexTeamsDesktop-Windows-Gold/Webex_x86.msi 
-Zoom platform=windows url=https://cdn.zoom.us/prod/5.7.4.804/ZoomInstaller.exe download-type=7za inner-package=7za:Zoom.msi exec=Zoom.exe requires=MSFTEDIT
+Zoom platform=windows url=https://zoom.us/client/latest/ZoomInstaller.exe download-type=7za inner-package=7za:Zoom.msi exec=Zoom.exe requires=MSFTEDIT
 
 * category='IRCClient;Chat;Internet;Network'
 IceChat platform=windows url=https://github.com/icechat/IceChat/releases/download/9.50P/icechat-portable.zip exec='IceChat2009.exe' comment='IRC Client' 

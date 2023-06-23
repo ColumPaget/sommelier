@@ -84,7 +84,7 @@ RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v
 
 * category='Conferencing;VOIP;Telephony;Chat;Internet;Network'
 Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
-Zoom platform=linux64 url=https://cdn.zoom.us/prod/5.6.13632.0328/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='7ed3b1610f80118649a93bddb017c954c9aa083c787cee9564cbb0cdf8f2c200' 
+Zoom platform=linux64 url=https://zoom.us/client/5.15.0.4063/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
 
 
 *category=Electronics

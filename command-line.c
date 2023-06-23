@@ -31,6 +31,7 @@ static void PrintUsage()
     printf("  -system                       install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
     printf("  -hash                         hash downloads even if they have no expected hash value\n");
+    printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
     printf("\n");
     printf("Proxy urls have the form: \n");
     printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -95,6 +96,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-d")==0)
     {
         LibUsefulSetValue("HTTP:Debug","Y");

@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o
+OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
 LIBS=@LIBUSEFUL_BUNDLED@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -60,6 +60,10 @@ regedit.o: regedit.h regedit.c
 
 run-application.o: run-application.h run-application.c
 	$(CC) $(CFLAGS) -c run-application.c
+
+xrandr.o: xrandr.h xrandr.c
+	$(CC) $(CFLAGS) -c xrandr.c
+
 
 patches-subdir:
 	- $(MAKE) -C patches
