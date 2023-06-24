@@ -1,4 +1,4 @@
-*category='Game' 
+* category='Game' 
 #Things available through gog.com
 
 #these games have worked for me in native linux
@@ -255,6 +255,7 @@ MoonbaseCommander platform=gog:windows exec=moonbase.exe
 MoonHunters platform=gog:windows
 MortalKombat4 platform=gog:windows exec="mk4.exe"
 MotoRacer2 platform=windows exec="moto.exe"
+MotoRacer3 platform=windows exec="MotoRacer3.exe" warn="You must turn on 'no intro' in the 'display' tab of the launcher, or the game will freeze on startup"
 Nexus platform=gog:windows exec=nexus.exe
 NeoScavenger platform=gog:windows
 Nox platform=gog:windows warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
@@ -274,7 +275,7 @@ PrisonArchitect platform=gog:windows exec="Prison Architect.exe"
 RaceTheSun platform=gog:windows 
 RailroadTycoon3 platform=gog:windows
 RageOfMages platform=gog:windows exec=rom.exe
-RCCars platform=gog:windows
+RCCars platform=gog:windows ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 RebelGalaxy platform=gog:windows
 Reigns platform=gog:windows 
 Revenant platform=gog:windows exec=Launcher.exe warn="This game only runs in fullscreen mode"
@@ -305,7 +306,7 @@ StarWolves platform=gog:windows
 StarVikingsForever platform=gog:windows
 StealthBastard platform=gog:windows exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha platform=gog:windows 
-StreetRacingSyndicate platform=gog:windows
+StreetRacingSyndicate platform=gog:windows warn="This game doesn't have focus when it starts up. You will have to use alt-tab, or whatever your window-manager supports, to find it's window"
 StrongholdHD platform=gog:windows
 SubmarineTitans platform=gog:windows exec="ST.exe"
 SwordOfTheStars platform=gog:windows exec="Sword of the Stars.exe" 
@@ -343,7 +344,6 @@ Witchaven2 platform=gog:windows
 Wizardry platform=gog:windows exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 WizardsAndWarriors platform=gog:windows vdesk=y
 X:BeyondTheFrontier platform=gog:windows
-XComInterceptor platform=gog:windows
 
 
 # 64-bit windows/wine only

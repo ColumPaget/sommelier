@@ -1,0 +1,18 @@
+#THESE ARE FREE GAMES. Set your expectations accordingly
+
+* category="game" platform="windows" exec="gtlauncher.exe"
+
+AroundTheWorld url="https://cdn.gametop.com/games/Around_the_World.exe"
+AirAssault url="https://cdn.gametop.com/games/Air-Assault.exe"
+AlienWars url="https://cdn.gametop.com/games/Alien_Wars.exe" exec="game.exe"
+AztecaBubbles url="https://cdn.gametop.com/games/Azteca.exe" exec="game.exe"
+CityRacing url="https://cdn.gametop.com/games/City-Racing.exe" exec="game.exe" warn="This game is trash, but it's kinda fun"
+DarkMatter url="https://cdn.gametop.com/games/Dark-Matter.exe"
+DreamCars url="https://cdn.gametop.com/games/Dream-Cars.exe"
+Farmcraft url="https://cdn.gametop.com/games/Farmcraft.exe" 
+Motoracing url="https://cdn.gametop.com/games/Motoracing.exe" exec="Game.exe"
+Nitroracers url="https://cdn.gametop.com/games/Nitroracers.exe" exec="NitroRacers.exe"
+OstrichRunners url="https://cdn.gametop.com/games/Ostrich-Runners.exe"
+SupermarketManagement2 url="https://cdn.gametop.com/games/Supermarket-Management-2.exe"
+TheSpell url="https://cdn.gametop.com/games/The-Spell.exe" 
+ToyDefence url="https://cdn.gametop.com/games/Toy-Defense.exe"
