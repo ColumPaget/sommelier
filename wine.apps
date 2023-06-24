@@ -21,7 +21,9 @@ OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser
 FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
 Waterfox platform=windows url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
-Librewolf platform=windows url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
+
+Librewolf platform=windows64 url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
+Librewolf platform=windows url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
 Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 
@@ -33,6 +35,11 @@ SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  
 EmClient platform=windows os-version=win81
 MailSpring platform=windows os-version=win81 requires=DotNet45
 MailBird platform=windows  os-version=win81 requires=DotNet45
+
+* category='Calculator;Office'
+SpeedCrunch platform=windows url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-win32.zip"
+PreciseCalculator platform=windows url="https://sourceforge.net/projects/preccalc/files/preccalc-32bit.zip"
+TTCalc platform=windows url="http://downloads.sourceforge.net/project/ttcalc/ttcalc/ttcalc-0.9.3/ttcalc-0.9.3-setup.exe"
 
 * category='InstantMessaging;Chat;Internet;Network' locale='$(lang)-$(country)' 
 Telegram platform=windows url=https://telegram.org/dl/desktop/win winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.' sha256='232eb4e8825cd02bd23c4155731180f2f7579fb4bc32bf5d07e0f906cc61b751' 

@@ -24,7 +24,7 @@ const char *PlatformDefault()
 
 int PlatformType(const char *Platform)
 {
-    const char *WindowsPlatforms[]= {"win","win16","win32","win64","windows","gog:win","gog:windows","gog:windows64","wine", NULL};
+    const char *WindowsPlatforms[]= {"win","win16","win32","win64","windows","windows32","windows64","gog:win","gog:windows","gog:windows64","wine", NULL};
 
     if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
     if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
@@ -49,7 +49,9 @@ int PlatformBitWidth(const char *Platform)
     if (strcasecmp(Platform, "linux32")==0) return(32);
     if (strcasecmp(Platform, "linux64")==0) return(64);
     if (strcasecmp(Platform, "win32")==0) return(32);
+    if (strcasecmp(Platform, "windows32")==0) return(32);
     if (strcasecmp(Platform, "win64")==0) return(64);
+    if (strcasecmp(Platform, "windows64")==0) return(64);
 
 //if we've been told NOT 32-bit linux, then this is a default platform type
 //and we assume 64 bit

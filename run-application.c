@@ -13,7 +13,7 @@ static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
     const char *ptr;
 
     Token=FormatStr(Token,"~rExecutable requires missing libs: %s~0\n", MissingLibs);
-		TerminalPutStr(Token, NULL);
+    TerminalPutStr(Token, NULL);
     LibPath=NativeLoadLibPath(LibPath);
     ptr=GetToken(MissingLibs, " ", &Token, 0);
     while (ptr)
@@ -85,7 +85,7 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
 pid_t RunSandboxed(TAction *Act)
 {
     char *SpawnConfig=NULL, *Tempstr=NULL;
-		pid_t pid;
+    pid_t pid;
 
 
     seteuid(0);
@@ -122,7 +122,7 @@ pid_t RunSandboxed(TAction *Act)
     Destroy(Tempstr);
     Destroy(SpawnConfig);
 
-	return(pid);
+    return(pid);
 }
 
 
@@ -131,7 +131,7 @@ pid_t RunNormal(TAction *Act)
 {
     char *SpawnConfig=NULL, *Tempstr=NULL;
     const char *ptr;
-		pid_t pid=-1;
+    pid_t pid=-1;
 
 
     ptr=GetVar(Act->Vars, "working-dir");
@@ -150,30 +150,39 @@ pid_t RunNormal(TAction *Act)
     Destroy(Tempstr);
     Destroy(SpawnConfig);
 
-return(pid);
+    return(pid);
 }
 
 
 void RunApplication(TAction *Act)
 {
     char *Tempstr=NULL;
-		int width, height;
-		pid_t pid;
+    int width, height;
+    pid_t pid;
 
     if (DesktopFileRead(Act))
     {
         Tempstr=AppFormatPath(Tempstr,  Act);
         if (StrValid(Act->Exec))
         {
-						XRandrGetResolution(&width, &height);
-            if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
-            else pid=RunNormal(Act);
+            if (fork()==0)
+            {
+                XRandrGetResolution(&width, &height);
+                if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
+                else pid=RunNormal(Act);
 
-						if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
-						{
-						waitpid(pid, NULL, 0);
-						XRandrSetResolution(width, height);
-						}
+                if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+                {
+										//wait for the application to exit, and collect any other
+										//pids while we do so
+                    while (1)
+                    {
+                        if (waitpid(-1, NULL, 0) == pid) break;
+                    }
+                    XRandrSetResolution(width, height);
+                }
+                _exit(0);
+            }
         }
         else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
     }
