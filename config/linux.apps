@@ -117,10 +117,13 @@ TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64
 
 
 * category='Game'
-TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' comment='Game requires specific version of libc++"
-
+TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60
+Xump platform=linux32 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32
+Xump platform=linux64 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64
+Hermes platform=linux32 url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes
+Hermes platform=linux64 url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
 
 * category='Notes;Office;Utility'
-SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz
+SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz sha256=6df10d5f29d3cdacae437b35b3cc5e102150b8b4714711f95b8a8f667496c173
 SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-x64.tar.gz exec=simplenote download-type=tar.gz
 

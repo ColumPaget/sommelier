@@ -636,10 +636,43 @@ static int CheckDLC(TAction *Act)
 }
 
 
+
+static int InstallFindEmulator(TAction *Act)
+{
+char *Tempstr=NULL, *Emulator=NULL;
+int result=TRUE;
+
+        //is an emulator installed for this platform? NULL means one is required by can't be found,
+        //empty string means none is required
+        Emulator=PlatformFindEmulator(Emulator, Act->Platform);
+
+        if (StrValid(Emulator))
+        {
+            Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+            SetVar(Act->Vars, "emulator", Emulator);
+        }
+        else if (! Emulator)
+        {
+            Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
+            Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+            Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
+						result=FALSE;
+        }
+				else Tempstr=CopyStr(Tempstr, "No emulator required\n");
+
+				TerminalPutStr(Tempstr, NULL);
+
+Destroy(Tempstr);
+Destroy(Emulator);
+
+return(result);
+}
+
+
 void InstallApp(TAction *Act)
 {
     const char *ptr;
-    char *Name=NULL, *Path=NULL, *Tempstr=NULL, *Emulator=NULL;
+    char *Name=NULL, *Path=NULL, *Tempstr=NULL;
 
     if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
     else Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
@@ -661,24 +694,8 @@ void InstallApp(TAction *Act)
         Tempstr=FormatStr(Tempstr, "~r~eERROR: '%s' is DLC for '%s', but parent package is not installed.~0\n", Act->Name, Act->Parent);
         TerminalPutStr(Tempstr, NULL);
     }
-    else
+    else if (InstallFindEmulator(Act))
     {
-        //is an emulator installed for this platform? NULL means one is required by can't be found,
-        //empty string means none is required
-        Emulator=PlatformFindEmulator(Emulator, Act->Platform);
-
-        if (StrValid(Emulator))
-        {
-            Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
-            SetVar(Act->Vars, "emulator", Emulator);
-        }
-        else if (! Emulator)
-        {
-            Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
-            Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-            Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
-        }
-
 
         Name=PlatformGetInstallMessage(Name, Act->Platform);
         if (StrValid(Name)) Tempstr=MCatStr(Tempstr, "\n~r", Name, "~0\n", NULL);
@@ -687,7 +704,6 @@ void InstallApp(TAction *Act)
         if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, "\n~rWARN: ", ptr, "~0\n", NULL);
 
         TerminalPutStr(Tempstr, NULL);
-
 
         Path=AppFormatPath(Path, Act);
         MakeDirPath(Path, 0700);
@@ -702,7 +718,6 @@ void InstallApp(TAction *Act)
         TerminalPutStr(Tempstr, NULL);
     }
 
-    Destroy(Emulator);
     Destroy(Tempstr);
     Destroy(Path);
     Destroy(Name);
@@ -730,18 +745,8 @@ void InstallReconfigure(TAction *Act)
     {
 //is an emulator installed for this platform? NULL means one is required by can't be found,
 //empty string means none is required
-        Tempstr=PlatformFindEmulator(Tempstr, Act->Platform);
-
-        if (StrValid(Tempstr)) Name=MCatStr(Name, "Found suitable emulator '", Tempstr, "'\n", NULL);
-        else if (! Tempstr)
-        {
-            Name=MCatStr(Name, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-            Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
-
-            Name=MCatStr(Name, "Please install one of: '", Tempstr, "'\n", NULL);
-        }
-
-
+				if (InstallFindEmulator(Act))
+				{
         Path=AppFormatPath(Path, Act);
         MakeDirPath(Path, 0700);
 
@@ -754,6 +759,7 @@ void InstallReconfigure(TAction *Act)
         InstallBundledItems(Act);
 
         printf("%s reconfigure complete\n", Act->Name);
+				}
     }
 
     Destroy(Tempstr);

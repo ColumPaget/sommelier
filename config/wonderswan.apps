@@ -1,0 +1,7 @@
+* platform=wonderswan category=Game;Games/Wonderswan
+
+SwanDriving url=http://sebastianmihai.com/downloads/swandriving/swandriving.wsc sha256=d3c35b8e33dd0a930cb7e6de5fdded043788b026151fd58a5d41a16eefff7c1e install-type=executable
+FinallyDemo url=https://ftp.untergrund.net/users/alienpdx/titan-finally-partyversion.zip sha256=c60af311c87f835ecc56e1815f62875f0b878a639168c9b1d8b1b5bc6c7a989b comment="This is not a game, it's a tech demo"
+WonderSnake url=https://pdroms.de/?__df=320a0b010017160b040e003a3a4d320a0b0100171612040b4c4b1f0c151b191b545557501b191b565354515d sha256=6067b6bf0e6f037c9a4585c41ce120e564b63f76da9c78c36b324dc346b4f27b
+WonderSnake2 url=https://pdroms.de/?__df=320a0b010017160b040e003a573a3a4d320a0b0100171612040b4c4b1f0c151b191b545557531b191b5653545055 sha256=6067b6bf0e6f037c9a4585c41ce120e564b63f76da9c78c36b324dc346b4f27b
+

@@ -189,6 +189,16 @@ nes
  : 3ds games run under the citra emulator
 vectrex
  : vectrex games run using the 'vecx' emulator
+ps1
+ : playstation 1 games that run under the mednafen emulator
+turbografx
+ : turbografx/pc-engine games that run under the mednafen emulator
+wonderswan
+ : wonderswan games that run under the mednafen emulator
+atarilynx
+ : atari lynx games that run under the mednafen emulator
+atarist
+ : atari ST games that run under the hatari emulator
 
 
 

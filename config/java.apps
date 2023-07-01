@@ -1,5 +1,4 @@
 
-
 * platform=java category='2DGraphics;Graphics'
 Spade url=https://github.com/Spade-Editor/Spade/releases/download/v0.16.0-Beta/Spade.jar install-type='executable' sha256='4a67f0ce2dbb93ada78b01ed5d998a2db1203798244f20113df778771147fc2d' 
 Alchemy url=https://al.chemy.org/files/Alchemy-008.tar.gz download-type='tar.gz' movefiles-from='Alchemy/*' sha256='911e1c7440f19500ba041a0f51c0104d6c4bf49f6c05cd2d96a13fc6da5e8910' 

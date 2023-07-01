@@ -1,6 +1,6 @@
 #THESE ARE FREE GAMES. Set your expectations accordingly
 
-* category="game" platform="windows" exec="gtlauncher.exe"
+* category="Game;Games/Gametop" platform="windows" exec="gtlauncher.exe"
 
 AroundTheWorld url="https://cdn.gametop.com/games/Around_the_World.exe"
 AirAssault url="https://cdn.gametop.com/games/Air-Assault.exe"

@@ -76,14 +76,14 @@ install:
 	mkdir -p $(HOME)/.sommelier
 	mkdir -p $(HOME)/.sommelier/patches
 	cp sommelier $(HOME)/bin/
-	cp *.apps *.conf $(HOME)/.sommelier/
+	cp config/*.apps config/*.conf $(HOME)/.sommelier/
 	-cp patches/*.so $(HOME)/.sommelier/patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
 	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
 	cp sommelier $(DESTDIR)$(exec_prefix)/bin/
-	cp *.apps *.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp config/*.apps config/*.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 
 test:

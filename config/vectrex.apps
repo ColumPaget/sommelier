@@ -1,4 +1,4 @@
-* platform=vectrex category=Games;Games/Vectrex
+* platform=vectrex category=Game;Games/Vectrex
 
 ArmorAttack url=https://archive.org/compress/vectrex-armorattack exec=ArmorAttack-1982.vec
 Bedlam url=https://archive.org/compress/vectrex-bedlam
@@ -23,4 +23,4 @@ StarTrek url=https://archive.org/compress/vectrex-startrek
 Gravitrex url=https://archive.org/compress/vectrex-gravitrex exec=GravitrexbyJohnDondzila-2002.vec
 Vectrexians url=https://archive.org/compress/vectrex-vectrexians
 WebWarp url=https://archive.org/compress/vectrex-webwarp exec=WebWarp-1983.vec
-
+ScalarOwnage url=http://sebastianmihai.com/downloads/scalar/scalar.bin

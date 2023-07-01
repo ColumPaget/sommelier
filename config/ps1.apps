@@ -1,0 +1,17 @@
+#These are homebrews and demo CDs.
+
+# From Archive.org 
+* platform=ps1 category=Game;Games/PlayStation1 icon=$(install-dir)/__ia_thumb.jpg
+
+ArmoredCoreDemo url=https://archive.org/compress/slpm-80119
+ResidentEvil2Demo url=https://archive.org/compress/resident-evil-2-demo-europe sha256=a1263f0b257e0b07e0526441882551e2639579c377a8ddb957d88897276173dd
+PSXMusicDisk url=https://archive.org/download/pmd_source/pmd.zip warn="This rom only plays the music in the mednafen emulator"
+TombRaider2DemoE3 url=https://archive.org/compress/tr2-e3-psx/formats=ITEM%20TILE,PNG,ARCHIVE%20BITTORRENT,METADATA,UNKNOWN,CUE%20SHEET sha256=74f75c9150b6780154d3e6d608f0dc18565743890ef687fea52f73065e8cd799 
+Driver2Demo url=https://archive.org/compress/Driver2DemoEU-PSX/formats=ISO%20IMAGE,CUE%20SHEET,ARCHIVE%20BITTORRENT,METADATA,JPEG,ITEM%20TILE sha256=2d922ad02d2f9ba61bbc07b01241fb6b8ccbdc20abfa9d688e2b26d5ca037201
+MagicCastle url=https://archive.org/download/magic-castle-2021-07-may/Magic_Castle_2021_07_May.zip sha256=a51244c2d8feb193271d0d735b52eeb5d3661b5e7eaf3313793ef0b3e72f7271
+Warzone2100Demo url=https://archive.org/compress/warzone2100demo-pal-sled-01787-sonyplaystation1/formats=TEXT,JPEG,UNKNOWN,CUE%20SHEET,ZIP,ITEM%20TILE,ARCHIVE%20BITTORRENT,METADATA sha256=d4cfe3ae48360f2dd5e2c4afcedc3b11810f9d74436107b752cd8ec03a42cbb4
+
+# From elsewhere
+* platform=ps1 category=Game;Games/PlayStation1 
+
+BuzzyBee url=https://github.com/NDR008/BuzzyBee/releases/download/v1.1_release/BuzzyBee_v1.1_image.zip sha256=4df87120d6cf6e01312295cb8233ee211ebdcb12b216061b702a333396c60052 warn="This rom only plays the music in the mednafen emulator"

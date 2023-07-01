@@ -1,4 +1,5 @@
-* category='Doom;Game'
+* category='Doom;Game;Games/Doom'
+
 FreeDoomDeathmatch platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedm-0.11.3.zip exec='freedm.wad'  sha256='2af698fb028ccc95993827f88679ea9b246116c2966894a51578755cad800ce0' comment='Freedoom wad' 
 FreeDoomPhase1 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec='freedoom1.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase1 mod' 
 FreeDoomPhase2 platform=doom url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec='freedoom2.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase2 mod' 
