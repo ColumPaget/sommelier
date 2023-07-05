@@ -63,8 +63,8 @@ KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitt
 PaleMoon platform=linux32 url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz'  sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
 PaleMoonGTK2 platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk2.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
 PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk3.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' 
-SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/$(locale)/seamonkey-2.53.2.$(locale).linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='0e3dc36afe0a66e83e2d33687f0d2988704c2c2aac137ad1a4bcdb96e34d2f9e' 
-SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/$(locale)/seamonkey-2.53.2.$(locale).linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' 
+SeaMonkey platform=linux32 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/$(locale)/seamonkey-2.53.2.$(locale).linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='0e3dc36afe0a66e83e2d33687f0d2988704c2c2aac137ad1a4bcdb96e34d2f9e' donate=https://www.seamonkey-project.org/donate/
+SeaMonkey platform=linux64 url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/$(locale)/seamonkey-2.53.2.$(locale).linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' donate=https://www.seamonkey-project.org/donate/
 GnuIcecat platform=linux32 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='8d3e3038ec1a1f5b871c5c54b97fb13bc42eb10f85ecd3b096529ed7d290f571' 
 GnuIcecat platform=linux64 url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-x86_64.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='4f0dffe7ae5d98a63bd44b2b0dbd39f93d60056391214e8565892ab1ade36a85' 
 Waterfox platform=linux64 url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/waterfox-G4.1.4.en-US.linux-x86_64.tar.bz2 download-type='tar.bz2' exec=waterfox sha256=1748266754bb35bbaa47042a6ee208f345d3b5da4b65adf7675f85980fe97de4
@@ -86,9 +86,18 @@ DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 do
 RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
+* category='IRC;Chat;Internet;Network'
+SeaMonkeyChat platform=linux32 exec='seamonkey.exe' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyChat platform=linux64 exec='seamonkey.exe' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+
+
 * category='Conferencing;VOIP;Telephony;Chat;Internet;Network'
 Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
 Zoom platform=linux64 url=https://zoom.us/client/5.15.0.4063/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
+
+* category='Email;Internet;Network'
+SeaMonkeyMail platform=linux32 exec='seamonkey.exe' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyMail platform=linux64 exec='seamonkey.exe' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 
 
 *category=Electronics

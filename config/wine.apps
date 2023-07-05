@@ -31,7 +31,7 @@ BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releas
 ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
 Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
-SeaMonkeyMail platform=windows exec-args='-mail' comment='SeaMonkey Email App'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyMail platform=windows exec-args='-mail' comment='Email app bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 EmClient platform=windows os-version=win81
 MailSpring platform=windows os-version=win81 requires=DotNet45
 MailBird platform=windows  os-version=win81 requires=DotNet45
@@ -75,6 +75,7 @@ IceChat platform=windows url=https://github.com/icechat/IceChat/releases/downloa
 HexChat platform=windows url=https://dl.hexchat.net/hexchat/HexChat%202.14.3%20x86.exe exec='hexchat.exe' comment='IRC Client' sha256='1089e1218aa1f6522c74ebc2530fa8ff518e2a249ad4c8a92ef5727fe12ad12b' 
 Nettalk platform=windows url=http://www.ntalk.de/Nettalk/StartDown.php?server=1&lang=en requires='VB6' comment='IRC Client from Germany' sha256='c9affcdecd8a33f058ed9024108cab81dd91821ac7a43db402994a0700e8b796' 
 mIRC platform=windows url=https://www.mirc.com/get.php?mirror comment='Popular IRC client. Reqiuires Registration' sha256='abbb23f101884d3f423ee1ca734755761f21d75890efed17668533ad4912448c' 
+SeaMonkeyChat platform=windows exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 
 * category='2DGraphics;Graphics'
 AndreaMosaic platform=windows url=http://andreaplanet.com/andreamosaic/download.php?version=fullweb version='3.36.0' exec='AndreaMosaic.exe' comment='Make Mosaics from images' sha256='bb5e0287db029b530f812e0c7faf64ebfe5329480bf84c535ce820825d1c6145' donate=http://www.andreaplanet.com/andreamosaic/donation/
@@ -174,6 +175,7 @@ SublimeText platform=windows url=https://download.sublimetext.com/Sublime%20Text
 Notepad++ platform=windows url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898' 
 CherryTree platform=windows url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec='cherrytree.exe' 
 EditPadLite platform=windows url=http://download.jgsoft.com/editpad/SetupEditPadLite.exe warn='This app is only free for personal/non-commercial use. App auto-runs on install, so you'll need to close it for sommelier to complete the installation.'
+SeaMonkeyEdit platform=windows exec-args='-editor' comment='HTML editor bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 
 * category='RemoteAccess;Utility'
 TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
