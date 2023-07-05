@@ -87,8 +87,8 @@ RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
 * category='IRC;Chat;Internet;Network'
-SeaMonkeyChat platform=linux32 exec='seamonkey.exe' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
-SeaMonkeyChat platform=linux64 exec='seamonkey.exe' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyChat platform=linux32 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyChat platform=linux64 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 
 
 * category='Conferencing;VOIP;Telephony;Chat;Internet;Network'
@@ -96,8 +96,14 @@ Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.
 Zoom platform=linux64 url=https://zoom.us/client/5.15.0.4063/zoom_x86_64.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
 
 * category='Email;Internet;Network'
-SeaMonkeyMail platform=linux32 exec='seamonkey.exe' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
-SeaMonkeyMail platform=linux64 exec='seamonkey.exe' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyMail platform=linux32 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyMail platform=linux64 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+
+* category='Editor'
+SeaMonkeyEdit platform=linux32 exec='seamonkey' exec-args='-edit' comment='HTML Editor bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyEdit platform=linux64 exec='seamonkey' exec-args='-edit' comment='HTML Editor bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+
+
 
 
 *category=Electronics

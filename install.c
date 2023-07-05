@@ -446,6 +446,8 @@ static void InstallBundledItems(TAction *Parent)
         if (Node)
         {
             Child=(TAction *) Node->Item;
+	    Child->Platform=CopyStr(Child->Platform, Parent->Platform);
+            SetVar(Child->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
             SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
             SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
             FinalizeExeInstall(Child);
