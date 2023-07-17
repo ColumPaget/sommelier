@@ -4271,7 +4271,7 @@ cf_have_capabilities=no
 if test "${enable_capabilities+set}" = set; then :
   enableval=$enable_capabilities; cf_use_capabilities=$enableval
 else
-  cf_use_capabilities=yes
+  cf_use_capabilities=no
 fi
 
 

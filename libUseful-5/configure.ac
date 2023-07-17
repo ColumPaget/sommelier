@@ -174,7 +174,7 @@ esac
 
 
 cf_have_capabilities=no
-AC_ARG_ENABLE(capabilities, [  --enable-capabilities       enable linux capabilities support (default=no)], cf_use_capabilities=$enableval, cf_use_capabilities=yes )
+AC_ARG_ENABLE(capabilities, [  --enable-capabilities       enable linux capabilities support (default=no)], cf_use_capabilities=$enableval, cf_use_capabilities=no )
 
 if test "$cf_use_capabilities" = "yes"
 then
