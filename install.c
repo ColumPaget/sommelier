@@ -344,6 +344,8 @@ static void FinalizeExeInstall(TAction *Act)
         //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
         if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
 
+        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "install-dir"));
+
         if (StrValid(Tempstr))
         {
             WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
@@ -354,7 +356,7 @@ static void FinalizeExeInstall(TAction *Act)
     }
 
 
-    if (StrValid(Path))
+    if (StrValid(Path) || (Act->Flags * FLAG_NOEXEC))
     {
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
