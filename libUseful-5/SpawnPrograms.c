@@ -26,6 +26,8 @@ int SpawnParseConfig(const char *Config)
         if (strcasecmp(Token,"+stderr")==0) Flags |= SPAWN_COMBINE_STDERR;
         else if (strcasecmp(Token,"stderr2null")==0) Flags |= SPAWN_STDERR_NULL;
         else if (strcasecmp(Token,"stdout2null")==0) Flags |= SPAWN_STDOUT_NULL;
+        else if (strcasecmp(Token,"errnull")==0) Flags |= SPAWN_STDERR_NULL;
+        else if (strcasecmp(Token,"outnull")==0) Flags |= SPAWN_STDOUT_NULL | SPAWN_STDERR_NULL;
 
         ptr=GetToken(ptr," |,",&Token,GETTOKEN_MULTI_SEP);
     }
@@ -101,7 +103,11 @@ pid_t xfork(const char *Config)
         //we must handle creds store straight away, because it's memory is likely configured
         //with SMEM_NOFORK and thus the memory is invalid on fork
         CredsStoreOnFork();
-        if (StrValid(Config)) ProcessApplyConfig(Config);
+        if (StrValid(Config))
+        {
+            //if any of the process configs we asked for failed, then quit
+            if (ProcessApplyConfig(Config) & PROC_SETUP_FAIL) _exit(1);
+        }
     }
     return(pid);
 }
@@ -183,29 +189,33 @@ pid_t PipeSpawnFunction(int *infd, int *outfd, int *errfd, BASIC_FUNC Func, void
     //default these to stdin, stdout and stderr and then override those later
     int c1=0, c2=1, c3=2;
     int channel1[2], channel2[2], channel3[2], DevNull=-1;
+    int result;
     int Flags=0;
 
 
     Flags=SpawnParseConfig(Config);
     if (infd)
     {
-        pipe(channel1);
+        result=pipe(channel1);
         //this is a read channel, so pipe[0]
-        c1=channel1[0];
+        if (result==0) c1=channel1[0];
+        else RaiseError(ERRFLAG_ERRNO, "PipeSpawnFunction", "Failed to create pipe for stdin");
     }
 
     if (outfd)
     {
-        pipe(channel2);
+        result=pipe(channel2);
         //this is a write channel, so pipe[1]
-        c2=channel2[1];
+        if (result==0) c2=channel2[1];
+        else RaiseError(ERRFLAG_ERRNO, "PipeSpawnFunction", "Failed to create pipe for stdout");
     }
 
     if (errfd)
     {
-        pipe(channel3);
+        result=pipe(channel3);
         //this is a write channel, so pipe[1]
-        c3=channel3[1];
+        if (result==0) c3=channel3[1];
+        else RaiseError(ERRFLAG_ERRNO, "PipeSpawnFunction", "Failed to create pipe for stderr");
     }
     else if (Flags & SPAWN_COMBINE_STDERR) c3=c2;
 
@@ -219,12 +229,18 @@ pid_t PipeSpawnFunction(int *infd, int *outfd, int *errfd, BASIC_FUNC Func, void
 
         if (Flags & SPAWN_STDOUT_NULL)
         {
-            close(*outfd);
+            if (outfd) close(*outfd);
             outfd=NULL;
         }
 
         if (outfd) close(channel2[0]);
         else if (DevNull==-1) DevNull=open("/dev/null",O_RDWR);
+
+        if (Flags & SPAWN_STDERR_NULL)
+        {
+            if (errfd) close(*errfd);
+            errfd=NULL;
+        }
 
         if (errfd) close(channel3[0]);
         else if (DevNull==-1) DevNull=open("/dev/null",O_RDWR);
@@ -401,7 +417,7 @@ int STREAMSpawnCommandAndPty(const char *Command, const char *Config, STREAM **C
     int pty, tty;
     int result=FALSE;
     char *Tempstr=NULL, *Args=NULL, *Token=NULL;
-		const char *ptr;
+    const char *ptr;
 
     *PtyS=NULL;
     *CmdS=NULL;
@@ -413,16 +429,16 @@ int STREAMSpawnCommandAndPty(const char *Command, const char *Config, STREAM **C
         else Tempstr=CopyStr(Tempstr, "rw");
 
         Args=FormatStr(Args, "%s setsid ctty=%d nosig ", Tempstr, tty);
-				ptr=GetToken(Config, "\\S", &Token, 0);
-				while (ptr)
-				{
-				if (strcmp(Token, "ptystderr")==0)
-				{
-						Tempstr=FormatStr(Tempstr, "stderr=%d", tty);
-						Args=CatStr(Args, Tempstr);
-				}
-				ptr=GetToken(ptr, "\\S", &Token, 0);
-				}	
+        ptr=GetToken(Config, "\\S", &Token, 0);
+        while (ptr)
+        {
+            if (strcmp(Token, "ptystderr")==0)
+            {
+                Tempstr=FormatStr(Tempstr, "stderr=%d", tty);
+                Args=CatStr(Args, Tempstr);
+            }
+            ptr=GetToken(ptr, "\\S", &Token, 0);
+        }
 
         Tempstr=MCopyStr(Tempstr, "cmd:", Command, NULL);
         *CmdS=STREAMOpen(Tempstr, Args);

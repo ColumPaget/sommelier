@@ -96,6 +96,8 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     const char *ptr;
     int ForcedFileType=FILETYPE_UNKNOWN;
 
+    if (! StrValid(Path)) return(FALSE);
+
     switch (Act->PlatformID)
     {
     case PLATFORM_SCUMMVM:
@@ -448,7 +450,7 @@ static void InstallBundledItems(TAction *Parent)
         if (Node)
         {
             Child=(TAction *) Node->Item;
-	    Child->Platform=CopyStr(Child->Platform, Parent->Platform);
+            Child->Platform=CopyStr(Child->Platform, Parent->Platform);
             SetVar(Child->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
             SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
             SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
@@ -643,33 +645,33 @@ static int CheckDLC(TAction *Act)
 
 static int InstallFindEmulator(TAction *Act)
 {
-char *Tempstr=NULL, *Emulator=NULL;
-int result=TRUE;
+    char *Tempstr=NULL, *Emulator=NULL;
+    int result=TRUE;
 
-        //is an emulator installed for this platform? NULL means one is required by can't be found,
-        //empty string means none is required
-        Emulator=PlatformFindEmulator(Emulator, Act->Platform);
+    //is an emulator installed for this platform? NULL means one is required by can't be found,
+    //empty string means none is required
+    Emulator=PlatformFindEmulator(Emulator, Act->Platform);
 
-        if (StrValid(Emulator))
-        {
-            Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
-            SetVar(Act->Vars, "emulator", Emulator);
-        }
-        else if (! Emulator)
-        {
-            Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
-            Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-            Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
-						result=FALSE;
-        }
-				else Tempstr=CopyStr(Tempstr, "No emulator required\n");
+    if (StrValid(Emulator))
+    {
+        Tempstr=MCopyStr(Tempstr, "~gFound suitable emulator '", Emulator, "'~0\n", NULL);
+        SetVar(Act->Vars, "emulator", Emulator);
+    }
+    else if (! Emulator)
+    {
+        Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
+        Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
+        Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
+        result=FALSE;
+    }
+    else Tempstr=CopyStr(Tempstr, "No emulator required\n");
 
-				TerminalPutStr(Tempstr, NULL);
+    TerminalPutStr(Tempstr, NULL);
 
-Destroy(Tempstr);
-Destroy(Emulator);
+    Destroy(Tempstr);
+    Destroy(Emulator);
 
-return(result);
+    return(result);
 }
 
 
@@ -749,21 +751,21 @@ void InstallReconfigure(TAction *Act)
     {
 //is an emulator installed for this platform? NULL means one is required by can't be found,
 //empty string means none is required
-				if (InstallFindEmulator(Act))
-				{
-        Path=AppFormatPath(Path, Act);
-        MakeDirPath(Path, 0700);
+        if (InstallFindEmulator(Act))
+        {
+            Path=AppFormatPath(Path, Act);
+            MakeDirPath(Path, 0700);
 
-        InstallSingleItemPreProcessInstall(Act);
-        Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
+            InstallSingleItemPreProcessInstall(Act);
+            Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
 
-        chdir(Path);
-        TerminalPutStr("~eFinding executables~0\n", NULL);
-        FinalizeExeInstall(Act);
-        InstallBundledItems(Act);
+            chdir(Path);
+            TerminalPutStr("~eFinding executables~0\n", NULL);
+            FinalizeExeInstall(Act);
+            InstallBundledItems(Act);
 
-        printf("%s reconfigure complete\n", Act->Name);
-				}
+            printf("%s reconfigure complete\n", Act->Name);
+        }
     }
 
     Destroy(Tempstr);

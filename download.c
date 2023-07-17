@@ -70,10 +70,48 @@ static void DownloadShowSSLStatus(STREAM *S)
 
 
 
+STREAM *DownloadHTTPOpen(TAction *Act, const char *URL)
+{
+    STREAM *S;
+    char *Args=NULL, *Tempstr=NULL;
+    const char *ptr;
+
+    Args=MCopyStr(Args, "r User-Agent=Sommelier-", VERSION, " ", NULL);
+
+    //if there is a 'referrer' page, then download that, so that the site sees us connect
+    //to that page prior to attempting the download
+    ptr=GetVar(Act->Vars, "referer");
+    if (StrValid(ptr))
+    {
+        S=STREAMOpen(ptr, Args);
+        Tempstr=STREAMReadDocument(Tempstr, S);
+        STREAMClose(S);
+
+        Args=MCatStr(Args, "Referer=", ptr, NULL);
+    }
+
+    S=STREAMOpen(URL, Args);
+    if (S)
+    {
+        ptr=STREAMGetValue(S, "HTTP:ResponseCode");
+        if (StrValid(ptr) && *ptr=='2')
+        {
+            if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+        }
+    }
+
+    Destroy(Tempstr);
+    Destroy(Args);
+
+    return(S);
+}
+
+
+
 
 static int DownloadCopyFile(TAction *Act)
 {
-    char *Tempstr=NULL, *URL=NULL, *Args=NULL, *cwd=NULL;
+    char *Tempstr=NULL, *URL=NULL, *Args=NULL, *CurrDir=NULL;
     const char *ptr;
     STREAM *S;
     int bytes=0;
@@ -90,40 +128,28 @@ static int DownloadCopyFile(TAction *Act)
 
     if (StrValid(Act->DownName))
     {
-        Args=MCopyStr(Args, "r User-Agent=Sommelier-", VERSION, " ", NULL);
-        ptr=GetVar(Act->Vars, "referer");
-        if (StrValid(ptr))
-        {
-            S=STREAMOpen(ptr, Args);
-            Tempstr=STREAMReadDocument(Tempstr, S);
-            STREAMClose(S);
+        if (strncmp(URL, "https:", 6)==0) S=DownloadHTTPOpen(Act, URL);
+        else if (strncmp(URL, "http:", 5)==0) S=DownloadHTTPOpen(Act, URL);
+        else S=STREAMOpen(URL, "r");
 
-            Args=MCatStr(Args, "Referer=", ptr, NULL);
-        }
-
-        S=STREAMOpen(URL, Args);
         if (S)
         {
-            ptr=STREAMGetValue(S, "HTTP:ResponseCode");
-            if (StrValid(ptr) && *ptr=='2')
-            {
-                if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
-                STREAMAddProgressCallback(S, DownloadCallback);
+            STREAMAddProgressCallback(S, DownloadCallback);
 
-                if (StrValid(Config->InstallerCache))
-                {
-                    Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
-                    MakeDirPath(Act->SrcPath, 0770);
-                }
-                else
-                {
-                    //this function allocs memory
-                    cwd=get_current_dir_name();
-                    Act->SrcPath=MCopyStr(Act->SrcPath, cwd, "/", Act->DownName, NULL);
-                }
-                Act->Flags |= FLAG_DOWNLOADED;
-                bytes=STREAMCopy(S,  Act->SrcPath);
+            if (StrValid(Config->InstallerCache))
+            {
+                Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
+                MakeDirPath(Act->SrcPath, 0770);
             }
+            else
+            {
+                //this function allocs memory so 'CopyStr' isn't needed
+                CurrDir=get_current_dir_name();
+                Act->SrcPath=MCopyStr(Act->SrcPath, CurrDir, "/", Act->DownName, NULL);
+            }
+
+            Act->Flags |= FLAG_DOWNLOADED;
+            bytes=STREAMCopy(S,  Act->SrcPath);
             STREAMClose(S);
         }
         else
@@ -142,10 +168,10 @@ static int DownloadCopyFile(TAction *Act)
         TerminalPutStr(Tempstr, NULL);
     }
 
-    DestroyString(Tempstr);
-    DestroyString(Args);
-    DestroyString(URL);
-    DestroyString(cwd);
+    Destroy(Tempstr);
+    Destroy(CurrDir);
+    Destroy(Args);
+    Destroy(URL);
 
     return(bytes);
 }

@@ -211,12 +211,12 @@ void AppAddToBundle(ListNode *Apps, TAction *App, const char *ParentName)
         if (strcmp(Curr->Tag, ParentName)==0)
         {
             Parent=(TAction *) Curr->Item;
-	    if (strcmp(Parent->Platform, App->Platform)==0)
-	    {
-            Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
-            Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
-            SetVar(Parent->Vars, "bundles", Tempstr);
-	    }
+            if (strcmp(Parent->Platform, App->Platform)==0)
+            {
+                Tempstr=CopyStr(Tempstr, GetVar(Parent->Vars, "bundles"));
+                Tempstr=MCatStr(Tempstr, " ", App->Name, NULL);
+                SetVar(Parent->Vars, "bundles", Tempstr);
+            }
         }
         Curr=ListGetNext(Curr);
     }

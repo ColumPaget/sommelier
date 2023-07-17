@@ -78,16 +78,17 @@ int TerminalConsumeCharacter(const char **ptr)
 
     default:
         //handle unicode
-        if (**ptr & 128)
+        //all unicode has the top 2 bits set in the first byte
+        //even if it has more than these set it will at least
+        //have the first two
+        if (**ptr & 192)
         {
-            switch (**ptr & 224)
-            {
-            case 224:
-                ptr_incr(ptr, 1);
-            case 192:
-                ptr_incr(ptr, 1);
-            }
-
+            //if starts with 11110 then there will be 3 unicode bytes after
+            if ((**ptr & 248)==240) ptr_incr(ptr, 3); //
+            //if starts with 1110 then there will be 2 unicode bytes after
+            else if ((**ptr & 240)==224) ptr_incr(ptr, 2); //
+            //if starts with 110 then there will be 1 unicode bytes after
+            else if ((**ptr & 224)==192) ptr_incr(ptr, 1); //
             IsRealChar=TRUE;
         }
         else IsRealChar=TRUE;
@@ -746,12 +747,13 @@ void TerminalPutChar(int Char, STREAM *S)
 {
     char *Tempstr=NULL;
     char towrite;
+    int result;
 
     if (Char <= 0x7f)
     {
         towrite=Char;
         if (S) STREAMWriteChar(S, towrite);
-        else write(1, &towrite, 1);
+        else result=write(1, &towrite, 1);
     }
     else
     {
@@ -759,7 +761,7 @@ void TerminalPutChar(int Char, STREAM *S)
 
         //do not use StrLenFromCache here, as string will be short
         if (S) STREAMWriteLine(Tempstr, S);
-        else write(1,Tempstr,StrLen(Tempstr));
+        else result=write(1,Tempstr,StrLen(Tempstr));
     }
 
     Destroy(Tempstr);
@@ -771,13 +773,13 @@ void TerminalPutChar(int Char, STREAM *S)
 void TerminalPutStr(const char *Str, STREAM *S)
 {
     char *Tempstr=NULL;
-    int len;
+    int len, result;
 
     Tempstr=TerminalFormatStr(Tempstr, Str, S);
     //this could be a long-ish string, so we do use StrLenFromCache
     len=StrLenFromCache(Tempstr);
     if (S) STREAMWriteBytes(S, Tempstr, len);
-    else write(1,Tempstr,len);
+    else result=write(1,Tempstr,len);
 
     Destroy(Tempstr);
 }

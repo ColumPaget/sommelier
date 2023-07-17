@@ -351,6 +351,7 @@ int GetHostARP(const char *IP, char **Device, char **MAC)
     FILE *F;
 
     Tempstr=SetStrLen(Tempstr, 255);
+//TODO: why use fopen?
     F=fopen("/proc/net/arp","r");
     if (F)
     {
@@ -934,7 +935,7 @@ int STREAMNetConnect(STREAM *S, const char *Proto, const char *Host, int Port, c
     {
         //Flags are handled in this function
         S->in_fd=NetConnectWithSettings(Proto, STREAMGetValue(S, "LocalAddress"), Host, Port, &Settings);
-        S->Timeout=Settings.Timeout;
+        if (Settings.Timeout > 0) S->Timeout=Settings.Timeout;
         S->out_fd=S->in_fd;
         if (S->in_fd > -1) result=TRUE;
     }

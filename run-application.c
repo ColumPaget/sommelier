@@ -173,8 +173,8 @@ void RunApplication(TAction *Act)
 
                 if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
                 {
-										//wait for the application to exit, and collect any other
-										//pids while we do so
+                    //wait for the application to exit, and collect any other
+                    //pids while we do so
                     while (1)
                     {
                         if (waitpid(-1, NULL, 0) == pid) break;
