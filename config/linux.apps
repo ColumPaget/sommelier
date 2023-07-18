@@ -38,8 +38,9 @@ Discord platform=linux64 url=https://discord.com/api/download?platform=linux&for
 
 category='RemoteAccess'
 #Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/version_14x/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
-Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
-Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
+Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
+Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
+ 
 
 RealVNCViewer platform=linux32 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86 icon='realvnc.png' comment='RealVNC Viewer' sha256='e47143186930480bc2260323b5330ebd7556ee2277bc4c20965438075d82eee0'  install-type=executable
 RealVNCViewer platform=linux64 url=https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x64 icon='realvnc.png' comment='RealVNC Viewer' sha256='4ac20464566dc6756325bb2476f82f495d7479eb7587f2dd65b3d3f1164d8648'  install-type=executable
@@ -60,7 +61,7 @@ KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitt
 
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)'
-Basilisk platform=linux64 url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk'
+Basilisk platform=linux64 url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
 PaleMoon platform=linux32 url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz'  sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
 PaleMoonGTK2 platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk2.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
 PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk3.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' 
