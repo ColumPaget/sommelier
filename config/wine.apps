@@ -12,7 +12,9 @@ DotNet45 platform=windows url=https://download.microsoft.com/download/b/a/4/ba4a
 DotNet48 platform=windows url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/abd170b4b0ec15ad0222a809b761a036/ndp48-x86-x64-allos-enu.exe sha256=95889d6de3f2070c07790ad6cf2000d33d9a1bdfc6a381725ab82ab1c314fd53
 
 * category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
-Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
+#Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
+Basilisk platform=windows url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
+
 K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
 SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/
 SlimBrowser platform=windows url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'

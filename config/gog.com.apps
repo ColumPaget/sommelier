@@ -74,6 +74,7 @@ WayOfTheSamurai platform=gog:linux
 
 
 #64-bit only linux gog games
+BaldursGate platform=gog:linux64 exec64="BaldursGate"
 DiceyDungeons platform=gog:linux64
 HeroOfTheKingdom platform=gog:linux64
 HeroOfTheKingdom2 platform=gog:linux64
