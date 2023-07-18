@@ -60,6 +60,7 @@ KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitt
 
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)'
+Basilisk platform=linux64 url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk'
 PaleMoon platform=linux32 url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz'  sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
 PaleMoonGTK2 platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk2.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
 PaleMoon platform=linux64 url=extracted:http\://linux.palemoon.org/download/mainline:/datastore/release/palemoon-*.linux-x86_64-gtk3.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' 
