@@ -37,6 +37,7 @@ SeaMonkeyMail platform=windows exec-args='-mail' comment='Email app bundled with
 EmClient platform=windows os-version=win81
 MailSpring platform=windows os-version=win81 requires=DotNet45
 MailBird platform=windows  os-version=win81 requires=DotNet45
+FoxMail platform=windows url=https://www.foxmail.com/win/download exec=Foxmail.exe warn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
 
 * category='Calculator;Office'
 SpeedCrunch platform=windows url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-win32.zip"
@@ -163,6 +164,9 @@ QuiteRSS platform=windows url=https://quiterss.org/files/0.18.12/QuiteRSS-0.18.1
 GPodder platform=windows url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8' 
 Juice platform=windows url=http://prdownloads.sourceforge.net/juicereceiver/Juice22Setup.exe?download comment='Podcast Watcher/Downloader' sha256='9235ca5cc0720ea09b61df61f546453a98afa10e86d7f02f1f70e234253ca31c' 
 
+* category='Usenet;NNTP;Internet;Network'
+GrabIt  platform=windows url=https://download.shemes.com/GrabIt175b3.exe sha256=8159e146603de9f6a975f665f07439e75f439c969619d86357c956a89f076df7 
+
 * category='Electronics'
 ICProg platform=windows url=http://www.ic-prog.com/icprog106C.zip sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
 PicPick platform=windows url=http://ngwin.com/download/latest/picpick_inst.exe exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk='y' 
@@ -184,7 +188,7 @@ TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-
 TurboVNC platform=windows url=https://sourceforge.net/projects/turbovnc/files/2.2.5/TurboVNC-2.2.5-x86.exe/download exec='vncviewer.exe' sha256='5b0c5f2ccb3ab031d75bc38a8ff68fa6414ba61826ffe02d8216742eef5dc047' 
 Teamviewer platform=windows url=https://download.teamviewer.com/download/version_14x/TeamViewerPortable.zip comment='Official Teamviewer client' 
 
-* comment='Player;Audio'
+* category='Player;Audio'
 AIMP platform=windows url=https://www.aimp.ru/?do=download.file&id=4 sha256='41070175804131607f907e359f1268ee0863a6493d8c94ce14a4be11ba7c978c' 
 CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolplayer/Coolplayer/219/CoolPlayer219_Bin.zip?r=&amp;ts=1532774479 version='219' exec='coolplayer.exe' sha256='a6a7c42c3b2aa45df8d02a6c98a0aec6dd67bab1be835d09d4ef1b1861002337' winmanager='N' comment='MP3 player' 
 XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
@@ -194,11 +198,11 @@ QMMP platform=windows url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.
 WinAmp platform=windows url=http://www.meggamusic.co.uk/winamp/winamp5666_full_all_redux.exe exec=winamp.exe os-version=winxp
 Clementine platform=windows url=https://github.com/clementine-player/Clementine/releases/download/1.4.0rc1-869-gccf4f75c3/ClementineSetup-1.4.0rc1-869-gccf4f75c3.exe exec=clementine.exe sha256=ce1cba9a430418e7cdd03116f05efbca17b046d39cb70b42a120d7b73051931a
 
-* comment='Player;Video'
+* category='Player;Video'
 MediaPlayerClassic platform=windows url=https://downloads.sourceforge.net/project/mpc-hc/MPC%20HomeCinema%20-%20Win32/MPC-HC_v1.7.5_x86/MPC-HC.1.7.5.x86.exe sha256=1d690da5b330f723aea4a294d478828395d321b59fc680f2b971e8b16b8bd33d exec=mpc-hc.exe
 VLC platform=windows url=https://get.videolan.org/vlc/2.2.1/win32/vlc-2.2.1-win32.exe sha256=2eaa3881b01a2464d2a155ad49cc78162571dececcef555400666c719a60794d exec=vlc.exe
 
-* comment='AudioVideoEditor;Audio'
+* category='AudioVideoEditor;Audio'
 mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
 AudioLab platform=windows url=http://www.completelyfreesoftware.com/software/alab11d.zip type='WAV editor' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' comment='Editor for WAV files' 
 BRELS platform=windows url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' comment='Midi Editor' 
@@ -216,7 +220,12 @@ WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/wav
 WavePad platform=windows url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
 Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 
-* comment='AudioVideoEditor;Video'
+
+* category='MediaTagEditor;Audio'
+Mp3Tag platform=windows url="https://download.mp3tag.de/mp3tagv321setup.exe" sha256=cdc540b1d3f2f53366bfb97ee6d5e93fcfc07d993251d00d19f29cfa9f2921d3 donate=https://www.mp3tag.de/en/donations.html
+
+
+* category='AudioVideoEditor;Video'
 VSDC platform=windows url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
 Movavi platform=windows url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe
 XMediaRecode platform=windows url=http://www.xmedia-recode.de/download/XMediaRecode3271_setup.exe requires='MSVC2017' sha256=ea97335695f52bed2ce7e5529f8cd597bf049906f8a29f54d8096f9a72a65c98 donate=https://www.xmedia-recode.de/en/donations.php
@@ -352,3 +361,5 @@ Zektor platform=windows url=http://www.tardis.dk/dlcount/click.php?id=17 donate=
 NUD platform=windows url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' 
 KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
 Windle platform=windows url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
+
+
