@@ -359,7 +359,6 @@ OutThere  exec=outthereomega.exe
 PanzerDragoon 
 RiseEterna  
 OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
-
-
+StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
 
 

@@ -1,8 +1,8 @@
 OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
-LIBS= -lssl -lcrypto -lUseful-4  
+LIBS= -lssl -lcrypto -lUseful-5  
 prefix=/usr/local
 exec_prefix=${prefix}
-CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_LIBUSEFUL_4_LIBUSEFUL_H=1 -DHAVE_LIBUSEFUL_4=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBUSEFUL_5_LIBUSEFUL_H=1 -DHAVE_LIBUSEFUL5=1 -DHAVE_LIBUSEFUL_5=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
 
 all: $(OBJ) patches-subdir main.c 
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
@@ -75,14 +75,14 @@ install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
 	mkdir -p $(HOME)/.sommelier/patches
-	cp sommelier $(HOME)/bin/
+	cp -f sommelier $(HOME)/bin/
 	cp config/*.apps config/*.conf $(HOME)/.sommelier/
 	-cp patches/*.so $(HOME)/.sommelier/patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
 	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
-	cp sommelier $(DESTDIR)$(exec_prefix)/bin/
+	cp -f sommelier $(DESTDIR)$(exec_prefix)/bin/ 
 	cp config/*.apps config/*.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 
