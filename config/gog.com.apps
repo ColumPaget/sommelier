@@ -1,105 +1,107 @@
-* category='Game' 
 #Things available through gog.com
 
 #these games have worked for me in native linux
 
 
-140 platform=gog:linux exec="140Linux.x86" exec64="140Linux.x86_64"
-AirlineTycoonDeluxe platform=gog:linux exec="ATDeluxe"
-AnomalyWarzoneEarth platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
-Anomaly2 platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=Anomaly2
-AnomalyKorea platform=gog:linux ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=AnomalyKorea
-AIWarFleetCommand platform=gog:linux exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
-Ascendant platform=gog:linux
-Battlevoid platform=gog:linux exec=harbinger
-BionicDues platform=gog:linux exec="BionicLinux.x86" exec64="BionicLinux.x86_64"
-Braveland platform=gog:linux exec="Braveland.x86" exec64="Braveland.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-BravelandWizard platform=gog:linux exec="Braveland Wizard.x86" exec64="Braveland Wizard.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-BravelandPirate platform=gog:linux exec="Braveland Pirate.x86" exec64="Braveland Pirate.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-CelestianTales platform=gog:linux 
-ChaosReborn platform=gog:linux warn="This game has been seen to have graphics issues on some linux platforms"
-Convoy platform=gog:linux exec="Convoy.x86" exec64="Convoy.x86_64"
-CryptOfTheNecrodancer platform=gog:linux exec="NecroDancer.sh"
-DarkestDungeon platform=gog:linux exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
-DarkestDungeon:Sheildbreaker platform=gog:linux dlc parent=DarkestDungeon
-DarkestDungeon:Musketeer platform=gog:linux dlc parent=DarkestDungeon
-DarkestDungeon:CrimsonCourt platform=gog:linux dlc parent=DarkestDungeon
-DarkestDungeon:ColorOfMadness platform=gog:linux dlc parent=DarkestDungeon
-Darwinia platform=gog:linux
-Defcon platform=gog:linux warn="This game has been seen to fail on some linux platforms"
-Deadnaut platform=gog:linux exec="Deadnaut.x86"
-DoorKickers platform=gog:linux 
-Duskers platform=gog:linux exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
-DungeonSouls platform=gog:linux exec=runner 
-FTL platform=gog:linux  exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
-FistPuncher platform=gog:linux  warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
-GalaxySquad platform=gog:linux
-Hacknet platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
-HardWest platform=gog:linux 
-HandOfFate platform=gog:linux
-Hammerwatch platform=gog:linux exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
-HotlineMiami platform=gog:linux exec="hotline_launcher"
-Huniepop platform=gog:linux warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
-InvisibleInc platform=gog:linux working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
-Jotun platform=gog:linux exec='Jotun.x86' exec64="Jotun.x86_64"
-LegendOfGrimrock platform=gog:linux exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
-LostSea platform=gog:linux
-MoonHunters platform=gog:linux exec="MoonHunters.x86" exec64="MoonHunters.x86_64"
-Monolith platform=gog:linux exec=runner
-MotherRussiaBleeds platform=gog:linux 
-NeoScavenger platform=gog:linux exec="NEOScavenger"
-PapersPlease platform=gog:linux exec="PapersPlease "
-Overfall platform=gog:linux exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
-QuestForInfamy platform=gog:linux 
-RaceTheSun platform=gog:linux 
-Realpolitiks platform=gog:linux 
-RogueLegacy platform=gog:linux
-SepterraCore platform=gog:linux
-ShadowrunReturns platform=gog:linux exec="Shadowrun.sh"
-Silver platform=gog:linux exec="silver_launcher.sh"
-SpaceCom platform=gog:linux exec="SPACECOM.x86"
-Spacechem platform=gog:linux exec="spacechem-launcher.sh"
-Starcrawlers platform=gog:linux exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
-StarVikingsForever platform=gog:linux
-SteamWorldDig platform=gog:linux exec="SteamWorldDig"
-SteamWorldHeist platform=gog:linux exec="Heist"
-SuperHexagon platform=gog:linux exec="SuperHexagon.x86" exec64="SuperHexagon.x86_64" working-dir="$(exec-dir)"
-TIS100 platform=gog:linux 
-Tangledeep platform=gog:linux
-TheWestportIndependent platform=gog:linux exec=the_westport_independent
-TrainValley platform=gog:linux exec="train-valley.x86" exec64="train-valley.x86_64"
-Transistor platform=gog:linux exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
-WayOfTheSamurai platform=gog:linux
+* category='Game;GOG' platform=gog:linux
+140  exec="140Linux.x86" exec64="140Linux.x86_64"
+AirlineTycoonDeluxe  exec="ATDeluxe"
+AnomalyWarzoneEarth  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
+Anomaly2  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=Anomaly2
+AnomalyKorea  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=AnomalyKorea
+AIWarFleetCommand  exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
+Ascendant 
+Battlevoid  exec=harbinger
+BionicDues  exec="BionicLinux.x86" exec64="BionicLinux.x86_64"
+Braveland  exec="Braveland.x86" exec64="Braveland.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandWizard  exec="Braveland Wizard.x86" exec64="Braveland Wizard.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandPirate  exec="Braveland Pirate.x86" exec64="Braveland Pirate.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+CelestianTales  
+ChaosReborn  warn="This game has been seen to have graphics issues on some linux platforms"
+Convoy  exec="Convoy.x86" exec64="Convoy.x86_64"
+CryptOfTheNecrodancer  exec="NecroDancer.sh"
+DarkestDungeon  exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
+DarkestDungeon:Sheildbreaker  dlc parent=DarkestDungeon
+DarkestDungeon:Musketeer  dlc parent=DarkestDungeon
+DarkestDungeon:CrimsonCourt  dlc parent=DarkestDungeon
+DarkestDungeon:ColorOfMadness  dlc parent=DarkestDungeon
+Darwinia 
+Defcon  warn="This game has been seen to fail on some linux platforms"
+Deadnaut  exec="Deadnaut.x86"
+DoorKickers  
+Duskers  exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
+DungeonSouls  exec=runner 
+FTL   exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
+FistPuncher   warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
+GalaxySquad 
+Hacknet  working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
+HardWest  
+HandOfFate 
+Hammerwatch  exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+HotlineMiami  exec="hotline_launcher"
+Huniepop  warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
+InvisibleInc  working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
+Jotun  exec='Jotun.x86' exec64="Jotun.x86_64"
+LegendOfGrimrock  exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
+LostSea 
+MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64"
+Monolith  exec=runner
+MotherRussiaBleeds  
+NeoScavenger  exec="NEOScavenger"
+PapersPlease  exec="PapersPlease "
+Overfall  exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
+QuestForInfamy  
+RaceTheSun  
+Realpolitiks  
+RogueLegacy 
+SepterraCore 
+ShadowrunReturns  exec="Shadowrun.sh"
+Silver  exec="silver_launcher.sh"
+SpaceCom  exec="SPACECOM.x86"
+Spacechem  exec="spacechem-launcher.sh"
+Starcrawlers  exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
+StarVikingsForever 
+SteamWorldDig  exec="SteamWorldDig"
+SteamWorldHeist  exec="Heist"
+SuperHexagon  exec="SuperHexagon.x86" exec64="SuperHexagon.x86_64" working-dir="$(exec-dir)"
+TIS100  
+Tangledeep 
+TheWestportIndependent  exec=the_westport_independent
+TrainValley  exec="train-valley.x86" exec64="train-valley.x86_64"
+Transistor  exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
+WayOfTheSamurai 
 
 
 
 #64-bit only linux gog games
-BaldursGate platform=gog:linux64 exec64="BaldursGate"
-DeepSkyDerelicts platform=gog:linux64
-DiceyDungeons platform=gog:linux64 exec64="diceydungeons"
-HeroOfTheKingdom platform=gog:linux64
-HeroOfTheKingdom2 platform=gog:linux64
-IntoTheBreach platform=gog:linux64 exec64="Breach"
-IratusLordOfTheDead platform=gog:linux64 exec64='Iratus'
-KerbalSpaceProgram platform=gog:linux64 category='Game' exec64="KSPLauncher.x86_64"
-KingdomRush platform=gog:linux64 exec="run.sh" 
-MainframeDefenders platform=gog:linux64
-MiniMetro platform=gog:linux64 exec64="Mini Metro"
-Loria platform=gog:linux64
-OpenTTD platform=gog:linux64 exec64=openttd
-OutThere platform=gog:linux64 exec64="outthereomega.x86"
-PrisonArchitect platform=gog:linux64 exec64="PrisonArchitect.sh"
-RadioCommander platform=gog:linux64 exec64="RC.x86_64"
-Shing platform=gog:linux64 exec64="Shing!.x86_64"
-SilmarisDiceKingdom platform=gog:linux64 exec64="silmaris.x86_64"
-SlayTheSpire platform=gog:linux64 exec64="SlayTheSpire"
-StardewValley platform=gog:linux64 exec64="StardewValley"
-Stellaris platform=gog:linux64 category='Game;StrategyGame;4xGame' exec='stellaris'
+* category='Game;GOG' platform=gog:linux64
+BaldursGate  exec64="BaldursGate"
+DeepSkyDerelicts 
+DiceyDungeons  exec64="diceydungeons"
+HeroOfTheKingdom 
+HeroOfTheKingdom2 
+IntoTheBreach  exec64="Breach"
+IratusLordOfTheDead  exec64='Iratus'
+KerbalSpaceProgram  category='Game' exec64="KSPLauncher.x86_64"
+KingdomRush  exec="run.sh" 
+MainframeDefenders 
+MiniMetro  exec64="Mini Metro"
+Loria 
+OpenTTD  exec64=openttd
+OutThere  exec64="outthereomega.x86"
+PrisonArchitect  exec64="PrisonArchitect.sh"
+RadioCommander  exec64="RC.x86_64"
+Shing  exec64="Shing!.x86_64"
+SilmarisDiceKingdom  exec64="silmaris.x86_64"
+SlayTheSpire  exec64="SlayTheSpire"
+StardewValley  exec64="StardewValley"
+Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
+* category='Game;GOG'
 AloneInTheDark platform=gog:windos exec=INDARK.EXE 
 AnvilOfDawn platform=gog:windos exec="ANVIL.EXE"
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
@@ -155,7 +157,7 @@ Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
 
 
-* platform=gog:scummvm
+* category='Game;GOG' platform=gog:scummvm
 #SCUMMVM platform
 LureOfTheTemptress
 BeneathASteelSky
@@ -163,7 +165,7 @@ TeenAgent
 TheDig
 Bladerunner
 
-* platform=gog:windows
+* category='Game;GOG' platform=gog:windows
 # windows via wine
 99LevelsToHell  
 ABCMurders  
@@ -351,7 +353,7 @@ XComInterceptor exec="Interceptor.exe"
 
 
 # 64-bit windows/wine only
-* platform=gog:windows64
+* category='Game;GOG' platform=gog:windows64
 DeepSkyDerelicts 
 AltFrequencies 
 RadioCommander 
