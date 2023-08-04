@@ -358,6 +358,7 @@ RadioCommander
 OutThere  exec=outthereomega.exe
 PanzerDragoon 
 RiseEterna  
+OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
 
 
 
