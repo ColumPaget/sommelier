@@ -113,8 +113,8 @@ SeaMonkeyEdit platform=linux64 exec='seamonkey' exec-args='-edit' comment='HTML 
 # Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
 
 Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.19-linux32.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='c12c6dc7706a5cc4027964032bc3c79162e542a40cd42b1aa3c6c893df05ac58' 
-#Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  #sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
-Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-ide/arduino-ide_2.1.1_Linux_64bit.zip download-type='zip' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  #sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
+Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.19-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE' sha256='eb68bddc1d1c0120be2fca1350a03ee34531cf37f51847b21210b6e70545bc9b' warn="There is a more modern (for better or worse) version of this program that can be installed as 'Arduino2'"
+Arduino2 platform=linux64 url=https://downloads.arduino.cc/arduino-ide/arduino-ide_2.1.1_Linux_64bit.zip download-type='zip' exec='arduino-ide' category='Electronics' comment='Arduino Programming IDE' sha256='7033b5a37506bd7c19a2a7717311fd931a5db3ba120ace27a4166cf911bba4a8' 
 
 
 
