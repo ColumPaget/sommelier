@@ -78,6 +78,7 @@ WayOfTheSamurai
 BaldursGate  exec64="BaldursGate"
 DeepSkyDerelicts 
 DiceyDungeons  exec64="diceydungeons"
+HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
 HeroOfTheKingdom2 
 IntoTheBreach  exec64="Breach"
@@ -221,7 +222,7 @@ Fallout  exec="FalloutLauncher.exe"
 FantasyWars  exec=fw.exe
 FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 FreightTycoon 
-Flatout  Category='Game'
+Flatout  
 FrozenSynapse  exec="FrozenSynapse.exe"
 FTL  
 GalacticAssault  
@@ -354,13 +355,17 @@ XComInterceptor exec="Interceptor.exe"
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64
-DeepSkyDerelicts 
+8BitAdventures2
 AltFrequencies 
-RadioCommander 
+BattleFleetGothicArmada
+CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
+DeepSkyDerelicts 
+FlashOut3D
+OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
 OutThere  exec=outthereomega.exe
 PanzerDragoon 
+RadioCommander 
 RiseEterna  
-OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
+RoadWarden warn="Only the demo version of this game has been tested"
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
-
-
+Tharsis
