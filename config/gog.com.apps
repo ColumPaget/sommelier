@@ -44,6 +44,7 @@ InvisibleInc  working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32
 Jotun  exec='Jotun.x86' exec64="Jotun.x86_64"
 LegendOfGrimrock  exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
 LostSea 
+MartialLaw exec="martial-law" warn="This game has some graphics problems at certain resolutions"
 MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64"
 Monolith  exec=runner
 MotherRussiaBleeds  
@@ -179,6 +180,7 @@ AnomalyWarzoneEarth
 ArxFatalis  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Ascendant 
 Battlevoid  
+Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 BionicDues 
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
@@ -355,12 +357,13 @@ XComInterceptor exec="Interceptor.exe"
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64
-8BitAdventures2
 AltFrequencies 
-BattleFleetGothicArmada
+BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 DeepSkyDerelicts 
 FlashOut3D
+Furi
+NomadsOfTheDriftland exec="Nomads.exe"
 OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
 OutThere  exec=outthereomega.exe
 PanzerDragoon 
