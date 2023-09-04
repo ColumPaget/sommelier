@@ -105,7 +105,6 @@ Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 # for many of these either of the windows or linux packages can be used
 * category='Game;GOG'
 AloneInTheDark platform=gog:windos exec=INDARK.EXE 
-AnvilOfDawn platform=gog:windos exec="ANVIL.EXE"
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleIsle platform=gog:windos exec="BI.EXE"
@@ -154,9 +153,9 @@ ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 Timelapse platform=gog:windos 
 WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
-XComUFODefense platform=gog:windos 
 Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
+XComUFODefense platform=gog:windos 
 
 
 * category='Game;GOG' platform=gog:scummvm
@@ -221,7 +220,7 @@ Etherlords
 EuropaUniversalis   exec="europa.exe"
 EuropaUniversalis2  exec="eu2.exe"
 Fallout  exec="FalloutLauncher.exe"
-FantasyWars  exec=fw.exe
+FantasyWars  exec="fw.exe"
 FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 FreightTycoon 
 Flatout  
@@ -230,6 +229,7 @@ FTL
 GalacticAssault  
 GalacticCivilizations1  exec="galciv.exe" vdesk=y
 GalaxySquad 
+Gothic warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 GroundControl 
 HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HaegemoniaLegionsOfIron  
@@ -289,7 +289,8 @@ Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360  
 RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 RollerCoasterTycoon 
-RogueLegacy 
+RogueLegacy
+SacredGold exec="Sacred.exe"
 Screamer4x4
 SepterraCore  exec="septerra.exe"
 ShadowrunReturns  
@@ -305,6 +306,7 @@ SpaceEmpiresDeluxe4  exec="Se4.exe"
 SpaceRangersHD  exec="Rangers.exe"
 SpaceRun  exec="oSpaceGame.exe"
 Spellforce  warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
+Spellforce2
 StardewValley platform=windows exec=StardewValley
 StarfleetCommand  vdesk=y os-version=winxp exec="sfc.exe"
 StarfleetAcademy  vdesk=y os-version=winxp exec="sfa.exe"
