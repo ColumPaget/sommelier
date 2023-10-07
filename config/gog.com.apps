@@ -77,6 +77,7 @@ WayOfTheSamurai
 #64-bit only linux gog games
 * category='Game;GOG' platform=gog:linux64
 BaldursGate  exec64="BaldursGate"
+DangerScavenger
 DeepSkyDerelicts 
 DiceyDungeons  exec64="diceydungeons"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
@@ -108,8 +109,12 @@ AloneInTheDark platform=gog:windos exec=INDARK.EXE
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleIsle platform=gog:windos exec="BI.EXE"
+BioMenace platform=gog:windos exec="BMENACE1.EXE"
+BioMenace platform=gog:lindos exec="BMENACE1.EXE"
 Castles  platform=gog:lindos exec="CASTLES.BAT"
 Castles  platform=gog:windos exec="CASTLES.BAT"
+ChallengeOfTheFiveRealms  platform=gog:windos exec="C5.COM"
+ChallengeOfTheFiveRealms  platform=gog:lindos exec="C5.COM"
 ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=Chess;BoardGame;Game
 ChineseChess platform=gog:windos exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab" category=Chess;BoardGame;Game
 Darklands platform=gog:lindos exec="DARKLAND.EXE"
@@ -121,6 +126,8 @@ HocusPocus platform=gog:windos exec="hocus.exe"
 Ishar platform=gog:windos exec="start.exe"
 Ishar2 platform=gog:windos exec="start.exe"
 ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE"
+JaggedAlliance platform=gog:windos exec="JA.EXE"
+JaggedAlliance2 platform=gog:windos exec="JA2.EXE"
 MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
 MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
 MasterOfOrion platform=gog:lindos exec="ORION.EXE"
@@ -178,6 +185,7 @@ AnomalyDefenders
 AnomalyWarzoneEarth  
 ArxFatalis  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Ascendant 
+BadNorth
 Battlevoid  
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 BionicDues 
@@ -221,6 +229,7 @@ EuropaUniversalis   exec="europa.exe"
 EuropaUniversalis2  exec="eu2.exe"
 Fallout  exec="FalloutLauncher.exe"
 FantasyWars  exec="fw.exe"
+FrailHearts
 FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 FreightTycoon 
 Flatout  
@@ -344,6 +353,7 @@ Uplink  exec=uplink.exe vdesk=y
 TheWitcherAdventureGame  
 UFO:Aftermath  
 UFO:Aftershock  
+UFO:Afterlight exec="UFO.exe"
 Victoria 
 VtmBloodlines  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 VtmRedemption  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
@@ -355,7 +365,8 @@ Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop be
 WizardsAndWarriors  vdesk=y
 X:BeyondTheFrontier 
 XComInterceptor exec="Interceptor.exe"
-
+MortalGlory winmanager=n
+RunestoneKeeper
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64
