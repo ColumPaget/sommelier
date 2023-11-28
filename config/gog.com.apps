@@ -77,6 +77,8 @@ WayOfTheSamurai
 #64-bit only linux gog games
 * category='Game;GOG' platform=gog:linux64
 BaldursGate  exec64="BaldursGate"
+BridgeConstructor exec="BridgeConstructor.x86_64"
+BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
 DeepSkyDerelicts 
 DiceyDungeons  exec64="diceydungeons"
@@ -367,6 +369,7 @@ X:BeyondTheFrontier
 XComInterceptor exec="Interceptor.exe"
 MortalGlory winmanager=n
 RunestoneKeeper
+VoidPrison exec="Void Prison.exe"
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64

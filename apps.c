@@ -471,7 +471,7 @@ int AppsOutputList(TAction *Template)
         {
             if (StrValid(App->URL)) p_dl="www";
             else p_dl="";
-            printf("%- 25s  %- 12s  %- 12s %- 3s   ", App->Name, App->Platform, GetVar(App->Vars, "category"), p_dl);
+            printf("%-25s  %-12s  %-12s %-3s   ", App->Name, App->Platform, GetVar(App->Vars, "category"), p_dl);
             printf("%s\n",GetVar(App->Vars, "comment"));
         }
 
