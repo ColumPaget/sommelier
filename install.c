@@ -110,20 +110,20 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
             Tempstr=MCopyStr(Tempstr, "~rWARN: Program to be installed may be 64-bit only, and you seem to be installing it on a 32-bit linux system.~0\n", NULL);
             TerminalPutStr(Tempstr, NULL);
         }
-				//fall through to 'PLATFORM_GOGLINUX'
+    //fall through to 'PLATFORM_GOGLINUX'
 
     case PLATFORM_GOGLINUX:
         ForcedFileType=FILETYPE_ZIP;
         FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* data/noarch/support/icon.png $(extra-files)", Act->Vars, 0);
-				Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
         SetVar(Act->Vars, "app-icon", Tempstr);
         break;
 
     case PLATFORM_GOGSCUMMVM:
     case PLATFORM_GOGDOS:
         ForcedFileType=FILETYPE_ZIP;
-        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/support/icon.png $(extra-files)", Act->Vars, 0);
-				Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
+        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/game/* data/noarch/support/icon.png $(extra-files)", Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
         SetVar(Act->Vars, "app-icon", Tempstr);
         break;
     }
@@ -640,7 +640,7 @@ static int CheckDLC(TAction *Act)
     int result=FALSE;
 
     Parent=ActionCreate(ACT_INSTALL, Act->Parent);
-    result=DesktopFileRead(Parent);
+    result=DesktopFileLoad(Parent);
     ActionDestroy(Parent);
 
     return(result);

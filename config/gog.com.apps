@@ -123,6 +123,8 @@ Darklands platform=gog:lindos exec="DARKLAND.EXE"
 Darklands platform=gog:windos exec="DARKLAND.EXE"
 DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE"
 DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold
+EpicPinball platform=gog:windos exec="PINBALL.EXE"
+EpicPinball platform=gog:lindos exec="PINBALL.EXE"
 HocusPocus platform=gog:lindos exec="hocus.exe"
 HocusPocus platform=gog:windos exec="hocus.exe"
 Ishar platform=gog:windos exec="start.exe"
@@ -296,6 +298,7 @@ RageOfMages  exec="rom.exe"
 RCCars  ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 RebelGalaxy 
 Reigns  
+RestaurantEmpire 
 Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360  
 RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
@@ -370,6 +373,8 @@ XComInterceptor exec="Interceptor.exe"
 MortalGlory winmanager=n
 RunestoneKeeper
 VoidPrison exec="Void Prison.exe"
+WarriorKings
+WarriorKingsBattles
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64

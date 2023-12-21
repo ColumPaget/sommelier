@@ -16,6 +16,7 @@ static void PrintUsage()
     printf("sommelier winecfg <name>                           run 'winecfg' for named wine application\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
     printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");
+		printf("sommelier autostart                                run programs from ~/.config/autostart\n");
     printf("\n");
     printf("options are:\n");
     printf("  -d                            print debugging (there will be a lot!)\n");
@@ -190,6 +191,20 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strncmp(arg, "reconf", 6)==0) Act=ParseStandardCommand(CmdLine, "reconfigure", ACT_RECONFIGURE, Acts, Options);
         else if (strcmp(arg, "uninstall")==0) Act=ParseStandardCommand(CmdLine, "uninstall", ACT_UNINSTALL, Acts, Options);
         else if (strcmp(arg, "download")==0) Act=ParseStandardCommand(CmdLine, "download", ACT_DOWNLOAD, Acts, Options);
+        else if (strcmp(arg, "run")==0) ParseSimpleAction(Acts, ACT_RUN, CmdLine);
+        else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, CmdLine);
+        else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
+        else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
+        else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
+        else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);
+        else if (strcmp(arg, "version")==0) PrintVersion();
+        else if (strcmp(arg, "-version")==0) PrintVersion();
+        else if (strcmp(arg, "--version")==0) PrintVersion();
+        else if (strcmp(arg, "autostart")==0) 
+				{
+                Act=ActionCreate(ACT_AUTOSTART, "");
+                ListAddItem(Acts, Act);
+				}
         else if (strcmp(arg, "set")==0)
         {
             SettingsStr=CopyStr(SettingsStr, CommandLineNext(CmdLine));
@@ -206,19 +221,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
                 arg=CommandLineNext(CmdLine);
             }
         }
-        else
-        {
-            if (strcmp(arg, "run")==0) ParseSimpleAction(Acts, ACT_RUN, CmdLine);
-            else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, CmdLine);
-            else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
-            else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
-            else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
-            else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);
-            else if (strcmp(arg, "version")==0) PrintVersion();
-            else if (strcmp(arg, "-version")==0) PrintVersion();
-            else if (strcmp(arg, "--version")==0) PrintVersion();
-            else PrintUsage();
-        }
+        else PrintUsage();
     }
     else PrintUsage();
 

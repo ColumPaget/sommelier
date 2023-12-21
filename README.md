@@ -107,6 +107,7 @@ sommelier download <name> [<name>]                 download installers/packages 
 sommelier run <name> [<options>]                   run an application by name
 sommelier winecfg <name> [<options>]               run winecfg for named wine application
 sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
+sommelier autostart                                load programs out of ~/.config/autostart
 
 options are:
   -d                            print debugging (there will be a lot!)
@@ -320,6 +321,13 @@ ENVIRONMENT VARIABLES
 
 Sommelier looks for the variables `SOMMELIER_CA_BUNDLE`, `CURL_CA_BUNDLE` and `SSL_VERIFY_FILE`, in that order, to discover the path of the Certificate Bundle for certificate verification.
 If `SOMMELIER_INSTALLER_CACHE` is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the `-url` option.
+
+
+
+AUTOSTART
+=========
+
+sommelier can emulate a desktop environment that autostarts programs using .desktop files in `~/.config/autostart`. This is to assist window-managers that don't support this feature.
 
 
 TO DO

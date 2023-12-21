@@ -31,6 +31,7 @@
 #define ACT_DOWNLOAD 15
 #define ACT_RECONFIGURE 16
 #define ACT_WINECFG 17
+#define ACT_AUTOSTART 18
 
 #define FLAG_DEBUG 1
 #define FLAG_FORCE 2

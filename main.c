@@ -117,6 +117,7 @@ int main(int argc, char *argv[])
 {
     ListNode *Acts, *Curr;
     TAction *Act;
+		char *Tempstr=NULL;
 
 //we will not need root permissions unless we sandbox, and we'll reclaim them as needed then
     if (geteuid()==0) seteuid(getuid());
@@ -136,6 +137,7 @@ int main(int argc, char *argv[])
     while (Curr)
     {
         Act=(TAction *) Curr->Item;
+
         if (Act)
         {
             switch (Act->Type)
@@ -161,8 +163,14 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_RUN:
-                RunApplication(Act);
+                RunApplicationFromDesktopFile(Act);
                 break;
+
+						case ACT_AUTOSTART:
+								Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
+printf("ATS: %s\n", Tempstr);
+								DesktopFileDirectoryRunAll(Tempstr);
+								break;
 
             case ACT_REBUILD_HASHES:
                 RebuildAppList(Act);
@@ -193,6 +201,7 @@ int main(int argc, char *argv[])
 
         Curr=ListGetNext(Curr);
     }
+		Destroy(Tempstr);
 
     return(0);
 }

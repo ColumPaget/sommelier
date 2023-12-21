@@ -8,7 +8,7 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
     char *Tempstr=NULL;
 
     if (Config->Flags & FLAG_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
-    else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local//share/applications/", Act->Vars, 0);
+    else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local/share/applications/", Act->Vars, 0);
 
     SetVar(Act->Vars, "desktop-path", Tempstr);
     RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name).desktop",Act->Vars, 0);
@@ -58,54 +58,49 @@ int DesktopFileDelete(TAction *Act)
     return(FALSE);
 }
 
-int DesktopFileRead(TAction *Act)
+int DesktopFileRead(const char *Path, TAction *Act)
 {
     char *Tempstr=NULL, *Token=NULL, *Exec=NULL;
     const char *ptr;
     int result=FALSE;
     STREAM *S;
 
-    Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
-    if (StrValid(Tempstr))
+    S=STREAMOpen(Path, "r");
+    if (S)
     {
-        S=STREAMOpen(Tempstr, "r");
-        if (S)
+        result=TRUE;
+        Tempstr=STREAMReadLine(Tempstr, S);
+        while (Tempstr)
         {
-            result=TRUE;
-            Tempstr=STREAMReadLine(Tempstr, S);
-            while (Tempstr)
+            StripTrailingWhitespace(Tempstr);
+            ptr=GetToken(Tempstr, "=", &Token, 0);
+            if (strcasecmp(Token,"SommelierExec")==0)
             {
-                StripTrailingWhitespace(Tempstr);
-                ptr=GetToken(Tempstr, "=", &Token, 0);
-                if (strcasecmp(Token,"SommelierExec")==0)
-                {
-                    Act->Exec=CopyStr(Act->Exec, ptr);
-                    StripQuotes(Act->Exec);
-                }
-                else if (strcasecmp(Token,"Exec")==0)
-                {
-                    Exec=CopyStr(Exec, ptr);
-                    StripQuotes(Exec);
-                }
-                else if (strcasecmp(Token,"Icon")==0)
-                {
-                    Token=CopyStr(Token, ptr);
-                    StripQuotes(Token);
-                    SetVar(Act->Vars, "icon", Token);
-                }
-                else if (strcasecmp(Token,"Path")==0)
-                {
-                    Token=CopyStr(Token, ptr);
-                    StripQuotes(Token);
-                    SetVar(Act->Vars, "working-dir", Token);
-                }
-                Tempstr=STREAMReadLine(Tempstr, S);
+                Act->Exec=CopyStr(Act->Exec, ptr);
+                StripQuotes(Act->Exec);
             }
-            STREAMClose(S);
+            else if (strcasecmp(Token,"Exec")==0)
+            {
+                Exec=CopyStr(Exec, ptr);
+                StripQuotes(Exec);
+            }
+            else if (strcasecmp(Token,"Icon")==0)
+            {
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "icon", Token);
+            }
+            else if (strcasecmp(Token,"Path")==0)
+            {
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "working-dir", Token);
+            }
+            Tempstr=STREAMReadLine(Tempstr, S);
         }
-        else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
+        STREAMClose(S);
     }
-    else fprintf(stderr, "ERROR: Failed to find .desktop file '%s' for application\n", Tempstr);
+    else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
 
 //if we didn't find a 'SommelierExec' entry then we must be dealing with
 //a setup that doesn't use sommelier to run the app. Thus the 'Exec' entry
@@ -130,6 +125,45 @@ int DesktopFileRead(TAction *Act)
     return(result);
 }
 
+
+int DesktopFileLoad(TAction *Act)
+{
+    char *Tempstr=NULL;
+    int result=FALSE;
+
+    Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
+    if (StrValid(Tempstr))
+    {
+        result=DesktopFileRead(Tempstr, Act);
+    }
+    else fprintf(stderr, "ERROR: Failed to find .desktop file '%s' for application\n", Tempstr);
+
+    Destroy(Tempstr);
+
+    return(result);
+}
+
+
+void DesktopFileDirectoryRunAll(const char *DirPath)
+{
+    TAction *Act;
+    glob_t Glob;
+    char *Tempstr=NULL;
+    int i;
+
+    Tempstr=MCopyStr(Tempstr, DirPath, "/*", NULL);
+    glob(Tempstr, 0, 0, &Glob);
+    for (i=0; i < Glob.gl_pathc; i++)
+    {
+        Act=ActionCreate(ACT_RUN, "startup");
+        DesktopFileRead(Glob.gl_pathv[i], Act);
+        RunApplication(Act);
+        ActionDestroy(Act);
+    }
+    globfree(&Glob);
+
+    Destroy(Tempstr);
+}
 
 
 //setup configuration for a native linux app

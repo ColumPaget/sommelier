@@ -5,8 +5,9 @@
 #include "common.h"
 
 int DesktopFileDelete(TAction *Act);
-int DesktopFileRead(TAction *Act);
+int DesktopFileLoad(TAction *Act);
 void DesktopFileGenerate(TAction *Act);
+void DesktopFileDirectoryRunAll(const char *DirPath);
 
 #endif
 

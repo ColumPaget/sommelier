@@ -4,6 +4,7 @@
 #include "common.h"
 
 void RunApplication(TAction *Act);
+void RunApplicationFromDesktopFile(TAction *Act);
 void RunWineCfg(TAction *Act);
 
 #endif

@@ -160,34 +160,40 @@ void RunApplication(TAction *Act)
     int width, height;
     pid_t pid;
 
-    if (DesktopFileRead(Act))
+    Tempstr=AppFormatPath(Tempstr,  Act);
+    if (StrValid(Act->Exec))
     {
-        Tempstr=AppFormatPath(Tempstr,  Act);
-        if (StrValid(Act->Exec))
+        if (fork()==0)
         {
-            if (fork()==0)
-            {
-                XRandrGetResolution(&width, &height);
-                if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
-                else pid=RunNormal(Act);
+            XRandrGetResolution(&width, &height);
+            if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
+            else pid=RunNormal(Act);
 
-                if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+            if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+            {
+                //wait for the application to exit, and collect any other
+                //pids while we do so
+                while (1)
                 {
-                    //wait for the application to exit, and collect any other
-                    //pids while we do so
-                    while (1)
-                    {
-                        if (waitpid(-1, NULL, 0) == pid) break;
-                    }
-                    XRandrSetResolution(width, height);
+                    if (waitpid(-1, NULL, 0) == pid) break;
                 }
-                _exit(0);
+                XRandrSetResolution(width, height);
             }
+            _exit(0);
         }
-        else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
     }
+    else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
 
     Destroy(Tempstr);
+}
+
+
+void RunApplicationFromDesktopFile(TAction *Act)
+{
+    if (DesktopFileLoad(Act))
+    {
+        RunApplication(Act);
+    }
 }
 
 
@@ -195,7 +201,7 @@ void RunWineCfg(TAction *Act)
 {
     char *Tempstr=NULL;
 
-    if (DesktopFileRead(Act))
+    if (DesktopFileLoad(Act))
     {
         Tempstr=AppFormatPath(Tempstr,  Act);
         Act->Exec=CopyStr(Act->Exec, "winecfg");
