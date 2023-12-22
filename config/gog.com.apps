@@ -198,6 +198,7 @@ Bloodrayne2
 BloodrayneBetrayal 
 Caravan  
 Carcassonne 
+CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
 ChaosReborn  
 ChaosOverlords  
 Civilization3  exec="Civ3Launcher.exe"
@@ -211,7 +212,8 @@ DarkQuest2
 Darkstone  exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 DeadSpace  exec="Dead Space.exe"
 Defcon  
-DesertLaw 
+DesertLaw
+DeathTrap
 DiceyDungeons 
 Diluvion  
 DinsCurse  rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
@@ -233,6 +235,7 @@ EuropaUniversalis   exec="europa.exe"
 EuropaUniversalis2  exec="eu2.exe"
 Fallout  exec="FalloutLauncher.exe"
 FantasyWars  exec="fw.exe"
+FeudalAlloy
 FrailHearts
 FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 FreightTycoon 
@@ -283,6 +286,8 @@ OffworldResourceBase  exec="orb.exe" warn="This game installs in a virtual deskt
 OriginalWar  exec=Owar.exe
 Overfall  
 OpenTTD  exec=openttd.exe
+PapersPlease
+PaperSorcerer
 Parkan2  
 Patrician3  exec=Patrician3.exe
 Perimeter  
@@ -290,15 +295,18 @@ Pod  exec=PODX3Dfx.exe
 PopulousTheBeginning  exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2  exec=PR2.exe
+Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 Praetorians  
 PrisonArchitect  exec="Prison Architect.exe"
+PunchClub
 RaceTheSun  
 RailroadTycoon3 
 RageOfMages  exec="rom.exe"
 RCCars  ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 RebelGalaxy 
 Reigns  
-RestaurantEmpire 
+RestaurantEmpire
+RelicHuntersZeroRemix
 Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Revolver360  
 RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
@@ -307,11 +315,14 @@ RogueLegacy
 SacredGold exec="Sacred.exe"
 Screamer4x4
 SepterraCore  exec="septerra.exe"
+SealOfEvil
+ShadowHand
 ShadowrunReturns  
 ShadowWatch  
 SherlockHolmesVsJackTheRipper  
 SimCity3000 
-SilmarisDiceKingdom 
+SilmarisDiceKingdom
+SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
 SlayTheSpire  exec="SlayTheSpire.exe"
 SmugglersV  
 SpaceColony  
@@ -373,8 +384,6 @@ XComInterceptor exec="Interceptor.exe"
 MortalGlory winmanager=n
 RunestoneKeeper
 VoidPrison exec="Void Prison.exe"
-WarriorKings
-WarriorKingsBattles
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64
