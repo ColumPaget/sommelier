@@ -38,6 +38,8 @@ Hacknet  working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" ex
 HardWest  
 HandOfFate 
 Hammerwatch  exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+HeadsWillRoll exec="headswillroll_downfall.sh"
+HeroinesQuest exec="heroine\'squest" exec-args="--windowed"
 HotlineMiami  exec="hotline_launcher"
 Huniepop  warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
 InvisibleInc  working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
@@ -76,11 +78,13 @@ WayOfTheSamurai
 
 #64-bit only linux gog games
 * category='Game;GOG' platform=gog:linux64
+Aragami warn="Game requires a powerful system"
 BaldursGate  exec64="BaldursGate"
 BridgeConstructor exec="BridgeConstructor.x86_64"
 BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
 DeepSkyDerelicts 
+DokiDokiGravityDive exec="start.sh"
 DiceyDungeons  exec64="diceydungeons"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
@@ -98,6 +102,7 @@ PrisonArchitect  exec64="PrisonArchitect.sh"
 RadioCommander  exec64="RC.x86_64"
 Shing  exec64="Shing!.x86_64"
 SilmarisDiceKingdom  exec64="silmaris.x86_64"
+SkullsOfTheShogun
 SlayTheSpire  exec64="SlayTheSpire"
 StardewValley  exec64="StardewValley"
 Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
@@ -405,7 +410,8 @@ OneFingerDeathPunch2 warn="This game has been seen to work under some versions o
 OutThere  exec=outthereomega.exe
 PanzerDragoon 
 RadioCommander 
-RiseEterna  
+RiseEterna 
 RoadWarden warn="Only the demo version of this game has been tested"
+StarGeneral
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
 Tharsis

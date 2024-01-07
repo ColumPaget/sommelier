@@ -177,7 +177,8 @@ static void DesktopFileConfigureNative(TAction *Act)
     {
         Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
         SetVar(Act->Vars, "ld_preload", Tempstr);
-        Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) '$(exec-path)' $(exec-args)", Act->Vars, 0);
+		
+        Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
         StripLeadingWhitespace(Tempstr);
         StripTrailingWhitespace(Tempstr);
 
@@ -187,7 +188,7 @@ static void DesktopFileConfigureNative(TAction *Act)
     ptr=GetVar(Act->Vars, "exec64");
     if (StrValid(ptr))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, "'$(exec-dir)/$(exec64)'", Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "\"$(exec-dir)/$(exec64)\"", Act->Vars, 0);
         StripLeadingWhitespace(Tempstr);
         StripTrailingWhitespace(Tempstr);
 
@@ -207,7 +208,7 @@ static void DesktopFileConfigureWine(TAction *Act)
     //for windows we must override the found exec-path to be in windows format
     Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
     strrep(Tempstr, '/', '\\');
-		Quoted=QuoteCharsInStr(Quoted, Tempstr, "\"");
+	Quoted=QuoteCharsInStr(Quoted, Tempstr, "\"");
     SetVar(Act->Vars,"exec-path", Quoted);
 
     if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
