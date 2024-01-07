@@ -202,21 +202,23 @@ static void DesktopFileConfigureNative(TAction *Act)
 //setup configuration for a windows app run via WINE
 static void DesktopFileConfigureWine(TAction *Act)
 {
-    char *Tempstr=NULL;
+    char *Tempstr=NULL, *Quoted=NULL;
 
     //for windows we must override the found exec-path to be in windows format
     Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
     strrep(Tempstr, '/', '\\');
-    SetVar(Act->Vars,"exec-path", Tempstr);
+		Quoted=QuoteCharsInStr(Quoted, Tempstr, "\"");
+    SetVar(Act->Vars,"exec-path", Quoted);
 
     if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
     else if (strcmp(Act->Platform, "win32")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win32 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
-    else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine '$(exec-path)' $(exec-args)", Act->Vars, 0);
+    else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
 
     SetVar(Act->Vars, "invocation", Tempstr);
     SetVar(Act->Vars, "invoke-dir", GetVar(Act->Vars, "working-dir"));
 
     Destroy(Tempstr);
+    Destroy(Quoted);
 }
 
 

@@ -186,16 +186,19 @@ AgeOfWonders  exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/
 AimRacing 
 AncientEnemy  
 AnomalyDefenders  
-AnomalyWarzoneEarth  
-ArxFatalis  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+AnomalyWarzoneEarth
+Aragami
+ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Ascendant 
 BadNorth
+Ballance vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Battlevoid  
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
-BionicDues 
+BionicDues
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
-BloodrayneBetrayal 
+BloodrayneBetrayal
+CardaclysmShardsOfTheFour
 Caravan  
 Carcassonne 
 CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
@@ -249,7 +252,9 @@ Gothic warn="This game installs in a virtual desktop because it has issues with 
 GroundControl 
 HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HaegemoniaLegionsOfIron  
-HaegemoniaSolonHeritage  
+HaegemoniaSolonHeritage
+HeadsWillRoll
+HeroinesQuest vdesk=y warn="Game is low-resolution, and thus a virtual desktop/window mode makes sense for it"
 HeroesOfMightAndMagic3  
 HeroOfTheKingdom  
 HeroOfTheKingdom2  
@@ -290,7 +295,8 @@ PapersPlease
 PaperSorcerer
 Parkan2  
 Patrician3  exec=Patrician3.exe
-Perimeter  
+Perimeter
+PhoningHome warn="Game appears to run, but very slowly."
 Pod  exec=PODX3Dfx.exe
 PopulousTheBeginning  exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
@@ -308,11 +314,12 @@ Reigns
 RestaurantEmpire
 RelicHuntersZeroRemix
 Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
-Revolver360  
+Revolver360 
 RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 RollerCoasterTycoon 
 RogueLegacy
 SacredGold exec="Sacred.exe"
+Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
 Screamer4x4
 SepterraCore  exec="septerra.exe"
 SealOfEvil
