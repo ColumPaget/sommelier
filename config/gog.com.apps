@@ -244,6 +244,8 @@ EuropaUniversalis2  exec="eu2.exe"
 Fallout  exec="FalloutLauncher.exe"
 FantasyWars  exec="fw.exe"
 FeudalAlloy
+FinalVendetta
+FightNRage
 FrailHearts
 FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
 FreightTycoon 
