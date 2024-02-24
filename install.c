@@ -362,8 +362,7 @@ static void FinalizeExeInstall(TAction *Act)
         break;
     }
 
-
-    if (StrValid(Path) || (Act->Flags * FLAG_NOEXEC))
+    if (StrValid(Path) || (Act->Flags & FLAG_NOEXEC))
     {
         //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));

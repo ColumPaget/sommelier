@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
+OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
 LIBS=@LIBUSEFUL_BUNDLED@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -21,6 +21,9 @@ apps.o: apps.h apps.c
 
 doom.o: doom.h doom.c
 	$(CC) $(CFLAGS) -c doom.c
+
+msdos.o: msdos.h msdos.c
+	$(CC) $(CFLAGS) -c msdos.c
 
 elf.o: elf.h elf.c
 	$(CC) $(CFLAGS) -c elf.c

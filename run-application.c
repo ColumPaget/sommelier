@@ -137,6 +137,7 @@ pid_t RunNormal(TAction *Act)
     ptr=GetVar(Act->Vars, "working-dir");
     if (StrValid(ptr))
     {
+				printf("switching to working directory: %s\n", ptr);
         if (chdir(ptr) !=0) perror("ERROR switching to directory: ");
     }
 

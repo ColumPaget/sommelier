@@ -112,7 +112,9 @@ Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
 * category='Game;GOG'
-AloneInTheDark platform=gog:windos exec=INDARK.EXE 
+Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE"
+AloneInTheDark platform=gog:windos exec="INDARK.EXE" 
+AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE"
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleIsle platform=gog:windos exec="BI.EXE"
@@ -128,8 +130,19 @@ Darklands platform=gog:lindos exec="DARKLAND.EXE"
 Darklands platform=gog:windos exec="DARKLAND.EXE"
 DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE"
 DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold
+EarthwormJim platform=gog:windos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"
+EarthwormJim platform=gog:lindos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"
+EarthwormJim2 platform=gog:windos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE"
+EarthwormJim2 platform=gog:lindos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE"
+ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)"
+ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' working-dir="$(exec-dir)"
+ElderScrollsMorrowind platform=gog:windos
 EpicPinball platform=gog:windos exec="PINBALL.EXE"
 EpicPinball platform=gog:lindos exec="PINBALL.EXE"
+FantasyGeneral platform=gog:windos exec="FG.BAT" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c: fg.bat" 
+FantasyGeneral platform=gog:lindos exec="FG.BAT" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c: fg.bat" 
+HeroesOfMightAndMagic platform=gog:windos exec=HEROES.EXE commands='mount c .; imgmount d homm1.gog -t iso; c: ; loadfix -4 heroes.exe'
+HeroesOfMightAndMagic2 platform=gog:windos exec=HEROES2.EXE commands='mount c .; imgmount d homm2.gog -t iso; c: ; heroes2.exe'
 HocusPocus platform=gog:lindos exec="hocus.exe"
 HocusPocus platform=gog:windos exec="hocus.exe"
 Ishar platform=gog:windos exec="start.exe"
@@ -166,8 +179,9 @@ Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbo
 Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
 SubWar2050 platform=gog:windos exec="subwar.bat"
 ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
-Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 Timelapse platform=gog:windos 
+TombRaider platform=gog:windos exec="GAME.DAT" commands='imgmount d "GAME.DAT" -fs iso; d:; TOMB.EXE' 
+Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
 Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
@@ -374,6 +388,7 @@ Thief2
 Thief3  
 ThisIsThePolice  
 ThroneOfDarkness 
+TombRaider2
 Torchlight  os-version=winxp
 Torchlight2  os-version=winxp exec=Torchlight2.exe
 TransportGiant2 

@@ -28,6 +28,7 @@ uname -v = #18 SMP Wed Feb 10 15:42:19 GMT 2021
 /bin/universe          = unknown
 
 PATH: /usr/prebin
+PATH: /home/colum/bin
 PATH: /usr/local/bin
 PATH: /usr/bin
 PATH: /usr/X11R7/bin
@@ -304,10 +305,19 @@ configure:3719: checking for GetToken in -lUseful-5
 configure:3753: result: yes
 configure:3765: checking for SSL_library_init in -lssl
 configure:3790: gcc -o conftest -g -O2   conftest.c -lssl  -lUseful-5  >&5
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: warning: libssl.so.48, needed by /usr/local/lib/libUseful-5.so, may conflict with libssl.so.55
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_EncryptFinal is often misused, please use EVP_EncryptFinal_ex and EVP_CIPHER_CTX_cleanup
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_DecryptFinal is often misused, please use EVP_DecryptFinal_ex and EVP_CIPHER_CTX_cleanup
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_CipherFinal is often misused, please use EVP_CipherFinal_ex and EVP_CIPHER_CTX_cleanup
 configure:3790: $? = 0
 configure:3799: result: yes
 configure:3810: checking for EVP_CIPHER_CTX_init in -lcrypto
 configure:3835: gcc -o conftest -g -O2   conftest.c -lcrypto  -lssl -lUseful-5  >&5
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: warning: libssl.so.48, needed by /usr/local/lib/libUseful-5.so, may conflict with libssl.so.55
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: warning: libcrypto.so.46, needed by /usr/local/lib/libUseful-5.so, may conflict with libcrypto.so.52
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_EncryptFinal is often misused, please use EVP_EncryptFinal_ex and EVP_CIPHER_CTX_cleanup
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_DecryptFinal is often misused, please use EVP_DecryptFinal_ex and EVP_CIPHER_CTX_cleanup
+/usr/lib/gcc/i486-pc-linux-gnu/8.3.0/../../../../i486-pc-linux-gnu/bin/ld: /usr/lib/libcrypto.so.46: warning: EVP_CipherFinal is often misused, please use EVP_CipherFinal_ex and EVP_CIPHER_CTX_cleanup
 configure:3835: $? = 0
 configure:3844: result: yes
 configure:4149: checking openssl/crypto.h usability

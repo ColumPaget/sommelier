@@ -2,6 +2,7 @@
 #include "config.h"
 #include "regedit.h"
 #include "doom.h"
+#include "msdos.h"
 
 ListNode *Platforms=NULL;
 
@@ -346,6 +347,7 @@ char *PlatformSelect(char *RetStr, TAction *Act)
 
 void PlatformApplySettings(TAction *Act)
 {
+
     switch (Act->PlatformID)
     {
     case PLATFORM_WINDOWS:
@@ -355,6 +357,12 @@ void PlatformApplySettings(TAction *Act)
     case PLATFORM_DOOM:
         DoomApplySettings(Act);
         break;
+
+		case PLATFORM_DOS:
+		case PLATFORM_GOGDOS:
+		case PLATFORM_GOGWINDOS:
+        MSDOSApplySettings(Act);
+		break;
     }
 }
 
