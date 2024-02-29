@@ -13,6 +13,7 @@ ListNode *AppsGetList()
 
 int AppPlatformMatches(TAction *App, const char *Platforms)
 {
+
     if (! StrValid(Platforms)) return (TRUE);
     if (InList(App->Platform, Platforms)) return(TRUE);
 
@@ -22,28 +23,31 @@ int AppPlatformMatches(TAction *App, const char *Platforms)
 }
 
 
+int AppMatchCompareVars(TAction *App, const char *VarName, const char *Match)
+{
+const char *ptr;
+
+   if (! StrValid(Match)) return(TRUE);
+
+   ptr=GetVar(App->Vars, VarName);
+   if (InList(Match, ptr)) return(TRUE);
+   return(FALSE);
+}
+
 
 int AppMatches(TAction *Template, TAction *App)
 {
-    int result=FALSE;
-    char *Token=NULL;
-    const char *ptr;
-
+    if (! StrValid(Template->Platform)) return(TRUE);
     if (! AppPlatformMatches(App, Template->Platform) ) return(FALSE);
+    if (! AppMatchCompareVars(App, "category", GetVar(Template->Vars, "category"))) return(FALSE);
+		if ((Template->Flags & FLAG_INSTALLED) && (! AppIsInstalled(App)) ) return(FALSE);
 
-    /* doesn't yet exist!
-    if (StrValid(Template->Category))
+    if (StrValid(Template->Name))
     {
-    	ptr=GetToken(App->Category, ";", &Token, 0)
-    	while (ptr)
-    	{
-    		if (strcasecmp(Token, Template->Category)==0) result=TRUE;
-    	ptr=GetToken(ptr, ";", &Token, 0)
-    	}
+//printf("PM: [%s] [%s]\n", Template->Name, App->Name );
+	if (! pmatch_one(Template->Name, App->Name, StrLen(App->Name), NULL, NULL, 0)) return(FALSE);
     }
-    */
 
-    Destroy(Token);
     return(TRUE);
 }
 
@@ -74,7 +78,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             }
             else if (strcmp(Name,"platform")==0)
             {
-                Act->Platform=CopyStr(Act->Platform, Value);
+                Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(Value));
                 Plt=PlatformFind(Act->Platform);
                 if (Plt)
                 {
@@ -351,6 +355,20 @@ char *AppFormatPath(char *Path, TAction *Act)
 }
 
 
+
+int AppIsInstalled(TAction *App)
+{
+char *Tempstr=NULL;
+int result=FALSE;
+
+Tempstr=AppFormatPath(Tempstr, App);
+if (access(Tempstr, F_OK)==0) result=TRUE;
+
+Destroy(Tempstr);
+return(result);
+}
+ 
+
 int AppFindConfig(TAction *App, const char *Platforms)
 {
     TAction *AppConfig;
@@ -461,7 +479,8 @@ int AppsOutputList(TAction *Template)
     ListNode *Curr;
     int result=FALSE;
     TAction *App;
-    char *p_dl;
+    const char *p_dl;
+    char *Flags=NULL, *Tempstr=NULL;
 
     Curr=ListGetNext(Apps);
     while (Curr)
@@ -469,15 +488,19 @@ int AppsOutputList(TAction *Template)
         App=(TAction *) Curr->Item;
         if (AppMatches(Template, App))
         {
-            if (StrValid(App->URL)) p_dl="www";
-            else p_dl="";
-            printf("%-25s  %-12s  %-12s %-3s   ", App->Name, App->Platform, GetVar(App->Vars, "category"), p_dl);
+						Flags=CopyStr(Flags, "");
+            if (StrValid(App->URL)) Flags=CatStr(Flags, "www,");
+						if (AppIsInstalled(App)) Flags=CatStr(Flags,"i,");
+
+            printf("%-25s  %12s %-12s  %-12s   ", App->Name, App->Platform, Flags, GetVar(App->Vars, "category"));
             printf("%s\n",GetVar(App->Vars, "comment"));
         }
 
         Curr=ListGetNext(Curr);
     }
 
+		Destroy(Tempstr);
+		Destroy(Flags);
     return(result);
 }
 

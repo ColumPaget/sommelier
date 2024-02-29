@@ -72,15 +72,14 @@ patches-subdir:
 	- $(MAKE) -C patches
 
 clean:
-	rm -f sommelier *.o libUseful-5/*.o libUseful-5/*.so libUseful-5/*.a patches/*.so *.orig
+	rm -f sommelier *.o libUseful-5/*.o libUseful-5/*.so libUseful-5/*.a patches/*.so *.orig .*.swp */.*.swp
 
 install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
-	mkdir -p $(HOME)/.sommelier/patches
 	cp -f sommelier $(HOME)/bin/
 	cp config/*.apps config/*.conf $(HOME)/.sommelier/
-	-cp patches/*.so $(HOME)/.sommelier/patches
+	$(MAKE) install -C patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
@@ -88,6 +87,7 @@ install_global:
 	cp -f sommelier $(DESTDIR)$(exec_prefix)/bin/ 
 	cp config/*.apps config/*.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
+	$(MAKE) install_global -C patches
 
 test:
 	echo "no tests"

@@ -30,12 +30,13 @@ int PlatformType(const char *Platform)
     if (! StrValid(Platform)) return(PLATFORM_WINDOWS);
     if (MatchTokenFromList(Platform, WindowsPlatforms, 0) > -1) return(PLATFORM_WINDOWS);
     if (strcasecmp(Platform, "dos")==0) return(PLATFORM_DOS);
+    if (strcasecmp(Platform, "msdos")==0) return(PLATFORM_DOS);
     if (strcasecmp(Platform, "scummvm")==0) return(PLATFORM_SCUMMVM);
-    if (strcasecmp(Platform, "gog.com:linux")==0) return(PLATFORM_GOGLINUX);
-    if (strcasecmp(Platform, "gog.com:linux64")==0) return(PLATFORM_GOGLINUX64);
-    if (strcasecmp(Platform, "gog.com:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
-    if (strcasecmp(Platform, "gog.com:lindos")==0) return(PLATFORM_GOGDOS);
-    if (strcasecmp(Platform, "gog.com:windos")==0) return(PLATFORM_GOGWINDOS);
+    if (strcasecmp(Platform, "gog:linux")==0) return(PLATFORM_GOGLINUX);
+    if (strcasecmp(Platform, "gog:linux64")==0) return(PLATFORM_GOGLINUX64);
+    if (strcasecmp(Platform, "gog:scummvm")==0) return(PLATFORM_GOGSCUMMVM);
+    if (strcasecmp(Platform, "gog:lindos")==0) return(PLATFORM_GOGDOS);
+    if (strcasecmp(Platform, "gog:windos")==0) return(PLATFORM_GOGWINDOS);
     if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
     if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
     if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
@@ -114,6 +115,7 @@ static TPlatform *PlatformsParse(const char *Line)
         {
             if (strcmp(Name, "platform")==0)
             {
+								Plt->Name=CopyStr(Plt->Name, Value);
                 Plt->ID=PlatformType(Value);
                 if (Plt->ID==PLATFORM_UNKNOWN) Plt->ID=PLATFORM_GENERIC;
             }
@@ -144,27 +146,26 @@ static TPlatform *PlatformsParse(const char *Line)
 TPlatform *PlatformFind(const char *Name)
 {
     ListNode *Curr;
-    char *Token=NULL;
-    const char *ptr;
 
     Curr=ListGetNext(Platforms);
     while (Curr)
     {
-        ptr=GetToken(Curr->Tag, ",", &Token, 0);
-        while (ptr)
-        {
-            if (strcasecmp(Token, Name)==0)
-            {
-                Destroy(Token);
-                return(Curr->Item);
-            }
-            ptr=GetToken(ptr, ",", &Token, 0);
-        }
-
+				if (InList(Name, Curr->Tag)) return(Curr->Item);
         Curr=ListGetNext(Curr);
     }
 
     return(NULL);
+}
+
+
+const char *PlatformUnAlias(const char *Alias)
+{
+TPlatform *Platform;
+
+Platform=PlatformFind(Alias);
+
+if (! Platform) return(Alias);
+return(Platform->Name);
 }
 
 
@@ -347,6 +348,9 @@ char *PlatformSelect(char *RetStr, TAction *Act)
 
 void PlatformApplySettings(TAction *Act)
 {
+    const char *ptr;
+
+    ResolveVar(Act->Vars, "emulator-args");
 
     switch (Act->PlatformID)
     {
@@ -358,11 +362,11 @@ void PlatformApplySettings(TAction *Act)
         DoomApplySettings(Act);
         break;
 
-		case PLATFORM_DOS:
-		case PLATFORM_GOGDOS:
-		case PLATFORM_GOGWINDOS:
+    case PLATFORM_DOS:
+    case PLATFORM_GOGDOS:
+    case PLATFORM_GOGWINDOS:
         MSDOSApplySettings(Act);
-		break;
+        break;
     }
 }
 

@@ -29,5 +29,9 @@ void ConfigInit()
 
     ptr=getenv("SOMMELIER_INSTALLER_CACHE");
     if (StrValid(ptr)) Config->InstallerCache=CopyStr(Config->InstallerCache, ptr);
+
+
+    //default user agent. Can be overridden with the -user-agent or -us command-line argument
+    LibUsefulSetValue("HTTP:UserAgent","Wget/1.19.2");
 }
 

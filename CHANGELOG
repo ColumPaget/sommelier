@@ -1,0 +1,193 @@
+v9.0 (2024-02-28)
+    * add more gog games, including TombRaider, ElderScrollsArena/Daggerfall, HeroesOfMightAndMagic, EarthwormJim, FinalVendetta, FightNRage
+    * support using dosbox '-c <command>'
+    * add 'saves-dir' system to prevent pollution of users home or ~/Documents directory
+    * add icons for some apps
+    * handle linux games with ' in the title
+    * handle quote (') in file names, as in Heroine's Quest
+    * add .config/autostart support
+    * fix/improve 'list' command, add -category and -installed search options
+    * support dosbox-x as an emulator
+    * add atari800 emulator, with some games from archive.org
+    * handle aliases for platforms (e.g. msdos/dos)
+
+v8.33 (2023-11-07)
+    * add more gog games, including StarRenegades and OneFingerDeathPunch2
+    * update arduino app
+    * fix gog:windows64 platform config
+
+v8.32 (2023-09-01)
+    * add more gog games, including DiceyDungeons, DeepSkyDerelicts
+    * extract icons from gog:linux packages
+
+v8.31 (2023-07-17)
+    * add/update Basilisk browser app
+    * fix compile with bundled libUseful
+    * fixes for openssh urls
+    * minor fixes to get correct 'working directory' for an app
+    * fix app bundling (many apps in one file)
+    * tidyup SeaMonkey config
+
+v8.30 (2023-07-01)
+    * add platforms: playstation 1, turbografx, atari st, atari lynx and wonderswan
+    * don't make main thread wait on app exit
+
+v8.21 (2023-06-24)
+    * added some gametop games
+    * use xrandr to reset screen resolution after app exits
+
+
+v8.20 (2023-03-25)
+    * improve discovery of working/exec-dir
+
+v8.19 (2023-03-20)
+    * support libUseful-5, upgrade bundled libUseful
+    * Fix issues with deleting certain paths. 
+
+v8.18 (2023-02-15)
+    * Added per-app 'donate' message. 
+    * More wine apps
+
+v8.17 (2023-02-11)
+    * add more gog games including DeadSpace
+    * add vectrex platform
+    * add support for DarkestDungeon DLC. 
+
+v8.15 (2023-01-13)
+    * add feature to launch winecfg for a specified app
+    * add some wine apps, including windle and augmetinel
+
+v8.14 (2022-08-03)
+    * .deb packages can now be installed (but not their dependancies). 
+    * added some linux64 browsers, including BraveBrowser, chrome
+    * better autodetection of executables for multiarch linux apps.
+    * added some more gog games
+
+v8.12 (2022-04-24)
+    * use realpath to get full path of install url
+    * fix for incorrect auto-detection of platform
+    * fix for http redirects. added 'platforms' command. 
+    * fix for spurious 'missing libs' warning
+
+
+v8.10 (2021-12-21)
+    * added more wine.apps and gog.com.apps
+    * Fix for mistake in locales code. Various minor improvements
+
+v8.5 (2021-08-09) 
+    * added 'hail mary' system for missing libraries, by finding a similarly named library and trying to use that.
+
+v8.4 (2021-06-30) 
+    * added more gog games and wine apps
+
+v8.3 (2021-06-16) 
+    * added more gog games and wine apps
+    * added warning for native apps that have missing libraries
+    * Allow for blank lines and comments in platforms.conf.
+
+
+v8.2 (2021-05-30) 
+    * support install of native apps system-wide in /usr/bin or /opt/<something>/bin
+    * warn if /usr/share/X11 is missing for apps that might expect it
+
+v8.0 (2021-04-03) 
+    * add java app support
+    * add Arduino, Filezilla and Foxit apps
+
+v7.4 (2021-01-23) 
+    * added -install-name command-line option
+    * allow building with clang
+
+v7.3 (2021-01-20) 
+    * better platform detection from installer url
+
+
+v7.2 (2020-12-24) 
+    * fix installing from an ssh: url
+
+v7.1 (2020-12-15) 
+    * Added some homebrew apps to 3DS platform. 
+    * Added MSPaint and AIMP to wine apps. 
+    * Many platforms now handled internally as 'PLATFORM_GENERIC' with shared code.
+    * adding 'generic' platforms defined via the new platforms.conf file
+    * add 7zip support for unpacking apps
+
+
+v6.1 (2020-11-30) 
+    * better platform autodetection for installing gog games
+
+v5.3 (2020-10-25) 
+    * fix broken 'list' command
+    * support gog games that bundle 32-bit and 64-bit executables in one package
+
+v5.1 (2020-06-23) 
+    * added system for extracting download URL from a webpage. 
+    * STATIC_LIBS must be before LIBS in makefile for some gcc instances
+    * Fix for sometimes deleting executables
+    * Make some effort to locate icons for apps.
+    * Try to be smart about installing linux 32 or 64 bit apps
+    * fix for eternal look in AppAddToBundle
+    * Fix issues with 'bundled' windows apps. 
+    * Handle old-style sommelier .desktop files, or those not created by sommelier.
+    * show output of apps like installers when run with -d
+    * better category handling
+    * initial work on finding/getting icons for installed apps
+    * change .desktop files to use sommelier to run programs
+    * Fix installer checking the wrong sha256 for dependancies
+
+v5.0 (2020-05-20)
+    * desktop files are now compatible with kde, xfce, moksha and MATE desktop environments. 
+    * Autodetects 32-bit or 64-bit linux and installs appropriate apps. 
+
+v4.7 (2020-05-21) 
+    * Can now install a few native linux apps
+
+v4.5 (2020-05-17) 
+    * Added 'reconfigure' command  
+    * support emulator settings for DOOM emulators
+
+v4.4 (2020-05-06) 
+    * support zxspectrum games using fuse emulator. 
+    * added support for 'sommelier list -platform <platform>'
+
+v4.3 (2020-04-11) 
+    * 'bundles' feature added to create .desktop files for multiple programs bundled in the same package.
+    * More improvements to installation feedback.
+
+v4.3 (2020-04-09) 
+    * Tidyup output during install. 
+    * Add working dir to .desktop files for wine apps, so the app knows to run in that directory 
+    * Inform user of certificate verify status for HTTPS connections. 
+    * Delete installer/.zip files by default rather than wasting space. 
+    * refuse to install app if expected hash doesn't match.
+    * Added 'download' command. 
+
+v4.1 (2019-12-09) 
+    * compile-time openssl detection for more recent versions of openssl/libressl
+    * added --with-system-libuseful autconf option
+    * Bugfix for false 'Download Failed 0 bytes recieved' message
+    * Fix for certain types of http redirect. 
+    * PaleMoon now downloads latest version rather than a fixed version
+
+v4.0 (2019-06-23) 
+    * myriad changes for installing gog.com games, freedoom wads and scummvm games
+
+v3.1 (2019-03-20) 
+    * Fix for situations where downloaded installer and final executable have the same filename. 
+    * allow setting os-version  with './sommelier set'
+    * allow setting vdesk resolution with './sommelier set'
+
+v3.0 (2019-02-25) 
+    * Stopped wine from asking to install .net and gecko every time. 
+    * Fixed 'no download bar' for large downloads. 
+
+v2.0 (2019-01-31)
+    * added -version command
+    * fix for wrong #include, upgrade to libUseful-4
+
+v1.1 (2018-10-06)
+    * One-line fix for bug when running for the first time
+
+v1.0 (2018-10-06)
+    * Change libUseful ./configure to always enable SSL
+    * Initial commit

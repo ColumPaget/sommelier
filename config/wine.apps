@@ -1,365 +1,365 @@
-* category='library'
-TimesNewRoman platform=windows url=https://sourceforge.net/projects/corefonts/files/the%20fonts/final/times32.exe/download sha256='db56595ec6ef5d3de5c24994f001f03b2a13e37cee27bc25c58f6f43e8f807ab' 
-MFC platform=windows url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
-VB5 platform=windows url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
-VB6 platform=windows url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' 
-MSXML3 platform=windows url=http://repository.playonlinux.com/divers/msxml3.msi dll-overrides='msxml3' sha256='f9c678f8217e9d4f9647e8a1f6d89a7c26a57b9e9e00d39f7487493dd7b4e36c' 
-MSXML6 platform=windows url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi sha256='1b71b104d7491a719ba360f5fa5b07b50255153c4ce20e35ae13ce151b95b01e' 
-MSVC2017 platform=windows url=https://download.microsoft.com/download/c/d/e/cde87cf8-8cb7-4602-bcda-88bfe9179a8c/vc_redist.x86.exe
-MSFTEDIT platform=windows url=http://download.windowsupdate.com/msdownload/update/software/svpk/2011/02/windows6.1-kb976932-x86_c3516bc5c9e69fee6d9ac4f981f5b95977a8a2fa.exe download-type=cab extract-filter=*/msftedit.dll movefiles-to=*/msftedit.dll:$(drive_c)/windows/system32
-DotNet40 platform=windows url=https://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe sha256=65e064258f2e418816b304f646ff9e87af101e4c9552ab064bb74d281c38659f
-DotNet45 platform=windows url=https://download.microsoft.com/download/b/a/4/ba4a7e71-2906-4b2d-a0e1-80cf16844f5f/dotnetfx45_full_x86_x64.exe sha256=a04d40e217b97326d46117d961ec4eda455e087b90637cb33dd6cc4a2c228d83
-DotNet48 platform=windows url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/abd170b4b0ec15ad0222a809b761a036/ndp48-x86-x64-allos-enu.exe sha256=95889d6de3f2070c07790ad6cf2000d33d9a1bdfc6a381725ab82ab1c314fd53
+* category='library' platform=windows
+TimesNewRoman url=https://sourceforge.net/projects/corefonts/files/the%20fonts/final/times32.exe/download sha256='db56595ec6ef5d3de5c24994f001f03b2a13e37cee27bc25c58f6f43e8f807ab' 
+MFC url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
+VB5 url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
+VB6 url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' 
+MSXML3 url=http://repository.playonlinux.com/divers/msxml3.msi dll-overrides='msxml3' sha256='f9c678f8217e9d4f9647e8a1f6d89a7c26a57b9e9e00d39f7487493dd7b4e36c' 
+MSXML6 url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi sha256='1b71b104d7491a719ba360f5fa5b07b50255153c4ce20e35ae13ce151b95b01e' 
+MSVC2017 url=https://download.microsoft.com/download/c/d/e/cde87cf8-8cb7-4602-bcda-88bfe9179a8c/vc_redist.x86.exe
+MSFTEDIT url=http://download.windowsupdate.com/msdownload/update/software/svpk/2011/02/windows6.1-kb976932-x86_c3516bc5c9e69fee6d9ac4f981f5b95977a8a2fa.exe download-type=cab extract-filter=*/msftedit.dll movefiles-to=*/msftedit.dll:$(drive_c)/windows/system32
+DotNet40 url=https://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe sha256=65e064258f2e418816b304f646ff9e87af101e4c9552ab064bb74d281c38659f
+DotNet45 url=https://download.microsoft.com/download/b/a/4/ba4a7e71-2906-4b2d-a0e1-80cf16844f5f/dotnetfx45_full_x86_x64.exe sha256=a04d40e217b97326d46117d961ec4eda455e087b90637cb33dd6cc4a2c228d83
+DotNet451 url=https://download.microsoft.com/download/1/6/7/167F0D79-9317-48AE-AEDB-17120579F8E2/NDP451-KB2858728-x86-x64-AllOS-ENU.exe
+DotNet48 url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/abd170b4b0ec15ad0222a809b761a036/ndp48-x86-x64-allos-enu.exe sha256=95889d6de3f2070c07790ad6cf2000d33d9a1bdfc6a381725ab82ab1c314fd53
 
-* category='WebBrowser;Internet;Network' locale='$(lang)-$(country)' 
-#Basilisk platform=windows url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
-Basilisk platform=windows url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
+* category='WebBrowser;Internet;Network' platform=windows locale='$(lang)-$(country)' 
+#Basilisk url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
+Basilisk url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
 
-K-Meleon platform=windows url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey platform=windows url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/
-SlimBrowser platform=windows url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
-PaleMoon platform=windows url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
-OtterBrowser platform=windows url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
-FireFox platform=windows url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
-Sleipnir platform=windows url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
-Waterfox platform=windows url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
+K-Meleon url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
+SeaMonkey url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/
+SlimBrowser url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
+PaleMoon url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
+OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
+FireFox url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
+Sleipnir url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
+Waterfox url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
 
-Librewolf platform=windows64 url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
-Librewolf platform=windows url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
-Chromium platform=windows url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
-BraveBrowser platform=windows url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
+Librewolf platform=windows64  url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
+Librewolf url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
+Chromium url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
+BraveBrowser url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 
-* category='Email;Office;Network' locale='$(lang)-$(country)' 
-ClawsMail platform=windows url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
-Sylpheed platform=windows url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird platform=windows url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
-SeaMonkeyMail platform=windows exec-args='-mail' comment='Email app bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
-EmClient platform=windows os-version=win81
-MailSpring platform=windows os-version=win81 requires=DotNet45
-MailBird platform=windows  os-version=win81 requires=DotNet45
-FoxMail platform=windows url=https://www.foxmail.com/win/download exec=Foxmail.exe warn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
+* category='Email;Office;Network' platform=windows locale='$(lang)-$(country)' 
+ClawsMail url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
+Sylpheed url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
+Thunderbird url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
+SeaMonkeyMail exec-args='-mail' comment='Email app bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
+FoxMail url=https://www.foxmail.com/win/download exec=Foxmail.exe warn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
 
-* category='Calculator;Office'
-SpeedCrunch platform=windows url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-win32.zip"
-PreciseCalculator platform=windows url="https://sourceforge.net/projects/preccalc/files/preccalc-32bit.zip"
-TTCalc platform=windows url="http://downloads.sourceforge.net/project/ttcalc/ttcalc/ttcalc-0.9.3/ttcalc-0.9.3-setup.exe"
+* category='Calculator;Office' platform=windows
+SpeedCrunch url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-win32.zip" sha256="024362bccd7908b508192cd90c2f6a716b5aa4fa5c7ff2aea9a1bf49d6580175"
+PreciseCalculator url="https://sourceforge.net/projects/preccalc/files/preccalc-32bit.zip" sha256="d88d7f41b729fcc3383261d81eb0e3d4c6400815b1cc5505ab21c4273571a077"
+TTCalc url="http://downloads.sourceforge.net/project/ttcalc/ttcalc/ttcalc-0.9.3/ttcalc-0.9.3-setup.exe" sha256="c6cd75cf21f8aefc2f3623cf3424d3ffd84c9834ccdd423108e036197735dac4"
 
-* category='InstantMessaging;Chat;Internet;Network' locale='$(lang)-$(country)' 
-Telegram platform=windows url=https://telegram.org/dl/desktop/win winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.' sha256='232eb4e8825cd02bd23c4155731180f2f7579fb4bc32bf5d07e0f906cc61b751' 
-Telegreat platform=windows url=https://telegre.at/tsetup/tportable.1.9.8.7z winmanager='N' exec='Telegreat.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='41316c85e6bd3822965a60864f6823eabde813569bccc8f8b39d0968a1439dda' 
-Kotatogram platform=windows url=https://github.com/kotatogram/kotatogram-desktop/releases/download/k1.4.1/1.4.1-win32-portable.zip winmanager='N' exec='Kotatogram.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='58f229acdf5f5e69697040bf9b3f215a1db4497034af86e0626796c6656c7d27' 
+* category='InstantMessaging;Chat;Internet;Network' platform=windows locale='$(lang)-$(country)' 
+Telegram url=https://telegram.org/dl/desktop/win winmanager='N' exec='Telegram.exe' comment='Telegram Desktop Messenger. Requires binding to a messenger app thats installed on a phone.' sha256='232eb4e8825cd02bd23c4155731180f2f7579fb4bc32bf5d07e0f906cc61b751' 
+Telegreat url=https://telegre.at/tsetup/tportable.1.9.8.7z winmanager='N' exec='Telegreat.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='41316c85e6bd3822965a60864f6823eabde813569bccc8f8b39d0968a1439dda' 
+Kotatogram url=https://github.com/kotatogram/kotatogram-desktop/releases/download/k1.4.1/1.4.1-win32-portable.zip winmanager='N' exec='Kotatogram.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='58f229acdf5f5e69697040bf9b3f215a1db4497034af86e0626796c6656c7d27' 
 
-qTox platform=windows url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
-isotoxin platform=windows url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' sha256=135945ee38c9e92ea0a6130570a27562d856d479c7d160edf432e447a61547ed
-MirandaIM platform=windows url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
-Instantbird platform=windows url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
-LineIM platform=windows url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758'
-NHeko platform=windows url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe sha256=1b62c4840711eefa4f07664507367fd324419209d4be8922e069d47321cc9712
-WeChat platform=windows url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
-WhatsApp platform=windows url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
-MushClient platform=windows url=http://www.gammon.com.au/files/mushclient/mushclient506.exe exec=MUSHclient.exe sha256=d6ee92d30eb6e73875283e78826787cdc5309563c1688469c1128ffac0469f07
+qTox url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
+isotoxin url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' sha256=135945ee38c9e92ea0a6130570a27562d856d479c7d160edf432e447a61547ed
+MirandaIM url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
+Instantbird url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
+LineIM url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758'
+NHeko url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe sha256=1b62c4840711eefa4f07664507367fd324419209d4be8922e069d47321cc9712
+WeChat url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
+WhatsApp url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
+MushClient url=http://www.gammon.com.au/files/mushclient/mushclient506.exe exec=MUSHclient.exe sha256=d6ee92d30eb6e73875283e78826787cdc5309563c1688469c1128ffac0469f07
 
 
 
 #Not working yet
-#Twitch platform=windows url=https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe requires=DotNet48 os-version=win81
-#Discord platform=windows url=https://dl.discordapp.net/apps/win/0.0.304/DiscordSetup.exe requires=DotNet48 os-version=win81
+#Twitch url=https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe requires=DotNet48 os-version=win81
+#Discord url=https://dl.discordapp.net/apps/win/0.0.304/DiscordSetup.exe requires=DotNet48 os-version=win81
 
 
-* category='VOIP;Telephony;Chat;Internet;Network'
-MicroSIP platform=windows url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname='MicroSIP-3.19.10.exe' winmanager='N' comment='MicroSIP SIP communicator' sha256='d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5' 
-Teamspeak platform=windows url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
-Ekiga platform=windows url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe sha256=334044d5b5f4e37631adcb0dca2bf13b3bede4e60bb0f0ffaea318ef73b34e6b
-Webex platform=windows url=https://binaries.webex.com/WebexTeamsDesktop-Windows-Gold/Webex_x86.msi 
-Zoom platform=windows url=https://zoom.us/client/latest/ZoomInstaller.exe download-type=7za inner-package=7za:Zoom.msi exec=Zoom.exe requires=MSFTEDIT
+* category='VOIP;Telephony;Chat;Internet;Network' platform=windows
+MicroSIP url=https://www.microsip.org/downloads/?file=MicroSIP-3.19.10.exe dlname='MicroSIP-3.19.10.exe' winmanager='N' comment='MicroSIP SIP communicator' sha256='d853c5d65f889b34318748326ae3002d13c48361e7c72516da7550f107ad15d5' 
+Teamspeak url=https://files.teamspeak-services.com/releases/client/3.5.2/TeamSpeak3-Client-win32-3.5.2.exe sha256='4ac7f746be2cac47985388ec97d6b01e50c4236457b6a07b888fd3d050cafb41' exec='ts3client_win32.exe' comment='Gamer focused voice-over-ip app' 
+Ekiga url=http://ftp.gnome.org/pub/gnome/binaries/win32/ekiga/4.0/ekiga-setup-4.0.1+.exe exec=ekiga.exe sha256=334044d5b5f4e37631adcb0dca2bf13b3bede4e60bb0f0ffaea318ef73b34e6b
+Webex url=https://binaries.webex.com/WebexTeamsDesktop-Windows-Gold/Webex_x86.msi 
+Zoom url=https://zoom.us/client/latest/ZoomInstaller.exe download-type=7za inner-package=7za:Zoom.msi exec=Zoom.exe requires=MSFTEDIT
 
-* category='IRCClient;Chat;Internet;Network'
-IceChat platform=windows url=https://github.com/icechat/IceChat/releases/download/9.50P/icechat-portable.zip exec='IceChat2009.exe' comment='IRC Client' 
-HexChat platform=windows url=https://dl.hexchat.net/hexchat/HexChat%202.14.3%20x86.exe exec='hexchat.exe' comment='IRC Client' sha256='1089e1218aa1f6522c74ebc2530fa8ff518e2a249ad4c8a92ef5727fe12ad12b' 
-Nettalk platform=windows url=http://www.ntalk.de/Nettalk/StartDown.php?server=1&lang=en requires='VB6' comment='IRC Client from Germany' sha256='c9affcdecd8a33f058ed9024108cab81dd91821ac7a43db402994a0700e8b796' 
-mIRC platform=windows url=https://www.mirc.com/get.php?mirror comment='Popular IRC client. Reqiuires Registration' sha256='abbb23f101884d3f423ee1ca734755761f21d75890efed17668533ad4912448c' 
-SeaMonkeyChat platform=windows exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
+* category='IRCClient;Chat;Internet;Network' platform=windows
+HexChat url=https://dl.hexchat.net/hexchat/HexChat%202.14.3%20x86.exe exec='hexchat.exe' comment='IRC Client' sha256='1089e1218aa1f6522c74ebc2530fa8ff518e2a249ad4c8a92ef5727fe12ad12b' 
+Nettalk url=http://www.ntalk.de/Nettalk/StartDown.php?server=1&lang=en requires='VB6' comment='IRC Client from Germany' sha256='c9affcdecd8a33f058ed9024108cab81dd91821ac7a43db402994a0700e8b796' 
+mIRC url=https://www.mirc.com/get.php?mirror comment='Popular IRC client. Reqiuires Registration' sha256='abbb23f101884d3f423ee1ca734755761f21d75890efed17668533ad4912448c' 
+SeaMonkeyChat exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 
-* category='2DGraphics;Graphics'
-AndreaMosaic platform=windows url=http://andreaplanet.com/andreamosaic/download.php?version=fullweb version='3.36.0' exec='AndreaMosaic.exe' comment='Make Mosaics from images' sha256='bb5e0287db029b530f812e0c7faf64ebfe5329480bf84c535ce820825d1c6145' donate=http://www.andreaplanet.com/andreamosaic/donation/
-AniTuner platform=windows url=https://torry.net/files/tools/graph/cursor/anisetup.exe exec='AniTuner.exe' sha256='d687a406d361947fd42de13fde32f4746a39a0bd5ec25b262a416f712097d812' comment='Create animated cursors' os-version='winxp' 
-ArtWeaver platform=windows url=https://www.artweaver.de/direct/Artweaver.exe requires='TimesNewRoman' exec='Artweaver.exe' sha256='62433cd3235faa87158825aa9151dc578833c65fb3859838ac1d85996cfd0e06' exec=Artweaver.exe
-BrickAtelier platform=windows url=http://koti.mbnet.fi/paulkp/brick/brickatelier085.zip version='0.85' exec='brickatelier.exe' type='graphics' rating='platinum' sha256='cccbda19ef115a8b5b5d28c21fa2ddccc48548a6218af3a56f86cf2efc03fbf5' 
-Gimp platform=windows url=https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.18-setup-2.exe exec='gimp-2.10.exe' sha256='bf6ce59587e63e1e8bab923e7dfdaa0f2c8bd3ac4d0ced602f3c063f9e32465c' 
-GraphicsGale platform=windows url=extracted:https\://graphicsgale.com/us/download.html:../files/setgaleus*.exe exec='Gale.exe' type='graphics' rating='platinum' sha256='7402ec89ff58c9635c7974bf792e8e4494c07a5e076ab4a3343c23d4bf841027' 
-MedibangPaint platform=windows url=extracted:https\://medibangpaint.com/en/app-download/:https\://medibangpaint.com/static/installer/MediBangPaintPro/MediBangPaintProSetup-*-32bit.exe comment='Advanced paint program' sha256='6f9360bf4660bc1d7e6615ca75a4aff6d395594460e637e75053cd29eecf1d69' 
-RealworldPaint platform=windows url=http://download.rw-designer.com/2013.1/RWPaint32.msi type='Graphics' rating='platinum' sha256='7eff64a9a33b8e340470d7a84033bd318a715eea2041f6e3be4fd410db2a1ce5' 
-Rexpaint platform=windows url=https://www.gridsagegames.com/blogs/files/REXPaint-v1.04.zip sha256='058ecbce6b8f12679aa7903d2cc171bdf1002e1d9fb73297622504feb8487ed4' comment='ANSI/ASCII art program particularly aimed at roguelikes' 
-IconFX platform=windows url=http://icofx.ro/files/icofxsetup.exe exec='icofx3.exe' comment='Icon Creator' warn='Trial Version' sha256='62acf69bbfb515dc111ece7475812824a1930123930a4221fca3aa7767bf26d3' 
-DrawMe platform=windows url=http://www.completelyfreesoftware.com/software/drawme.zip exec='DRAWME.EXE' comment='Win3.1 draw' sha256='37914c4f4c4f72f06a366c45eb82fd77ca9edd8c4e7ff2790aad521723ab440e' 
-FireAlpaca platform=windows url=https://firealpaca.com/download/win comment='Another paint program' sha256='0eeda65cf62173b32e67916da207ddcf57639e079734ba8e811bafe3407ccd32' 
-Krita platform=windows url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec='krita.exe' sha256='c8efe945804ec9f08f019853c60895e390edfeb03bde13874b4d05231c03261d' 
-PaintBuster platform=windows url=https://archive.org/download/tucows_362047_PaintBuster/PB7Setup.exe licence='Shareware' sha256='83c9aa3dc2a32cc3e24304bf06c82f6043d97b60c0ada9b1d15409a8a7951b03' 
-LazPaint platform=windows url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_setup_win32_win64.exe sha256='698905dd3483fc5c45c7e6a2e1793e2673d95d97776a4e51bd97c1e28ff20b6b' 
-MSPaint platform=windows url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type='zip' exec='MSPAINT.EXE' sha256='4fb2f77a898fa6ff8e2fd62a28d10001a916ed8facd02f11f580ed9d92c66e2b' 
-Inkscape platform=windows url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe
-FotoGrafix platform=windows url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
-Pixelformer platform=windows url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
-Paint.net platform=windows url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40 sha256=fbe4a86a352154397405ff4e04a3f649a58f8e0c25cab26c6c4fbdfa2ec877dd
-CinePaint platform=windows url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe sha256=617946e6e683b1474de0d1fe801a335c527884b09cf5224171f7408bd3689b2a
-PaintToolSAI platform=windows url=https://www.systemax.jp/bin/sai2-20220527-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
-TikZit platform=windows url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-win.zip exec=tikzit.exe warn="program takes a while to initialize and start responding after displaying initial screen" sha256=e97bc93434b719d891e1c24bafb025d9176b94f24b32d675bc1c73fe4aaf0375
+* category='2DGraphics;Graphics' platform=windows
+AndreaMosaic url=http://andreaplanet.com/andreamosaic/download.php?version=fullweb version='3.36.0' exec='AndreaMosaic.exe' comment='Make Mosaics from images' sha256='bb5e0287db029b530f812e0c7faf64ebfe5329480bf84c535ce820825d1c6145' donate=http://www.andreaplanet.com/andreamosaic/donation/
+AniTuner url=https://torry.net/files/tools/graph/cursor/anisetup.exe exec='AniTuner.exe' sha256='d687a406d361947fd42de13fde32f4746a39a0bd5ec25b262a416f712097d812' comment='Create animated cursors' os-version='winxp' 
+ArtWeaver url=https://www.artweaver.de/direct/Artweaver.exe requires='TimesNewRoman' exec='Artweaver.exe' sha256='62433cd3235faa87158825aa9151dc578833c65fb3859838ac1d85996cfd0e06' exec=Artweaver.exe
+BrickAtelier url=http://koti.mbnet.fi/paulkp/brick/brickatelier085.zip version='0.85' exec='brickatelier.exe' type='graphics' rating='platinum' sha256='cccbda19ef115a8b5b5d28c21fa2ddccc48548a6218af3a56f86cf2efc03fbf5' 
+Gimp url=https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.18-setup-2.exe exec='gimp-2.10.exe' sha256='bf6ce59587e63e1e8bab923e7dfdaa0f2c8bd3ac4d0ced602f3c063f9e32465c' 
+GraphicsGale url=extracted:https\://graphicsgale.com/us/download.html:../files/setgaleus*.exe exec='Gale.exe' type='graphics' rating='platinum' sha256='7402ec89ff58c9635c7974bf792e8e4494c07a5e076ab4a3343c23d4bf841027' 
+MedibangPaint url=extracted:https\://medibangpaint.com/en/app-download/:https\://medibangpaint.com/static/installer/MediBangPaintPro/MediBangPaintProSetup-*-32bit.exe comment='Advanced paint program' sha256='6f9360bf4660bc1d7e6615ca75a4aff6d395594460e637e75053cd29eecf1d69' 
+RealworldPaint url=http://download.rw-designer.com/2013.1/RWPaint32.msi type='Graphics' rating='platinum' sha256='7eff64a9a33b8e340470d7a84033bd318a715eea2041f6e3be4fd410db2a1ce5' 
+Rexpaint url=https://www.gridsagegames.com/blogs/files/REXPaint-v1.04.zip sha256='058ecbce6b8f12679aa7903d2cc171bdf1002e1d9fb73297622504feb8487ed4' comment='ANSI/ASCII art program particularly aimed at roguelikes' 
+IconFX url=http://icofx.ro/files/icofxsetup.exe exec='icofx3.exe' comment='Icon Creator' warn='Trial Version' sha256='62acf69bbfb515dc111ece7475812824a1930123930a4221fca3aa7767bf26d3' 
+DrawMe url=http://www.completelyfreesoftware.com/software/drawme.zip exec='DRAWME.EXE' comment='Win3.1 draw' sha256='37914c4f4c4f72f06a366c45eb82fd77ca9edd8c4e7ff2790aad521723ab440e' 
+FireAlpaca url=https://firealpaca.com/download/win comment='Another paint program' sha256='0eeda65cf62173b32e67916da207ddcf57639e079734ba8e811bafe3407ccd32' 
+Krita url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec='krita.exe' sha256='c8efe945804ec9f08f019853c60895e390edfeb03bde13874b4d05231c03261d' 
+PaintBuster url=https://archive.org/download/tucows_362047_PaintBuster/PB7Setup.exe licence='Shareware' sha256='83c9aa3dc2a32cc3e24304bf06c82f6043d97b60c0ada9b1d15409a8a7951b03' 
+LazPaint url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_setup_win32_win64.exe sha256='698905dd3483fc5c45c7e6a2e1793e2673d95d97776a4e51bd97c1e28ff20b6b' 
+MSPaint url=https://web.archive.org/web/20130218065827if_/http://download.microsoft.com/download/winntwks40/paint/1/nt4/en-us/paintnt.exe download-type='zip' exec='MSPAINT.EXE' sha256='4fb2f77a898fa6ff8e2fd62a28d10001a916ed8facd02f11f580ed9d92c66e2b' 
+Inkscape url=https://inkscape.org/gallery/item/26938/inkscape-1.1-x86.msi exec=inkscape.exe sha256=1d02a124e39f906bb6bab7a7867967e12ecf1a8493a3718d3090392e54811ab9
+FotoGrafix url=https://onedrive.live.com/download?resid=6DAFF4AECFFB3ABE!13946&authkey=!AFjUAu13gRYnQfw&ithint=file%2czip exec=fotografix.exe
+Pixelformer url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
+Paint.net url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40 sha256=fbe4a86a352154397405ff4e04a3f649a58f8e0c25cab26c6c4fbdfa2ec877dd
+CinePaint url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe sha256=617946e6e683b1474de0d1fe801a335c527884b09cf5224171f7408bd3689b2a
+PaintToolSAI url=https://www.systemax.jp/bin/sai2-20220527-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
+TikZit url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-win.zip exec=tikzit.exe warn="program takes a while to initialize and start responding after displaying initial screen" sha256=e97bc93434b719d891e1c24bafb025d9176b94f24b32d675bc1c73fe4aaf0375
 
-* category='3DGraphics;Graphics'
-Unicorn3D platform=windows url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
-Anim8or platform=windows url=http://anim8or.com/download/files/animv100.zip exec='Anim8or.exe' type='3D-modeller' rating='platinum' sha256='fc3c3bcca04aba801ca79258529f17472aec9661e2b169570e7528c7be3bb5e6' comment='3D animation/modelling package' 
-K-3d platform=windows url=https://downloads.sourceforge.net/project/k3d/K-3D%20Win32%20Binaries/K-3D%200.8.0.1/k3d-setup-0.8.0.1.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fk3d%2Ffiles%2FK-3D%2520Win32%2520Binaries%2FK-3D%25200.8.0.1%2Fk3d-setup-0.8.0.1.exe%2Fdownload&ts=1524089236 version='0.8.0.1' installer='k3d-setup-0.8.0.1.exe' exec='k3d.exe' type='3D-modeller' rating='platinum' sha256='66c0bb0a85bd1ebf6bad4dc7356eaf0f062c35b21aa9487a37a4e8443f21e205' comment='3D modelling package' 
-OpenFX platform=windows url=http://openfx.org/download/install.msi exec='openfx.exe' sha256='446c7c63a3e940aaa1057e1a417995b4e28554a1b5ac938392782d5c8152d5cb' 
-Fragmotion platform=windows url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' 
-DragonBones platform=windows url=https://tool.egret-labs.org/DragonBonesPro/DragonBonesPro-v5.6.3.exe exec=DragonBonesPro.exe
+* category='3DGraphics;Graphics' platform=windows
+Unicorn3D url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
+Anim8or url=http://anim8or.com/download/files/animv100.zip exec='Anim8or.exe' type='3D-modeller' rating='platinum' sha256='fc3c3bcca04aba801ca79258529f17472aec9661e2b169570e7528c7be3bb5e6' comment='3D animation/modelling package' 
+K-3d url=https://downloads.sourceforge.net/project/k3d/K-3D%20Win32%20Binaries/K-3D%200.8.0.1/k3d-setup-0.8.0.1.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fk3d%2Ffiles%2FK-3D%2520Win32%2520Binaries%2FK-3D%25200.8.0.1%2Fk3d-setup-0.8.0.1.exe%2Fdownload&ts=1524089236 version='0.8.0.1' installer='k3d-setup-0.8.0.1.exe' exec='k3d.exe' type='3D-modeller' rating='platinum' sha256='66c0bb0a85bd1ebf6bad4dc7356eaf0f062c35b21aa9487a37a4e8443f21e205' comment='3D modelling package' 
+OpenFX url=http://openfx.org/download/install.msi exec='openfx.exe' sha256='446c7c63a3e940aaa1057e1a417995b4e28554a1b5ac938392782d5c8152d5cb' 
+Fragmotion url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip version='134' exec='fragmotion_134.zip' sha256='aed3a75f0b26c459511a38c08ac92306ad00ada6245e40345ea75ba05fa224ae' comment='3D modelling package' 
+DragonBones url=https://tool.egret-labs.org/DragonBonesPro/DragonBonesPro-v5.6.3.exe exec=DragonBonesPro.exe sha256=
 
-* category='ImageViewer;Viewer;Graphics'
-IfranView platform=windows url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
-Faststone platform=windows url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
-XnView platform=windows exec=XnView.exe url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
-XnViewMP platform=windows exec=XnView.exe url=https://download.xnview.com/XnViewMP-win.zip 
-VallenJpegger platform=windows url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
-PhotoView platform=windows url=http://www.mitec.cz/Downloads/PhotoView.zip
-FreeVImager platform=windows url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.18-Portable.exe install-type=executable
-DiminViewerN5 platform=windows url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe sha256=40f3075f3aa15e246e734f22a09159534962c9fb5d637b61992b2bedafd5a709
-JPEGView platform=windows url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download sha256=f0d6c62bc7c5aa49a7a8f45294d8199355d7c1a940df5a322dc163effad22591
-QView platform=windows url=https://github.com/jurplel/qView/releases/download/5.0/qView-5.0-win32.zip exec=qView.exe sha256=ae01ed2c7c9df553f737f148f3acda24ad01362595bfc9964474b382205f4e79
-
-
-* category='FileManager;FileTools;System'
-MultiCommander platform=windows url=http://multicommander.com/files/updates/MultiCommander_win32_(9.6.1.2582).exe sha256='8534750838a8094a9ed89b86643a7777db74ac688943b61817cd4cc64530452d' exec='MultiCommander.exe' 
-XYPlorerFree platform=windows url=https://www.xyplorer.com/download/xyplorer_free.zip installer='XYplorerFree_17.40_Install.exe' requires='VB6' sha256='99d5d3268ce2ff881c3e91dd481882ceb18ed3616e453d1f68d141f5eeb0b205' 
-Explorer++ platform=windows url=https://explorerplusplus.com/software/explorer++_1.3.5_x86.zip exec='Explorer++.exe' sha256='575ac27046fcc685ee6009964d031d4cb30c0292699c54df300bd1bf93e922df' 
-UnrealCommander platform=windows url=https://x-diesel.com/download/uncomsetup.exe?32 exec='Uncom.exe' sha256='a8cbc227bcd8d5f83a8657c17df5e2fd6114a165f670579f716ba583a1b32422' 
-NexusFile platform=windows url=http://www.xiles.net/download.php?file=NexusFileSetup5.3.3.exe&product=NexusFile5&ver=5.3.3.5532 sha256='4016244657b412ae0a17255ffec6bbc1c0e2ed3981144b82b19117a50585e63e' 
-XenonFM platform=windows url=https://sourceforge.net/projects/xenon-portable/files/Beta%20Releases/2.0%20Beta%204/Xenon_Portable_2.0_Beta_4.paf.exe/download comment='Very Simple/Lightweight Filemanager' sha256='593efb99f593aefdcbf889558b22dfc1f189caccd5ca8c2f2b4882cea5999fab' 
-DoubleCommander platform=windows url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7' 
-FileZilla platform=windows url=extracted:https\://filezilla-project.org/download.php?show_all=1:*win32-setup.exe?h=* exec='filezilla.exe' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' sha256='f7c5be12cab910e2ed55b79b6f1b5314c5d9c1909a62216c882c8c6dc406f241' 
-
-* category='Office' locale='$(lang)-$(country)'
-AbiWord platform=windows url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
-OpenOffice platform=windows url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/$(locale)/Apache_OpenOffice_4.1.7_Win_x86_install_$(locale).exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' exec=quickstart.exe
-LibreOffice platform=windows url=https://download.documentfoundation.org/libreoffice/stable/7.4.5/win/x86/LibreOffice_7.4.5_Win_x86.msi exec=quickstart.exe warn="Applications runs but crashes a lot on wine 6.0" donate=https://www.libreoffice.org/donate/
-AtlantisWordProcessor platform=windows url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
-FreeOfficeTextMaker platform=windows url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
-FreeOfficePlanMaker platform=windows exec=PlanMaker.exe bundled=FreeOfficeTextMaker
-FreeOfficePresentations platform=windows exec=Presentations.exe bundled=FreeOfficeTextMaker
-WinMerge platform=windows url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/winmerge-2.16.28-exe.zip comment="GUI to diff/merge text files" sha256=5df7528f94432360b5c7a05f5a0a605344c18acf94f22d7c8d5506f07220c133 exec=WinMergeU.exe
-
-* category='PDF;Viewer;Office'
-SumatraPDF platform=windows url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
-FoxitPDF platform=windows url= https://cdn01.foxitsoftware.com/pub/foxit/reader/desktop/win/10.x/10.1/en_us/FoxitReader10_Setup_Prom_IS.exe exec='FoxitReader.exe' comment='PDF Viewer' sha256='8130970e6976a953e98f89fcf24783b67d1080f84b961ac2c1cee2051673ff9a'
-PDF-Xchange platform=windows url=http://downloads.pdf-xchange.com/PXCViewer_x86.msi comment='PDF Viewer' movefiles-from='$(drive_c)/Program Files/Tracker Software/*' exec='PDFXCview.exe' sha256='36e10e5c05a7085ef6850cff4f02492d6a546058abf478e6770c5baaf7593ae9' 
-
-* category='Ebooks;Viewer;Office'
-FBReader platform=windows url=https://fbreader.org/files/win32/FBReaderSetup-0.12.10.exe sha256='252ee8e08ba3355e45012c58feea20cb790cbcca47fa6fed381d842193932b6a' 
-IcecreamEbookReader platform=windows url=https://icecreamapps.com/download/ebook_reader_setup.exe sha256='c57e05e81bf922e5b77e2e5dd444420d3fa2e9e1152f1b1061245c71839256e8' 
-KoboBooks platform=windows url=https://kbdownload1-a.akamaihd.net/desktop/kobodesktop/kobosetup.exe warn="This application works, but suffers from occasional crashes"
-AdobeDigitalEditions platform=windows url=https://download.adobe.com/pub/adobe/digitaleditions/ADE_4.5_Installer.exe exec=DigitalEditions.exe requires=DotNet40 requires=DotNet40 sha256=a21a9d5389728fdac6a7288953dddeea774ef2bee07f1caf7ea20bbed8f5a2c6
+* category='ImageViewer;Viewer;Graphics' platform=windows
+IfranView url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
+Faststone url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
+XnViewexec=XnView.exe  url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
+XnViewMPexec=XnView.exe  url=https://download.xnview.com/XnViewMP-win.zip 
+VallenJpegger url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
+PhotoView url=http://www.mitec.cz/Downloads/PhotoView.zip
+FreeVImager url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.23-Portable.exe install-type=executable sha256=eda687c324f4882ba136850e837dbd77abdedeeb333798490561dbe68b7f4563
+DiminViewerN5 url=https://dimin.net/software/viewer/imgview5_full.zip exec=imgview5.exe sha256=40f3075f3aa15e246e734f22a09159534962c9fb5d637b61992b2bedafd5a709
+JPEGView url=https://sourceforge.net/projects/jpegview/files/jpegview/1.0.37/JPEGView_1.0.37.zip/download sha256=f0d6c62bc7c5aa49a7a8f45294d8199355d7c1a940df5a322dc163effad22591
+QView url=https://github.com/jurplel/qView/releases/download/5.0/qView-5.0-win32.zip exec=qView.exe sha256=ae01ed2c7c9df553f737f148f3acda24ad01362595bfc9964474b382205f4e79
 
 
-* category='Feed;RSS;Internet;Network'
-FeedRoller platform=windows url=https://sector-seven.com/assets/downloads/feedroller.zip comment='RSS/News Desktop Ticker' sha256='5ad7d0680de77e68b3c9a63b8b2bfba5789016b41757c0e24e0adde60b8a6968'
-QuiteRSS platform=windows url=https://quiterss.org/files/0.18.12/QuiteRSS-0.18.12-Setup.exe comment='RSS Feed Reader' sha256='cb23f619b351b54a34d3bb21a7a37265f21baa2af4e8b614374eee61055b97d3' 
-GPodder platform=windows url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8' 
-Juice platform=windows url=http://prdownloads.sourceforge.net/juicereceiver/Juice22Setup.exe?download comment='Podcast Watcher/Downloader' sha256='9235ca5cc0720ea09b61df61f546453a98afa10e86d7f02f1f70e234253ca31c' 
+* category='FileManager;FileTools;System' platform=windows
+MultiCommander url=http://multicommander.com/files/updates/MultiCommander_win32_(9.6.1.2582).exe sha256='8534750838a8094a9ed89b86643a7777db74ac688943b61817cd4cc64530452d' exec='MultiCommander.exe' 
+XYPlorerFree url=https://www.xyplorer.com/download/xyplorer_free.zip installer='XYplorerFree_17.40_Install.exe' requires='VB6' sha256='99d5d3268ce2ff881c3e91dd481882ceb18ed3616e453d1f68d141f5eeb0b205' 
+Explorer++ url=https://explorerplusplus.com/software/explorer++_1.3.5_x86.zip exec='Explorer++.exe' sha256='575ac27046fcc685ee6009964d031d4cb30c0292699c54df300bd1bf93e922df' 
+UnrealCommander url=https://x-diesel.com/download/uncomsetup.exe?32 exec='Uncom.exe' sha256='a8cbc227bcd8d5f83a8657c17df5e2fd6114a165f670579f716ba583a1b32422' 
+NexusFile url=http://www.xiles.net/download.php?file=NexusFileSetup5.3.3.exe&product=NexusFile5&ver=5.3.3.5532 sha256='4016244657b412ae0a17255ffec6bbc1c0e2ed3981144b82b19117a50585e63e' 
+XenonFM url=https://sourceforge.net/projects/xenon-portable/files/Beta%20Releases/2.0%20Beta%204/Xenon_Portable_2.0_Beta_4.paf.exe/download comment='Very Simple/Lightweight Filemanager' sha256='593efb99f593aefdcbf889558b22dfc1f189caccd5ca8c2f2b4882cea5999fab' 
+DoubleCommander url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20Windows%2032%20bit/Double%20Commander%200.8.3%20beta/doublecmd-0.8.3.i386-win32.msi/download sha256='ebb59e339fd098951faf7652743e3129d1897f84b4eeda7b1f74956e841ca6b7' 
+FileZilla url=extracted:https\://filezilla-project.org/download.php?show_all=1:*win32-setup.exe?h=* exec='filezilla.exe' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' sha256='f7c5be12cab910e2ed55b79b6f1b5314c5d9c1909a62216c882c8c6dc406f241' 
 
-* category='Usenet;NNTP;Internet;Network'
-GrabIt  platform=windows url=https://download.shemes.com/GrabIt175b3.exe sha256=8159e146603de9f6a975f665f07439e75f439c969619d86357c956a89f076df7 
+* category='Office' locale='$(lang)-$(country)' platform=windows
+AbiWord url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
+OpenOffice url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/$(locale)/Apache_OpenOffice_4.1.7_Win_x86_install_$(locale).exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' exec=quickstart.exe
+LibreOffice url=https://download.documentfoundation.org/libreoffice/stable/7.4.5/win/x86/LibreOffice_7.4.5_Win_x86.msi exec=quickstart.exe warn="Applications runs but crashes a lot on wine 6.0" donate=https://www.libreoffice.org/donate/
+AtlantisWordProcessor url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
+FreeOfficeTextMaker url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
+FreeOfficePlanMakerexec=PlanMaker.exe bundled=FreeOfficeTextMaker
+FreeOfficePresentationsexec=Presentations.exe bundled=FreeOfficeTextMaker
+WinMerge url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/winmerge-2.16.28-exe.zip comment="GUI to diff/merge text files" sha256=5df7528f94432360b5c7a05f5a0a605344c18acf94f22d7c8d5506f07220c133 exec=WinMergeU.exe
 
-* category='Electronics'
-ICProg platform=windows url=http://www.ic-prog.com/icprog106C.zip sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
-PicPick platform=windows url=http://ngwin.com/download/latest/picpick_inst.exe exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk='y' 
-ElectronicsAssistant platform=windows url=https://www.electronics2000.co.uk/assist/assist.exe sha256='c69620e62647f2868ae2e6ade93d93a320fd1307074d61e49fc928bab33c8d2d' 
-LTSpice platform=windows url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe  sha256=8d71504400002da9597c649f544966a0ea7952c7004d26e6fe71cda863383f2f
+* category='PDF;Viewer;Office' platform=windows
+SumatraPDF url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
+FoxitPDF url= https://cdn01.foxitsoftware.com/pub/foxit/reader/desktop/win/10.x/10.1/en_us/FoxitReader10_Setup_Prom_IS.exe exec='FoxitReader.exe' comment='PDF Viewer' sha256='8130970e6976a953e98f89fcf24783b67d1080f84b961ac2c1cee2051673ff9a'
+PDF-Xchange url=http://downloads.pdf-xchange.com/PXCViewer_x86.msi comment='PDF Viewer' movefiles-from='$(drive_c)/Program Files/Tracker Software/*' exec='PDFXCview.exe' sha256='36e10e5c05a7085ef6850cff4f02492d6a546058abf478e6770c5baaf7593ae9' 
 
-* category='Astronomy'
-RegiStax platform=windows url=http://www.astronomie.be/registax/setupregistax6.exe
-
-* category='TextEditor;Utility'
-SublimeText platform=windows url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe version='3143' exec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6' 
-Notepad++ platform=windows url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898' 
-CherryTree platform=windows url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec='cherrytree.exe' 
-EditPadLite platform=windows url=http://download.jgsoft.com/editpad/SetupEditPadLite.exe warn='This app is only free for personal/non-commercial use. App auto-runs on install, so you'll need to close it for sommelier to complete the installation.'
-SeaMonkeyEdit platform=windows exec-args='-editor' comment='HTML editor bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
-
-* category='RemoteAccess;Utility'
-TightVNC platform=windows url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
-TurboVNC platform=windows url=https://sourceforge.net/projects/turbovnc/files/2.2.5/TurboVNC-2.2.5-x86.exe/download exec='vncviewer.exe' sha256='5b0c5f2ccb3ab031d75bc38a8ff68fa6414ba61826ffe02d8216742eef5dc047' 
-Teamviewer platform=windows url=https://download.teamviewer.com/download/version_14x/TeamViewerPortable.zip comment='Official Teamviewer client' 
-
-* category='Player;Audio'
-AIMP platform=windows url=https://www.aimp.ru/?do=download.file&id=4 sha256='41070175804131607f907e359f1268ee0863a6493d8c94ce14a4be11ba7c978c' 
-CoolPlayer platform=windows url=https://downloads.sourceforge.net/project/coolplayer/Coolplayer/219/CoolPlayer219_Bin.zip?r=&amp;ts=1532774479 version='219' exec='coolplayer.exe' sha256='a6a7c42c3b2aa45df8d02a6c98a0aec6dd67bab1be835d09d4ef1b1861002337' winmanager='N' comment='MP3 player' 
-XMPlay platform=windows url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
-Modplug platform=windows url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
-RadioSure platform=windows url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
-QMMP platform=windows url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.2-win32.exe sha256='3822419fa36e247426c76720911e38e879b04fefe3a83d362b6f0f566345eb58' exec=qmmp.exe
-WinAmp platform=windows url=http://www.meggamusic.co.uk/winamp/winamp5666_full_all_redux.exe exec=winamp.exe os-version=winxp
-Clementine platform=windows url=https://github.com/clementine-player/Clementine/releases/download/1.4.0rc1-869-gccf4f75c3/ClementineSetup-1.4.0rc1-869-gccf4f75c3.exe exec=clementine.exe sha256=ce1cba9a430418e7cdd03116f05efbca17b046d39cb70b42a120d7b73051931a
-
-* category='Player;Video'
-MediaPlayerClassic platform=windows url=https://downloads.sourceforge.net/project/mpc-hc/MPC%20HomeCinema%20-%20Win32/MPC-HC_v1.7.5_x86/MPC-HC.1.7.5.x86.exe sha256=1d690da5b330f723aea4a294d478828395d321b59fc680f2b971e8b16b8bd33d exec=mpc-hc.exe
-VLC platform=windows url=https://get.videolan.org/vlc/2.2.1/win32/vlc-2.2.1-win32.exe sha256=2eaa3881b01a2464d2a155ad49cc78162571dececcef555400666c719a60794d exec=vlc.exe
-
-* category='AudioVideoEditor;Audio'
-mp3DirectCut platform=windows url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
-AudioLab platform=windows url=http://www.completelyfreesoftware.com/software/alab11d.zip type='WAV editor' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' comment='Editor for WAV files' 
-BRELS platform=windows url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' comment='Midi Editor' 
-Caustic platform=windows url=http://www.singlecellsoftware.com/download/Caustic_3.2.0_installer.exe referer='http://www.singlecellsoftware.com/caustic' sha256='20be4c834c41d9fa6a3da33e30ffd951d2262e067a5fdc4dc833942abcfa834d' comment='Music making studio' 
-FLStudio platform=windows url=https://support.image-line.com/redirect/FLStudio_Installer?_ga=2.160548221.1563864817.1524342160-1720700824.1524342160 exec='FLStudio_Installer' sha256='9af49763ae3d70211377fc59694d731c94ef928dd308cc5405c0fea39fe60fda' comment='Music making studio' 
-MadTracker platform=windows url=http://www.tucows.com/download/windows/files/mt261_full.exe version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' comment='Another Modtracker' 
-Mixxx platform=windows url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' 
-Mobius platform=windows url=http://www.circularlabs.com/mobius-2-5.exe version='2.5' exec='mobius-2-5.exe' sha256='85236a14167ef3b1febf23444c350130cbe6a2f8c7c48330b74b54e12536a80d' comment='Sound looper application for music' 
-OcenAudio platform=windows url=https://www.ocenaudio.com/downloads/index.php/ocenaudio_portable.zip? exec=ocenaudio.exe
-OpenMPT platform=windows url=https://openmpt.org/download_file.php?file=OpenMPT-1.30.10.00-portable-x86-legacy.zip donate=https://openmpt.org/donate
-OpenShot platform=windows url=https://github.com/OpenShot/openshot-qt/releases/download/v2.6.1/OpenShot-v2.6.1-x86.exe sha256=bc9fe41b693d207e60b037f3a1148b9d81b307ebca7122b699447b6e923ab99e exec=openshot-qt.exe
-Promotion-ng platform=windows url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c'
-QuartzAudio platform=windows url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467'
-WaveShop platform=windows url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 
-WavePad platform=windows url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
-Wavosaur platform=windows url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
+* category='Ebooks;Viewer;Office' platform=windows
+FBReader url=https://fbreader.org/files/win32/FBReaderSetup-0.12.10.exe sha256='252ee8e08ba3355e45012c58feea20cb790cbcca47fa6fed381d842193932b6a' 
+IcecreamEbookReader url=https://icecreamapps.com/download/ebook_reader_setup.exe sha256='c57e05e81bf922e5b77e2e5dd444420d3fa2e9e1152f1b1061245c71839256e8' 
+KoboBooks url=https://kbdownload1-a.akamaihd.net/desktop/kobodesktop/kobosetup.exe warn="This application works, but suffers from occasional crashes"
+AdobeDigitalEditions url=https://download.adobe.com/pub/adobe/digitaleditions/ADE_4.5_Installer.exe exec=DigitalEditions.exe requires=DotNet40 requires=DotNet40 sha256=a21a9d5389728fdac6a7288953dddeea774ef2bee07f1caf7ea20bbed8f5a2c6
 
 
-* category='MediaTagEditor;Audio'
-Mp3Tag platform=windows url="https://download.mp3tag.de/mp3tagv321setup.exe" sha256=cdc540b1d3f2f53366bfb97ee6d5e93fcfc07d993251d00d19f29cfa9f2921d3 donate=https://www.mp3tag.de/en/donations.html
+* category='Feed;RSS;Internet;Network' platform=windows
+FeedRoller url=https://sector-seven.com/assets/downloads/feedroller.zip comment='RSS/News Desktop Ticker' sha256='5ad7d0680de77e68b3c9a63b8b2bfba5789016b41757c0e24e0adde60b8a6968'
+QuiteRSS url=https://quiterss.org/files/0.18.12/QuiteRSS-0.18.12-Setup.exe comment='RSS Feed Reader' sha256='cb23f619b351b54a34d3bb21a7a37265f21baa2af4e8b614374eee61055b97d3' 
+GPodder url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8' 
+Juice url=http://prdownloads.sourceforge.net/juicereceiver/Juice22Setup.exe?download comment='Podcast Watcher/Downloader' sha256='9235ca5cc0720ea09b61df61f546453a98afa10e86d7f02f1f70e234253ca31c' 
+
+* category='Usenet;NNTP;Internet;Network' platform=windows
+GrabIt  url=https://download.shemes.com/GrabIt175b3.exe sha256=8159e146603de9f6a975f665f07439e75f439c969619d86357c956a89f076df7 
+
+* category='Electronics' platform=windows
+ICProg url=http://www.ic-prog.com/icprog106C.zip sha256='0ef72411a5253e6249f723701876fc093b1ddc4d055fd9e406e2545b711d8850' 
+PicPick url=http://ngwin.com/download/latest/picpick_inst.exe exec='picpick_inst.exe' sha256='43f58fcbb1b1dde2f8baa66ed8fd5f168310a8002feed02e374695acc3847a8f' vdesk='y' 
+ElectronicsAssistant url=https://www.electronics2000.co.uk/assist/assist.exe sha256='c69620e62647f2868ae2e6ade93d93a320fd1307074d61e49fc928bab33c8d2d' 
+LTSpice url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe  sha256=8d71504400002da9597c649f544966a0ea7952c7004d26e6fe71cda863383f2f
+
+* category='Astronomy' platform=windows
+RegiStax url=http://www.astronomie.be/registax/setupregistax6.exe sha256=836503d060e0f71f0e2f0d46a06b7d03b94c6e93c3e7947f381329aa1bc1c219
+
+* category='TextEditor;Utility' platform=windows
+SublimeText url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe version='3143' exec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6' 
+Notepad++ url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898' 
+CherryTree url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec='cherrytree.exe' 
+EditPadLite url=http://download.jgsoft.com/editpad/SetupEditPadLite.exe warn='This app is only free for personal/non-commercial use. App auto-runs on install, so you'll need to close it for sommelier to complete the installation.'
+SeaMonkeyEditexec-args='-editor' comment='HTML editor bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
+
+* category='RemoteAccess;Utility' platform=windows
+TightVNC url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 
+TurboVNC url=https://sourceforge.net/projects/turbovnc/files/2.2.5/TurboVNC-2.2.5-x86.exe/download exec='vncviewer.exe' sha256='5b0c5f2ccb3ab031d75bc38a8ff68fa6414ba61826ffe02d8216742eef5dc047' 
+Teamviewer url=https://download.teamviewer.com/download/version_14x/TeamViewerPortable.zip comment='Official Teamviewer client' 
+
+* category='Player;Audio' platform=windows
+AIMP url=https://www.aimp.ru/?do=download.file&id=4 sha256='41070175804131607f907e359f1268ee0863a6493d8c94ce14a4be11ba7c978c' 
+CoolPlayer url=https://downloads.sourceforge.net/project/coolplayer/Coolplayer/219/CoolPlayer219_Bin.zip?r=&amp;ts=1532774479 version='219' exec='coolplayer.exe' sha256='a6a7c42c3b2aa45df8d02a6c98a0aec6dd67bab1be835d09d4ef1b1861002337' winmanager='N' comment='MP3 player' 
+XMPlay url=http://www.un4seen.com/files/xmplay38.zip winmanager='N' comment='Audio player for MP3, OGG, .mod, .xm, etc' sha256='b88adcc7f63e885bf4b51c2f51652558c1ee6e00ca7dd39bcee93361009d4eca' 
+Modplug url=https://download.openmpt.org/archive/mpp/mpp1.46.02.zip version='1.46.02' exec='MODPLUG.EXE' sha256='3db46e26918c56e617d6150cc6b7e1b96f61cc11a15df1e89879dfaad8de4cf7' comment='Player for various types of 'mod' file' 
+RadioSure url=http://www.radiosure.com/downloads/RadioSure-2.2.1046-setup.exe sha256='2bb9b0867b2aa71e4fa53e0a360637adc6705076b500ce5d3da4bed4030a1293' exec='RadioSure.exe' 
+QMMP url=http://qmmp.ylsoftware.com/files/windows/1.5/qmmp-1.5.2-win32.exe sha256='3822419fa36e247426c76720911e38e879b04fefe3a83d362b6f0f566345eb58' exec=qmmp.exe
+WinAmp url=http://www.meggamusic.co.uk/winamp/winamp5666_full_all_redux.exe exec=winamp.exe os-version=winxp sha256=ea9a6ba81475d49876d0b8b300d93f28f7959b8e99ce4372dbde746567e14002
+Clementine url=https://github.com/clementine-player/Clementine/releases/download/1.4.0rc1-869-gccf4f75c3/ClementineSetup-1.4.0rc1-869-gccf4f75c3.exe exec=clementine.exe sha256=ce1cba9a430418e7cdd03116f05efbca17b046d39cb70b42a120d7b73051931a
+
+* category='Player;Video' platform=windows
+MediaPlayerClassic url=https://downloads.sourceforge.net/project/mpc-hc/MPC%20HomeCinema%20-%20Win32/MPC-HC_v1.7.5_x86/MPC-HC.1.7.5.x86.exe sha256=1d690da5b330f723aea4a294d478828395d321b59fc680f2b971e8b16b8bd33d exec=mpc-hc.exe
+VLC url=https://get.videolan.org/vlc/2.2.1/win32/vlc-2.2.1-win32.exe sha256=2eaa3881b01a2464d2a155ad49cc78162571dececcef555400666c719a60794d exec=vlc.exe
+
+* category='AudioVideoEditor;Audio' platform=windows
+mp3DirectCut url=http://download4.freefiles-18.de/software/s39913/d29822/29/822/mp3DC223.exe sha256='48dc1088db3e5896ab520b30ed75fb1185212658ae789bb818d122b2982a0965' comment='Edit MP3 files' 
+AudioLab url=http://www.completelyfreesoftware.com/software/alab11d.zip type='WAV editor' sha256='dbcdb0444fc41f1046040ecbec9763096432830ce22b95dd20973780c581f3f4' comment='Editor for WAV files' 
+BRELS url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' comment='Midi Editor' 
+Caustic url=http://www.singlecellsoftware.com/download/Caustic_3.2.0_installer.exe referer='http://www.singlecellsoftware.com/caustic' sha256='20be4c834c41d9fa6a3da33e30ffd951d2262e067a5fdc4dc833942abcfa834d' comment='Music making studio' 
+FLStudio url=https://support.image-line.com/redirect/FLStudio_Installer?_ga=2.160548221.1563864817.1524342160-1720700824.1524342160 exec='FLStudio_Installer' sha256='9af49763ae3d70211377fc59694d731c94ef928dd308cc5405c0fea39fe60fda' comment='Music making studio' 
+MadTracker url=http://www.tucows.com/download/windows/files/mt261_full.exe version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' comment='Another Modtracker' 
+Mixxx url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' 
+Mobius url=http://www.circularlabs.com/mobius-2-5.exe version='2.5' exec='mobius-2-5.exe' sha256='85236a14167ef3b1febf23444c350130cbe6a2f8c7c48330b74b54e12536a80d' comment='Sound looper application for music' 
+OcenAudio url=https://www.ocenaudio.com/downloads/index.php/ocenaudio_portable.zip? exec=ocenaudio.exe
+OpenMPT url=https://openmpt.org/download_file.php?file=OpenMPT-1.30.10.00-portable-x86-legacy.zip donate=https://openmpt.org/donate sha256=e3cb6ec26732392e0a7073b004a8f01900f67928f37243c8553632682cbc8cd4
+OpenShot url=https://github.com/OpenShot/openshot-qt/releases/download/v2.6.1/OpenShot-v2.6.1-x86.exe sha256=bc9fe41b693d207e60b037f3a1148b9d81b307ebca7122b699447b6e923ab99e exec=openshot-qt.exe
+Promotion-ng url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c'
+QuartzAudio url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467'
+WaveShop url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/waveshop-1.0.14.001-bin.zip/download sha256='a337bd7c49c4dff96a3ae4be71f090c49a53dd99869fd816418914670a6bd879' 
+WavePad url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
+Wavosaur url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 
 
-* category='AudioVideoEditor;Video'
-VSDC platform=windows url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
-Movavi platform=windows url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe
-XMediaRecode platform=windows url=http://www.xmedia-recode.de/download/XMediaRecode3271_setup.exe requires='MSVC2017' sha256=ea97335695f52bed2ce7e5529f8cd597bf049906f8a29f54d8096f9a72a65c98 donate=https://www.xmedia-recode.de/en/donations.php
-
-* category='Clock;Utility'
-DSClock platform=windows url=http://www.dualitysoft.com/download/dsc302r-x86.exe comment='Desktop clock with alarm' sha256='bbaf2f87fb03b5cc189bb2225f1e3fa6bc7c56143e3ee1cd220f2e4b056695c6' 
-Qlock platform=windows url=http://www.qlock.com/qlock-install.exe comment='Desktop world clock' sha256='aa7781ff548df57739dbe9197c4428551e063ab3ef2727cc51a57566df9cd07c' 
-DesktopStopwatch platform=windows url=http://www.tucows.com/download/windows/files7/stopwatch.exe install-type='executable' comment='Simple stopwatch' sha256='490d833205f9dfe4f1950d40c845489aa2d2039a77ab10473384986f8442ea6f' 
-FreeAlarmClock platform=windows url=https://freealarmclocksoftware.com/FreeAlarmClockSetup.exe exec=FreeAlarmClock.exe
-
-* category='FontEditor;FontViewer;Viewer;Utility'
-AmpFont platform=windows url=http://www.ampsoft.net/files/FontViewer.zip comment='Font Viewer' sha256='1356f3976dcd54eee73611d1617ca8d113eae6c14ff0b8971a3d21444fd22554' 
-NexusFont platform=windows url=http://www.xiles.net/download.php?file=nexusfont_setup_2.6.2.exe&product=NexusFont2&ver=2.6.2.1870 exec='NexusFont.exe' comment='Font Viewer' sha256='6039c7ff1a5846a0a7203250472163b28bc52eceef710cfa94a5eb169407db7d' 
-FontPage platform=windows url=https://bluefive.pairsite.com/FontPage.zip installer='FontPage/setup.exe' requires='VB6' sha256='99a1347aa6b406cca0f1e2328ee867f6e8b5c2a3519d89ab5197588ca9c7126e' 
-AngelCodeBFG platform=windows url=http://www.angelcode.com/products/bmfont/install_bmfont_1.14_beta.exe comment='Bitmap Font Generator' sha256='084486e6ca6e090edd46b8958346183fc0bd3746bd9ef0cf892898a202808d37' 
+* category='MediaTagEditor;Audio' platform=windows
+Mp3Tag url="https://download.mp3tag.de/mp3tagv321setup.exe" sha256=cdc540b1d3f2f53366bfb97ee6d5e93fcfc07d993251d00d19f29cfa9f2921d3 donate=https://www.mp3tag.de/en/donations.html
 
 
-* category=Bittorrent;Network
-FrostWire platform=windows url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
-qBitTorrent platform=windows url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe sha256=01487a0e2594a5065e4d780eb012dcd0dafadc218d1b6aba69528bd6ede6afb5
+* category='AudioVideoEditor;Video' platform=windows
+VSDC url=http://www.videosoftdev.com/services/download.aspx?ProductID=x32_1 exec=VideoEditor.exe
+Movavi url=https://www.movavi.com/download-videoeditorpluswinmac exec=movavi.exe
+XMediaRecode url=http://www.xmedia-recode.de/download/XMediaRecode3271_setup.exe requires='MSVC2017' sha256=ea97335695f52bed2ce7e5529f8cd597bf049906f8a29f54d8096f9a72a65c98 donate=https://www.xmedia-recode.de/en/donations.php
 
-* category='Utility'
-CDex platform=windows url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
-7-Zip platform=windows url=http://www.7-zip.org/a/7z1602.exe exec='7zFM.exe' sha256='629ce3c424bd884e74aed6b7d87d8f0d75274fb87143b8d6360c5eec41d5f865' comment='Graphical Archive App' 
-DNSBench platform=windows url=https://www.grc.com/files/DNSBench.exe exec='DNSBench.exe' sha256='a9bc505f668a6af598681a0eb1be64b484d869a48b5991107827a9f0052cff45' comment='Steven Gibsons DNS Benchmark' install-type='executable' 
-Hexelon platform=windows url=https://www.hexelon.com/download/v607/app/HEXelonMAX-6.07-install.exe exec='hexelon.exe' comment='Scientific calculator 1' warn='Hexelon starts up after install, you must shut it down to complete the install' sha256='9e4608a16f0263f984e89c9f4d64bdca25b16a35a7c464875c41dfff23b3d04a' 
-ScreenRuler platform=windows url=http://www.tucows.com/download/windows/files3/Screen-Ruler.exe comment='Measure distances in pixels on screen' install-type='executable' sha256='781093ca61b550a1cf3a8503c223f00802eb6672130c9bf265e31a5e69e43e82' 
-WOLSender platform=windows url=http://www.tucows.com/download/windows/files2/wakeonlansender.exe comment='Send Wake On LAN packets' sha256='1abc509019689464bf3f66d1a24213a8531e21df66dd3e7fbbf8b3481ca9a21f' exec='WakeOnLan.exe' 
-ImageBurn platform=windows url=http://download.imgburn.com/SetupImgBurn_2.5.8.0.exe version='2.5.6.0' exec='SetupImgBurn_2.5.8.0.exe' sha256='d7dea2819edc77bc44db637cd324e61942b54930cb3034f8f1a417b7dd27b514' 
-GetRight platform=windows url=http://download.getright.com/getright-download.exe sha256='77f08faacf8433dd9912e49c80d0e0668a0f451036a5a9ab4abf15220c17f2e5' comment='Download manager' 
-IPAddress platform=windows url=https://bluefive.pairsite.com/IPaddress.zip installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
-Sync.com platform=windows url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn='Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work' exec='sync-taskbar.exe' comment='Desktop app for Sync.com storage service' sha256='c6644943f4dc495e38af4a5187ad40e192bb2f0706a6ee9e2200c9fa48c07826' 
-KeePass platform=windows url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
-KeePassXC platform=windows url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi sha256=4b48f83dd63d9388c8d982037a671832e72767dfc296ff5b91d2e76049095fed
-Wireshark platform=windows url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe 
-BeerSmith platform=windows url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode" sha256=83f0fcf2e7e4d07ada6700462915c2827ca5ec7b797c7fb6542a0c85eba72f53
-SimpleNote platform=windows url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-win-2.21.0.exe exec=Simplenote.exe sha256=a3f26f4d0d196b152da5cfcafb72ac2f3e82e5041009a20f6958c43f9f478cd8
-EssentialPIM platform=windows url=https://www.essentialpim.com/download/EssentialPIM.exe dlname=EssentialPIMInstaller.exe exec=EssentialPIM.exe sha256=a780d775936fe73c19af8d39bc5dda5e2ebc15cc54f3f0f7243d7af1a97f8e1e
+* category='Clock;Utility' platform=windows
+DSClock url=http://www.dualitysoft.com/download/dsc302r-x86.exe comment='Desktop clock with alarm' sha256='bbaf2f87fb03b5cc189bb2225f1e3fa6bc7c56143e3ee1cd220f2e4b056695c6' 
+Qlock url=http://www.qlock.com/qlock-install.exe comment='Desktop world clock' sha256='aa7781ff548df57739dbe9197c4428551e063ab3ef2727cc51a57566df9cd07c' 
+DesktopStopwatch url=http://www.tucows.com/download/windows/files7/stopwatch.exe install-type='executable' comment='Simple stopwatch' sha256='490d833205f9dfe4f1950d40c845489aa2d2039a77ab10473384986f8442ea6f' 
+FreeAlarmClock url=https://freealarmclocksoftware.com/FreeAlarmClockSetup.exe exec=FreeAlarmClock.exe
 
-* category='Chess;BoardGame;Game'
-ArenaChess platform=windows url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
-WinChess platform=windows url=https://archive.org/download/WinChess_1020/winchess.zip version='1.01' exec='WINCHESS.EXE' sha256='a42b06d7fd1c76ec2526d763023b0de5dd1e756b159964fb66f5687f94b38929' comment='Chess for Windows 3.1' 
-Arasan platform=windows url=https://archive.org/download/ARASAN32/ARASAN32.zip version='3.0' exec='ARASAN32.EXE' sha256='cf7742e7b0e3e00f063bb7b743dfbd4683f9ef40320a3e1e15fb0ad01fd365d7' installer='SETUP.EXE' installer-vdesk='Y' comment='Chess Program' 
-WindowsRebelDecadeChess platform=windows url=https://image.dosgamesarchive.com/games/r10man_w.zip sha256='2c2b6b1bb6f7bd2df6e5d9483ae70b2fad3b4bd1156fb4de3e19011c3cab8369' comment='Chess Program' 
-
-* category='ChineseChess;Xiangqi;Chess;BoardGame;Game'
-XieXie platform=windows url=http://www.cc-xiexie.com/files/XXFreeware2.5.XInstaller.exe version='2.5' sha256='c494843e850e122422d673f2004be3bc4b82732d0598ecb13c9e6655144c41a3' comment='Good Xianqi (Chinese Chess) playing program' 
-HiddenLynx platform=windows url=https://archive.org/download/Hidden_Lynx/HiddenLynxSetup.exe setup='HiddenLynxSetup.exe' comment='Another good Xianqui (Chinese Chess) program' sha256='92f00b9c43918340628e2e3744a13a3c3899697187dd7b8b9bc091a092891ff9' 
-
-* category='Go;Wei-Chi;BoardGame;Game'
-SmartGo platform=windows url=https://www.smartgo.com/download/SGSetup.exe sha256='57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3' warn='15 day trial' comment='Go/wei-chi player. 15 day trial only' 
+* category='FontEditor;FontViewer;Viewer;Utility' platform=windows
+AmpFont url=http://www.ampsoft.net/files/FontViewer.zip comment='Font Viewer' sha256='1356f3976dcd54eee73611d1617ca8d113eae6c14ff0b8971a3d21444fd22554' 
+NexusFont url=http://www.xiles.net/download.php?file=nexusfont_setup_2.6.2.exe&product=NexusFont2&ver=2.6.2.1870 exec='NexusFont.exe' comment='Font Viewer' sha256='6039c7ff1a5846a0a7203250472163b28bc52eceef710cfa94a5eb169407db7d' 
+FontPage url=https://bluefive.pairsite.com/FontPage.zip installer='FontPage/setup.exe' requires='VB6' sha256='99a1347aa6b406cca0f1e2328ee867f6e8b5c2a3519d89ab5197588ca9c7126e' 
+AngelCodeBFG url=http://www.angelcode.com/products/bmfont/install_bmfont_1.14_beta.exe comment='Bitmap Font Generator' sha256='084486e6ca6e090edd46b8958346183fc0bd3746bd9ef0cf892898a202808d37' 
 
 
-* category='Othello;BoardGame;Game'
-TinyOthello platform=windows url=https://archive.org/download/TinyOthello_1020/tinyothello.zip exec='TinyOthello.exe' sha256='667c209c9b52950040b6db25dda47222fbfd72450b6142ff093cc23a8062b56f' 
-Othello97 platform=windows url=https://archive.org/download/KoSOthello97_1020/Othello97.zip exec='Othello97.exe' requires='VB5' sha256='48f0b0dcfd59abed539bfcec43fbf1b0374f8ec241ecace11b656df6580b32ce' 
-Othello98 platform=windows url=https://archive.org/download/Othello98_1020/othello_Ferrari.zip exec='Othello.exe' sha256='d9ec5ffbd268e270cab792cdaf5e774dac4d5a119c990ffa3155476d712255ea' 
-ZebraOthello platform=windows url=http://radagast.se/othello/wz424.exe exec='wzebra.exe' sha256='d2e3a76012a9d7881dbc06a7bfb88f9a065c7be6462b4eec2e297c5fba4fc34a' 
+* category=Bittorrent;Network platform=windows
+FrostWire url=https://github.com/frostwire/frostwire/releases/download/frostwire-desktop-6.7.9-build-277/frostwire-6.7.9.windows.github.exe comment='Bittorrent media downloader/player' sha256='d6993028b8f34788006569cab1140e0f480665af92c282b42530347c9dd84344' 
+qBitTorrent url=https://sourceforge.net/projects/qbittorrent/files/qbittorrent-win32/qbittorrent-4.3.9/qbittorrent_4.3.9_setup.exe/download exec=qbittorrent.exe sha256=01487a0e2594a5065e4d780eb012dcd0dafadc218d1b6aba69528bd6ede6afb5
+
+* category='Utility' platform=windows
+CDex url=http://mirror.cdex.mu/CDex%201.77%20Portable/CDex-1.77-portable-unicode.zip version='1.77' exec='CDex-1.77-portable-unicode.zip' sha256='5906a9883e7691d028d4a5dc23633b7884cd27277e39d3fdfadc35028feb40f0' 
+7-Zip url=http://www.7-zip.org/a/7z1602.exe exec='7zFM.exe' sha256='629ce3c424bd884e74aed6b7d87d8f0d75274fb87143b8d6360c5eec41d5f865' comment='Graphical Archive App' 
+DNSBench url=https://www.grc.com/files/DNSBench.exe exec='DNSBench.exe' sha256='a9bc505f668a6af598681a0eb1be64b484d869a48b5991107827a9f0052cff45' comment='Steven Gibsons DNS Benchmark' install-type='executable' 
+Hexelon url=https://www.hexelon.com/download/v607/app/HEXelonMAX-6.07-install.exe exec='hexelon.exe' comment='Scientific calculator 1' warn='Hexelon starts up after install, you must shut it down to complete the install' sha256='9e4608a16f0263f984e89c9f4d64bdca25b16a35a7c464875c41dfff23b3d04a' 
+ScreenRuler url=http://www.tucows.com/download/windows/files3/Screen-Ruler.exe comment='Measure distances in pixels on screen' install-type='executable' sha256='781093ca61b550a1cf3a8503c223f00802eb6672130c9bf265e31a5e69e43e82' 
+WOLSender url=http://www.tucows.com/download/windows/files2/wakeonlansender.exe comment='Send Wake On LAN packets' sha256='1abc509019689464bf3f66d1a24213a8531e21df66dd3e7fbbf8b3481ca9a21f' exec='WakeOnLan.exe' 
+ImageBurn url=http://download.imgburn.com/SetupImgBurn_2.5.8.0.exe version='2.5.6.0' exec='SetupImgBurn_2.5.8.0.exe' sha256='d7dea2819edc77bc44db637cd324e61942b54930cb3034f8f1a417b7dd27b514' 
+GetRight url=http://download.getright.com/getright-download.exe sha256='77f08faacf8433dd9912e49c80d0e0668a0f451036a5a9ab4abf15220c17f2e5' comment='Download manager' 
+IPAddress url=https://bluefive.pairsite.com/IPaddress.zip installer='setup.exe' requires='VB6' sha256='820ba8fa7a807fe0652f5976a07999529fe023ef1c2cb841cedbf974085b1dc2' 
+Sync.com url=https://www.sync.com/download/legacy/win/sync-installer.exe category='Storage' warn='Don't forget to exit sync after install so that sommelier can finish the install. You must set your sync directory correctly when asked during install, changing it later doesn't seem to work' exec='sync-taskbar.exe' comment='Desktop app for Sync.com storage service' sha256='c6644943f4dc495e38af4a5187ad40e192bb2f0706a6ee9e2200c9fa48c07826' 
+KeePass url=https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.45/KeePass-2.45-Setup.exe/download comment='Password Manager' sha256='9058cc9d44129e8c2c902e21f8678974b789ecd8f9d6add81c98fbeaf9794e23' 
+KeePassXC url=https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-Win32.msi sha256=4b48f83dd63d9388c8d982037a671832e72767dfc296ff5b91d2e76049095fed
+Wireshark url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.msi exec=wireshark.exe 
+BeerSmith url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode" sha256=83f0fcf2e7e4d07ada6700462915c2827ca5ec7b797c7fb6542a0c85eba72f53
+SimpleNote url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-win-2.21.0.exe exec=Simplenote.exe sha256=a3f26f4d0d196b152da5cfcafb72ac2f3e82e5041009a20f6958c43f9f478cd8
+EssentialPIM url=https://www.essentialpim.com/download/EssentialPIM.exe dlname=EssentialPIMInstaller.exe exec=EssentialPIM.exe sha256=a780d775936fe73c19af8d39bc5dda5e2ebc15cc54f3f0f7243d7af1a97f8e1e
 
 
-* category='Backgammon;BoardGame;Game'
-ProBackgammon platform=windows url=https://archive.org/download/ProBackgammon/PROBACK.zip exec='ProBack.exe' sha256='b1dcf2f062b7406866ff6c26e8320cf6b699f69e88e5fea515c3496c1f2ae9f3' 
-QuickBackgammon platform=windows url=https://archive.org/download/QuickBackgammon_1020/backgw32.zip exec='backgw32.exe' sha256='8a0a2895ef13581b47ceb0cfdc0200f49f38e7858e5ce61d64cd41bc63e33108' 
+* category='Chess;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+ArenaChess url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
+Arasan url=https://archive.org/download/ARASAN32/ARASAN32.zip version='3.0' exec='ARASAN32.EXE' sha256='cf7742e7b0e3e00f063bb7b743dfbd4683f9ef40320a3e1e15fb0ad01fd365d7' installer='SETUP.EXE' installer-vdesk='Y' comment='Chess Program' 
+DreamChess url="https://github.com/dreamchess/dreamchess/releases/download/0.3.0/DreamChess-0.3.0-win32.zip" sha256=ba76a227f83dd3a1336f75230847cfe4c173c8cb7f70f770800719aacb6bd9fe
+WinChess url=https://archive.org/download/WinChess_1020/winchess.zip version='1.01' exec='WINCHESS.EXE' sha256='a42b06d7fd1c76ec2526d763023b0de5dd1e756b159964fb66f5687f94b38929' comment='Chess for Windows 3.1' 
+WindowsRebelDecadeChess url=https://image.dosgamesarchive.com/games/r10man_w.zip sha256='2c2b6b1bb6f7bd2df6e5d9483ae70b2fad3b4bd1156fb4de3e19011c3cab8369' comment='Chess Program' 
 
 
-* category='BoardGame;Game'
-Hexagon platform=windows url=https://archive.org/download/Hexagon_1020/hexagon.zip comment='Get from one side of the board to the other' sha256='81ae40a7dc01923f584afd368b7ba535f6ceb20baf514bffe06428e504f02852' 
+* category='ChineseChess;Xiangqi;Chess;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+XieXie url=http://www.cc-xiexie.com/files/XXFreeware2.5.XInstaller.exe version='2.5' sha256='c494843e850e122422d673f2004be3bc4b82732d0598ecb13c9e6655144c41a3' comment='Good Xianqi (Chinese Chess) playing program' 
+HiddenLynx url=https://archive.org/download/Hidden_Lynx/HiddenLynxSetup.exe setup='HiddenLynxSetup.exe' comment='Another good Xianqui (Chinese Chess) program' sha256='92f00b9c43918340628e2e3744a13a3c3899697187dd7b8b9bc091a092891ff9' 
 
-* category='CardGame;Game'
-XmSol platform=windows url=https://sourceforge.net/projects/xmsol/files/xmsol.zip/download exec='xmsol.exe' comment='A great many solitaire card games, including freecell' sha256='1ccec2f0e61e4157c8cd02b3fc75fb23bf9cd03f98d748fc84b2984e253f631c' 
-XCell platform=windows url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip version='4.0a' exec='xcell.exe' comment='Freecell Clone' sha256='049615687199033dbab053d114213c37da6a3ac478de79b415b9fcc1ea4ebefe' 
-Hearts platform=windows url=http://www.tucows.com/download/games/files2/thnoshearts.zip installer-vdesk='Y' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe' 
+* category='Go;Wei-Chi;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+SmartGo url=https://www.smartgo.com/download/SGSetup.exe sha256='57e01020abf52a1d1d6594544fd150d00f52d31ff4fdd58808798c0be8fdd2f3' warn='15 day trial' comment='Go/wei-chi player. 15 day trial only' 
 
-* category='Roguelike;Roleplaying;Game'
-DesktopDungeons platform=windows url=http://www.qcfdesign.com/Files/DesktopDungeons/DesktopDungeons_v021.exe exec='DesktopDungeons.exe' comment='Coffebreak Roguelike' sha256='2a6e2b339efebd2e13dec776baa36dda79b1de8c079ba1fccbc053a2f33df86e' icon="HeroPaladin.png"
-DungeonCrawlStoneSoup platform=windows url=http://crawl.develz.org/release/0.21/stone_soup-0.21.1-tiles-win32.zip exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256='fec60ac700975e3bc1edb1d13c0e74d799bc5431cb6b0ef797bf960e3bb28198' 
-GearHead1 platform=windows url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/GH1-1.302-sdl-windows-i386.zip movefiles-from='gearhead-1/*' exec='gharena.exe' comment='Mecha Roguelike' sha256='edfdd0c0682ba7e7bbbbc908ca2a092ddc66fd251bb7a6c72700f7d9d9768aa1' 
-TalesOfMajeal platform=windows url=http://te4.org/dl/t-engine/t-engine4-windows-1.5.9.zip comment='Very polished fantasy roguelike' sha256='7e05b9168df8caab7412e66daa574121bd5e3231077c4a53b0f781c814b0df61' 
-SplunkyClassic platform=windows url=http://www.derekyu.com/games/spelunky_1_1.zip comment='Platform Roguelike' sha256='572f0a1976e76ebbd295daae651b8b6f00c6b9cf960d3e1c2cc57128d6437727' 
-DwarfFortress platform=windows url=http://www.bay12games.com/dwarves/df_44_12_win32.zip exec='Dwarf Fortress.exe' comment='ASCII roguelike' sha256='ef98a150472531260315760a95fadb235c2b8b330f8cc0787bec6d22ff61b92f' donate=http://www.bay12games.com/support.html
+* category='Othello;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+TinyOthello url=https://archive.org/download/TinyOthello_1020/tinyothello.zip exec='TinyOthello.exe' sha256='667c209c9b52950040b6db25dda47222fbfd72450b6142ff093cc23a8062b56f' 
+Othello97 url=https://archive.org/download/KoSOthello97_1020/Othello97.zip exec='Othello97.exe' requires='VB5' sha256='48f0b0dcfd59abed539bfcec43fbf1b0374f8ec241ecace11b656df6580b32ce' 
+Othello98 url=https://archive.org/download/Othello98_1020/othello_Ferrari.zip exec='Othello.exe' sha256='d9ec5ffbd268e270cab792cdaf5e774dac4d5a119c990ffa3155476d712255ea' 
+ZebraOthello url=http://radagast.se/othello/wz424.exe exec='wzebra.exe' sha256='d2e3a76012a9d7881dbc06a7bfb88f9a065c7be6462b4eec2e297c5fba4fc34a' 
 
-* category='LogicGame;Game'
-Taipei platform=windows url=https://archive.org/download/Taipei_1020/TAIPEI50.zip version='1.01' exec='TP.EXE' sha256='f502c9443501866bd873fa77c77cac7d99ccffe91a8feffdf2b10c3f1d439c90' comment='Mahjong tile game for Windows 3.1' 
-SegaSwirl platform=windows url=http://web.archive.org/web/20040207155639/http://www.segaswirl.com:80/pc/sw_large.exe exec='swirl.exe' comment='Another color matching game' sha256='947c4c0a02ce90abbcaba476a1824a55a97f3088ea282da89c1e2c2c8caee3e9' 
-Reflexion platform=windows url=https://archive.org/download/Reflexion_game/reflexion.zip sha256='76b5c0c7cd1c3de8ca7da6c279b97a7e4810cd12acb59dfa5db32fa1f9187707' 
-TacticalLines platform=windows url=https://archive.org/download/TacticalLines_1020/tl.zip comment='Another color/shapes matching game' sha256='da733f477dfbfdd41f06982c8a2fc508e3052596f230a588bd70edd759bf3e3c' 
-HexPlus platform=windows url=https://archive.org/download/Clipboard2015053001/hexpuse.zip exec='HEXPUSe.EXE' sha256='734e46203ed4ce1222bee457739a183e8f20db202a85bb7e8ef06ba9d4fe5ffb' 
-Codex platform=windows url=https://archive.org/download/Codex_1020/codex.zip requires='VB5' comment='Mastermind 'guess the code' game' sha256='707a137e0c5dbe013ceb9c9a8c9c1fe29878ab41e1eeedcef635674c9b6a7f37' 
-Ruckingenur2 platform=windows url=http://www.zachtronics.com/images/ruckingenur2-installer.exe sha256='c8631d5902930e3563a8195edf0980c4d05b944fda2cefa7630905261ab28400' comment='Hardware Hacking Game. A little strange' 
-RuckingenurCE platform=windows url=http://www.zachtronics.com/images/ruckingenur-ce-installer.exe sha256='47a1a4094d5dda86130e5085aa46e3c494e90af084a919848abff6501204a97c' comment='Community Edition of Ruckingenur2 hardware hacking game, with new levels created by players' 
-7Colors platform=windows url=https://archive.org/download/7Colors_1020/7colors95.zip exec='7colors.exe' requires='VB5' sha256='bd04d53d18cdb58bd6b4b622c4eb624fd709d610e01dd3591c8cdffb748ad66f' 
 
-* category='StrategyGame;Game'
-AgeOfConquest platform=windows url=http://www.ageofconquest.com/download/user_aoc/setup_conquest_win32_4.18.221_auto.exe comment='Risk style conquest game' sha256='6b5b3fbb0e08c821e0541edc91c71c3740dbe0dc9b66e062fd98a34bb58df5fe' 
-BattleForWesnoth platform=windows url=https://sourceforge.net/projects/wesnoth/files/wesnoth-1.14/wesnoth-1.14.4/wesnoth-1.14.4-win32.exe/download sha256='fe6c276970efa5d510a31976c58949b034aa3f393ee7ea75ccfbbfdfd4c5cc22' comment='Very polished Fantasy RPG/RTS' donate=https://liberapay.com/Wesnoth/donate
-SPWW2 platform=windows url=http://download.shrapnelgames.com/downloads/winSP/winSPWW2.zip installer='winSPWW2-DL-version 5.0.exe' comment='Steel Panthers World War 2 game' sha256='b6d8488739493bf5eaa0300bcbce0f7af94217d8d898a9bc7b9038ccc7307a91' 
+* category='Backgammon;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+ProBackgammon url=https://archive.org/download/ProBackgammon/PROBACK.zip exec='ProBack.exe' sha256='b1dcf2f062b7406866ff6c26e8320cf6b699f69e88e5fea515c3496c1f2ae9f3' 
+QuickBackgammon url=https://archive.org/download/QuickBackgammon_1020/backgw32.zip exec='backgw32.exe' sha256='8a0a2895ef13581b47ceb0cfdc0200f49f38e7858e5ce61d64cd41bc63e33108' 
 
-* category='Game'
-3dStarStrike platform=windows url=https://archive.org/download/3dstarstrike-remake/3dstarstrike.zip installer='install.exe' comment='Addictive space shooter game' sha256='76212e248ce6d7ae860cce32c022f5346642bacc8453bf6cb0781e06f9672e81' 
-ArcAetherAnomalies platform=windows url=http://www.j-kyle.com/arc/Anomalies_Install_2008-10-31.exe
-Arcadia platform=windows url=http://www.tardis.dk/dlcount/click.php?id=41 donate=http://tardis.dk/wordpress/?page_id=981 exec=Arcadia.exe movefiles-from='$(drive_c)/Program Files/Arcadia/Arcad*/*'
-Augmentinel platform=windows url=https://simonowen.com/spectrum/augmentinel/Augmentinel-15.zip comment="Another remake of the classic 'Sentinel' game from the ZX Spectrum/C64 era" sha256=5ff6173f7c1813dbd8618b824eb4120a115ce447622126445cec94cd8dd2dd2f exec=Augmentinel.exe
-BattleshipsForever platform=windows url=http://www.wyrdysm.com/battleshipsforever/BFFullInstallerv90d.exe sha256='1158e35fe0129c31e407f6d5f1a751bb0166b3854ac45ca15a09618f456cbe72' 
-BlackWidow platform=windows url=http://www.tardis.dk/dlcount/click.php?id=40 donate=http://tardis.dk/wordpress/?page_id=981
-CarpeUniversum platform=windows url=http://www.wyrdysm.com/games/CarpeUniversumv12.zip sha256='d9e812efd2f926cda03dcf7bf4c6af26a8dc149b89449e00c14aaa69a60acfa4' comment='Hectic vertical shooter game' 
-Cybernoid3 platform=windows url=https://archive.org/download/cybernoid-3-phoenix/C3.zip comment='Addictive space shooter game' vdesk='y' sha256='818d0ae3de84c8884296df02545edc4a1a551f792cb02727df271e0b940f9ae7' 
-GazerStar platform=windows url=https://archive.org/download/shooter_201705/shooter.zip sha256='d40b326dc24c522180ccb7127827c986c1e66059c9ee6e801e0df9dc68f6aecc' 
-GeneRally platform=windows url=http://gene-rally.com/download/latest/ comment='little racing car game' sha256='e1ffc2f37d39748f6569c8f166b7b1a7aff2d4f6d385c2b1aa5ba7c2f9feef7e' 
-Glest platform=windows url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' 
-Gwan platform=windows url=https://archive.org/download/GWANWin/GWANWin.zip sha256='d4937612dbb26a90371159337a805043ab16fa73c805f1a34a67c1b29fd6f946' comment='Innovative vector-style game' 
-Invader platform=windows url=https://archive.org/download/749InvaderInstall/749_invader_install.exe comment='Space Invaders clone' sha256='5f9949a69a71d0ede178ef7a0b7f0289824419ecc7dc2d68453ac641d62279ec' 
-Invaders95 platform=windows url=https://archive.org/download/Invaders95/Invaders95.zip sha256='e5b41178a2beba361cb091f33a0e99febdfac08f6b9f37d8d8fab14ab5f29402' installer-vdesk='Y' comment='Space invaders clone' 
-JadeEmpire platform=windows url=https://archive.org/compress/JadePC sha256='3286d52835858ad3b6466722e533c39d759ce746745e1cd6ca155bf6ab2ec9ae' 
-JphJoust3 platform=windows url=https://archive.org/download/joust3/joust3.zip exec='Joust3_RevengeOfTheLavaTroll.exe' sha256='25de49988f43e82c40979b05d74291967783af73349cd311d95203a0e2f43294' comment='Joust clone with more complex gameplay than the original' 
-LaserTank platform=windows url=https://laser-tank.com/game/LaserTank.zip sha256='4c1361a82600ab40390d8c09bd43756b59e9c1d61d2e0e6c47a012cee785a6b3' 
-LockOn platform=windows url=https://archive.org/download/lockOn/lockOn.zip exec='_lockOn__iteration002.exe' sha256='74b9bf44d8138f3bf99c7e8b3154097250a62a677d8664629b02646e0690f035' comment='Addictive space shooter game' vdesk='y' 
-OmegaRace platform=windows url=http://www.tardis.dk/dlcount/click.php?id=20  donate=http://tardis.dk/wordpress/?page_id=981
-Oolite platform=windows url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite-1.90_x86.exe exec=oolite.exe sha256=9bafc8389115dd551300ef0e807c7580cd57b010d31fad0af148ebaaefc08b37
-PlasmaWorm platform=windows url=http://digital-eel.com/plasmaworm/files/plasmaworm_free.exe sha256='c8354e264d32b1ba8bdfd0c543cca99719707ac1135bbb56485a27f589f23be9' comment='Snake game' 
-PrivateerRemake platform=windows url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
-RiftSpace platform=windows url=https://archive.org/download/RiftSpace/RiftSpace.exe exec='RiftSpace.exe' sha256='c4546ae1cba46c8b1ec6072ed868f0ffc03d6168363853fe2d8e2bf65418c933' 
-Sentry platform=windows url=https://archive.org/download/Sentry_1020/sentry.zip exec='Sentry.exe' comment='PC Remake of the Classic 'Sentinel' game from the ZX Spectrum/C64 era' sha256='4caeb80c3bd43e138338e2aa0a98f3d11759c5e70e3fd2939ddb0e2bda405727' 
-SimpleTetris platform=windows url=https://archive.org/download/SimpleTetris/SimpleTetris.zip movefiles-from='Tetris/*' exec='tetris.exe' sha256='830d947433ed1a710dfb4c71c2eeef705ac2b4c41a86450c2ca42a502595c38a' 
-Sokoban++ platform=windows url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' 
-SpaceFury platform=windows url=http://www.tardis.dk/dlcount/click.php?id=18 donate=http://tardis.dk/wordpress/?page_id=981
-SpaceRawks platform=windows url=http://www.tardis.dk/dlcount/click.php?id=47 donate=http://tardis.dk/wordpress/?page_id=981 comment="Asteriods clone"
-StarCastle platform=windows url= http://www.tardis.dk/dlcount/click.php?id=27 donate=http://tardis.dk/wordpress/?page_id=981 
-TinyHeist platform=windows url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' 
-TrackManiaForever platform=windows url=http://files.trackmaniaforever.com/tmnationsforever_setup.exe exec=TmForeverLauncher.exe
-Transcendance platform=windows url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' 
-VVVVVV platform=windows url=http://www.flibitijibibo.com/VVVVVV-MP-10202016.zip comment='Spikes! Why are there always spikes?' sha256='39fbe76e8b7ce8bc8a37b64a7170e9e7e011c9585876bda89c04df7a472bcd91' 
-Zektor platform=windows url=http://www.tardis.dk/dlcount/click.php?id=17 donate=http://tardis.dk/wordpress/?page_id=981
-NUD platform=windows url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' 
-KingsQuest1 platform=windows url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
-Windle platform=windows url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
+
+* category='BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Hexagon url=https://archive.org/download/Hexagon_1020/hexagon.zip comment='Get from one side of the board to the other' sha256='81ae40a7dc01923f584afd368b7ba535f6ceb20baf514bffe06428e504f02852' 
+
+* category='CardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+XmSol url=https://sourceforge.net/projects/xmsol/files/xmsol.zip/download exec='xmsol.exe' comment='A great many solitaire card games, including freecell' sha256='1ccec2f0e61e4157c8cd02b3fc75fb23bf9cd03f98d748fc84b2984e253f631c' 
+XCell url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip version='4.0a' exec='xcell.exe' comment='Freecell Clone' sha256='049615687199033dbab053d114213c37da6a3ac478de79b415b9fcc1ea4ebefe' 
+Hearts url=http://www.tucows.com/download/games/files2/thnoshearts.zip installer-vdesk='Y' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe' 
+
+* category='Roguelike;Roleplaying;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+DesktopDungeons url=http://www.qcfdesign.com/Files/DesktopDungeons/DesktopDungeons_v021.exe exec='DesktopDungeons.exe' comment='Coffebreak Roguelike' sha256='2a6e2b339efebd2e13dec776baa36dda79b1de8c079ba1fccbc053a2f33df86e' icon="HeroPaladin.png"
+DungeonCrawlStoneSoup url=http://crawl.develz.org/release/0.21/stone_soup-0.21.1-tiles-win32.zip exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256='fec60ac700975e3bc1edb1d13c0e74d799bc5431cb6b0ef797bf960e3bb28198' 
+GearHead1 url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/GH1-1.302-sdl-windows-i386.zip movefiles-from='gearhead-1/*' exec='gharena.exe' comment='Mecha Roguelike' sha256='edfdd0c0682ba7e7bbbbc908ca2a092ddc66fd251bb7a6c72700f7d9d9768aa1' 
+TalesOfMajeal url=http://te4.org/dl/t-engine/t-engine4-windows-1.5.9.zip comment='Very polished fantasy roguelike' sha256='7e05b9168df8caab7412e66daa574121bd5e3231077c4a53b0f781c814b0df61' 
+SplunkyClassic url=http://www.derekyu.com/games/spelunky_1_1.zip comment='Platform Roguelike' sha256='572f0a1976e76ebbd295daae651b8b6f00c6b9cf960d3e1c2cc57128d6437727' 
+DwarfFortress url=http://www.bay12games.com/dwarves/df_44_12_win32.zip exec='Dwarf Fortress.exe' comment='ASCII roguelike' sha256='ef98a150472531260315760a95fadb235c2b8b330f8cc0787bec6d22ff61b92f' donate=http://www.bay12games.com/support.html
+
+
+* category='LogicGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Taipei url=https://archive.org/download/Taipei_1020/TAIPEI50.zip version='1.01' exec='TP.EXE' sha256='f502c9443501866bd873fa77c77cac7d99ccffe91a8feffdf2b10c3f1d439c90' comment='Mahjong tile game for Windows 3.1' 
+SegaSwirl url=http://web.archive.org/web/20040207155639/http://www.segaswirl.com:80/pc/sw_large.exe exec='swirl.exe' comment='Another color matching game' sha256='947c4c0a02ce90abbcaba476a1824a55a97f3088ea282da89c1e2c2c8caee3e9' 
+Reflexion url=https://archive.org/download/Reflexion_game/reflexion.zip sha256='76b5c0c7cd1c3de8ca7da6c279b97a7e4810cd12acb59dfa5db32fa1f9187707' 
+TacticalLines url=https://archive.org/download/TacticalLines_1020/tl.zip comment='Another color/shapes matching game' sha256='da733f477dfbfdd41f06982c8a2fc508e3052596f230a588bd70edd759bf3e3c' 
+HexPlus url=https://archive.org/download/Clipboard2015053001/hexpuse.zip exec='HEXPUSe.EXE' sha256='734e46203ed4ce1222bee457739a183e8f20db202a85bb7e8ef06ba9d4fe5ffb' 
+Codex url=https://archive.org/download/Codex_1020/codex.zip requires='VB5' comment='Mastermind 'guess the code' game' sha256='707a137e0c5dbe013ceb9c9a8c9c1fe29878ab41e1eeedcef635674c9b6a7f37' 
+Ruckingenur2 url=http://www.zachtronics.com/images/ruckingenur2-installer.exe sha256='c8631d5902930e3563a8195edf0980c4d05b944fda2cefa7630905261ab28400' comment='Hardware Hacking Game. A little strange' 
+RuckingenurCE url=http://www.zachtronics.com/images/ruckingenur-ce-installer.exe sha256='47a1a4094d5dda86130e5085aa46e3c494e90af084a919848abff6501204a97c' comment='Community Edition of Ruckingenur2 hardware hacking game, with new levels created by players' 
+7Colors url=https://archive.org/download/7Colors_1020/7colors95.zip exec='7colors.exe' requires='VB5' sha256='bd04d53d18cdb58bd6b4b622c4eb624fd709d610e01dd3591c8cdffb748ad66f' 
+
+* category='StrategyGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+AgeOfConquest url=http://www.ageofconquest.com/download/user_aoc/setup_conquest_win32_4.18.221_auto.exe comment='Risk style conquest game' sha256='6b5b3fbb0e08c821e0541edc91c71c3740dbe0dc9b66e062fd98a34bb58df5fe' 
+BattleForWesnoth url=https://sourceforge.net/projects/wesnoth/files/wesnoth-1.14/wesnoth-1.14.4/wesnoth-1.14.4-win32.exe/download sha256='fe6c276970efa5d510a31976c58949b034aa3f393ee7ea75ccfbbfdfd4c5cc22' comment='Very polished Fantasy RPG/RTS' donate=https://liberapay.com/Wesnoth/donate
+SPWW2 url=http://download.shrapnelgames.com/downloads/winSP/winSPWW2.zip installer='winSPWW2-DL-version 5.0.exe' comment='Steel Panthers World War 2 game' sha256='b6d8488739493bf5eaa0300bcbce0f7af94217d8d898a9bc7b9038ccc7307a91' 
+
+* category='Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+3dStarStrike  url=https://archive.org/download/3dstarstrike-remake/3dstarstrike.zip installer='install.exe' comment='Addictive space shooter game' sha256='76212e248ce6d7ae860cce32c022f5346642bacc8453bf6cb0781e06f9672e81' 
+ArcAetherAnomalies url=http://www.j-kyle.com/arc/Anomalies_Install_2008-10-31.exe sha256=9b3e937d71a58fa9e9ed475cfbf6e173b840f6262e1a5007b318e2db76faaf3e
+Arcadia url=http://www.tardis.dk/dlcount/click.php?id=41 donate=http://tardis.dk/wordpress/?page_id=981 exec=Arcadia.exe movefiles-from='$(drive_c)/Program Files/Arcadia/Arcad*/*'
+Augmentinel url=https://simonowen.com/spectrum/augmentinel/Augmentinel-15.zip comment="Another remake of the classic 'Sentinel' game from the ZX Spectrum/C64 era" sha256=5ff6173f7c1813dbd8618b824eb4120a115ce447622126445cec94cd8dd2dd2f exec=Augmentinel.exe
+BattleshipsForever url=http://www.wyrdysm.com/battleshipsforever/BFFullInstallerv90d.exe sha256='1158e35fe0129c31e407f6d5f1a751bb0166b3854ac45ca15a09618f456cbe72' 
+BlackWidow url=http://www.tardis.dk/dlcount/click.php?id=40 donate=http://tardis.dk/wordpress/?page_id=981
+CarpeUniversum url=http://www.wyrdysm.com/games/CarpeUniversumv12.zip sha256='d9e812efd2f926cda03dcf7bf4c6af26a8dc149b89449e00c14aaa69a60acfa4' comment='Hectic vertical shooter game' 
+Cybernoid3 url=https://archive.org/download/cybernoid-3-phoenix/C3.zip comment='Addictive space shooter game' vdesk='y' sha256='818d0ae3de84c8884296df02545edc4a1a551f792cb02727df271e0b940f9ae7' 
+GazerStar url=https://archive.org/download/shooter_201705/shooter.zip sha256='d40b326dc24c522180ccb7127827c986c1e66059c9ee6e801e0df9dc68f6aecc' 
+GeneRally url=http://gene-rally.com/download/latest/ comment='little racing car game' sha256='e1ffc2f37d39748f6569c8f166b7b1a7aff2d4f6d385c2b1aa5ba7c2f9feef7e' 
+Glest url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' 
+Gwan url=https://archive.org/download/GWANWin/GWANWin.zip sha256='d4937612dbb26a90371159337a805043ab16fa73c805f1a34a67c1b29fd6f946' comment='Innovative vector-style game' 
+Invader url=https://archive.org/download/749InvaderInstall/749_invader_install.exe comment='Space Invaders clone' sha256='5f9949a69a71d0ede178ef7a0b7f0289824419ecc7dc2d68453ac641d62279ec' 
+Invaders95 url=https://archive.org/download/Invaders95/Invaders95.zip sha256='e5b41178a2beba361cb091f33a0e99febdfac08f6b9f37d8d8fab14ab5f29402' installer-vdesk='Y' comment='Space invaders clone' 
+JadeEmpire url=https://archive.org/compress/JadePC sha256='3286d52835858ad3b6466722e533c39d759ce746745e1cd6ca155bf6ab2ec9ae' 
+JphJoust3 url=https://archive.org/download/joust3/joust3.zip exec='Joust3_RevengeOfTheLavaTroll.exe' sha256='25de49988f43e82c40979b05d74291967783af73349cd311d95203a0e2f43294' comment='Joust clone with more complex gameplay than the original' 
+LaserTank url=https://laser-tank.com/game/LaserTank.zip sha256='4c1361a82600ab40390d8c09bd43756b59e9c1d61d2e0e6c47a012cee785a6b3' 
+LockOn url=https://archive.org/download/lockOn/lockOn.zip exec='_lockOn__iteration002.exe' sha256='74b9bf44d8138f3bf99c7e8b3154097250a62a677d8664629b02646e0690f035' comment='Addictive space shooter game' vdesk='y' 
+OmegaRace url=http://www.tardis.dk/dlcount/click.php?id=20  donate=http://tardis.dk/wordpress/?page_id=981
+Oolite url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite-1.90_x86.exe exec=oolite.exe sha256=9bafc8389115dd551300ef0e807c7580cd57b010d31fad0af148ebaaefc08b37
+PlasmaWorm url=http://digital-eel.com/plasmaworm/files/plasmaworm_free.exe sha256='c8354e264d32b1ba8bdfd0c543cca99719707ac1135bbb56485a27f589f23be9' comment='Snake game' 
+PrivateerRemake url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
+RiftSpace url=https://archive.org/download/RiftSpace/RiftSpace.exe exec='RiftSpace.exe' sha256='c4546ae1cba46c8b1ec6072ed868f0ffc03d6168363853fe2d8e2bf65418c933' 
+Sentry url=https://archive.org/download/Sentry_1020/sentry.zip exec='Sentry.exe' comment='PC Remake of the Classic 'Sentinel' game from the ZX Spectrum/C64 era' sha256='4caeb80c3bd43e138338e2aa0a98f3d11759c5e70e3fd2939ddb0e2bda405727' 
+SimpleTetris url=https://archive.org/download/SimpleTetris/SimpleTetris.zip movefiles-from='Tetris/*' exec='tetris.exe' sha256='830d947433ed1a710dfb4c71c2eeef705ac2b4c41a86450c2ca42a502595c38a' 
+Sokoban++ url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' 
+SpaceFury url=http://www.tardis.dk/dlcount/click.php?id=18 donate=http://tardis.dk/wordpress/?page_id=981
+SpaceRawks url=http://www.tardis.dk/dlcount/click.php?id=47 donate=http://tardis.dk/wordpress/?page_id=981 comment="Asteriods clone"
+StarCastle url= http://www.tardis.dk/dlcount/click.php?id=27 donate=http://tardis.dk/wordpress/?page_id=981 
+TinyHeist url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' 
+TrackManiaForever url=http://files.trackmaniaforever.com/tmnationsforever_setup.exe exec=TmForeverLauncher.exe
+Transcendance url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' 
+VVVVVV url=http://www.flibitijibibo.com/VVVVVV-MP-10202016.zip comment='Spikes! Why are there always spikes?' sha256='39fbe76e8b7ce8bc8a37b64a7170e9e7e011c9585876bda89c04df7a472bcd91' 
+Zektor url=http://www.tardis.dk/dlcount/click.php?id=17 donate=http://tardis.dk/wordpress/?page_id=981
+NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' 
+KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
+Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
 
 

@@ -16,23 +16,28 @@ static void PrintUsage()
     printf("sommelier winecfg <name>                           run 'winecfg' for named wine application\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
     printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");
-		printf("sommelier autostart                                run programs from ~/.config/autostart\n");
+    printf("sommelier autostart                                run programs from ~/.config/autostart\n");
     printf("\n");
     printf("options are:\n");
     printf("  -d                            print debugging (there will be a lot!)\n");
     printf("  -c <config file>              specify a config (list of apps) file, rather than using the default\n");
     printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)\n");
     printf("  -install-name <name>          Name that program will be installed under and called/run under\n");
+    printf("  -install-as <name>            Name that program will be installed under and called/run under\n");
     printf("  -f                            force install even if expected sha256 doesn't match the download\n");
     printf("  -force                        force install even if expected sha256 doesn't match the download\n");
     printf("  -proxy <url>                  use a proxy for downloading installs\n");
-    printf("  -platform <platform>          platform to use when displaying lists of apps\n");
+    printf("  -platform <platform>          platform to use when installing or displaying lists of apps\n");
+    printf("  -category <category>          category to use when displaying lists of apps\n");
+    printf("  -installed                    display only installed app when displaying lists of apps\n");
     printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
     printf("  -S                            install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -system                       install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
     printf("  -hash                         hash downloads even if they have no expected hash value\n");
     printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
+    printf("  -user-agent <agent string>    set user-agent to send when communicating over http\n");
+    printf("  -ua <agent string>            set user-agent to send when communicating over http\n");
     printf("\n");
     printf("Proxy urls have the form: \n");
     printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -47,9 +52,13 @@ static void PrintUsage()
     printf("There are currently only settings for 'wine' that can be configured with the 'set' command:\n");
     printf("vdesk=y/n              run program within a virtual desktop, or not\n");
     printf("vdesk=<resolution>     run program within a virtual desktop with supplied resolution\n");
+    printf("vdesk=<resolution>     run program within a virtual desktop with supplied resolution\n");
     printf("winmanage=y/n          allow window manager to decorate and manage windows of this program, or not\n");
     printf("smoothfonts=y/n        use font anti-aliasing, or not\n");
     printf("os-version=<os>        set version of windows to emulate. Choices are: win10, win81, win8, win7, win2008, vista, win2003, winxp, win2k, nt40,  winme, win98, win95, win31\n");
+		printf("sound=y/n/sfx           DOOM only: sound on/off, or only effects (no music)\n");
+		printf("mouse=y/n               DOOM only: use mouse in-game, or not\n");
+		printf("grab=y/n                DOOM only: grab mouse, or not\n");
     printf("\n");
     printf("Environment Variables\n");
     printf("Sommelier looks for the variables SOMMELIER_CA_BUNDLE, CURL_CA_BUNDLE and SSL_VERIFY_FILE, in that order, to discover the path of the Certificate Bundle for certificate verification.\n");
@@ -95,15 +104,21 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-url")==0) Act->URL=realpath(CommandLineNext(CmdLine), NULL);
     else if (strcmp(p_Opt, "-install-name")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
+    else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED; 
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
+    else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-d")==0)
     {
         LibUsefulSetValue("HTTP:Debug","Y");
         Config->Flags |= FLAG_DEBUG;
     }
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
+
+
 }
 
 
@@ -125,21 +140,35 @@ static TAction *CommandLineParseOptions(CMDLINE *CmdLine)
 
 TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
 {
-    TAction *Act=NULL;
+    TAction *Act=NULL, *ListAct=NULL;
     const char *arg;
 
+    //list is one of the few actions that doesn't need an argument
+    //so if we were asked to list, but there are no arguments, just add
+    //a blank 'list all'. 
+    if (Type==ACT_LIST)
+    {
+        Act=ActionCreate(Type, "");
+        ListAddItem(Acts, Act);
+    }
 
     arg=CommandLineNext(CmdLine);
     while (arg)
     {
-        if (*arg=='-') ParseCommandLineOption(Act, CmdLine);
+        if (*arg == '-') 
+	{
+		ParseCommandLineOption(Act, CmdLine);
+	}
         else
         {
-            Act=ActionCreate(Type, arg);
+	    if (Type==ACT_LIST) Act->Name=CopyStr(Act->Name, arg);
+            else Act=ActionCreate(Type, arg);
             ListAddItem(Acts, Act);
         }
         arg=CommandLineNext(CmdLine);
     }
+
+
     return(Act);
 }
 
@@ -200,11 +229,11 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strcmp(arg, "version")==0) PrintVersion();
         else if (strcmp(arg, "-version")==0) PrintVersion();
         else if (strcmp(arg, "--version")==0) PrintVersion();
-        else if (strcmp(arg, "autostart")==0) 
-				{
-                Act=ActionCreate(ACT_AUTOSTART, "");
-                ListAddItem(Acts, Act);
-				}
+        else if (strcmp(arg, "autostart")==0)
+        {
+            Act=ActionCreate(ACT_AUTOSTART, "");
+            ListAddItem(Acts, Act);
+        }
         else if (strcmp(arg, "set")==0)
         {
             SettingsStr=CopyStr(SettingsStr, CommandLineNext(CmdLine));

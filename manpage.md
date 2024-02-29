@@ -13,13 +13,18 @@ SYNOPSIS
 ========
 
 ```
-sommelier list [options]                           print list of apps available for install
+sommelier platforms                                print list of supported platforms
+sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
-sommelier reconfigure <name> [<name>]              reconfigure an application by name
-sommelier download <name> [<name>]                 download installers/packages to the current directory
-sommelier run <name> [<options>]                   run an application by name
-sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
+sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier run <name>                               run an application by name
+sommelier winecfg <name>                           run 'winecfg' for named wine application
+sommelier download <name>                          just download installer/package to current directory
+sommelier set <setting string> <name> [<name>]     change settings of an installed application
+sommelier autostart                                run programs from ~/.config/autostart
+
 ```
 
 DESCRIPTION
@@ -43,12 +48,24 @@ OPTIONS
  : force install even if expected sha256 doesn't match the download
 -force
  : force install even if expected sha256 doesn't match the download
+-install-name <name>
+ : Name that program will be installed under and called/run under
+-install-as <name>
+ : Name that program will be installed under and called/run under
 -proxy <url>
  : use a proxy for downloading installs
 -platform <platform>
  : specify platform to display when listing apps, or if installing an app that has multiple platforms
+-category <category>
+ : category to use when displaying lists of apps
+-installed
+ : display only installed app when displaying lists of apps
 -k
  : keep installer or .zip file instead of deleting it after install
+-S
+ : install app system-wide under /opt, to be run as a normal native app
+-system
+ : install app system-wide under /opt, to be run as a normal native app
 -icache <dir>
  : installer cache: download installer to directory 'dir' and leave it there
 -hash
@@ -57,8 +74,12 @@ OPTIONS
  : set a value at install
 -set
  : set a value at install
-
-
+-no-xrandr
+ : don't use xrandr to reset screen resolution after running and application
+-user-agent <agent string>
+ : set user-agent to send when communicating over http
+-ua <agent string>
+ : set user-agent to send when communicating over http
 
 EXAMPLE USAGE
 =============

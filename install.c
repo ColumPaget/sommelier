@@ -9,7 +9,7 @@
 #include "find_program.h"
 #include "config.h"
 #include "native.h"
-
+#include "uninstall.h"
 
 
 
@@ -33,7 +33,7 @@ static void RunInstallers(TAction *Act)
     if (RegFlags) RegEdit(Act, RegFlags, NULL, NULL, NULL);
 
     ptr=GetVar(Act->Vars, "installer-path");
-    printf("INSTALLER PATH: %s\n", ptr);
+    printf("INSTALLER PATH: %s %d\n", ptr, Act->PlatformID);
     if (StrValid(ptr))
     {
         switch (Act->PlatformID)
@@ -144,7 +144,17 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 
 
 
+static void PostProcessSetupDirVar(TAction *Act, const char *VarName)
+{
+    const char *ptr;
 
+    ptr=ResolveVar(Act->Vars, VarName);
+    if (StrValid(ptr))
+    {
+        if (Config->Flags & FLAG_DEBUG) printf("%s: [%s]\n", VarName, ptr);
+        MakeDirPath(ptr, 0770);
+    }
+}
 
 
 static void PostProcessInstall(TAction *Act)
@@ -153,6 +163,10 @@ static void PostProcessInstall(TAction *Act)
     char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
     const char *ptr;
     int i, result;
+
+    PostProcessSetupDirVar(Act, "saves-dir");
+    PostProcessSetupDirVar(Act, "patches-dir");
+
 
     ptr=GetVar(Act->Vars, "delete");
     if (StrValid(ptr))
@@ -171,6 +185,41 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
+    ptr=GetVar(Act->Vars, "copyfiles-from");
+    if (StrValid(ptr))
+    {
+        From=SubstituteVarsInString(From, ptr, Act->Vars, 0);
+        glob(From, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            ptr=Glob.gl_pathv[i];
+            if (Config->Flags & FLAG_DEBUG) printf("COPY: [%s] [%s]\n", ptr, GetBasename(ptr));
+            FileCopy(ptr, GetBasename(ptr));
+        }
+    }
+
+    ptr=GetVar(Act->Vars, "copyfiles-to");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        ptr=GetToken(Tempstr, ":", &From, 0);
+        To=CopyStr(To, ptr);
+        To=SlashTerminateDirectoryPath(To);
+
+        if (Config->Flags & FLAG_DEBUG) printf("copyfiles-to: [%s] [%s]\n", From, To);
+        MakeDirPath(To, 0766);
+
+        glob(From, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            ptr=Glob.gl_pathv[i];
+            Tempstr=MCopyStr(Tempstr, To, GetBasename(ptr), NULL);
+            if (Config->Flags & FLAG_DEBUG) printf("COPY: [%s] [%s]\n", ptr, Tempstr);
+            FileCopy(ptr, Tempstr);
+        }
+    }
+
+
     ptr=GetVar(Act->Vars, "movefiles-from");
     if (StrValid(ptr))
     {
@@ -178,8 +227,9 @@ static void PostProcessInstall(TAction *Act)
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
-            if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
-            rename(Glob.gl_pathv[i], GetBasename(Glob.gl_pathv[i]));
+            ptr=Glob.gl_pathv[i];
+            if (Config->Flags & FLAG_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, GetBasename(ptr));
+            rename(ptr, GetBasename(ptr));
         }
     }
 
@@ -198,11 +248,13 @@ static void PostProcessInstall(TAction *Act)
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
-            Tempstr=MCopyStr(Tempstr, To, "/", GetBasename(Glob.gl_pathv[i]), NULL);
-            if (Config->Flags & FLAG_DEBUG) printf("MOVE: %s\n", Glob.gl_pathv[i]);
-            rename(Glob.gl_pathv[i], Tempstr);
+            ptr=Glob.gl_pathv[i];
+            Tempstr=MCopyStr(Tempstr, To, GetBasename(ptr), NULL);
+            if (Config->Flags & FLAG_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, Tempstr);
+            rename(ptr, Tempstr);
         }
     }
+
 
     ptr=GetVar(Act->Vars, "rename");
     if (StrValid(ptr))
@@ -215,6 +267,20 @@ static void PostProcessInstall(TAction *Act)
 
         if (Config->Flags & FLAG_DEBUG) printf("RENAME: '%s' -> '%s'\n", From, To);
         result=rename(From, To);
+    }
+
+    ptr=GetVar(Act->Vars, "link");
+    if (StrValid(ptr))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        ptr=GetToken(Tempstr, ":", &Value, GETTOKEN_QUOTES);
+        From=UnQuoteStr(From, Value);
+        To=UnQuoteStr(To, ptr);
+
+        if (Config->Flags & FLAG_DEBUG) printf("LINK: '%s' -> '%s'\n", From, To);
+        UninstallDir(Act, To);
+        unlink(To);
+        result=symlink(From, To);
     }
 
 

@@ -285,6 +285,7 @@ unsigned long FileCopyWithProgress(const char *SrcPath, const char *DestPath, DA
 {
     STREAM *Src;
     unsigned long result;
+    struct stat FStat;
 
     Src=STREAMOpen(SrcPath,"r");
     if (! Src) return(0);
@@ -292,6 +293,8 @@ unsigned long FileCopyWithProgress(const char *SrcPath, const char *DestPath, DA
     if (Callback) STREAMAddProgressCallback(Src,Callback);
     result=STREAMCopy(Src, DestPath);
     STREAMClose(Src);
+    if (stat(SrcPath, &FStat)==0) chmod(DestPath, FStat.st_mode);
+
     return(result);
 }
 
@@ -488,7 +491,7 @@ int FileSystemUnMountFlagsDepth(const char *MountPoint, int UnmountFlags, int Ex
             glob(Path, 0, 0, &Glob);
             for (i=0; i < Glob.gl_pathc; i++)
             {
-                if (stat(Glob.gl_pathv[i],&FStat)==0)
+                if (lstat(Glob.gl_pathv[i],&FStat)==0)
                 {
                     if (S_ISDIR(FStat.st_mode))
                     {

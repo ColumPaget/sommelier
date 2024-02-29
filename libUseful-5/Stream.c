@@ -42,7 +42,7 @@ typedef struct
 #include <poll.h>
 #include <math.h>
 
-static void *SelectAddFD(TSelectSet *Set, int type, int fd)
+static void SelectAddFD(TSelectSet *Set, int type, int fd)
 {
     struct pollfd *items;
 
@@ -287,6 +287,7 @@ void STREAMSetFlushType(STREAM *S, int Type, int StartPoint, int BlockSize)
 void STREAMReAllocBuffer(STREAM *S, int size, int Flags)
 {
     char *ibuf=NULL, *obuf=NULL;
+    int RW;
 
     if (S->Flags & SF_MMAP) return;
 
@@ -298,15 +299,23 @@ void STREAMReAllocBuffer(STREAM *S, int size, int Flags)
         S->OutputBuff=NULL;
     }
 
+
+    // extract the 'readonly' and 'writeonly' flags
+    RW=S->Flags & (SF_WRONLY | SF_RDONLY);
+
+    //for HTTP 'readonly' and 'writeonly' have a different meaning, they mean
+    //'get' and 'post'. HTTP is always bidirectional
+    if (S->Type == STREAM_TYPE_HTTP) RW=0;
+
     if (S->Flags & SF_SECURE)
     {
-        if (! (S->Flags & SF_WRONLY)) SecureRealloc(&S->InputBuff, S->BuffSize, size, SMEM_SECURE);
-        if (! (S->Flags & SF_RDONLY)) SecureRealloc(&S->OutputBuff, S->BuffSize, size, SMEM_SECURE);
+        if (! (RW & SF_WRONLY)) SecureRealloc(&S->InputBuff, S->BuffSize, size, SMEM_SECURE);
+        if (! (RW & SF_RDONLY)) SecureRealloc(&S->OutputBuff, S->BuffSize, size, SMEM_SECURE);
     }
     else
     {
-        if (! (S->Flags & SF_WRONLY)) S->InputBuff =(char *) realloc(S->InputBuff,size);
-        if (! (S->Flags & SF_RDONLY)) S->OutputBuff=(char *) realloc(S->OutputBuff,size);
+        if (! (RW & SF_WRONLY)) S->InputBuff =(char *) realloc(S->InputBuff,size);
+        if (! (RW & SF_RDONLY)) S->OutputBuff=(char *) realloc(S->OutputBuff,size);
     }
 
     if (ibuf)
@@ -340,7 +349,7 @@ int STREAMCheckForBytes(STREAM *S)
     if (S->InEnd > S->InStart) return(TRUE);
     if (S->in_fd==-1) return(FALSE);
 
-    if (S->Flags & SF_FOLLOW)
+    if ((S->Type == STREAM_TYPE_FILE) && (S->Flags & SF_FOLLOW))
     {
         while (1)
         {
@@ -560,6 +569,7 @@ static int STREAMInternalPushBytes(STREAM *S, const char *Data, int DataLen)
         {
         case STREAM_TYPE_WS:
         case STREAM_TYPE_WSS:
+        case STREAM_TYPE_WS_SERVICE:
             result=WebSocketSendBytes(S, Data+count, DataLen-count);
             break;
 
@@ -745,8 +755,8 @@ STREAM *STREAMFromDualFD(int in_fd, int out_fd)
 {
     STREAM *Stream;
 
-    if (in_fd==-1) return(NULL);
-    if (out_fd==-1) return(NULL);
+    if ((in_fd==-1) && (out_fd==-1)) return(NULL);
+    //if (out_fd==-1) return(NULL);
 
     Stream=STREAMCreate();
     Stream->in_fd=in_fd;
@@ -790,6 +800,7 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
 
     if (Flags & STREAM_APPEND) Mode |=O_APPEND;
     if (Flags & SF_CREATE) Mode |=O_CREAT;
+    if (Flags & SF_EXCL) Mode |=O_EXCL;
 
     if (CompareStr(Path,"-")==0)
     {
@@ -902,6 +913,7 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
         if (Flags & STREAM_APPEND) lseek(fd,0,SEEK_END);
     }
 
+    STREAMSetFlags(Stream, Flags, 0);
 
     Destroy(Tempstr);
     Destroy(NewPath);
@@ -911,7 +923,9 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
 
 
 
-int STREAMParseConfig(const char *Config)
+
+
+static int STREAMParseConfig(const char *Config)
 {
     const char *ptr;
     int Flags=SF_RDWR;
@@ -924,6 +938,7 @@ int STREAMParseConfig(const char *Config)
         {
             //any space indicates end of open flags
             if (isspace(*ptr)) break;
+
             switch (*ptr)
             {
             case 'c':
@@ -976,8 +991,11 @@ int STREAMParseConfig(const char *Config)
             case 't':
                 Flags |= SF_TMPNAME;
                 break;
-            case 'T':
-                Flags |= SF_TLS_AUTO;
+            case 'x':
+		//for local files this is 'exclusive open' with O_EXCL. 
+		//for ssh connections this is the 'execute' flag that indicates
+		//a command is to be run
+                Flags |= SF_EXCL; 
                 break;
             case 'z':
                 Flags |= SF_COMPRESSED;
@@ -1017,6 +1035,8 @@ static const char *STREAMExtractMasterURL(const char *URL)
 }
 
 
+#define STREAMFileOpenWithConfig(url, config) STREAMFileOpen((url), STREAMParseConfig(config))
+
 
 //URL can be a file path or a number of different network/file URL types
 STREAM *STREAMOpen(const char *URL, const char *Config)
@@ -1024,20 +1044,18 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     STREAM *S=NULL;
     char *Proto=NULL, *Host=NULL, *Token=NULL, *User=NULL, *Pass=NULL, *Path=NULL, *Args=NULL;
     const char *ptr;
-    int Port=0, Flags=0;
+    int Port=0;
 
     Proto=CopyStr(Proto,"");
     ptr=STREAMExtractMasterURL(URL);
     ParseURL(ptr, &Proto, &Host, &Token, &User, &Pass, &Path, &Args);
     if (StrValid(Token)) Port=strtoul(Token,NULL,10);
 
-    Flags=STREAMParseConfig(Config);
-
     switch (*Proto)
     {
     case 'c':
         if (strcasecmp(Proto,"cmd")==0) S=STREAMSpawnCommand(URL+4, Config);
-        else S=STREAMFileOpen(URL, Flags);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
     case 'f':
@@ -1050,35 +1068,27 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
             //from the current directory
             if (*ptr=='/') ptr++;
             if (*ptr=='/') ptr++;
-            S=STREAMFileOpen(ptr, Flags);
+            S=STREAMFileOpenWithConfig(URL, Config);
         }
-        else S=STREAMFileOpen(URL, Flags);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
     case 'g':
         if (strcasecmp(Proto, "gemini")==0) S=GeminiOpen(URL, Config);
-        else S=STREAMFileOpen(URL, Flags);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
     case 'h':
         if (
             (strcasecmp(Proto,"http")==0) ||
             (strcasecmp(Proto,"https")==0)
-        )
-        {
-            S=HTTPWithConfig(URL, Config);
-            //the 'write only' and 'read only' flags normally result in one or another
-            //buffer not being allocated (as it's not expected to be needed). However
-            //with HTTP 'write' means 'POST', and we still need both read and write
-            //buffers to read from and to the server, so we must unset these flags
-            Flags &= ~(SF_WRONLY | SF_RDONLY);
-        }
-        else S=STREAMFileOpen(URL, Flags);
+        ) S=HTTPWithConfig(URL, Config);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
     case 'm':
-        if (strcasecmp(Proto,"mmap")==0) S=STREAMFileOpen(URL+5, Flags | SF_MMAP);
-        else S=STREAMFileOpen(URL, Flags);
+        if (strcasecmp(Proto,"mmap")==0) S=STREAMFileOpen(URL+5, STREAMParseConfig(Config) | SF_MMAP);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
     case 't':
@@ -1087,7 +1097,7 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
         if ( (CompareStr(URL,"-")==0) || (strcasecmp(URL,"stdio:")==0) ) S=STREAMFromDualFD(dup(0), dup(1));
         else if (strcasecmp(URL,"stdin:")==0) S=STREAMFromFD(dup(0));
         else if (strcasecmp(URL,"stdout:")==0) S=STREAMFromFD(dup(1));
-        else if (strcasecmp(Proto,"ssh")==0) S=SSHOpen(Host, Port, User, Pass, Path, Flags);
+        else if (strcasecmp(Proto,"ssh")==0) S=SSHOpen(Host, Port, User, Pass, Path, STREAMParseConfig(Config));
         else if (strcasecmp(Proto,"tty")==0)
         {
             S=STREAMFromFD(TTYConfigOpen(URL+4, Config));
@@ -1113,25 +1123,23 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     case 'w':
         if (strcasecmp(Proto,"wss")==0) S=WebSocketOpen(URL, Config);
         else if (strcasecmp(Proto,"ws")==0) S=WebSocketOpen(URL, Config);
-        else S=STREAMFileOpen(URL, Flags);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
 
 
     default:
         if (CompareStr(URL,"-")==0) S=STREAMFromDualFD(dup(0),dup(1));
-        else S=STREAMFileOpen(URL, Flags);
+        else S=STREAMFileOpenWithConfig(URL, Config);
         break;
     }
 
     if (S)
     {
-        S->Flags |= Flags;
         if (S->Flags & SF_SECURE) STREAMResizeBuffer(S, S->BuffSize);
-        STREAMSetFlags(S, S->Flags, 0);
-        if (Flags & SF_COMPRESSED)
+        if (S->Flags & SF_COMPRESSED)
         {
-            if (Flags & SF_RDONLY) STREAMAddStandardDataProcessor(S, "decompress", "gzip", "");
-            else if (Flags & SF_WRONLY) STREAMAddStandardDataProcessor(S, "compress", "gzip", "");
+            if (S->Flags & SF_RDONLY) STREAMAddStandardDataProcessor(S, "decompress", "gzip", "");
+            else if (S->Flags & SF_WRONLY) STREAMAddStandardDataProcessor(S, "compress", "gzip", "");
         }
 
         switch (S->Type)
@@ -1143,6 +1151,8 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
         case STREAM_TYPE_CHUNKED_HTTP:
         case STREAM_TYPE_WS:
         case STREAM_TYPE_WSS:
+        case STREAM_TYPE_WS_SERVICE:
+
             ptr=LibUsefulGetValue("Net:Timeout");
             if (StrValid(ptr)) STREAMSetTimeout(S, atoi(ptr));
             break;
@@ -1475,6 +1485,7 @@ int STREAMReadCharsToBuffer(STREAM *S)
         {
         case STREAM_TYPE_WS:
         case STREAM_TYPE_WSS:
+        case STREAM_TYPE_WS_SERVICE:
             bytes_read=WebSocketReadBytes(S, tmpBuff, val);
             break;
 
@@ -1506,7 +1517,7 @@ int STREAMReadCharsToBuffer(STREAM *S)
         //there's no bytes in tmpBuff in this situation
         bytes_read=STREAMReadThroughProcessors(S, NULL, -1);
         if (bytes_read > 0) read_result=bytes_read;
-	else read_result=STREAM_CLOSED;
+        else read_result=STREAM_CLOSED;
     }
 
 
@@ -2313,6 +2324,23 @@ int STREAMFind(STREAM *S, const char *Item, const char *Delimiter, char **RetStr
 }
 
 
+static int UseKernelSendFile(STREAM *In, STREAM *Out, int Flags)
+{
+if (! (Flags & SENDFILE_KERNEL)) return(FALSE);
+switch (In->Type)
+{
+case STREAM_TYPE_FILE:
+case STREAM_TYPE_PIPE:
+break;
+
+default: return(FALSE); break;
+}
+
+if  (ListSize(In->ProcessingModules) > 0) return(FALSE);
+if  (ListSize(Out->ProcessingModules) > 0) return(FALSE);
+
+return(TRUE);
+}
 
 
 unsigned long STREAMSendFile(STREAM *In, STREAM *Out, unsigned long Max, int Flags)
@@ -2338,13 +2366,7 @@ unsigned long STREAMSendFile(STREAM *In, STREAM *Out, unsigned long Max, int Fla
 //if we are not using ssl and not using processor modules, we can use
 //kernel-level copy!
 
-    if (
-        (Flags & SENDFILE_KERNEL) &&
-        (! (In->State & SS_SSL)) &&
-        (! (Out->State & SS_SSL)) &&
-        (ListSize(In->ProcessingModules)==0) &&
-        (ListSize(Out->ProcessingModules)==0)
-    )
+    if (UseKernelSendFile(In, Out, Flags))
     {
         UseSendFile=TRUE;
         STREAMFlush(Out);
@@ -2451,12 +2473,12 @@ unsigned long STREAMCopy(STREAM *Src, const char *DestPath)
 
 int STREAMCommit(STREAM *S)
 {
-    void *Item;
+    HTTPInfoStruct *Item;
 
-    Item=STREAMGetItem(S, "HTTP:InfoStruct");
-    if (Item)
+    if (! (S->Flags & SF_RDONLY) )
     {
-        if (HTTPTransact((HTTPInfoStruct *) Item) != NULL) return(TRUE);
+        Item=(HTTPInfoStruct *) STREAMGetItem(S, "HTTP:InfoStruct");
+        if ( Item && (HTTPTransact(Item) !=NULL) ) return(TRUE);
     }
 
     //for streams where we are talking to someting on pipes

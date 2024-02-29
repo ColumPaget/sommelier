@@ -134,10 +134,16 @@ pid_t RunNormal(TAction *Act)
     pid_t pid=-1;
 
 
+    ptr=GetVar(Act->Vars, "saves-dir");
+    if (StrValid(ptr))
+    {
+        MakeDirPath(ptr, 0700);
+    }
+
     ptr=GetVar(Act->Vars, "working-dir");
     if (StrValid(ptr))
     {
-				printf("switching to working directory: %s\n", ptr);
+        printf("switching to working directory: %s\n", ptr);
         if (chdir(ptr) !=0) perror("ERROR switching to directory: ");
     }
 

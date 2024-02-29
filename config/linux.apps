@@ -1,6 +1,6 @@
 
 * category='Graphics;3DGraphics'
-Ayam platform=linux32 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux32.tar.gz/download exec=ayam comment='3D Modeller' download-type='tar.gz'
+Ayam platform=linux32 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux32.tar.gz/download exec=ayam comment='3D Modeller' download-type='tar.gz' sha256=e40f35dcb65d5293926431feb626306b749cf0789d5584071fd4cd196ffddf1f
 Ayam platform=linux64 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux64.tar.gz/download exec=ayam comment='3D Modeller' download-type='tar.gz'
 
 
@@ -19,11 +19,11 @@ Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.
 Calibre platform=linux64 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-x86_64.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='cfc01fd4f55b14f5facf43fee57c89557c84bc718b81a43dce10c50eaacee5cc' 
 
 * category='Office' locale='$(lang)-$(country)'
-FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz
+FreeOffice platform=linux32 url=https://www.softmaker.net/down/softmaker-freeoffice-982-i386.tgz sha256=c7282fa368c3c520c67bb976dc05bf23614035daadaaf38dc785f2fc0a99a386
 FreeOffice platform=linux64 url=https://www.softmaker.net/down/softmaker-freeoffice-982-amd64.tgz
 
 * category='Calculator;Office'
-SpeedCrunch platform=linux32 url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-linux32.tar.bz2" download-type='tar.bz2' exec=speedcrunch
+SpeedCrunch platform=linux32 url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-linux32.tar.bz2" download-type='tar.bz2' exec=speedcrunch sha256=a0c2f275a8bf37d7c75657d236bc247df2ca1f2d58e44a2d31a3bfe7fe0cac5f
 SpeedCrunch platform=linux64 url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-linux64.tar.bz2" download-type='tar.bz2' exec=speedcrunch
 Qalculate platform=linux64 url="https://github.com/Qalculate/qalculate-gtk/releases/download/v4.6.1/qalculate-4.6.1-x86_64.tar.xz" exec=qalculate download-type='tar.xz' 
 
@@ -48,12 +48,12 @@ TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download
 TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='c0f7417794dfa463a2aec9b14e50c8de0eadc1b393813ed6fd0389f143896bc3' 
 
 *category='Compression;Utilities'
-7zip platform=linux32 url=https://www.7-zip.org/a/7z2102-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
-7zip platform=linux64 url=https://www.7-zip.org/a/7z2102-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
+7zip platform=linux32 url=https://7-zip.org/a/7z2400-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz sha256=1125a624244d0e8c9dca99a608823b9f000b1068f35e11b471d76c2190cd7687
+7zip platform=linux64 url=https://7-zip.org/a/7z2400-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 
 *category='Network;Utilities;Nettools'
-OoklaSpeedtest platform=linux32 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-i386.tgz download-type=tar.gz exec=speedtest
-OoklaSpeedtest platform=linux64 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz download-type=tar.gz exec=speedtest
+OoklaSpeedtest platform=linux32 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-i386.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" sha256=9ff7e18dbae7ee0e03c66108445a2fb6ceea6c86f66482e1392f55881b772fe8
+OoklaSpeedtest platform=linux64 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" 
 
 * category=System;Terminals
 KittyTerminal platform=linux32 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-i686.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
@@ -85,7 +85,7 @@ FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
 DropBox platform=linux32 url=https://www.dropbox.com/download?plat=lnx.x86 download-type=tar.gz movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
 DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 download-type=tar.gz movefiles-from=.dropbox-dist/* exec=dropbox warn="This app requires you to use an ext4 filesystem. God knows what it's doing."
-RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone
+RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone sha256=bb8b44e0fab088c4f5e40878b4213ce15fa474763f1355f597b0a6ad2aa96c6d
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
 * category='IRC;Chat;Internet;Network'

@@ -31,6 +31,7 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 #include "StringList.h"
 #include "Expect.h"
 #include "List.h"
+#include "Array.h"
 #include "Stream.h"
 #include "Inet.h"
 #include "base64.h"
@@ -39,6 +40,8 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 #include "DataProcessing.h"
 #include "Encodings.h"
 #include "Hash.h"
+#include "HMAC.h"
+#include "OTP.h"
 #include "Compression.h"
 #include "Time.h"
 #include "Vars.h"
@@ -66,5 +69,8 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 #include "SysInfo.h"
 #include "Users.h"
 #include "UnitsOfMeasure.h"
+#include "HttpServer.h"
+#include "WebSocket.h"
+#include "PasswordFile.h"
 
 #endif

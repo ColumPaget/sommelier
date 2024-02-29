@@ -45,6 +45,7 @@ static char *FindProgramGoFishing(char *RetStr, TAction *Act)
 
     Curr=NULL;
     ptr=GetVar(Act->Vars, "exec");
+
     if (StrValid(ptr)) Curr=ListFindNamedItem(Exes, ptr);
     if (! Curr) Curr=ListGetNext(Exes);
 

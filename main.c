@@ -117,15 +117,14 @@ int main(int argc, char *argv[])
 {
     ListNode *Acts, *Curr;
     TAction *Act;
-		char *Tempstr=NULL;
+    char *Tempstr=NULL;
 
-//we will not need root permissions unless we sandbox, and we'll reclaim them as needed then
-    if (geteuid()==0) seteuid(getuid());
-
-
-//LibUsefulSetValue("HTTP:UserAgent","Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko");
-    LibUsefulSetValue("HTTP:UserAgent","Wget/1.19.2");
-//LibUsefulSetValue("HTTP:Debug", "Y");
+    //if we have an effective uid of 0 (root) then try setting the effective uid
+    //back to our real uid. We shouldn't need root permissions in this app.
+    if (geteuid()==0)
+    {
+        seteuid(getuid());
+    }
 
     ConfigInit();
 
@@ -137,7 +136,9 @@ int main(int argc, char *argv[])
     while (Curr)
     {
         Act=(TAction *) Curr->Item;
-
+				Tempstr=CopyStr(Tempstr, PlatformUnAlias(Act->Platform));
+				Act->Platform=CopyStr(Act->Platform, Tempstr);
+				
         if (Act)
         {
             switch (Act->Type)
@@ -166,11 +167,10 @@ int main(int argc, char *argv[])
                 RunApplicationFromDesktopFile(Act);
                 break;
 
-						case ACT_AUTOSTART:
-								Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
-printf("ATS: %s\n", Tempstr);
-								DesktopFileDirectoryRunAll(Tempstr);
-								break;
+            case ACT_AUTOSTART:
+                Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
+                DesktopFileDirectoryRunAll(Tempstr);
+                break;
 
             case ACT_REBUILD_HASHES:
                 RebuildAppList(Act);
@@ -201,7 +201,7 @@ printf("ATS: %s\n", Tempstr);
 
         Curr=ListGetNext(Curr);
     }
-		Destroy(Tempstr);
+    Destroy(Tempstr);
 
     return(0);
 }

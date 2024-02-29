@@ -1,5 +1,6 @@
 #include "desktopfiles.h"
 #include "platforms.h"
+#include "run-application.h"
 #include "config.h"
 
 
@@ -100,7 +101,7 @@ int DesktopFileRead(const char *Path, TAction *Act)
         }
         STREAMClose(S);
     }
-    else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Tempstr);
+    else fprintf(stderr, "ERROR: Failed to open .desktop file '%s' for application\n", Path);
 
 //if we didn't find a 'SommelierExec' entry then we must be dealing with
 //a setup that doesn't use sommelier to run the app. Thus the 'Exec' entry
@@ -171,14 +172,15 @@ static void DesktopFileConfigureNative(TAction *Act)
 {
     const char *ptr;
     char *Tempstr=NULL;
-    ptr=GetVar(Act->Vars, "exec");
 
+    ptr=GetVar(Act->Vars, "exec");
     if (StrValid(ptr))
     {
         Tempstr=SubstituteVarsInString(Tempstr, GetVar(Act->Vars, "ld_preload"), Act->Vars, 0);
         SetVar(Act->Vars, "ld_preload", Tempstr);
-		
-        Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
+
+        if (GetBoolVar(Act->Vars, "no-exec-arg")) Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars)", Act->Vars, 0);
+        else Tempstr=SubstituteVarsInString(Tempstr, "LD_PRELOAD=$(ld_preload) $(platform-vars) $(exec-vars) \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
         StripLeadingWhitespace(Tempstr);
         StripTrailingWhitespace(Tempstr);
 
@@ -208,7 +210,7 @@ static void DesktopFileConfigureWine(TAction *Act)
     //for windows we must override the found exec-path to be in windows format
     Tempstr=SubstituteVarsInString(Tempstr, "C:\\$(exec-dir)\\$(exec)", Act->Vars, 0);
     strrep(Tempstr, '/', '\\');
-	Quoted=QuoteCharsInStr(Quoted, Tempstr, "\"");
+    Quoted=QuoteCharsInStr(Quoted, Tempstr, "\"");
     SetVar(Act->Vars,"exec-path", Quoted);
 
     if (strcmp(Act->Platform, "win64")==0) Tempstr=SubstituteVarsInString(Tempstr, "WINEARCH=win64 WINEPREFIX=$(prefix) wine \"$(exec-path)\" $(exec-args)", Act->Vars, 0);
@@ -227,9 +229,17 @@ static void DesktopFileConfigureWine(TAction *Act)
 static void DesktopFileConfigureEmulator(TAction *Act)
 {
     char *EmuInvoke=NULL, *Tempstr=NULL;
+    const char *ptr;
 
 
     EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
+    if (GetBoolVar(Act->Vars, "no-exec-arg"))
+    {
+        SetVar(Act->Vars, "exec", "");
+        SetVar(Act->Vars, "exec-path", "");
+        SetVar(Act->Vars, "exec-args", "");
+    }
+
     Tempstr=SubstituteVarsInString(Tempstr, EmuInvoke, Act->Vars, 0);
     StripLeadingWhitespace(Tempstr);
     StripTrailingWhitespace(Tempstr);

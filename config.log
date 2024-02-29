@@ -68,6 +68,7 @@ PATH: /opt/tcl-8.6.10/bin
 PATH: /opt/tiffprogs-4.0.8/bin
 PATH: /opt/wine-6.0/bin
 PATH: /opt/xboinc_client-7.14.2/bin
+PATH: /opt/emulators/bin
 
 
 ## ----------- ##

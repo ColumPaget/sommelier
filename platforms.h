@@ -37,6 +37,7 @@ typedef struct
 {
     int Flags;
     int ID;
+		char *Name;
     char *Emulators;
     char *InstallMessage;
     char *WorkingDir;
@@ -48,6 +49,7 @@ typedef struct
 
 const char *PlatformDefault();
 TPlatform *PlatformFind(const char *Name);
+const char *PlatformUnAlias(const char *Alias);
 int PlatformType(const char *Platform);
 int PlatformBitWidth(const char *Platform);
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info);

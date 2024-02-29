@@ -12,7 +12,7 @@
 #include <glob.h>
 
 
-#define VERSION "8.33"
+#define VERSION "9.0"
 
 
 #define INSTALL_RUN 0
@@ -37,6 +37,7 @@
 #define FLAG_FORCE 2
 #define FLAG_DEPENDANCY 4
 #define FLAG_SYSTEM_INSTALL 8
+#define FLAG_INSTALLED 16
 #define FLAG_NO_XRANDR 32
 #define FLAG_SANDBOX 64
 #define FLAG_NET 128
@@ -68,11 +69,12 @@ typedef struct
     char *Args;
     char *Platform;
     char *OSVersion;
-		char *Parent;
+    char *Parent;
     ListNode *Vars;
 } TAction;
 
 
+const char *ResolveVar(ListNode *Vars, const char *VarName);
 char *FormatPath(char *RetStr, const char *Fmt);
 char *URLBasename(char *RetStr, const char *URL);
 int InList(const char *Item, const char *List);
@@ -88,5 +90,7 @@ int IdentifyFileType(const char *Path, int ForcedFileType);
 //to suppress a lot of crap that they might print out.
 void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig);
 
+int ParseBool(const char *Value);
+int GetBoolVar(ListNode *Vars, const char *Name);
 
 #endif

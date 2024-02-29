@@ -322,6 +322,10 @@ void TerminalInternalConfig(const char *Config, int *ForeColor, int *BackColor, 
             if (strcasecmp(Name,"mouse")==0) *Flags=TERM_MOUSE;
             break;
 
+	case 'n':
+            if (strcasecmp(Name,"nocolor")==0) *Flags=TERM_NOCOLOR;
+	    break;
+
         case 'r':
         case 'R':
             if (strcasecmp(Name, "rawkeys") ==0) *Flags |= TERM_RAWKEYS;
@@ -330,6 +334,7 @@ void TerminalInternalConfig(const char *Config, int *ForeColor, int *BackColor, 
         case 's':
         case 'S':
             if (strcasecmp(Name,"stars")==0) *Flags |= TERM_SHOWSTARS;
+            if (strcasecmp(Name,"stars+1")==0) *Flags |= TERM_SHOWTEXTSTARS;
             if (strcasecmp(Name,"saveattribs")==0) *Flags |= TERM_SAVEATTRIBS;
             if (strcasecmp(Name,"save")==0) *Flags |= TERM_SAVEATTRIBS;
             break;
@@ -651,7 +656,8 @@ const char *TerminalFormatSubStr(const char *Str, char **RetStr, STREAM *Term)
                 Fg=0;
                 Bg=0;
                 ptr=TerminalParseColor(ptr, &Fg, &Bg);
-                *RetStr=TerminalCommandStr(*RetStr, TERM_COLOR, Fg, Bg);
+		//if we have a Term object, then TERM_STREAM_NOCOLOR must not be set
+                if ((! Term) || (! (Term->Flags & TERM_STREAM_NOCOLOR))) *RetStr=TerminalCommandStr(*RetStr, TERM_COLOR, Fg, Bg);
                 break;
 
             case 'e':
@@ -931,6 +937,7 @@ int TerminalTextConfig(const char *Config)
     if (strcasecmp(Config, "hidetext")==0) return(TERM_HIDETEXT);
     if (strcasecmp(Config, "stars")==0) return(TERM_SHOWSTARS);
     if (strcasecmp(Config, "stars+1")==0) return(TERM_SHOWTEXTSTARS);
+    if (strcasecmp(Config, "textstars")==0) return(TERM_SHOWTEXTSTARS);
     return(0);
 }
 
@@ -1057,7 +1064,9 @@ int TerminalInit(STREAM *S, int Flags)
     STREAMSetValue(S, "Terminal:top", "0");
 
 
+    if (Flags & TERM_NOCOLOR) S->Flags |= TERM_STREAM_NOCOLOR;
     if (Flags & TERM_HIDECURSOR) TerminalCursorHide(S);
+
     if (isatty(S->in_fd))
     {
         if (Flags & TERM_SAVEATTRIBS) ttyflags=TTYFLAG_SAVE;

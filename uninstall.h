@@ -3,6 +3,7 @@
 
 #include "common.h"
 
+int UninstallDir(TAction *Act, const char *Dir);
 void UnInstallApp(TAction *App);
 
 #endif

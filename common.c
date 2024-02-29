@@ -4,6 +4,18 @@
 
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
 
+const char *ResolveVar(ListNode *Vars, const char *VarName)
+{
+    char *Tempstr=NULL;
+    const char *ptr;
+
+    ptr=GetVar(Vars, VarName);
+    Tempstr=SubstituteVarsInString(Tempstr, ptr, Vars, 0);
+    SetVar(Vars, VarName, Tempstr);
+
+    Destroy(Tempstr);
+    return(GetVar(Vars, VarName));
+}
 
 char *FormatPath(char *RetStr, const char *Fmt)
 {
@@ -41,7 +53,7 @@ int InList(const char *Item, const char *List)
     const char *ptr;
 
     if (! StrValid(Item)) return(FALSE);
-    ptr=GetToken(List, ",", &Match, GETTOKEN_QUOTES);
+    ptr=GetToken(List, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
     while (ptr)
     {
         strlwr(Match);
@@ -65,7 +77,7 @@ int InList(const char *Item, const char *List)
             }
         }
 
-        ptr=GetToken(ptr, ",", &Match, GETTOKEN_QUOTES);
+    ptr=GetToken(ptr, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
     }
 
     Destroy(Match);
@@ -87,6 +99,7 @@ TAction *ActionCreate(int Type, const char *Name)
     if (StrValid(Name)) SetVar(Act->Vars, "name", Name);
 
     SetVar(Act->Vars, "prefix_template", DEFAULT_WINEPREFIX);
+    SetVar(Act->Vars, "user", LookupUserName(getuid()));
     SetVar(Act->Vars, "homedir", GetCurrUserHomeDir());
     return(Act);
 }
@@ -172,4 +185,18 @@ void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig)
     while (wait(0) > 1);
 }
 
+int ParseBool(const char *Value)
+{
+    if (! StrValid(Value)) return(FALSE);
+    if (atoi(Value) > 0) return(TRUE);
+    if (*Value=='y') return(TRUE);
+    if (*Value=='Y') return(TRUE);
+    if (strcasecmp(Value, "true")==0) return(TRUE);
 
+    return(FALSE);
+}
+
+int GetBoolVar(ListNode *Vars, const char *Name)
+{
+    return(ParseBool(GetVar(Vars, Name)));
+}

@@ -7,3 +7,8 @@ PapiCommandTennis url=https://github.com/retrobrews/md-games/raw/master/papicomm
 OldTowers url=https://github.com/retrobrews/md-games/raw/master/oldtowers.bin sha256='39cd650d9225785e9c93d3beb8ba95334eb16077ab930cbfe5f75d9999991576' 
 IKPlusDeluxe url=https://github.com/retrobrews/md-games/raw/master/ikplusdeluxe.bin sha256='abb5c9acd77d4f169523c0f27b9585b47a10079865a439f6e17cbdb39e4d4ed1' 
 OmegaBlast url=https://drive.google.com/uc?export=download&id=1NEB8T38ZY1PDqEBcAB3g-cwjWZaMhLuV sha256='87516e710a5e43ea6f70f09671aea01e97f69d93ad6b88abb310514d81deed67' 
+
+
+* platform=megadrive category=Chess;Game;Games/MegaDrive install-type=executable
+PadisChess url="https://archive.org/download/Chess_Russia_En_Unl.md/Chess_Russia_En_Unl.md"
+ChineseChess url="https://archive.org/download/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md"

@@ -111,10 +111,12 @@ Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
-* category='Game;GOG'
-Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE"
+
+* category='Game;GOG' 
+Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" no-exec-arg="y"
 AloneInTheDark platform=gog:windos exec="INDARK.EXE" 
-AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE"
+AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE" no-exec-arg="y"
+ArchimedeanDynasty platform=gog:windos exe="AD2.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/DAT/SAVE/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/DAT/SAVE" commands="mount c .; imgmount d game.ins -t iso; c:; AD2.EXE" no-exec-arg="y"
 BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
 BattleIsle platform=gog:windos exec="BI.EXE"
@@ -125,42 +127,44 @@ Castles  platform=gog:windos exec="CASTLES.BAT"
 ChallengeOfTheFiveRealms  platform=gog:windos exec="C5.COM"
 ChallengeOfTheFiveRealms  platform=gog:lindos exec="C5.COM"
 ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=Chess;BoardGame;Game
-ChineseChess platform=gog:windos exec="CHESSII.EXE" sha256="8208f937c87b9de899c7994b44645770ef5c3d0e963efab5a6e799eb9e3298ab" category=Chess;BoardGame;Game
+ChineseChess platform=gog:windos exec="CHESSII.EXE" category=Chess;BoardGame;Game
 Darklands platform=gog:lindos exec="DARKLAND.EXE"
 Darklands platform=gog:windos exec="DARKLAND.EXE"
-DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE"
-DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold
-EarthwormJim platform=gog:windos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"
-EarthwormJim platform=gog:lindos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"
-EarthwormJim2 platform=gog:windos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE"
-EarthwormJim2 platform=gog:lindos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE"
-ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)"
-ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' working-dir="$(exec-dir)"
-ElderScrollsMorrowind platform=gog:windos
+DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
+DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
+EarthwormJim platform=gog:windos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"  no-exec-arg="y" 
+EarthwormJim platform=gog:lindos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE" no-exec-arg="y" 
+EarthwormJim2 platform=gog:windos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
+EarthwormJim2 platform=gog:lindos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
+ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y" 
+ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)"
 EpicPinball platform=gog:windos exec="PINBALL.EXE"
 EpicPinball platform=gog:lindos exec="PINBALL.EXE"
-FantasyGeneral platform=gog:windos exec="FG.BAT" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c: fg.bat" 
-FantasyGeneral platform=gog:lindos exec="FG.BAT" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c: fg.bat" 
-HeroesOfMightAndMagic platform=gog:windos exec=HEROES.EXE commands='mount c .; imgmount d homm1.gog -t iso; c: ; loadfix -4 heroes.exe'
-HeroesOfMightAndMagic2 platform=gog:windos exec=HEROES2.EXE commands='mount c .; imgmount d homm2.gog -t iso; c: ; heroes2.exe'
+FantasyGeneral platform=gog:windos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" patches-dir="$(sommelier_root)/patches/FantasyGeneral/" copyfiles-to="$(patches-dir)/*:$(exec-dir)" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
+FantasyGeneral platform=gog:lindos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
+HeroesOfMightAndMagic platform=gog:windos exec=HEROES.EXE saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/GAMES/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/GAMES" commands='mount c .; imgmount d homm1.gog -t iso; ; c:; loadfix -4 heroes.exe' no-exec-arg="y"
+HeroesOfMightAndMagic2 platform=gog:windos exec=HEROES2.EXE saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/GAMES/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/GAMES" commands='mount c .;  imgmount d homm2.gog -t iso; c:; heroes2.exe' no-exec-arg="y"
 HocusPocus platform=gog:lindos exec="hocus.exe"
 HocusPocus platform=gog:windos exec="hocus.exe"
 Ishar platform=gog:windos exec="start.exe"
 Ishar2 platform=gog:windos exec="start.exe"
-ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE"
+ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE" 
 JaggedAlliance platform=gog:windos exec="JA.EXE"
 JaggedAlliance2 platform=gog:windos exec="JA2.EXE"
+JillOfTheJungle  platform=gog:windos exec="jill1.exe" bundled=JillOfTheJungle
+JillOfTheJungle2 platform=gog:windos exec="jill2.exe" bundled=JillOfTheJungle
+JillOfTheJungle3 platform=gog:windos exec="jill3.exe" bundled=JillOfTheJungle
 MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
 MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
 MasterOfOrion platform=gog:lindos exec="ORION.EXE"
 MasterOfOrion platform=gog:windos exec="ORION.EXE"
 MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
-MegaRace platform=gog:windos exec=MEGARACE.exe  
+MegaRace platform=gog:windos exec="MEGARACE.exe"
+MegaRace2 platform=gog:windos exec="MEGARACE.exe" commands="mount c .; imgmount d MEGARACE2.gog -t iso; c:; megarace2.exe" no-exec-arg="y"
 MortalKombat platform=gog:windos exec="MK1.EXE" 
 MortalKombat2 platform=gog:windos exec="MK2.EXE"
 MortalKombat3 platform=gog:windos exec="START.BAT"
-Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
 RealmsOfChaos platform=gog:lindos exec="ROC.EXE"
 RealmsOfChaos platform=gog:windos exec="ROC.EXE"
 SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT"
@@ -180,9 +184,13 @@ Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_st
 SubWar2050 platform=gog:windos exec="subwar.bat"
 ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 Timelapse platform=gog:windos 
-TombRaider platform=gog:windos exec="GAME.DAT" commands='imgmount d "GAME.DAT" -fs iso; d:; TOMB.EXE' 
+TombRaider platform=gog:windos exec="GAME.DAT" patches-dir="$(sommelier_root)/patches/TombRaider/" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(patches-dir)/*:$(saves-dir)" emulator-args="-conf $(saves-dir)/dosbox.conf" commands='mount c $(saves-dir); imgmount d "GAME.DAT" -fs iso; c:; copy d:*.386 c:; d:DOS4GW.EXE d:TOMB.EXE'  no-exec-arg="y"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+UltimaUnderworld platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw.bat" no-exec-arg="y"
+UltimaUnderworld2 platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw2.bat" no-exec-arg="y"
 WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
+WormsUnited platform=gog:windos exec="WORMS.DAT" commands="mount c .; imgmount d WORMS.DAT -t iso; SET dos4g=quiet; SET wormscfg=D:\worms.cfg; SET wormscd=D:; c:; d:dos4gw.exe d:bin\wrms.exe" no-exec-arg="y"
+Wolfenstein platform=gog:windos exec="wolf3d.exe" commands="mount c .; c:; launcher\start.bat" no-exec-arg="y"
 Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
 XComUFODefense platform=gog:windos 
@@ -196,7 +204,7 @@ TeenAgent
 TheDig
 Bladerunner
 
-* category='Game;GOG' platform=gog:windows
+* category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 # windows via wine
 99LevelsToHell  
 ABCMurders  
@@ -251,6 +259,7 @@ DungeonSiege2  exec="DungeonSiege2.exe"
 DungeonSiege3  exec="Dungeon Siege III.exe"
 DungeonSouls  exec="DungeonSouls.exe"
 Duskers  
+ElderScrollsMorrowind 
 EmperorOfTheFadingSuns  vdesk=y
 Etherlords  
 EuropaUniversalis   exec="europa.exe"
@@ -351,7 +360,7 @@ SherlockHolmesVsJackTheRipper
 SimCity3000 
 SilmarisDiceKingdom
 SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
-SlayTheSpire  exec="SlayTheSpire.exe"
+SlayTheSpire exec="SlayTheSpire.exe"
 SmugglersV  
 SpaceColony  
 SpaceCom  
@@ -373,12 +382,11 @@ StreetRacingSyndicate  warn="This game doesn't have focus when it starts up. You
 StrongholdHD 
 SubmarineTitans  exec="ST.exe"
 SwordOfTheStars  exec="Sword of the Stars.exe" 
-#rename="$(drive_c)/GOG\ Games/Sword\ of \ the\ Stars/Sword\ of\ the\ Stars.exe $(drive_c)/GOG\ Games/SwordoftheStars.exe"
 SystemShock2  os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Tangledeep 
 TalismanOrigins 
 TachyonFringe  exec=Tachyon.exe
-TelltaleTexasHoldem  DinsCurse platform=gog:windows rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem"
+TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem"
 Tempest 
 TerminalVelocity 
 TheGuild  
@@ -415,7 +423,7 @@ RunestoneKeeper
 VoidPrison exec="Void Prison.exe"
 
 # 64-bit windows/wine only
-* category='Game;GOG' platform=gog:windows64
+* category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AltFrequencies 
 BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"

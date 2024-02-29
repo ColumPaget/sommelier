@@ -1,3 +1,8 @@
+/*
+Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
+* SPDX-License-Identifier: GPL-3.0
+*/
+
 #ifndef LIBUSEFUL_KEYCODES_H
 #define LIBUSEFUL_KEYCODES_H
 
@@ -13,10 +18,11 @@
 //defined if they are not already defined (probably because linux/input.h isn't present) 
 
 
-#define KEYMOD_SHIFT 1
-#define KEYMOD_CTRL  2
-#define KEYMOD_ALT   4
-#define KEYMOD_ALT2   8
+#define KEYMOD_SHIFT   1
+#define KEYMOD_CTRL    2
+#define KEYMOD_ALT     4
+#define KEYMOD_ALT2    8
+#define KEYMOD_SUPER  64
 
 //Keycode definitions
 #define ESCAPE 0x1b

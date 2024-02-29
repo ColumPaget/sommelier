@@ -8,13 +8,18 @@ sommelier - installer for apps that run under wine or other emulators
 
 .nf
 
-sommelier list [options]                           print list of apps available for install
+sommelier platforms                                print list of supported platforms
+sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
-sommelier reconfigure <name> [<name>]              reconfigure an application by name
-sommelier download <name> [<name>]                 download installers/packages to the current directory
-sommelier run <name> [<options>]                   run an application by name
-sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
+sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier run <name>                               run an application by name
+sommelier winecfg <name>                           run 'winecfg' for named wine application
+sommelier download <name>                          just download installer/package to current directory
+sommelier set <setting string> <name> [<name>]     change settings of an installed application
+sommelier autostart                                run programs from ~/.config/autostart
+
 .fi
 .ad b
 
@@ -27,6 +32,9 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 .SH OPTIONS
 
 .TP
+.B -d
+print debugging (there will be a lot!)
+.TP
 .B -url <url>
  install from a specified url or file path
 .TP
@@ -36,7 +44,12 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 .B -f
  force install even if expected sha256 doesn\(aqt match the download
 .TP
+.B -force
+ force install even if expected sha256 doesn\(aqt match the download
+.TP
 .B -install-name <name>
+ install an application under a different name
+.B -install-as <name>
  install an application under a different name
 .TP
 .B -proxy <url>
@@ -50,6 +63,33 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 .TP
 .B -set
  set a value at install
+.TP
+.B -platform <platform>
+ platform to use when installing or displaying lists of apps
+.TP
+.B -category <category>
+ category to use when displaying lists of apps
+.TP
+.B -installed
+ display only installed app when displaying lists of apps
+.TP
+.B -S
+ install app system-wide under /opt, to be run as a normal native app
+.TP
+.B -system
+ install app system-wide under /opt, to be run as a normal native app
+.TP
+.B -icache <dir>
+ installer cache: download installer to directory'dir' and leave it there
+.TP
+.B -no-xrandr                    
+ don't use xrandr to reset screen resolution after running and application
+.TP
+.B -user-agent <agent string>
+ set user-agent to send when communicating over http
+.TP
+.B -ua <agent string>
+ set user-agent to send when communicating over http
 
 
 Use of the '-install-name' option allows the same app to be installed in different subdirectories and called under different names.

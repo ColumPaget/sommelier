@@ -65,3 +65,7 @@ Zynaps url=https://archive.org/compress/zx_Zynaps_1987_Hewson_Consultants sha256
 * platform=spectrum category=Chess;Game;Games/ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
 3DChess url=https://archive.org/compress/zx_3D_Chess_1986_Psion_Software sha256='61e26c12dc11199e821f15fdb90df672339f70efebcd1918a29f59aa7d31077b' 
 SinclairChess url=https://archive.org/compress/zx_Chess_1982_Sinclair_Research sha256='1c205c08b6ad7da97e1511d47a7231fb5e02f95e9ba6e4ded0f4cba7ad8a9700' 
+SuperChess3.5 url="https://archive.org/download/zx_Super_Chess_III_v3.5_1985_CP_Software/Super_Chess_III_v3.5_1985_CP_Software.z80"
+CyrusISChess url="https://archive.org/download/zx_Cyrus_IS_Chess_1983_Sinclair_Research_a/Cyrus_IS_Chess_1983_Sinclair_Research_a.z80"
+PSIChess url="https://archive.org/download/zx_Psi_Chess_1986_The_Edge_Software/Psi_Chess_1986_The_Edge_Software.z80"
+

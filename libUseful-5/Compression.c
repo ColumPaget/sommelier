@@ -94,10 +94,10 @@ int zlibProcessorRead(TProcessingModule *ProcMod, const char *InData, unsigned l
 
     while ((ZData->z_in.avail_in > 0) || Flush)
     {
-        if (Flush) result=inflate(& ZData->z_in, Z_FINISH);
-        else result=inflate(& ZData->z_in, Z_NO_FLUSH);
-
+	//We do not need Z_FINISH here, 
+	result=inflate(& ZData->z_in, Z_NO_FLUSH);
         bytes_read=(*OutLen)-ZData->z_in.avail_out;
+
 
         if (result==Z_BUF_ERROR) break;
         switch (result)
@@ -114,7 +114,7 @@ int zlibProcessorRead(TProcessingModule *ProcMod, const char *InData, unsigned l
             break;
         }
 
-        if (ProcMod->Flags & DPM_READ_FINAL) break;
+        if ((ZData->z_in.avail_in==0) && (ProcMod->Flags & DPM_READ_FINAL)) break;
         if ((ZData->z_in.avail_in > 0) || Flush)
         {
             (*OutLen)+=BUFSIZ;
@@ -126,8 +126,8 @@ int zlibProcessorRead(TProcessingModule *ProcMod, const char *InData, unsigned l
     }
 #endif
 
-if ((bytes_read==0) && Flush) return(STREAM_CLOSED);
-return(bytes_read);
+    if ((bytes_read==0) && Flush) return(STREAM_CLOSED);
+    return(bytes_read);
 }
 
 

@@ -1,3 +1,4 @@
+#old dos games available online that claim to be legal/free
 
 * category='Game' platform=dos
 AstroFire  url=https://image.dosgamesarchive.com/games/af_full.zip exec='astro.exe'  sha256='f8ac309042795350053ee973600a6d7cb19ff010fef279d32e49843ccb39f96a' 
@@ -24,6 +25,9 @@ Dune2  url=http://www.completelyfreesoftware.com/software/dune2.zip exec='DUNE2.
 PsionChess  url=https://image.dosgamesarchive.com/games/psionchs.zip exec='Chess.exe' comment='Chess' sha256='f2c50e8d46f09c7434e8a26579483586ef92998a4b9ad632b05e367d3741b2d1' 
 CyrusChess  url=https://archive.org/download/msdos_shareware_fb_CHESS/CHESS.ZIP exec='CYRUS.COM' comment='Early 3D chess' sha256='1142b0168d9385d3c6692dff9c4c972b0d5e9df0057b5e4b12532a13bc3e0215' 
 RebelDecadeChess  url=https://image.dosgamesarchive.com/games/rebdec30.zip exec='START.BAT' sha256='5e26ff726236dd6d8476a6b08e0c79aaa86b9a035749439490967daea15acbfe' 
+NovaChess url="https://archive.org/download/NovaChessV1.121996ThomasStarkeStrategyChess/NovaChessv1.12.ZIP"
+KCChess url="https://archive.org/download/KCChess1990CraigBruceAndKevinPhillipsStrategyChess/KCChess.zip"
+ChessSystemTal url="https://archive.org/download/msdos_Chess_System_Tal_1997/Chess_System_Tal_1997.zip"
 
-* category='Utility;Clock platform=dos
+* category='Utility;Clock' platform=dos
 DigiClock  url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip exec='DIGITAL.EXE' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 
