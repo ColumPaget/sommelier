@@ -11,7 +11,7 @@ static void PrintUsage()
     printf("sommelier install <name> [<name>] [options]        install an application by name\n");
     printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
     printf("sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
-    printf("sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)\n");
+    printf("sommelier reconfigure <name> [<name>]              reconfigure an installed application (seek for executables, re-write desktop file)\n");
     printf("sommelier run <name>                               run an application by name\n");
     printf("sommelier winecfg <name>                           run 'winecfg' for named wine application\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
@@ -20,6 +20,7 @@ static void PrintUsage()
     printf("\n");
     printf("options are:\n");
     printf("  -d                            print debugging (there will be a lot!)\n");
+    printf("  -debug                        print debugging (there will be a lot!)\n");
     printf("  -c <config file>              specify a config (list of apps) file, rather than using the default\n");
     printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)\n");
     printf("  -install-name <name>          Name that program will be installed under and called/run under\n");
@@ -29,10 +30,15 @@ static void PrintUsage()
     printf("  -proxy <url>                  use a proxy for downloading installs\n");
     printf("  -platform <platform>          platform to use when installing or displaying lists of apps\n");
     printf("  -category <category>          category to use when displaying lists of apps\n");
-    printf("  -installed                    display only installed app when displaying lists of apps\n");
+    printf("  -installed                    display only installed apps when displaying lists of apps\n");
     printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
     printf("  -S                            install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -system                       install app system-wide under /opt, to be run as a normal native app\n");
+    printf("  -n <name>                     specify name to install the app under, allows installing multiple instances of the same app\n");
+    printf("  -install-name <name>          specify name to install the app under, allows installing multiple instances of the same app\n");
+    printf("  -install-as <name>            specify name to install the app under, allows installing multiple instances of the same app\n");
+    printf("  -emu <emulator>               specify a specific emulator to use when installing an app\n");
+    printf("  -emulator <emulator>          specify a specific emulator to use when installing an app\n");
     printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
     printf("  -hash                         hash downloads even if they have no expected hash value\n");
     printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
@@ -56,9 +62,9 @@ static void PrintUsage()
     printf("winmanage=y/n          allow window manager to decorate and manage windows of this program, or not\n");
     printf("smoothfonts=y/n        use font anti-aliasing, or not\n");
     printf("os-version=<os>        set version of windows to emulate. Choices are: win10, win81, win8, win7, win2008, vista, win2003, winxp, win2k, nt40,  winme, win98, win95, win31\n");
-		printf("sound=y/n/sfx           DOOM only: sound on/off, or only effects (no music)\n");
-		printf("mouse=y/n               DOOM only: use mouse in-game, or not\n");
-		printf("grab=y/n                DOOM only: grab mouse, or not\n");
+    printf("sound=y/n/sfx           DOOM only: sound on/off, or only effects (no music)\n");
+    printf("mouse=y/n               DOOM only: use mouse in-game, or not\n");
+    printf("grab=y/n                DOOM only: grab mouse, or not\n");
     printf("\n");
     printf("Environment Variables\n");
     printf("Sommelier looks for the variables SOMMELIER_CA_BUNDLE, CURL_CA_BUNDLE and SSL_VERIFY_FILE, in that order, to discover the path of the Certificate Bundle for certificate verification.\n");
@@ -92,11 +98,6 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-icache")==0)
-    {
-        Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
-        Act->Flags |= FLAG_KEEP_INSTALLER;
-    }
     else if (strcmp(p_Opt, "-hash")==0) Act->Flags |= FLAG_HASH_DOWNLOAD;
     else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
     else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
@@ -104,20 +105,29 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-url")==0) Act->URL=realpath(CommandLineNext(CmdLine), NULL);
     else if (strcmp(p_Opt, "-install-name")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-emu")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-emulator")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
     else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED; 
+    else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED;
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-d")==0)
+    else if (strcmp(p_Opt, "-icache")==0)
+    {
+        Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
+        Act->Flags |= FLAG_KEEP_INSTALLER;
+    }
+    else if (
+        (strcmp(p_Opt, "-d")==0) ||
+        (strcmp(p_Opt, "-debug")==0)
+    )
     {
         LibUsefulSetValue("HTTP:Debug","Y");
         Config->Flags |= FLAG_DEBUG;
     }
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
-
 
 }
 
@@ -145,8 +155,8 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
 
     //list is one of the few actions that doesn't need an argument
     //so if we were asked to list, but there are no arguments, just add
-    //a blank 'list all'. 
-    if (Type==ACT_LIST)
+    //a blank 'list all'.
+    if ((Type==ACT_LIST) || (Type==ACT_LIST_PLATFORMS))
     {
         Act=ActionCreate(Type, "");
         ListAddItem(Acts, Act);
@@ -155,15 +165,19 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     arg=CommandLineNext(CmdLine);
     while (arg)
     {
-        if (*arg == '-') 
-	{
-		ParseCommandLineOption(Act, CmdLine);
-	}
+        if (*arg == '-')
+        {
+            ParseCommandLineOption(Act, CmdLine);
+        }
         else
         {
-	    if (Type==ACT_LIST) Act->Name=CopyStr(Act->Name, arg);
-            else Act=ActionCreate(Type, arg);
-            ListAddItem(Acts, Act);
+            if (Type==ACT_LIST) Act->Name=CopyStr(Act->Name, arg);
+            else if ((Type==ACT_RUN) && Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
+            else
+            {
+                Act=ActionCreate(Type, arg);
+                ListAddItem(Acts, Act);
+            }
         }
         arg=CommandLineNext(CmdLine);
     }

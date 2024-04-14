@@ -47,6 +47,7 @@ PATH: /opt/avr/bin
 PATH: /opt/boinc_client-7.14.2/bin
 PATH: /opt/brlcad-7.26.4/bin
 PATH: /opt/clamav-0.100.1/bin
+PATH: /opt/emulators/bin
 PATH: /opt/games/bin
 PATH: /opt/gifprogs-5.1.2/bin
 PATH: /opt/git-2.27.0/bin
@@ -68,7 +69,6 @@ PATH: /opt/tcl-8.6.10/bin
 PATH: /opt/tiffprogs-4.0.8/bin
 PATH: /opt/wine-6.0/bin
 PATH: /opt/xboinc_client-7.14.2/bin
-PATH: /opt/emulators/bin
 
 
 ## ----------- ##

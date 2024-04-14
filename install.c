@@ -98,6 +98,9 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 
     if (! StrValid(Path)) return(FALSE);
 
+    ptr=GetVar(Act->Vars, "extract-filter");
+    FilesToExtract=SubstituteVarsInString(FilesToExtract, ptr, Act->Vars, 0);
+
     switch (Act->PlatformID)
     {
     case PLATFORM_SCUMMVM:
@@ -113,24 +116,21 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     //fall through to 'PLATFORM_GOGLINUX'
 
     case PLATFORM_GOGLINUX:
-        ForcedFileType=FILETYPE_ZIP;
-        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/game/* data/noarch/support/icon.png $(extra-files)", Act->Vars, 0);
-        Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
-        SetVar(Act->Vars, "app-icon", Tempstr);
-        break;
-
     case PLATFORM_GOGSCUMMVM:
     case PLATFORM_GOGDOS:
+    case PLATFORM_GOGNEOGEO:
         ForcedFileType=FILETYPE_ZIP;
-        FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/game/* data/noarch/support/icon.png $(extra-files)", Act->Vars, 0);
+        if (! StrValid(FilesToExtract)) FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/game/* $(extra-files)", Act->Vars, 0);
+        FilesToExtract=CatStr(FilesToExtract, " data/noarch/support/icon.png");
         Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
         SetVar(Act->Vars, "app-icon", Tempstr);
         break;
     }
 
     PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
+
     //if there's a package within the package, this will unpack it
-    PackageUnpackInner(Act, Path, ForcedFileType, FilesToExtract);
+    PackageUnpackInner(Act, GetVar(Act->Vars, "inner-package"), ForcedFileType, GetVar(Act->Vars, "inner-extract"));
 
     //if the package contained an installer program within it then  we run that
     ptr=GetVar(Act->Vars, "installer-path");
@@ -157,21 +157,16 @@ static void PostProcessSetupDirVar(TAction *Act, const char *VarName)
 }
 
 
-static void PostProcessInstall(TAction *Act)
+static void PostProcessDelete(TAction *Act, const char *PostProc)
 {
-    glob_t Glob;
-    char *From=NULL, *To=NULL, *Tempstr=NULL, *Value=NULL;
+    char *Tempstr=NULL, *Value=NULL;
     const char *ptr;
-    int i, result;
+    glob_t Glob;
+    int i;
 
-    PostProcessSetupDirVar(Act, "saves-dir");
-    PostProcessSetupDirVar(Act, "patches-dir");
-
-
-    ptr=GetVar(Act->Vars, "delete");
-    if (StrValid(ptr))
+    if (StrValid(PostProc))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
         ptr=GetToken(Tempstr, ",", &Value, GETTOKEN_QUOTES);
         while (ptr)
         {
@@ -185,10 +180,21 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
-    ptr=GetVar(Act->Vars, "copyfiles-from");
-    if (StrValid(ptr))
+    Destroy(Tempstr);
+    Destroy(Value);
+}
+
+
+static void PostProcessCopyFilesFrom(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+    if (StrValid(PostProc))
     {
-        From=SubstituteVarsInString(From, ptr, Act->Vars, 0);
+        From=SubstituteVarsInString(From, PostProc, Act->Vars, 0);
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
@@ -198,10 +204,23 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
-    ptr=GetVar(Act->Vars, "copyfiles-to");
-    if (StrValid(ptr))
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+}
+
+
+
+static void PostProcessCopyFilesTo(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+    if (StrValid(PostProc))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
         ptr=GetToken(Tempstr, ":", &From, 0);
         To=CopyStr(To, ptr);
         To=SlashTerminateDirectoryPath(To);
@@ -219,11 +238,23 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
 
-    ptr=GetVar(Act->Vars, "movefiles-from");
-    if (StrValid(ptr))
+
+static void PostProcessMoveFilesFrom(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+    if (StrValid(PostProc))
     {
-        From=SubstituteVarsInString(From, ptr, Act->Vars, 0);
+        From=SubstituteVarsInString(From, PostProc, Act->Vars, 0);
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
@@ -233,10 +264,24 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
-    ptr=GetVar(Act->Vars, "movefiles-to");
-    if (StrValid(ptr))
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
+
+
+static void PostProcessMoveFilesTo(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+
+    if (StrValid(PostProc))
     {
-        ptr=GetToken(ptr, ":", &Tempstr, 0);
+        ptr=GetToken(PostProc, ":", &Tempstr, 0);
         From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
 
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
@@ -255,11 +300,56 @@ static void PostProcessInstall(TAction *Act)
         }
     }
 
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
 
-    ptr=GetVar(Act->Vars, "rename");
-    if (StrValid(ptr))
+
+static void PostProcessChExt(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+    if (StrValid(PostProc))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        ptr=GetToken(PostProc, ":", &Tempstr, 0);
+        From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
+        To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
+
+        if (Config->Flags & FLAG_DEBUG) printf("chext: [%s] [%s]\n", From, To);
+        MakeDirPath(To, 0766);
+
+        glob(From, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            ptr=Glob.gl_pathv[i];
+            if (Config->Flags & FLAG_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
+            FileChangeExtension(ptr, To);
+        }
+    }
+
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
+
+
+static void PostProcessRename(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i, result;
+
+
+    if (StrValid(PostProc))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
         ptr=GetToken(Tempstr, "\\S", &Value, GETTOKEN_QUOTES);
         From=UnQuoteStr(From, Value);
         ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
@@ -269,27 +359,96 @@ static void PostProcessInstall(TAction *Act)
         result=rename(From, To);
     }
 
-    ptr=GetVar(Act->Vars, "link");
-    if (StrValid(ptr))
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
+
+
+static void PostProcessLink(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i, result;
+
+    if (StrValid(PostProc))
     {
-        Tempstr=SubstituteVarsInString(Tempstr, ptr, Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
         ptr=GetToken(Tempstr, ":", &Value, GETTOKEN_QUOTES);
         From=UnQuoteStr(From, Value);
         To=UnQuoteStr(To, ptr);
 
         if (Config->Flags & FLAG_DEBUG) printf("LINK: '%s' -> '%s'\n", From, To);
-        UninstallDir(Act, To);
+        //UninstallDir(Act, To);
+        rmdir(To);
         unlink(To);
         result=symlink(From, To);
     }
 
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
 
+
+static void PostProcessZip(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *Zip=NULL;
+    const char *ptr;
+
+
+    if (StrValid(PostProc))
+    {
+        Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
+        strrep(Tempstr, ',', ' ');
+        ptr=GetToken(Tempstr, ":", &Value, GETTOKEN_QUOTES);
+        Zip=MCopyStr(Zip, "zip ", Value, " ", ptr, " &>/dev/null", NULL);
+        if (Config->Flags & FLAG_DEBUG) printf("ZIP: %s'\n", Zip);
+        system(Zip);
+    }
+
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(Zip);
+}
+
+
+
+
+static void PostProcessInstall(TAction *Act)
+{
+    char *From=NULL, *To=NULL, *Tempstr=NULL, *Item=NULL,  *Name=NULL, *Value=NULL;
+    const char *ptr;
+    int i, result;
+
+    PostProcessSetupDirVar(Act, "saves-dir");
+    PostProcessSetupDirVar(Act, "patches-dir");
+
+    ptr=GetNameValuePair(Act->PostProcess, "\\S", "=", &Name, &Value);
+    while (ptr)
+    {
+        if (strcasecmp(Name, "delete")==0) PostProcessDelete(Act, Value);
+        if (strcasecmp(Name, "copyfiles-from")==0) PostProcessCopyFilesFrom(Act, Value);
+        if (strcasecmp(Name, "copyfiles-to")==0) PostProcessCopyFilesTo(Act, Value);
+        if (strcasecmp(Name, "movefiles-from")==0) PostProcessMoveFilesFrom(Act, Value);
+        if (strcasecmp(Name, "movefiles-to")==0) PostProcessMoveFilesTo(Act, Value);
+        if (strcasecmp(Name, "chext")==0) PostProcessChExt(Act, Value);
+        if (strcasecmp(Name, "rename")==0) PostProcessRename(Act, Value);
+        if (strcasecmp(Name, "link")==0) PostProcessLink(Act, Value);
+        if (strcasecmp(Name, "zip")==0) PostProcessZip(Act, Value);
+
+        ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
+    }
 
     ptr=GetVar(Act->Vars, "winmanager");
     if (StrValid(ptr)) RegEdit(Act, REG_NO_WINMANAGER, NULL, NULL, NULL);
 
 
     Destroy(Tempstr);
+    Destroy(Name);
     Destroy(Value);
     Destroy(From);
     Destroy(To);
@@ -720,7 +879,7 @@ static int InstallFindEmulator(TAction *Act)
 
     //is an emulator installed for this platform? NULL means one is required by can't be found,
     //empty string means none is required
-    Emulator=PlatformFindEmulator(Emulator, Act->Platform);
+    Emulator=PlatformFindEmulator(Emulator, Act->Platform, GetVar(Act->Vars, "required_emulator"));
 
     if (StrValid(Emulator))
     {

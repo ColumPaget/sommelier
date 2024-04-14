@@ -120,6 +120,7 @@ sommelier platforms                                print list of supported platf
 sommelier list [options]                           print list of apps available for install
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
+sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
 sommelier reconfigure <name> [<name>]              reconfigure an application by name
 sommelier download <name> [<name>]                 download installers/packages to the current directory
 sommelier run <name> [<options>]                   run an application by name
@@ -129,8 +130,10 @@ sommelier autostart                                load programs out of ~/.confi
 
 options are:
   -d                            print debugging (there will be a lot!)
+  -debug                        print debugging (there will be a lot!)
   -c <config file>              specify a config (list of apps) file, rather than using the default
   -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)
+  -n <name>                     Name that program will be installed under and called/run under
   -install-name <name>          Name that program will be installed under and called/run under
   -install-as <name>            Name that program will be installed under and called/run under
   -f                            force install even if expected sha256 doesn't match the download
@@ -143,11 +146,15 @@ options are:
   -S                            install app system-wide under /opt, to be run as a normal native app
   -system                       install app system-wide under /opt, to be run as a normal native app
   -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
+  -emu <emulator>               specify a specific emulator to use when installing an app
+  -emulator <emulator>          specify a specific emulator to use when installing an app
   -hash                         hash downloads even if they have no expected hash value
   -no-xrandr                    don't use xrandr to reset screen resolution after running and application
   -user-agent <agent string>    set user-agent to send when communicating over http
   -ua <agent string>            set user-agent to send when communicating over http
 ```
+
+
 
 The 'set' command can change various settings of an installed application on a setting-by-setting bases (see 'SETTINGS' below). Settings are also used in the config files for installing apps. The 'reconfigure' command sets all the settings from the configuration file, and rebuilds the .desktop file that specifies how to run an application, allowing the whole setup of the installed application to be changed.
 

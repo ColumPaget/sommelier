@@ -17,7 +17,11 @@ DotNet48 url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55
 Basilisk url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
 
 K-Meleon url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/
+#SeaMonkey url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.15/win32/$(locale)/seamonkey-2.53.15.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/
+
+SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.18.2/win32/$(locale)/seamonkey-2.53.18.2.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
+
+
 SlimBrowser url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
 PaleMoon url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
 OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
@@ -113,8 +117,8 @@ DragonBones url=https://tool.egret-labs.org/DragonBonesPro/DragonBonesPro-v5.6.3
 * category='ImageViewer;Viewer;Graphics' platform=windows
 IfranView url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
 Faststone url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
-XnViewexec=XnView.exe  url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
-XnViewMPexec=XnView.exe  url=https://download.xnview.com/XnViewMP-win.zip 
+XnView exec=XnView.exe  url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
+XnViewMP exec=XnView.exe  url=https://download.xnview.com/XnViewMP-win.zip 
 VallenJpegger url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
 PhotoView url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.23-Portable.exe install-type=executable sha256=eda687c324f4882ba136850e837dbd77abdedeeb333798490561dbe68b7f4563
@@ -139,8 +143,8 @@ OpenOffice url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7
 LibreOffice url=https://download.documentfoundation.org/libreoffice/stable/7.4.5/win/x86/LibreOffice_7.4.5_Win_x86.msi exec=quickstart.exe warn="Applications runs but crashes a lot on wine 6.0" donate=https://www.libreoffice.org/donate/
 AtlantisWordProcessor url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 FreeOfficeTextMaker url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
-FreeOfficePlanMakerexec=PlanMaker.exe bundled=FreeOfficeTextMaker
-FreeOfficePresentationsexec=Presentations.exe bundled=FreeOfficeTextMaker
+FreeOfficePlanMaker exec=PlanMaker.exe bundled=FreeOfficeTextMaker
+FreeOfficePresentations exec=Presentations.exe bundled=FreeOfficeTextMaker
 WinMerge url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/winmerge-2.16.28-exe.zip comment="GUI to diff/merge text files" sha256=5df7528f94432360b5c7a05f5a0a605344c18acf94f22d7c8d5506f07220c133 exec=WinMergeU.exe
 
 * category='PDF;Viewer;Office' platform=windows
@@ -178,7 +182,7 @@ SublimeText url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%2
 Notepad++ url=http://download.tuxfamily.org/notepadplus/archive/6.7.5/npp.6.7.5.Installer.exe version='6.7.5' sha256='8c3602d82d22b7a4348b479e1fa6352eee9df17005ac28a5af7c59074b561898' 
 CherryTree url=http://www.giuspen.com/software/cherrytree_0.39.2_setup.exe sha256='945a9edd672e76a5e3919d525dc449a904c957577c8905a5d952b133cb768130' category='Notes' exec='cherrytree.exe' 
 EditPadLite url=http://download.jgsoft.com/editpad/SetupEditPadLite.exe warn='This app is only free for personal/non-commercial use. App auto-runs on install, so you'll need to close it for sommelier to complete the installation.'
-SeaMonkeyEditexec-args='-editor' comment='HTML editor bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
+SeaMonkeyEdit exec-args='-editor' comment='HTML editor bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 
 * category='RemoteAccess;Utility' platform=windows
 TightVNC url=https://www.tightvnc.com/download/1.3.10/tightvnc-1.3.10_x86_viewer.zip version='1.3.10' exec='vncviewer.exe' rating='platinum' sha256='dbee58d687f6dd1870cbb6d43020a5e17d5b9e9c74eaf4a64bf07d705b802fee' comment='VNC client with data compression' 

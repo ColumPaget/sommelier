@@ -12,7 +12,7 @@
 #include <glob.h>
 
 
-#define VERSION "9.0"
+#define VERSION "9.1"
 
 
 #define INSTALL_RUN 0
@@ -70,6 +70,7 @@ typedef struct
     char *Platform;
     char *OSVersion;
     char *Parent;
+    char *PostProcess;
     ListNode *Vars;
 } TAction;
 

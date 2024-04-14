@@ -61,7 +61,7 @@ int DesktopFileDelete(TAction *Act)
 
 int DesktopFileRead(const char *Path, TAction *Act)
 {
-    char *Tempstr=NULL, *Token=NULL, *Exec=NULL;
+    char *Tempstr=NULL, *Name=NULL, *Token=NULL, *Exec=NULL;
     const char *ptr;
     int result=FALSE;
     STREAM *S;
@@ -74,28 +74,42 @@ int DesktopFileRead(const char *Path, TAction *Act)
         while (Tempstr)
         {
             StripTrailingWhitespace(Tempstr);
-            ptr=GetToken(Tempstr, "=", &Token, 0);
-            if (strcasecmp(Token,"SommelierExec")==0)
+            ptr=GetToken(Tempstr, "=", &Name, 0);
+            if (strcasecmp(Name,"SommelierExec")==0)
             {
                 Act->Exec=CopyStr(Act->Exec, ptr);
                 StripQuotes(Act->Exec);
             }
-            else if (strcasecmp(Token,"Exec")==0)
+            else if (strcasecmp(Name,"Exec")==0)
             {
                 Exec=CopyStr(Exec, ptr);
                 StripQuotes(Exec);
             }
-            else if (strcasecmp(Token,"Icon")==0)
+            else if (strcasecmp(Name,"Icon")==0)
             {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "icon", Token);
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "icon", Name);
             }
-            else if (strcasecmp(Token,"Path")==0)
+            else if (strcasecmp(Name,"Platform")==0)
             {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "working-dir", Token);
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "platform", Name);
+            }
+            else if (strcasecmp(Name,"Emulator")==0)
+            {
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "emulator", Name);
+								GetToken(Name, "\\S", &Token, 0);
+								SetVar(Act->Vars, "required_emulator", GetBasename(Token));	
+            }
+            else if (strcasecmp(Name,"Path")==0)
+            {
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "working-dir", Name);
             }
             Tempstr=STREAMReadLine(Tempstr, S);
         }
@@ -106,7 +120,12 @@ int DesktopFileRead(const char *Path, TAction *Act)
 //if we didn't find a 'SommelierExec' entry then we must be dealing with
 //a setup that doesn't use sommelier to run the app. Thus the 'Exec' entry
 //is the thing that we run
-    if (! StrValid(Act->Exec)) Act->Exec=CopyStr(Act->Exec, Exec);
+    if (! StrValid(Act->Exec))
+    {
+        //make sure we don't run another copy of sommelier! This would cause a fork bomb.
+        GetToken(Exec, "\\S", &Token, 0);
+        if (strcmp(GetBasename(Token), "sommelier") !=0) Act->Exec=CopyStr(Act->Exec, Exec);
+    }
 
 //now we rebuild the exec, extracting 'WINEPREFIX' from it if such exists
     Tempstr=CopyStr(Tempstr, Act->Exec);
@@ -119,6 +138,7 @@ int DesktopFileRead(const char *Path, TAction *Act)
         ptr=GetToken(ptr,"\\S",&Token, GETTOKEN_HONOR_QUOTES);
     }
 
+    DestroyString(Name);
     DestroyString(Exec);
     DestroyString(Token);
     DestroyString(Tempstr);
@@ -231,8 +251,7 @@ static void DesktopFileConfigureEmulator(TAction *Act)
     char *EmuInvoke=NULL, *Tempstr=NULL;
     const char *ptr;
 
-
-    EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform);
+    EmuInvoke=PlatformFindEmulator(EmuInvoke, Act->Platform, GetVar(Act->Vars, "required_emulator"));
     if (GetBoolVar(Act->Vars, "no-exec-arg"))
     {
         SetVar(Act->Vars, "exec", "");
@@ -287,16 +306,16 @@ void DesktopFileGenerate(TAction *Act)
         case PLATFORM_GOGSCUMMVM:
         case PLATFORM_GOGDOS:
         case PLATFORM_GOGWINDOS:
+        case PLATFORM_GOGNEOGEO:
         case PLATFORM_DOOM:
             DesktopFileConfigureEmulator(Act);
             break;
-
-
         }
 
 
         HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
         SetVar(Act->Vars, "exec-sha256", Hash);
+        SetVar(Act->Vars, "platform", Act->Platform);
 
 //did we download or otherwise obtain an application icon? If not, then consider the 'icon' setting
 //which may point to an icon for this app on local disk
@@ -312,7 +331,7 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(app-icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(app-icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);

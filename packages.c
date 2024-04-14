@@ -174,25 +174,31 @@ static void PackageFindAndRunInstaller(TAction *Act)
 
 
 //This function handles situations where a package contains another package, possibly in a different format
-void PackageUnpackInner(TAction *Act, const char *Path, int ForcedFileType, const char *FilesToExtract)
+void PackageUnpackInner(TAction *Act, const char *Files, int ForcedFileType, const char *FilesToExtract)
 {
-    const char *ptr;
-    char *Tempstr=NULL, *PkgType=NULL;
+    const char *ptr, *p_Path;
+    char *Tempstr=NULL, *Path=NULL, *PkgType=NULL;
 
-    ptr=GetVar(Act->Vars, "inner-package");
-    if (StrValid(ptr))
+    if (StrValid(Files))
     {
-        if (strchr(ptr, ':')) ptr=GetToken(ptr, ":", &PkgType, GETTOKEN_QUOTES);
-        if (StrValid(PkgType)) ForcedFileType=PackageTypeFromExtn(PkgType);
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
-        if (StrValid(Tempstr))
+        ptr=GetToken(Files, "\\S", &Tempstr, 0);
+        while (ptr)
         {
-            PackageUnpack(Act, Tempstr, ForcedFileType, FilesToExtract);
+            Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
+            p_Path=Path;
+            if (strchr(Path, ':')) p_Path=GetToken(Path, ":", &PkgType, GETTOKEN_QUOTES);
+
+            if (StrValid(PkgType)) ForcedFileType=PackageTypeFromExtn(PkgType);
+            Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), p_Path);
+            if (StrValid(Tempstr)) PackageUnpack(Act, Tempstr, ForcedFileType, FilesToExtract);
+
+            ptr=GetToken(ptr, "\\S", &Tempstr, 0);
         }
     }
 
     Destroy(Tempstr);
     Destroy(PkgType);
+    Destroy(Path);
 }
 
 

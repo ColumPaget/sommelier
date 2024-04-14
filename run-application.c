@@ -47,7 +47,7 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
     const char *ptr;
 
     SetVar(Act->Vars, "exec", Act->Exec);
-    SetVar(Act->Vars, "exec-args", Act->Args);
+    PlatformSetupEmulatorArgs(Act, "exec-args", Act->Args);
 
     ptr=GetToken(Act->Exec, "\\S", &Token, 0);
     while (ptr)
@@ -132,7 +132,6 @@ pid_t RunNormal(TAction *Act)
     char *SpawnConfig=NULL, *Tempstr=NULL;
     const char *ptr;
     pid_t pid=-1;
-
 
     ptr=GetVar(Act->Vars, "saves-dir");
     if (StrValid(ptr))

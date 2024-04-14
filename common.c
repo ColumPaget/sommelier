@@ -77,7 +77,7 @@ int InList(const char *Item, const char *List)
             }
         }
 
-    ptr=GetToken(ptr, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
+        ptr=GetToken(ptr, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
     }
 
     Destroy(Match);

@@ -51,8 +51,8 @@ MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64"
 Monolith  exec=runner
 MotherRussiaBleeds  
 NeoScavenger  exec="NEOScavenger"
-PapersPlease  exec="PapersPlease "
 Overfall  exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
+PapersPlease  exec="PapersPlease "
 QuestForInfamy  
 RaceTheSun  
 Realpolitiks  
@@ -80,6 +80,7 @@ WayOfTheSamurai
 * category='Game;GOG' platform=gog:linux64
 Aragami warn="Game requires a powerful system"
 BaldursGate  exec64="BaldursGate"
+BlazingStar exec64=BlazingStar
 BridgeConstructor exec="BridgeConstructor.x86_64"
 BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
@@ -99,6 +100,7 @@ Loria
 OpenTTD  exec64=openttd
 OutThere  exec64="outthereomega.x86"
 PrisonArchitect  exec64="PrisonArchitect.sh"
+Pulstar exec64=Pulstar
 RadioCommander  exec64="RC.x86_64"
 Shing  exec64="Shing!.x86_64"
 SilmarisDiceKingdom  exec64="silmaris.x86_64"
@@ -106,6 +108,22 @@ SkullsOfTheShogun
 SlayTheSpire  exec64="SlayTheSpire"
 StardewValley  exec64="StardewValley"
 Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
+
+
+#setup_snk_40th_anniversary_collection_1016_(64bit)_(45677).exe:Zone.Identifier
+
+#neo-geo games on gog. The linux downloads for these come with an emulator, but that's for 64-bit linux only. These entries allow you to run them under a neo-geo
+#emulator. At time of writing xmame and gngeo are set up in platforms.conf
+* category='Game;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
+ArtOfFighting2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/aof2.zip" inner-package="neogeo.zip aof2.zip" emu-name="aof2" chext="056-*:.bin" zip="aof2.zip:056-*"
+BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blastar.zip:230-*"
+Pulstar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/pulstar.zip" inner-package="neogeo.zip pulstar.zip" emu-name="pulstar" chext="089-*:.bin" zip="pulstar.zip:089-*"
+SamuraiShodown2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/samsho2.zip" inner-package="neogeo.zip samsho2.zip" emu-name="samsho2" chext="063-*:.bin" zip="samsho2.zip:063-*" 
+Sengoku3 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/sengoku3.zip" inner-package="neogeo.zip sengoku3.zip" emu-name="sengoku3" chext="261-*:.bin" link="261-ph1.bin:261-p1.bin" zip="sengoku3.zip:261-*"
+FatalFurySpecial extract-filter="$(extract-root)/neogeo.zip $(extract-root)/fatfursp.zip" inner-package="neogeo.zip fatfursp.zip" emu-name="fatfursp" chext="058-*:.bin" zip="fatfursp.zip:058-*"
+RealBoutFatalFury2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/rbff2.zip" inner-package="neogeo.zip rbff2.zip" emu-name="rbff2" chext="240-*:.bin" zip="rbff2.zip:240-*"
+
+
 
 #MSDOS platform 
 # 'lindos' means linux package, dos executable
@@ -235,7 +253,8 @@ Civilization3  exec="Civ3Launcher.exe"
 CombatChess 
 CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
 CovidTheOutbreak 
-CrusaderKings  
+CrusaderKings 
+DangerousWaters exec=LaunchDW.exe
 DarkestDungeon  
 DarkQuest  
 DarkQuest2  
@@ -311,6 +330,7 @@ MiniMetro  exec="Mini Metro.exe"
 Monolith  exec=Monolith.exe
 MoonbaseCommander  exec=moonbase.exe
 MoonHunters 
+MortalGlory winmanager=n
 MortalKombat4  exec="mk4.exe"
 MotoRacer2 platform=windows exec="moto.exe"
 MotoRacer3 platform=windows exec="MotoRacer3.exe" warn="You must turn on 'no intro' in the 'display' tab of the launcher, or the game will freeze on startup"
@@ -348,8 +368,10 @@ Revolver360
 RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 RollerCoasterTycoon 
 RogueLegacy
+RunestoneKeeper
 SacredGold exec="Sacred.exe"
 Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
+SamuraiShodownV
 Screamer4x4
 SepterraCore  exec="septerra.exe"
 SealOfEvil
@@ -402,15 +424,18 @@ Torchlight2  os-version=winxp exec=Torchlight2.exe
 TransportGiant2 
 Tropico  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Tropico2  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+TwinkleStarSprites exec=twinspri.exe
 Uplink  exec=uplink.exe vdesk=y
 TheWitcherAdventureGame  
 UFO:Aftermath  
 UFO:Aftershock  
 UFO:Afterlight exec="UFO.exe"
 Victoria 
+VoidPrison exec="Void Prison.exe"
 VtmBloodlines  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 VtmRedemption  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 W4kRitesOfWar  vdesk=y exec=RoW.exe
+WeirdWorlds exec=weirdworlds.exe
 Westerado  exec=WesteradoDB.exe
 Witchaven 
 Witchaven2 
@@ -418,9 +443,6 @@ Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop be
 WizardsAndWarriors  vdesk=y
 X:BeyondTheFrontier 
 XComInterceptor exec="Interceptor.exe"
-MortalGlory winmanager=n
-RunestoneKeeper
-VoidPrison exec="Void Prison.exe"
 
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"

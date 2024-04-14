@@ -25,13 +25,13 @@ int AppPlatformMatches(TAction *App, const char *Platforms)
 
 int AppMatchCompareVars(TAction *App, const char *VarName, const char *Match)
 {
-const char *ptr;
+    const char *ptr;
 
-   if (! StrValid(Match)) return(TRUE);
+    if (! StrValid(Match)) return(TRUE);
 
-   ptr=GetVar(App->Vars, VarName);
-   if (InList(Match, ptr)) return(TRUE);
-   return(FALSE);
+    ptr=GetVar(App->Vars, VarName);
+    if (InList(Match, ptr)) return(TRUE);
+    return(FALSE);
 }
 
 
@@ -40,12 +40,11 @@ int AppMatches(TAction *Template, TAction *App)
     if (! StrValid(Template->Platform)) return(TRUE);
     if (! AppPlatformMatches(App, Template->Platform) ) return(FALSE);
     if (! AppMatchCompareVars(App, "category", GetVar(Template->Vars, "category"))) return(FALSE);
-		if ((Template->Flags & FLAG_INSTALLED) && (! AppIsInstalled(App)) ) return(FALSE);
+    if ((Template->Flags & FLAG_INSTALLED) && (! AppIsInstalled(App)) ) return(FALSE);
 
     if (StrValid(Template->Name))
     {
-//printf("PM: [%s] [%s]\n", Template->Name, App->Name );
-	if (! pmatch_one(Template->Name, App->Name, StrLen(App->Name), NULL, NULL, 0)) return(FALSE);
+        if (! pmatch_one(Template->Name, App->Name, StrLen(App->Name), NULL, NULL, 0)) return(FALSE);
     }
 
     return(TRUE);
@@ -65,7 +64,6 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
 
         if (StrValid(Name))
         {
-
             if (strcmp(Name,"url")==0)
             {
                 Act->URL=CopyStr(Act->URL, Value);
@@ -117,11 +115,21 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 SetVar(Act->Vars, "bundled-with", Value);
             }
             else if (strcasecmp(Name,"parent")==0) Act->Parent=CopyStr(Act->Parent, Value);
+            else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"movefiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"chext")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"delete")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
     }
+
 
     Destroy(Tempstr);
     Destroy(Value);
@@ -350,6 +358,8 @@ char *AppFormatPath(char *Path, TAction *Act)
     Path=SlashTerminateDirectoryPath(Path);
     SetVar(Act->Vars, "install-dir",Path);
 
+    ResolveVar(Act->Vars, "emu-dir");
+
     DestroyString(Tempstr);
     return(Path);
 }
@@ -358,16 +368,16 @@ char *AppFormatPath(char *Path, TAction *Act)
 
 int AppIsInstalled(TAction *App)
 {
-char *Tempstr=NULL;
-int result=FALSE;
+    char *Tempstr=NULL;
+    int result=FALSE;
 
-Tempstr=AppFormatPath(Tempstr, App);
-if (access(Tempstr, F_OK)==0) result=TRUE;
+    Tempstr=AppFormatPath(Tempstr, App);
+    if (access(Tempstr, F_OK)==0) result=TRUE;
 
-Destroy(Tempstr);
-return(result);
+    Destroy(Tempstr);
+    return(result);
 }
- 
+
 
 int AppFindConfig(TAction *App, const char *Platforms)
 {
@@ -396,6 +406,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
                 App->DownName=CopyStr(App->DownName, AppConfig->DownName);
                 App->Parent=CopyStr(App->Parent, AppConfig->Parent);
                 App->PlatformID=AppConfig->PlatformID;
+                App->PostProcess=CopyStr(App->PostProcess, AppConfig->PostProcess);
                 if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
                 CopyVars(App->Vars, AppConfig->Vars);
                 result=TRUE;
@@ -451,14 +462,8 @@ int AppLoadConfig(TAction *App)
 //if no platform specified this will use the first matching app config it finds for any platform
     result=AppFindConfig(App, Tempstr);
 
-    if (StrValid(App->Parent))
-    {
-        SetVar(App->Vars, "name", App->Parent);
-    }
-    else if (StrValid(App->InstallName))
-    {
-        SetVar(App->Vars, "name", App->InstallName);
-    }
+    if (StrValid(App->Parent)) SetVar(App->Vars, "name", App->Parent);
+    else if (StrValid(App->InstallName)) SetVar(App->Vars, "name", App->InstallName);
 
     ptr=getenv("LANGUAGE");
     if (! StrValid(ptr)) ptr=getenv("LANG");
@@ -488,9 +493,9 @@ int AppsOutputList(TAction *Template)
         App=(TAction *) Curr->Item;
         if (AppMatches(Template, App))
         {
-						Flags=CopyStr(Flags, "");
+            Flags=CopyStr(Flags, "");
             if (StrValid(App->URL)) Flags=CatStr(Flags, "www,");
-						if (AppIsInstalled(App)) Flags=CatStr(Flags,"i,");
+            if (AppIsInstalled(App)) Flags=CatStr(Flags,"i,");
 
             printf("%-25s  %12s %-12s  %-12s   ", App->Name, App->Platform, Flags, GetVar(App->Vars, "category"));
             printf("%s\n",GetVar(App->Vars, "comment"));
@@ -499,8 +504,8 @@ int AppsOutputList(TAction *Template)
         Curr=ListGetNext(Curr);
     }
 
-		Destroy(Tempstr);
-		Destroy(Flags);
+    Destroy(Tempstr);
+    Destroy(Flags);
     return(result);
 }
 
