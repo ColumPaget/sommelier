@@ -4,11 +4,11 @@
 SYNOPSIS
 =========
 
-Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the main target emulator is wine, (currently 32-bit wine) though sommelier can also install some dosbox applications, a few linux native applications since version 4.7, and since version 4.0 some doom wads, scummvm games and gog.com games. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier, unless '-S' or '-system' options are used.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
+Sommelier is an installer program that downloads and installs packages/programs that run under an emulator. As the name implies, the main target emulator is wine, (mostly 32-bit wine) though sommelier can also install some dosbox applications, a few linux native applications since version 4.7, and since version 4.0 some doom wads, scummvm games and numerous gog.com games. Sommelier downloads an application and any dependancies (MFC, VB6) that it may have. Downloads are checked against an expected sha256 sum. Each application is installed in it's own directory-structure (AKA 'wine-bottle') under ~/.sommelier, unless '-S' or '-system' options are used.  Sommelier creates a .desktop file for each application in ~/.local/share/applications. If needed, registry entries are changed within the wine-bottle (e.g. some applications may need to be run in virtual-desktop mode, or may need to disallow window managing by the system window-manager. The wine-bottle approach allows registry changes to be made independantly for each application). The .desktop file is used to run the application by the 'sommelier run' command.
 
 When installing native linux applications, sommelier tries to detect whether the system is a 32bit linux, or a 64bit one. It does this by checking which platform it was compiled for. This means you can run sommelier on a 32bit linux running on a 64bit processor, or even on a system that has a 64bit kernel but 32bit applications, and so long as sommelier has been compiled 32bit, it will install 32bit versions of apps. If sommelier is compiled for 64bit, it will install linux apps for 64bit rather than 32bit.
 
-Sommelier can install some gog.com games, that either run under wine, dosbox, native linux or scummvm. If a game is in the list it means I've had it install and run successfully. For some reason I find fewer native games work for me than emulated games under wine. Unfortuantely you currently have to download all the files for a gog game with your browser and then install them with './sommelier install <game name> -url <path to installer>'.
+Sommelier can install many gog.com games, that either run under wine, native linux, dosbox, scummvm, or a neogeo emulator. If a game is in the list it means I've had it install and run successfully. For some reason I find fewer native games work for me than emulated games under wine. Unfortuantely you currently have to download all the files for a gog game with your browser and then install them with './sommelier install <game name> -url <path to installer>'.
 
 Many wine apps from gog are 32-bit applications, so you'll need to 'apt get wine32' to run those on most 64-bit distros.
 
@@ -155,7 +155,6 @@ options are:
 ```
 
 
-
 The 'set' command can change various settings of an installed application on a setting-by-setting bases (see 'SETTINGS' below). Settings are also used in the config files for installing apps. The 'reconfigure' command sets all the settings from the configuration file, and rebuilds the .desktop file that specifies how to run an application, allowing the whole setup of the installed application to be changed.
 
 The 'run' command can take arguments that are passed to the program. For instance, to run Telegram desktop in 'start in systray' mode use:
@@ -163,6 +162,9 @@ The 'run' command can take arguments that are passed to the program. For instanc
 ```
 	sommelier run Telegram -startintray
 ```
+
+Some emulators also have 'extra' arguments that can be used with the 'run' command. `sommelier platforms` should show those.
+
 
 
 PLATFORMS
@@ -209,11 +211,13 @@ gog:lin
 gog:linux
  : linux app from gog.com that runs natively
 gog:lindos
- : msdos app from from gog.com that's packaged for linux
+ : msdos app from gog.com that's packaged for linux
 gog:windos
- : msdos app from from gog.com that's packaged for windows
+ : msdos app from gog.com that's packaged for windows
 gog:scummvm
- : scummvm adventure game from from gog.com that's packaged for linux
+ : scummvm adventure game from gog.com that's packaged for linux
+gog:neogeo
+ : neogeno game from gog.com that's packaged for linux, run using mame, xmame or gngeo emulators
 megadrive
  : sega megadrive games run under the dgen or mednafen emulators
 segamaster

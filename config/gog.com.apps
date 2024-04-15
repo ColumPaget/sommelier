@@ -116,7 +116,7 @@ Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 #emulator. At time of writing xmame and gngeo are set up in platforms.conf
 * category='Game;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
 ArtOfFighting2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/aof2.zip" inner-package="neogeo.zip aof2.zip" emu-name="aof2" chext="056-*:.bin" zip="aof2.zip:056-*"
-BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blastar.zip:230-*"
+BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blazstar.zip:239-*"
 Pulstar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/pulstar.zip" inner-package="neogeo.zip pulstar.zip" emu-name="pulstar" chext="089-*:.bin" zip="pulstar.zip:089-*"
 SamuraiShodown2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/samsho2.zip" inner-package="neogeo.zip samsho2.zip" emu-name="samsho2" chext="063-*:.bin" zip="samsho2.zip:063-*" 
 Sengoku3 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/sengoku3.zip" inner-package="neogeo.zip sengoku3.zip" emu-name="sengoku3" chext="261-*:.bin" link="261-ph1.bin:261-p1.bin" zip="sengoku3.zip:261-*"

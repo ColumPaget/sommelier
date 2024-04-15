@@ -339,6 +339,39 @@ static void PostProcessChExt(TAction *Act, const char *PostProc)
 }
 
 
+static void PostProcessLinkExt(TAction *Act, const char *PostProc)
+{
+    char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
+    const char *ptr;
+    glob_t Glob;
+    int i;
+
+    if (StrValid(PostProc))
+    {
+        ptr=GetToken(PostProc, ":", &Tempstr, 0);
+        From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
+        To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
+
+        if (Config->Flags & FLAG_DEBUG) printf("chext: [%s] [%s]\n", From, To);
+        MakeDirPath(To, 0766);
+
+        glob(From, 0, 0, &Glob);
+        for (i=0; i < Glob.gl_pathc; i++)
+        {
+            ptr=Glob.gl_pathv[i];
+            if (Config->Flags & FLAG_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
+	    link(ptr, To);
+        }
+    }
+
+    Destroy(Tempstr);
+    Destroy(Value);
+    Destroy(From);
+    Destroy(To);
+}
+
+
+
 static void PostProcessRename(TAction *Act, const char *PostProc)
 {
     char *Tempstr=NULL, *Value=NULL, *From=NULL, *To=NULL;
@@ -397,6 +430,7 @@ static void PostProcessLink(TAction *Act, const char *PostProc)
 static void PostProcessZip(TAction *Act, const char *PostProc)
 {
     char *Tempstr=NULL, *Value=NULL, *Zip=NULL;
+    STREAM *S;
     const char *ptr;
 
 
@@ -405,9 +439,15 @@ static void PostProcessZip(TAction *Act, const char *PostProc)
         Tempstr=SubstituteVarsInString(Tempstr, PostProc, Act->Vars, 0);
         strrep(Tempstr, ',', ' ');
         ptr=GetToken(Tempstr, ":", &Value, GETTOKEN_QUOTES);
-        Zip=MCopyStr(Zip, "zip ", Value, " ", ptr, " &>/dev/null", NULL);
-        if (Config->Flags & FLAG_DEBUG) printf("ZIP: %s'\n", Zip);
-        system(Zip);
+        Zip=MCopyStr(Zip, "zip ", Value, " ", ptr, NULL);
+        printf("packing into zip: %s'\n", Zip);
+	Tempstr=MCopyStr(Tempstr, "cmd:", Zip, NULL);
+	S=STREAMOpen(Tempstr, "rw setsid");
+	if (S)
+	{
+	Tempstr=STREAMReadDocument(Tempstr, S);
+	STREAMClose(S);
+	}
     }
 
     Destroy(Tempstr);
@@ -436,6 +476,7 @@ static void PostProcessInstall(TAction *Act)
         if (strcasecmp(Name, "movefiles-from")==0) PostProcessMoveFilesFrom(Act, Value);
         if (strcasecmp(Name, "movefiles-to")==0) PostProcessMoveFilesTo(Act, Value);
         if (strcasecmp(Name, "chext")==0) PostProcessChExt(Act, Value);
+        if (strcasecmp(Name, "lnext")==0) PostProcessLinkExt(Act, Value);
         if (strcasecmp(Name, "rename")==0) PostProcessRename(Act, Value);
         if (strcasecmp(Name, "link")==0) PostProcessLink(Act, Value);
         if (strcasecmp(Name, "zip")==0) PostProcessZip(Act, Value);
@@ -747,7 +788,7 @@ static void InstallSingleItem(TAction *Act)
         }
 
         if (Act->Flags & FLAG_ABORT) _exit(1);
-        PostProcessInstall(Act);
+        //PostProcessInstall(Act);
 
         _exit(0);
     }
