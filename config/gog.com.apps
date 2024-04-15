@@ -112,8 +112,9 @@ Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 
 #setup_snk_40th_anniversary_collection_1016_(64bit)_(45677).exe:Zone.Identifier
 
-#neo-geo games on gog. The linux downloads for these come with an emulator, but that's for 64-bit linux only. These entries allow you to run them under a neo-geo
-#emulator. At time of writing xmame and gngeo are set up in platforms.conf
+# neo-geo games on gog. The linux downloads for these come with an emulator, but that's for 64-bit linux only. These entries allow you to run them under a neo-geo
+# emulator. At time of writing mame, xmame and gngeo are set up in platforms.conf
+# For some of these games the linux package is in the 'extras' section of the games gog page
 * category='Game;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
 ArtOfFighting2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/aof2.zip" inner-package="neogeo.zip aof2.zip" emu-name="aof2" chext="056-*:.bin" zip="aof2.zip:056-*"
 BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blazstar.zip:239-*"
@@ -122,7 +123,10 @@ SamuraiShodown2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/samsh
 Sengoku3 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/sengoku3.zip" inner-package="neogeo.zip sengoku3.zip" emu-name="sengoku3" chext="261-*:.bin" link="261-ph1.bin:261-p1.bin" zip="sengoku3.zip:261-*"
 FatalFurySpecial extract-filter="$(extract-root)/neogeo.zip $(extract-root)/fatfursp.zip" inner-package="neogeo.zip fatfursp.zip" emu-name="fatfursp" chext="058-*:.bin" zip="fatfursp.zip:058-*"
 RealBoutFatalFury2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/rbff2.zip" inner-package="neogeo.zip rbff2.zip" emu-name="rbff2" chext="240-*:.bin" zip="rbff2.zip:240-*"
-
+GarouMarkOfTheWolves extract-filter="$(extract-root)/neogeo.zip $(extract-root)/garou.zip" inner-package="neogeo.zip garou.zip" emu-name="garou" chext="253-*:.bin" zip="garou.zip:253-*"
+TheLastBlade extract-filter="$(extract-root)/neogeo.zip $(extract-root)/lastblad.zip" inner-package="neogeo.zip lastblad.zip" emu-name="lastblad" chext="234-*:.bin" zip="lastblad.zip:234-*"
+TheLastBlade2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/lastblad2.zip" inner-package="neogeo.zip lastblad2.zip" emu-name="lastblad2" chext="240-*:.bin" zip="lastblad2.zip:240-*"
+TwinkleStarSprites extract-filter="$(extract-root)/neogeo.zip $(extract-root)/twinspri.zip" inner-package="neogeo.zip twinspri.zip" emu-name="twinspri" chext="224-*:.bin" zip="twinspri.zip:224-*"
 
 
 #MSDOS platform 
@@ -222,6 +226,9 @@ TeenAgent
 TheDig
 Bladerunner
 
+
+
+
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 # windows via wine
 99LevelsToHell  
@@ -233,6 +240,7 @@ AncientEnemy
 AnomalyDefenders  
 AnomalyWarzoneEarth
 Aragami
+ArtOfFighting exec="aof.exe"
 ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Ascendant 
 BadNorth
@@ -240,6 +248,7 @@ Ballance vdesk=y warn="This game installs in a virtual desktop because it has is
 Battlevoid  
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 BionicDues
+BlazingStar exec="blazstar.exe"
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
 BloodrayneBetrayal
@@ -297,6 +306,7 @@ FTL
 GalacticAssault  
 GalacticCivilizations1  exec="galciv.exe" vdesk=y
 GalaxySquad 
+GarouMarkOfTheWolves exec="GarouApp.exe"
 Gothic warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 GroundControl 
 HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
@@ -412,6 +422,8 @@ TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(dr
 Tempest 
 TerminalVelocity 
 TheGuild  
+TheLastBlade exec=LastBlade.exe
+TheLastBlade2 exec=LastBlade2App.exe
 TheSwindle 
 Thief  exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Thief2  
