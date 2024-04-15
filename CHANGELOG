@@ -1,3 +1,8 @@
+v9.2 (2024-04-15)
+    * fixes to things broken in 9.1
+    * add modern mame, as well as old xmame to platforms
+    * add more gog neogeo games
+
 v9.1 (2024-04-14)
     * Detect desktop files that ask us to run sommelier again, and refuse. This prevents fork bombs
     * Support 'custom args' for emulators
