@@ -102,8 +102,8 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 Name=CopyStr(Name, ptr);
                 StripQuotes(Name);
                 SetVar(Act->Vars, "emulator", Name);
-								GetToken(Name, "\\S", &Token, 0);
-								SetVar(Act->Vars, "required_emulator", GetBasename(Token));	
+                GetToken(Name, "\\S", &Token, 0);
+                SetVar(Act->Vars, "required_emulator", GetBasename(Token));
             }
             else if (strcasecmp(Name,"Path")==0)
             {

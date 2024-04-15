@@ -135,18 +135,22 @@ char *PlatformEmulatorSelect(char *RetStr,  const char *Emulators, const char *R
     char *EmuName=NULL;
     const char *ptr;
 
+    RetStr=CopyStr(RetStr, "");
     ptr=GetToken(Emulators, ",", &EmuInvoke, 0);
     while (ptr)
     {
         GetToken(EmuInvoke, "\\S", &EmuName, 0);
-        if ( (! StrValid(RequiredEmulator)) || (strcmp(RequiredEmulator, EmuName)==0) )
+        if (StrValid(EmuName))
         {
-            Tempstr=FindFileInPath(Tempstr, EmuName, getenv("PATH"));
-            if (StrValid(Tempstr))
+            if ( (! StrValid(RequiredEmulator)) || (strcmp(RequiredEmulator, EmuName)==0) )
             {
-                //don't copy the executable name, copy the entire emulator invoke action
-                RetStr=CopyStr(RetStr, EmuInvoke);
-                break;
+                Tempstr=FindFileInPath(Tempstr, EmuName, getenv("PATH"));
+                if (StrValid(Tempstr))
+                {
+                    //don't copy the executable name, copy the entire emulator invoke action
+                    RetStr=CopyStr(RetStr, EmuInvoke);
+                    break;
+                }
             }
         }
         ptr=GetToken(ptr, ",", &EmuInvoke, 0);
@@ -223,23 +227,23 @@ void PlatformsList()
         Plat=(TPlatform *) Curr->Item;
         aliases=GetToken(Curr->Tag, ",", &Name, 0);
 
-				EmuList=CopyStr(EmuList, "");
-				ptr=GetToken(Plat->Emulators, ",", &Token, GETTOKEN_QUOTES);
-				while (ptr)
-				{
-				GetToken(Token, "\\S", &Item, GETTOKEN_QUOTES);
-				EmuList=MCatStr(EmuList, GetBasename(Item), " ", NULL);
-				ptr=GetToken(ptr, ",", &Token, GETTOKEN_QUOTES);
-				}
-				
-				ArgList=CopyStr(ArgList, "");
-				ptr=GetToken(Plat->Args, "\\S", &Token, GETTOKEN_QUOTES);
-				while (ptr)
-				{
-				GetToken(Token, ":", &Item, 0);
-			  ArgList=MCatStr(ArgList, "-", Item, " ", NULL);	
-				ptr=GetToken(ptr, "\\S", &Token, GETTOKEN_QUOTES);
-				}
+        EmuList=CopyStr(EmuList, "");
+        ptr=GetToken(Plat->Emulators, ",", &Token, GETTOKEN_QUOTES);
+        while (ptr)
+        {
+            GetToken(Token, "\\S", &Item, GETTOKEN_QUOTES);
+            EmuList=MCatStr(EmuList, GetBasename(Item), " ", NULL);
+            ptr=GetToken(ptr, ",", &Token, GETTOKEN_QUOTES);
+        }
+
+        ArgList=CopyStr(ArgList, "");
+        ptr=GetToken(Plat->Args, "\\S", &Token, GETTOKEN_QUOTES);
+        while (ptr)
+        {
+            GetToken(Token, ":", &Item, 0);
+            ArgList=MCatStr(ArgList, "-", Item, " ", NULL);
+            ptr=GetToken(ptr, "\\S", &Token, GETTOKEN_QUOTES);
+        }
 
         printf("%-15s  aliases: %-20s   emulators: %-20s  args: %s\n", Name, aliases, EmuList, ArgList);
         Curr=ListGetNext(Curr);
@@ -316,20 +320,16 @@ char *PlatformFindEmulator(char *RetStr, const char *PlatformName, const char *E
         Curr=ListGetNext(Curr);
     }
 
-    if (StrValid(Emulators))
+    switch (PlatformType(PlatformName))
     {
-        if (! StrValid(Emulators)) RetStr=CopyStr(RetStr, "");
-        else switch (PlatformType(PlatformName))
-            {
-            case PLATFORM_LINUX32:
-            case PLATFORM_LINUX64:
-                RetStr=CopyStr(RetStr, Emulators);
-                break;
+    case PLATFORM_LINUX32:
+    case PLATFORM_LINUX64:
+        RetStr=CopyStr(RetStr, "");
+        break;
 
-            default:
-                RetStr=PlatformEmulatorSelect(RetStr, Emulators, Emulator);
-                break;
-            }
+    default:
+        if (StrValid(Emulators)) RetStr=PlatformEmulatorSelect(RetStr, Emulators, Emulator);
+        break;
     }
 
     Destroy(Emulators);
