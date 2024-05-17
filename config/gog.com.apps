@@ -245,7 +245,8 @@ ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has 
 Ascendant 
 BadNorth
 Ballance vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Battlevoid  
+Battlevoid
+BeatHazardUltra  
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 BionicDues
 BlazingStar exec="blazstar.exe"
@@ -289,6 +290,7 @@ DungeonSouls  exec="DungeonSouls.exe"
 Duskers  
 ElderScrollsMorrowind 
 EmperorOfTheFadingSuns  vdesk=y
+EndlessSpace exec="Endless space.exe"
 Etherlords  
 EuropaUniversalis   exec="europa.exe"
 EuropaUniversalis2  exec="eu2.exe"
@@ -320,6 +322,7 @@ HeroOfTheKingdom2
 Hexplore  exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 HitmanCodename47  
 HotlineMiami  exec="HotlineLauncher.exe"
+HoverAce
 Huniepop 
 Imperialism  
 IndustryGiant2  exec="ig2_Addon.exe"
@@ -344,8 +347,8 @@ MortalGlory winmanager=n
 MortalKombat4  exec="mk4.exe"
 MotoRacer2 platform=windows exec="moto.exe"
 MotoRacer3 platform=windows exec="MotoRacer3.exe" warn="You must turn on 'no intro' in the 'display' tab of the launcher, or the game will freeze on startup"
-Nexus  exec=nexus.exe
 NeoScavenger 
+Nexus  exec=nexus.exe
 Nox  warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 OffworldResourceBase  exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
 OriginalWar  exec=Owar.exe
@@ -366,6 +369,7 @@ Praetorians
 PrisonArchitect  exec="Prison Architect.exe"
 PunchClub
 RaceTheSun  
+RaidenLegacy
 RailroadTycoon3 
 RageOfMages  exec="rom.exe"
 RCCars  ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
