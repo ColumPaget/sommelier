@@ -322,6 +322,8 @@ char *PlatformFindEmulator(char *RetStr, const char *PlatformName, const char *E
 
     switch (PlatformType(PlatformName))
     {
+    case PLATFORM_GOGLINUX:
+    case PLATFORM_GOGLINUX64:
     case PLATFORM_LINUX32:
     case PLATFORM_LINUX64:
         RetStr=CopyStr(RetStr, "");

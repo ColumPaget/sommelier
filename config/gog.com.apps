@@ -27,6 +27,7 @@ DarkestDungeon:CrimsonCourt  dlc parent=DarkestDungeon
 DarkestDungeon:ColorOfMadness  dlc parent=DarkestDungeon
 Darwinia 
 Defcon  warn="This game has been seen to fail on some linux platforms"
+DemonLordReincarnation
 Deadnaut  exec="Deadnaut.x86"
 DoorKickers  
 Duskers  exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
@@ -72,6 +73,7 @@ Tangledeep
 TheWestportIndependent  exec=the_westport_independent
 TrainValley  exec="train-valley.x86" exec64="train-valley.x86_64"
 Transistor  exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
+VoidScrappers
 WayOfTheSamurai 
 
 
@@ -108,6 +110,7 @@ SkullsOfTheShogun
 SlayTheSpire  exec64="SlayTheSpire"
 StardewValley  exec64="StardewValley"
 Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
+StreetsOfRage4 exec="SOR4"
 
 
 #setup_snk_40th_anniversary_collection_1016_(64bit)_(45677).exe:Zone.Identifier
@@ -463,11 +466,15 @@ XComInterceptor exec="Interceptor.exe"
 # 64-bit windows/wine only
 * category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AltFrequencies 
+ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe"
 BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 DeepSkyDerelicts 
+DefendTheRook exec="Defend the Rook.exe"
 FlashOut3D
 Furi
+Nadir exec="Nadir.exe"
+Necrosmith exec="Necrosmith.exe"
 NomadsOfTheDriftland exec="Nomads.exe"
 OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
 OutThere  exec=outthereomega.exe
