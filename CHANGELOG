@@ -1,3 +1,7 @@
+v9.3 (2024-05-23)
+    * fix regression that prevents installing gog:linux games
+    * add more gog games, including Streets of Rage 4, Endless Space, Nadir, Beat Hazard Ultra
+
 v9.2 (2024-04-15)
     * fixes to things broken in 9.1
     * add modern mame, as well as old xmame to platforms
