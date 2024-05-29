@@ -83,6 +83,7 @@ TAction *ActionCreate(int Type, const char *Name);
 void ActionDestroy(TAction *Act);
 int CompareSha256(TAction *Act);
 
+
 int IdentifyFileType(const char *Path, int ForcedFileType);
 
 //Some installers fork into background, perhaps calling 'setsid', which means we
@@ -93,5 +94,6 @@ void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig);
 
 int ParseBool(const char *Value);
 int GetBoolVar(ListNode *Vars, const char *Name);
+char *GlobNoCase(char *RetStr, const char *Dir, const char *Name);
 
 #endif

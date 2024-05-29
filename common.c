@@ -200,3 +200,28 @@ int GetBoolVar(ListNode *Vars, const char *Name)
 {
     return(ParseBool(GetVar(Vars, Name)));
 }
+
+
+char *GlobNoCase(char *RetStr, const char *Dir, const char *Name)
+{
+char *Tempstr=NULL;
+glob_t Glob;
+int i;
+
+RetStr=CopyStr(RetStr, "");
+Tempstr=MCopyStr(Tempstr, Dir, "/*", NULL);
+glob(Tempstr, 0, 0, &Glob);
+for (i=0; i < Glob.gl_pathc; i++)
+{
+	if (strcasecmp(Name, GetBasename(Glob.gl_pathv[i]))==0)
+	{
+		RetStr=CopyStr(RetStr, Glob.gl_pathv[i]);
+		break;
+	}
+}
+globfree(&Glob);
+
+Destroy(Tempstr);
+
+return(RetStr);
+}

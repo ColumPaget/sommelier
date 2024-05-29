@@ -2,7 +2,8 @@
 * category='Graphics;3DGraphics'
 Ayam platform=linux32 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux32.tar.gz/download exec=ayam comment='3D Modeller' download-type='tar.gz' sha256=e40f35dcb65d5293926431feb626306b749cf0789d5584071fd4cd196ffddf1f
 Ayam platform=linux64 url=https://sourceforge.net/projects/ayam/files/Ayam/1.29/ayam-1.29.linux64.tar.gz/download exec=ayam comment='3D Modeller' download-type='tar.gz'
-
+Blender platform=linux64 url=https://download.blender.org/release/Blender4.1/blender-4.1.1-linux-x64.tar.xz download-type='tar.xz' sha256=ab2ea3fe991601a5e6bd2cda786ecaa919c0b39e0550e59978b5d40270c260d3 exec=blender-launcher
+Blender platform=linux32 url=https://download.blender.org/release/Blender2.80/blender-2.80-linux-glibc224-i686.tar.bz2 download-type='tar.xz' sha256=6480de81157c485f636e9b696ac21153d43e906c907ad4b02952c4de664e9c07 exec=blender-launcher
 
 * category='Graphics;2DGraphics'
 LazPaint platform=linux32 url=extracted:https\://github.com/bgrabitmap/lazpaint/releases/latest:/*/releases/download/*/lazpaint*_linux32_no_install.tar.gz exec='lazpaint' download-type='tar.gz' comment='Paint Program'  
@@ -87,6 +88,7 @@ Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball do
 Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='e20950c7b6b07d6d4b46725238659e8ca4b504fb096c3b9cac4f207e4df3987a' 
 Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='d96596a54b67a9838571e5513144b200a575c067edfe0185a202b8c7097399d9' 
 
+
 * category='FileTransfer;Network'
 FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
 FileZilla platform=linux64 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*x86_64-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
@@ -142,9 +144,10 @@ DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecm
 DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
 
 * category='Roguelike;Roleplaying;Game'
-TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
-TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' category='Game' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
-
+TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
+TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
+UnRealWorld platform=linux32 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-i686-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
+UnRealWorld platform=linux64 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-x86_64-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
 
 * category='Game'
 TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60
@@ -152,6 +155,7 @@ Xump platform=linux32 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar
 Xump platform=linux64 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64
 Hermes platform=linux32 url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes
 Hermes platform=linux64 url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
+Taisei platform=linux64 url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei
 
 * category='Notes;Office;Utility'
 SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz sha256=6df10d5f29d3cdacae437b35b3cc5e102150b8b4714711f95b8a8f667496c173

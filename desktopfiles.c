@@ -22,16 +22,19 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
 
 static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
 {
-    char *Tempstr=NULL, *Path=NULL;
-    const char *SearchPath="$(homedir)/.local/share/applications/$(name).desktop:/opt/share/applications/$(name).desktop";
+    char *Tempstr=NULL, *Path=NULL, *Dir=NULL, *FName=NULL;
+    const char *SearchPath="$(homedir)/.local/share/applications/:/opt/share/applications/";
     const char *ptr;
 
     RetStr=CopyStr(RetStr, "");
+		FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
     ptr=GetToken(SearchPath, ":", &Path, 0);
     while (ptr)
     {
-        Tempstr=SubstituteVarsInString(Tempstr, Path, Act->Vars, 0);
-        if (access(Tempstr, F_OK)==0)
+        Dir=SubstituteVarsInString(Dir, Path, Act->Vars, 0);
+			
+				Tempstr=GlobNoCase(Tempstr, Dir, FName);
+        if (StrValid(Tempstr))
         {
             RetStr=CopyStr(RetStr, Tempstr);
             break;
@@ -40,7 +43,9 @@ static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
     }
 
     Destroy(Tempstr);
+    Destroy(FName);
     Destroy(Path);
+    Destroy(Dir);
 
     return(RetStr);
 }

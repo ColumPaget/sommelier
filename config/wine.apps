@@ -16,7 +16,7 @@ DotNet48 url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55
 #Basilisk url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
 Basilisk url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
 K-Meleon url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.18.2/win32/$(locale)/seamonkey-2.53.18.2.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' os-version=winxp warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
+SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.18.2/win32/$(locale)/seamonkey-2.53.18.2.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
 SlimBrowser url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
 PaleMoon url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
 OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
@@ -265,7 +265,6 @@ BeerSmith url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="Thi
 SimpleNote url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-win-2.21.0.exe exec=Simplenote.exe sha256=a3f26f4d0d196b152da5cfcafb72ac2f3e82e5041009a20f6958c43f9f478cd8
 EssentialPIM url=https://www.essentialpim.com/download/EssentialPIM.exe dlname=EssentialPIMInstaller.exe exec=EssentialPIM.exe sha256=a780d775936fe73c19af8d39bc5dda5e2ebc15cc54f3f0f7243d7af1a97f8e1e
 
-
 * category='Chess;BoardGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 ArenaChess url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
 Arasan url=https://archive.org/download/ARASAN32/ARASAN32.zip version='3.0' exec='ARASAN32.EXE' sha256='cf7742e7b0e3e00f063bb7b743dfbd4683f9ef40320a3e1e15fb0ad01fd365d7' installer='SETUP.EXE' installer-vdesk='Y' comment='Chess Program' 
@@ -364,5 +363,4 @@ Zektor url=http://www.tardis.dk/dlcount/click.php?id=17 donate=http://tardis.dk/
 NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' 
 KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
 Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
-
 
