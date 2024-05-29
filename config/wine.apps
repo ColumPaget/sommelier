@@ -1,8 +1,8 @@
 * category='library' platform=windows
 TimesNewRoman url=https://sourceforge.net/projects/corefonts/files/the%20fonts/final/times32.exe/download sha256='db56595ec6ef5d3de5c24994f001f03b2a13e37cee27bc25c58f6f43e8f807ab' 
-MFC url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vcredist.exe' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
+MFC url=https://download.microsoft.com/download/1/9/f/19fe4660-5792-4683-99e0-8d48c22eed74/Vs6sp6.exe installer='Vs6sp6.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install-stage2='vcredist.exe' sha256='7fa1d1778824b55a5fceb02f45c399b5d4e4dce7403661e67e587b5f455edbf3' 
 VB5 url=http://download.microsoft.com/download/vb50pro/utility/1/win98/en-us/msvbvm50.exe sha256='b5f8ea5b9d8b30822a2be2cdcb89cda99ec0149832659ad81f45360daa6e6965' 
-VB6 url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install_stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' 
+VB6 url=https://download.microsoft.com/download/5/a/d/5ad868a0-8ecd-4bb0-a882-fe53eb7ef348/VB6.0-KB290887-X86.exe installer='VB6.0-KB290887-X86.exe' installer-args='/T:"C:\\$(exec-dir)" /c /q' install-stage2='vbrun60sp6.exe' sha256='467b5a10c369865f2021d379fc0933cb382146b702bbca4bcb703fc86f4322bb' 
 MSXML3 url=http://repository.playonlinux.com/divers/msxml3.msi dll-overrides='msxml3' sha256='f9c678f8217e9d4f9647e8a1f6d89a7c26a57b9e9e00d39f7487493dd7b4e36c' 
 MSXML6 url=https://download.microsoft.com/download/2/e/0/2e01308a-e17f-4bf9-bf48-161356cf9c81/msxml6.msi sha256='1b71b104d7491a719ba360f5fa5b07b50255153c4ce20e35ae13ce151b95b01e' 
 MSVC2017 url=https://download.microsoft.com/download/c/d/e/cde87cf8-8cb7-4602-bcda-88bfe9179a8c/vc_redist.x86.exe
@@ -114,10 +114,10 @@ Fragmotion url=http://www.fragmosoft.com/fragMOTION/fragmotion_134.zip version='
 DragonBones url=https://tool.egret-labs.org/DragonBonesPro/DragonBonesPro-v5.6.3.exe exec=DragonBonesPro.exe sha256=
 
 * category='ImageViewer;Viewer;Graphics' platform=windows
-IfranView url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
-Faststone url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' 
-XnView exec=XnView.exe  url=https://download.xnview.com/XnView-win.zip sha256=97F26CF05604972F91C6BC218F57C0F044DB67144BCEE7FC5D09BCD44F4DD083
-XnViewMP exec=XnView.exe  url=https://download.xnview.com/XnViewMP-win.zip 
+IrfanView url=http://download.betanews.com/download/967963863-1/iview451_setup.exe comment='Lightweight Image Viewer' sha256='0a5400988954ec933edac01b8822f9937bb0b6bf2b1337b69cb3347bca375db2' exec='i_view32.exe' 
+Faststone url=http://www.faststonesoft.net/DN/FSViewerSetup65.exe comment='Very Advanced Image Viewer' sha256='69a355c656a325ae6b2310ca1c42434e141703cfae5f6275272c7f20a4838af9' icon=FSLogo.png
+XnView exec=XnView.exe  url=https://download.xnview.com/XnView-win.zip 
+XnViewMP exec=XnView.exe  url=https://download.xnview.com/XnViewMP-win.zip icon=xnview_2.png
 VallenJpegger url=http://jpegger.de/jpsetup.exe exec=jpegger.exe warn='This program auto-runs on install, so install will not complete until the application is closed"
 PhotoView url=http://www.mitec.cz/Downloads/PhotoView.zip
 FreeVImager url=https://www.contaware.com/downloads/latest/FreeVimager/english/FreeVimager-9.9.23-Portable.exe install-type=executable sha256=eda687c324f4882ba136850e837dbd77abdedeeb333798490561dbe68b7f4563

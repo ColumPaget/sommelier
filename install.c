@@ -12,61 +12,81 @@
 #include "uninstall.h"
 
 
-
-
-static void RunInstallers(TAction *Act)
+static void RunInstallerForPlatform(TAction *Act, const char *Path, const char *Args)
 {
-    const char *ptr;
     char *Tempstr=NULL, *Cmd=NULL, *CmdConfig=NULL;
-    int RegFlags=0;
+    const char *ptr;
 
+     if (StrValid(Path))
+	{
     if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
     else CmdConfig=CopyStr(CmdConfig, "outnull");
 
-    ptr=GetVar(Act->Vars, "installer-vdesk");
-    if (StrValid(ptr))
-    {
-        if (Config->Flags & FLAG_DEBUG) printf("Running installer in a virtual desktop\n");
-        RegFlags |= REG_VDESK;
-    }
 
-    if (RegFlags) RegEdit(Act, RegFlags, NULL, NULL, NULL);
-
-    ptr=GetVar(Act->Vars, "installer-path");
-    printf("INSTALLER PATH: %s %d\n", ptr, Act->PlatformID);
-    if (StrValid(ptr))
-    {
+        SetVar(Act->Vars, "run-installer-path", Path);
+        SetVar(Act->Vars, "run-installer-args", Args);
         switch (Act->PlatformID)
         {
         case PLATFORM_DOS:
-            Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(installer-path)' $(installer-args)", Act->Vars, 0);
-            printf("RUN INSTALLER: %s\n",Tempstr);
-            Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-            RunProgramAndConsumeOutput(Cmd, CmdConfig);
+            Tempstr=SubstituteVarsInString(Tempstr, "dosbox '$(run-installer-path)' $(run-installer-args)", Act->Vars, 0);
             break;
 
         case PLATFORM_WINDOWS:
         //windos has windows installer but msdos (Dosbox) executable
         case PLATFORM_GOGWINDOS:
-            ptr=strrchr(ptr, '.');
-            if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine msiexec /i '$(installer-path)' $(installer-args)", Act->Vars, 0);
-            else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine '$(installer-path)' $(installer-args)", Act->Vars, 0);
+            ptr=strrchr(Path, '.');
+            if (ptr && (strcmp(ptr, ".msi")==0)) Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine msiexec /i '$(run-installer-path)' $(run-installer-args)", Act->Vars, 0);
+            else Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) WINEDLLOVERRIDES=\"mscoree,mshtml=\" wine '$(run-installer-path)' $(run-installer-args)", Act->Vars, 0);
+            break;
 
-            printf("RUN INSTALLER: %s    in %s\n",Tempstr, get_current_dir_name());
-            Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-            RunProgramAndConsumeOutput(Cmd, CmdConfig);
+        default:
+            Tempstr=SubstituteVarsInString(Tempstr, "'$(run-installer-path)' $(run-installer-args)", Act->Vars, 0);
             break;
         }
-    }
 
-    ptr=GetVar(Act->Vars, "install_stage2");
+        Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
+        printf("RUN INSTALLER: %s    in %s\n", Cmd, get_current_dir_name()); fflush(NULL);
+        RunProgramAndConsumeOutput(Cmd, CmdConfig);
+      }
+
+    Destroy(CmdConfig);
+    Destroy(Tempstr);
+    Destroy(Cmd);
+}
+
+
+
+static void RunInstallers(TAction *Act)
+{
+    char *Tempstr=NULL, *Path=NULL, *Args=NULL;
+    const char *ptr;
+    int RegFlags=0;
+
+    //only run main installer if it actually exists
+    //even if it doesn't though, there might be a stage-2 installer contained within a zip etc
+    ptr=GetVar(Act->Vars, "installer-path");
     if (StrValid(ptr))
     {
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "prefix"), ptr);
-        SetVar(Act->Vars, "installer-path", Tempstr);
-        Cmd=SubstituteVarsInString(Cmd, "WINEPREFIX=$(prefix) wine '$(installer-path)'", Act->Vars, 0);
-        printf("RUN INSTALL STAGE2: %s\n", Cmd);
-        RunProgramAndConsumeOutput(Cmd, CmdConfig);
+        ptr=GetVar(Act->Vars, "installer-vdesk");
+        if (StrValid(ptr))
+        {
+            if (Config->Flags & FLAG_DEBUG) printf("Running installer in a virtual desktop\n");
+            RegFlags |= REG_VDESK;
+        }
+
+        if (RegFlags) RegEdit(Act, RegFlags, NULL, NULL, NULL);
+
+	Path=CopyStr(Path, GetVar(Act->Vars, "installer-path"));
+	Args=CopyStr(Args, GetVar(Act->Vars, "installer-args"));
+        RunInstallerForPlatform(Act, Path, Args);
+    }
+
+    ptr=GetVar(Act->Vars, "install-stage2");
+    if (StrValid(ptr))
+    {
+        Path=FindSingleFile(Path, GetVar(Act->Vars, "prefix"), ptr);
+	Args=CopyStr(Args, GetVar(Act->Vars, "stage2-args"));
+        RunInstallerForPlatform(Act, Path, Args);
     }
 
     if (Act->PlatformID==PLATFORM_WINDOWS)
@@ -80,9 +100,9 @@ static void RunInstallers(TAction *Act)
         RegEdit(Act, RegFlags, NULL, NULL, NULL);
     }
 
-    Destroy(CmdConfig);
     Destroy(Tempstr);
-    Destroy(Cmd);
+    Destroy(Path);
+    Destroy(Args);
 }
 
 
@@ -131,10 +151,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 
     //if there's a package within the package, this will unpack it
     PackageUnpackInner(Act, GetVar(Act->Vars, "inner-package"), ForcedFileType, GetVar(Act->Vars, "inner-extract"));
-
-    //if the package contained an installer program within it then  we run that
-    ptr=GetVar(Act->Vars, "installer-path");
-    if (StrValid(ptr)) RunInstallers(Act);
+    RunInstallers(Act);
 
     Destroy(Tempstr);
     Destroy(FilesToExtract);
@@ -360,7 +377,7 @@ static void PostProcessLinkExt(TAction *Act, const char *PostProc)
         {
             ptr=Glob.gl_pathv[i];
             if (Config->Flags & FLAG_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
-	    link(ptr, To);
+            link(ptr, To);
         }
     }
 
@@ -441,13 +458,13 @@ static void PostProcessZip(TAction *Act, const char *PostProc)
         ptr=GetToken(Tempstr, ":", &Value, GETTOKEN_QUOTES);
         Zip=MCopyStr(Zip, "zip ", Value, " ", ptr, NULL);
         printf("packing into zip: %s'\n", Zip);
-	Tempstr=MCopyStr(Tempstr, "cmd:", Zip, NULL);
-	S=STREAMOpen(Tempstr, "rw setsid");
-	if (S)
-	{
-	Tempstr=STREAMReadDocument(Tempstr, S);
-	STREAMClose(S);
-	}
+        Tempstr=MCopyStr(Tempstr, "cmd:", Zip, NULL);
+        S=STREAMOpen(Tempstr, "rw setsid");
+        if (S)
+        {
+            Tempstr=STREAMReadDocument(Tempstr, S);
+            STREAMClose(S);
+        }
     }
 
     Destroy(Tempstr);
@@ -499,17 +516,21 @@ static void PostProcessInstall(TAction *Act)
 void InstallFindIcon(TAction *Act)
 {
     ListNode *Founds, *Curr;
+    char *Tempstr=NULL;
 
     if (StrValid(GetVar(Act->Vars, "app-icon"))) return;
 
     Founds=ListCreate();
-    FindFiles(GetVar(Act->Vars, "drive_c"), GetVar(Act->Vars, "icon"), "", Founds);
+    FindFiles(GetVar(Act->Vars, "install-dir"), GetVar(Act->Vars, "icon"), "", Founds);
     Curr=ListGetNext(Founds);
     if (Curr)
     {
+	Tempstr=MCopyStr(Tempstr, "~g~eFound AppIcon: ~w", Curr->Item, "~0\n", NULL);
+        TerminalPutStr(Tempstr, NULL);
         SetVar(Act->Vars, "app-icon", Curr->Item);
     }
     ListDestroy(Founds, Destroy);
+    DestroyString(Tempstr);
 }
 
 
@@ -784,6 +805,7 @@ static void InstallSingleItem(TAction *Act)
             (Act->Flags & FLAG_DOWNLOADED)
         )
         {
+	    printf("Remove installer: %s\n", Act->SrcPath);
             unlink(Act->SrcPath);
         }
 

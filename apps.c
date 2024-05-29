@@ -125,6 +125,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
+            else if (strcasecmp(Name,"install_stage2")==0) SetVar(Act->Vars, "install-stage2", Value); 
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
@@ -389,7 +390,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
     Curr=ListGetNext(Apps);
     while (Curr)
     {
-        if (StrValid(Curr->Tag) && (strcmp(App->Name, Curr->Tag)==0))
+        if (StrValid(Curr->Tag) && (strcasecmp(App->Name, Curr->Tag)==0))
         {
             AppConfig=(TAction *) Curr->Item;
 

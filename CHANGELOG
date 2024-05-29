@@ -1,3 +1,8 @@
+v9.4 (2024-05-29)
+    * support '2 stage installers' for linux and dos installs
+    * added linux webbrowsers, Chrome, UngoogledChrome, SRwareIron and Midori
+    * report when app-icon is found during install
+
 v9.3 (2024-05-23)
     * fix regression that prevents installing gog:linux games
     * add more gog games, including Streets of Rage 4, Endless Space, Nadir, Beat Hazard Ultra

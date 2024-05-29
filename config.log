@@ -221,7 +221,7 @@ configure:3719: checking for GetToken in -lUseful-5
 configure:3753: result: yes
 configure:3765: checking for SSL_library_init in -lssl
 configure:3790: gcc -o conftest -g -O2   conftest.c -lssl  -lUseful-5  >&5
-/usr/bin/ld: /tmp/ccZ2srxN.o: in function `main':
+/usr/bin/ld: /tmp/cc5lxFfM.o: in function `main':
 /home/colum/sommelier/conftest.c:33: undefined reference to `SSL_library_init'
 collect2: error: ld returned 1 exit status
 configure:3790: $? = 1
@@ -265,7 +265,7 @@ configure: failed program was:
 configure:3799: result: no
 configure:3810: checking for EVP_CIPHER_CTX_init in -lcrypto
 configure:3835: gcc -o conftest -g -O2   conftest.c -lcrypto  -lUseful-5  >&5
-/usr/bin/ld: /tmp/cc4u1uK4.o: in function `main':
+/usr/bin/ld: /tmp/ccaPmHZi.o: in function `main':
 /home/colum/sommelier/conftest.c:33: undefined reference to `EVP_CIPHER_CTX_init'
 collect2: error: ld returned 1 exit status
 configure:3835: $? = 1
