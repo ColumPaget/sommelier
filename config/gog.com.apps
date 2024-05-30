@@ -473,7 +473,7 @@ DeepSkyDerelicts
 DefendTheRook exec="Defend the Rook.exe"
 FlashOut3D
 Furi
-Nadir exec="Nadir.exe"
+Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
 Necrosmith exec="Necrosmith.exe"
 NomadsOfTheDriftland exec="Nomads.exe"
 OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"

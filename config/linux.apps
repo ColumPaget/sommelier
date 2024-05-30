@@ -110,14 +110,14 @@ Zoom platform=linux64 url=https://zoom.us/client/5.15.0.4063/zoom_x86_64.tar.xz 
 SeaMonkeyMail platform=linux32 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyMail platform=linux64 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 
-* category='Editor'
+* category='TextEditor;Utility'
 SeaMonkeyEdit platform=linux32 exec='seamonkey' exec-args='-edit' comment='HTML Editor bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyEdit platform=linux64 exec='seamonkey' exec-args='-edit' comment='HTML Editor bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+SublimeText platform=linux32 url=https://download.sublimetext.com/sublime_text_3_build_3211_x32.tar.bz2 warn="this is a demo version, goto https://www.sublimehq.com/store/text to purchase a license" sha256=480609962bbbd12128b5332c7831372b8851c13e160512730d1b0a6a835a3071 exec=sublime_text
+SublimeText platform=linux64 url=https://download.sublimetext.com/sublime_text_3_build_3211_x64.tar.bz2 warn="this is a demo version, goto https://www.sublimehq.com/store/text to purchase a license" download-type="tar.bz2" sha256=0b3c8ca5e6df376c3c24a4b9ac2e3b391333f73b229bc6e87d0b4a5f636d74ee exec=sublime_text
 
 
-
-
-*category=Electronics
+*category=Electronics;Utility
 # Arduino platform=linux32 url=https://downloads.arduino.cc/arduino-1.8.13-linux32.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='2233c2fd7cbb01997fabb094c69ec4ef11f70fa4ee532d857e376c7e79e2fa55' 
 # Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.13-linux64.tar.xz download-type='tar.xz' exec='arduino' category='Electronics' comment='Arduino Programming IDE'  sha256='1b20d0ec850a2a63488009518725f058668bb6cb48c321f82dcf47dc4299b4ad' 
 
