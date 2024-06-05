@@ -88,7 +88,6 @@ BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
 DeepSkyDerelicts 
 DokiDokiGravityDive exec="start.sh"
-DiceLegacy
 DiceyDungeons  exec64="diceydungeons"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
@@ -254,6 +253,7 @@ Battlevoid
 BeatHazardUltra  
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 BionicDues
+BladesOfTime
 BlazingStar exec="blazstar.exe"
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
@@ -267,6 +267,7 @@ ChaosOverlords
 Civilization3  exec="Civ3Launcher.exe"
 CombatChess 
 CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
+CosmicStarHeroine exec="CSH.exe"
 CovidTheOutbreak 
 CrusaderKings 
 DangerousWaters exec=LaunchDW.exe
@@ -341,6 +342,7 @@ KingsBounty
 KnightShift  exec="KnightShift.exe"
 Locomotion  exec="LOCO.EXE" vdesk=y
 LordsOfMidnight  exec="Midnight.exe"
+Legend
 MainLining 
 MagicMaker  
 MegaRace3  exec="Megarace3.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
@@ -470,7 +472,6 @@ XComInterceptor exec="Interceptor.exe"
 AltFrequencies 
 ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe"
 BattlestarGalacticaDeadlock
-CosmicStarHeroine exec="CSH.exe"
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 DeepSkyDerelicts 
 DefendTheRook exec="Defend the Rook.exe"
