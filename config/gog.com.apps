@@ -88,6 +88,7 @@ BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
 DeepSkyDerelicts 
 DokiDokiGravityDive exec="start.sh"
+DiceLegacy
 DiceyDungeons  exec64="diceydungeons"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
@@ -104,6 +105,7 @@ OutThere  exec64="outthereomega.x86"
 PrisonArchitect  exec64="PrisonArchitect.sh"
 Pulstar exec64=Pulstar
 RadioCommander  exec64="RC.x86_64"
+ScarletHoodAndTheWickedWood
 Shing  exec64="Shing!.x86_64"
 SilmarisDiceKingdom  exec64="silmaris.x86_64"
 SkullsOfTheShogun
@@ -468,20 +470,26 @@ XComInterceptor exec="Interceptor.exe"
 AltFrequencies 
 ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe"
 BattlestarGalacticaDeadlock
+CosmicStarHeroine exec="CSH.exe"
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 DeepSkyDerelicts 
 DefendTheRook exec="Defend the Rook.exe"
 FlashOut3D
 Furi
+KingOfDragonPass exec="King of Dragon Pass.exe"
+MachinikaMuseum exec="MachinikaMuseum.exe"
 Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
 Necrosmith exec="Necrosmith.exe"
 NomadsOfTheDriftland exec="Nomads.exe"
 OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
-OutThere  exec=outthereomega.exe
-PanzerDragoon 
+OrbitalBullet exec=OrbitalBullet.exe warn="Game runs, but is slow under wine"
+OutThere  exec="outthereomega.exe"
+PanzerDragoon exec='Panzer Dragoon Remake.exe' warn="This game runs, but suffers from bugs and crashes"
+PaqueretteDownTheBunburrows exec='Paquerette Down the Bunburrows.exe' warn="This game has been seen to work on ubuntu wine-6.0.3, but fail on other systems"
 RadioCommander 
 RiseEterna 
 RoadWarden warn="Only the demo version of this game has been tested"
+SNK40thAnniversary exec="SNK40thCollection.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 StarGeneral
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
-Tharsis
+Tharsis exec="tharsis.exe"

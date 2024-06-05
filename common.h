@@ -12,7 +12,7 @@
 #include <glob.h>
 
 
-#define VERSION "9.4"
+#define VERSION "9.5"
 
 
 #define INSTALL_RUN 0
