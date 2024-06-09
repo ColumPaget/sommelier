@@ -32,12 +32,15 @@ Deadnaut  exec="Deadnaut.x86"
 DoorKickers  
 Duskers  exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
 DungeonSouls  exec=runner 
+EndlessSky
 FTL   exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
 FistPuncher   warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
 GalaxySquad 
 Hacknet  working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
 HardWest  
 HandOfFate 
+Halcyon6
+Halcyon6StarbaseCommander
 Hammerwatch  exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
 HeadsWillRoll exec="headswillroll_downfall.sh"
 HeroinesQuest exec="heroine\'squest" exec-args="--windowed"
@@ -48,7 +51,7 @@ Jotun  exec='Jotun.x86' exec64="Jotun.x86_64"
 LegendOfGrimrock  exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
 LostSea 
 MartialLaw exec="martial-law" warn="This game has some graphics problems at certain resolutions"
-MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64"
+MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64" warn="This game runs, but on some systems doesn't respond to any input"
 Monolith  exec=runner
 MotherRussiaBleeds  
 NeoScavenger  exec="NEOScavenger"
@@ -60,9 +63,9 @@ Realpolitiks
 RogueLegacy 
 SepterraCore 
 ShadowrunReturns  exec="Shadowrun.sh"
+ShadowTacticsBladesOfTheShogun exec="Shadow Tactics" warn="This game runs, but on some systems doesn't respond to any input"
 Silver  exec="silver_launcher.sh"
 SpaceCom  exec="SPACECOM.x86"
-Spacechem  exec="spacechem-launcher.sh"
 Starcrawlers  exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
 StarVikingsForever 
 SteamWorldDig  exec="SteamWorldDig"
@@ -75,7 +78,7 @@ TrainValley  exec="train-valley.x86" exec64="train-valley.x86_64"
 Transistor  exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
 VoidScrappers
 WayOfTheSamurai 
-
+VolgarrTheViking exec=Volgarr
 
 
 #64-bit only linux gog games
@@ -87,8 +90,9 @@ BridgeConstructor exec="BridgeConstructor.x86_64"
 BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
 DeepSkyDerelicts 
-DokiDokiGravityDive exec="start.sh"
 DiceyDungeons  exec64="diceydungeons"
+DokiDokiGravityDive exec="start.sh"
+Everspace exec="EverspaceWithShippedLibraries.sh"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
 HeroOfTheKingdom2 
@@ -105,10 +109,12 @@ PrisonArchitect  exec64="PrisonArchitect.sh"
 Pulstar exec64=Pulstar
 RadioCommander  exec64="RC.x86_64"
 ScarletHoodAndTheWickedWood
+Shapez exec64=shapezio
 Shing  exec64="Shing!.x86_64"
 SilmarisDiceKingdom  exec64="silmaris.x86_64"
 SkullsOfTheShogun
 SlayTheSpire  exec64="SlayTheSpire"
+SpaceChem  exec="SpaceChem"
 StardewValley  exec64="StardewValley"
 Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
 StreetsOfRage4 exec="SOR4"
@@ -235,6 +241,7 @@ Bladerunner
 
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 # windows via wine
+1nsane vdesk=y warn="This game runs in a virtual desktop because of issues with window focus and textures at fullscreen"
 99LevelsToHell  
 ABCMurders  
 AgarestGenerationsOfWar 
@@ -244,6 +251,7 @@ AncientEnemy
 AnomalyDefenders  
 AnomalyWarzoneEarth
 Aragami
+Arrow warn="This game has been seen to freeze at startup on some systems/wine versions, though it runs on others"
 ArtOfFighting exec="aof.exe"
 ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Ascendant 
@@ -258,9 +266,13 @@ BlazingStar exec="blazstar.exe"
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
 BloodrayneBetrayal
+CallOfJuarez exec="CoJ.exe"
+CallOfJuarez:BoundInBlood warn="This game cannot play it's video cutscenes. This creates a black screen at startup and at other points in the game. Press 'escape' to break out of thse"
+CallOfJuarez:GunSlinger exec="CoJGunslinger.exe"
 CardaclysmShardsOfTheFour
 Caravan  
 Carcassonne 
+Caveblazers
 CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
 ChaosReborn  
 ChaosOverlords  
@@ -276,9 +288,12 @@ DarkQuest
 DarkQuest2  
 Darkstone  exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 DeadSpace  exec="Dead Space.exe"
+DeathTrap
 Defcon  
 DesertLaw
-DeathTrap
+DeusEx exec="DeusEx.exe"
+DeusEx:HumanRevolution
+DeusEx:InvisibleWar
 DiceyDungeons 
 Diluvion  
 DinsCurse  rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
@@ -315,6 +330,7 @@ GalacticAssault
 GalacticCivilizations1  exec="galciv.exe" vdesk=y
 GalaxySquad 
 GarouMarkOfTheWolves exec="GarouApp.exe"
+GhostMaster
 Gothic warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
 GroundControl 
 HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
@@ -349,7 +365,6 @@ MegaRace3  exec="Megarace3.exe" warn="This game installs in a virtual desktop be
 MiniMetro  exec="Mini Metro.exe"
 Monolith  exec=Monolith.exe
 MoonbaseCommander  exec=moonbase.exe
-MoonHunters 
 MortalGlory winmanager=n
 MortalKombat4  exec="mk4.exe"
 MotoRacer2 platform=windows exec="moto.exe"
@@ -371,6 +386,8 @@ Pod  exec=PODX3Dfx.exe
 PopulousTheBeginning  exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2  exec=PR2.exe
+PrinceOfPersia exec="PrinceOfPersia_Launcher.exe"
+PrinceOfPersia:WarriorWithin warn="You must go to options and TURN OFF FOG or else you won't be able to see anything"
 Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
 Praetorians  
 PrisonArchitect  exec="Prison Architect.exe"
@@ -418,6 +435,8 @@ StarfleetAcademy  vdesk=y os-version=winxp exec="sfa.exe"
 StarsInShadow  
 StarRenegades 
 StarWolves  
+StarWolves2 warn="This game installs but has been seen to have severe performance issues"
+StarWolves3  
 StarVikingsForever 
 StealthBastard  exec="Stealth Bastard Deluxe.exe"
 StreetFighterAlpha  
@@ -444,6 +463,7 @@ ThroneOfDarkness
 TombRaider2
 Torchlight  os-version=winxp
 Torchlight2  os-version=winxp exec=Torchlight2.exe
+TotalOverdose
 TransportGiant2 
 Tropico  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Tropico2  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
@@ -475,6 +495,7 @@ BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 DeepSkyDerelicts 
 DefendTheRook exec="Defend the Rook.exe"
+EndlessSky exec="Endless_Sky-v0.10.6-x86_64.AppImage" warn="This game is an AppImage, you'll need a kernel that supports fuse, squashfs, etc"
 FlashOut3D
 Furi
 KingOfDragonPass exec="King of Dragon Pass.exe"
@@ -491,6 +512,10 @@ RadioCommander
 RiseEterna 
 RoadWarden warn="Only the demo version of this game has been tested"
 SNK40thAnniversary exec="SNK40thCollection.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Shapez exec=shapezio.exe
 StarGeneral
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
 Tharsis exec="tharsis.exe"
+Ultrakill exec="ULTRAKILL.exe" warn="Only the demo version of this game has been tested"
+
+
