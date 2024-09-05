@@ -515,6 +515,7 @@ SNK40thAnniversary exec="SNK40thCollection.exe" vdesk=y warn="This game installs
 Shapez exec=shapezio.exe
 StarGeneral
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
+SwordsAndSandals exec="Swords and Sandals Classic Collection.exe"
 Tharsis exec="tharsis.exe"
 Ultrakill exec="ULTRAKILL.exe" warn="Only the demo version of this game has been tested"
 

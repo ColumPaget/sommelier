@@ -23,6 +23,7 @@ OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-brow
 FireFox url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
 Waterfox url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
+Opera url=https://download.opera.com/download/get/?partner=www&opsys=Windows&arch=i386
 
 Librewolf url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
 Chromium url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
@@ -93,6 +94,7 @@ Rexpaint url=https://www.gridsagegames.com/blogs/files/REXPaint-v1.04.zip sha256
 IconFX url=http://icofx.ro/files/icofxsetup.exe exec='icofx3.exe' comment='Icon Creator' warn='Trial Version' sha256='62acf69bbfb515dc111ece7475812824a1930123930a4221fca3aa7767bf26d3' 
 DrawMe url=http://www.completelyfreesoftware.com/software/drawme.zip exec='DRAWME.EXE' comment='Win3.1 draw' sha256='37914c4f4c4f72f06a366c45eb82fd77ca9edd8c4e7ff2790aad521723ab440e' 
 FireAlpaca url=https://firealpaca.com/download/win comment='Another paint program' sha256='0eeda65cf62173b32e67916da207ddcf57639e079734ba8e811bafe3407ccd32' 
+FireAlpaca url=https://firealpaca.com/download/win comment='Another paint program' sha256='8f44f12abf00556f3f305641eccec2e0a7be35484212c9eab23f34c568355a18' 
 Krita url=https://download.kde.org/stable/krita/4.2.9/krita-x86-4.2.9-setup.exe exec='krita.exe' sha256='c8efe945804ec9f08f019853c60895e390edfeb03bde13874b4d05231c03261d' 
 PaintBuster url=https://archive.org/download/tucows_362047_PaintBuster/PB7Setup.exe licence='Shareware' sha256='83c9aa3dc2a32cc3e24304bf06c82f6043d97b60c0ada9b1d15409a8a7951b03' 
 LazPaint url=https://github.com/bgrabitmap/lazpaint/releases/download/v7.1.6/lazpaint7.1.6_setup_win32_win64.exe sha256='698905dd3483fc5c45c7e6a2e1793e2673d95d97776a4e51bd97c1e28ff20b6b' 
@@ -208,11 +210,9 @@ AudioLab url=http://www.completelyfreesoftware.com/software/alab11d.zip type='WA
 BRELS url=http://breno.sarmen.to/downloads/BRELS-Midi-Editor-v0.08.zip title='BRELS Midi Editor' exec='BRELS-Midi-Editor-v0.08.zip' sha256='a8391bfccefbfe07fd2ce5de81d245389c175588baea1618019144c713d1b4f2' comment='Midi Editor' 
 Caustic url=http://www.singlecellsoftware.com/download/Caustic_3.2.0_installer.exe referer='http://www.singlecellsoftware.com/caustic' sha256='20be4c834c41d9fa6a3da33e30ffd951d2262e067a5fdc4dc833942abcfa834d' comment='Music making studio' 
 FLStudio url=https://support.image-line.com/redirect/FLStudio_Installer?_ga=2.160548221.1563864817.1524342160-1720700824.1524342160 exec='FLStudio_Installer' sha256='9af49763ae3d70211377fc59694d731c94ef928dd308cc5405c0fea39fe60fda' comment='Music making studio' 
-MadTracker url=http://www.tucows.com/download/windows/files/mt261_full.exe version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' comment='Another Modtracker' 
 Mixxx url=https://downloads.mixxx.org/mixxx-2.0.0/mixxx-2.0.0-win32.exe version='2.0.0' exec='mixxx-2.0.0-win32.exe' sha256='3b7ad8078391b502341648f6fa4c7d094fd5eecb804f6f2789da6017bd766665' 
 Mobius url=http://www.circularlabs.com/mobius-2-5.exe version='2.5' exec='mobius-2-5.exe' sha256='85236a14167ef3b1febf23444c350130cbe6a2f8c7c48330b74b54e12536a80d' comment='Sound looper application for music' 
 OcenAudio url=https://www.ocenaudio.com/downloads/index.php/ocenaudio_portable.zip? exec=ocenaudio.exe
-OpenMPT url=https://openmpt.org/download_file.php?file=OpenMPT-1.30.10.00-portable-x86-legacy.zip donate=https://openmpt.org/donate sha256=e3cb6ec26732392e0a7073b004a8f01900f67928f37243c8553632682cbc8cd4
 OpenShot url=https://github.com/OpenShot/openshot-qt/releases/download/v2.6.1/OpenShot-v2.6.1-x86.exe sha256=bc9fe41b693d207e60b037f3a1148b9d81b307ebca7122b699447b6e923ab99e exec=openshot-qt.exe
 Promotion-ng url=https://www.cosmigo.com/wp-content/uploads/pro-motion-ng.exe exec='pro-motion-ng.exe' sha256='d4e23844047e5c623fe62b4a759102016a67aac4a55c8217c9c56d0520f9731c'
 QuartzAudio url=https://archive.org/download/tucows_193505_Quartz_AudioMaster_Freeware/Setupex_QuartzAudioMasterFreewareE.exe sha256='d9e91c837aa78fed5d4572cb3245e078aa33ec7c502849b2498352dcfcbdf467'
@@ -220,6 +220,15 @@ WaveShop url=http://sourceforge.net/projects/waveshop/files/waveshop-1.0.14/wave
 WavePad url=https://www.nch.com.au/components/wpsetup.exe exec=wavepad.exe warn='This Program is only free for personal/non-commercial use"
 Wavosaur url=https://www.wavosaur.com/download/files/Wavosaur.1.3.0.0-x86(en).zip exec='Wavosaur.exe' requires='MFC' sha256='7da27788d2e0fef4b9abedd90626b43b5ebd2d318655fc9748356eded8f51c81' 
 
+* category='ModTracker;AudioVideoEditor;Audio' platform=windows
+MilkyTracker url=https://github.com/milkytracker/MilkyTracker/releases/download/v1.04.00/milkytracker-1.04.00-win32.zip exec=MilkyTracker.exe sha256=8c25d5077d8ba5a585da4cdfaed377f8c1bc6f6b3b9b46ab62ff9ed846524b62
+SchismTracker url=https://github.com/schismtracker/schismtracker/releases/download/20240809/schismtracker-20240809-windows-i686.zip exec=schismtracker.exe sha256=5b65367190cdc7c629b53519487f67910ab44b4c388a2e3521c510b756774217
+FurnaceTracker url=https://github.com/tildearrow/furnace/releases/download/v0.6.7/furnace-0.6.7-win32.zip exec=furnace.exe sha256=a175d0229cf1377bf8d158bba4cc9ad85dab358d96ca9c76481ae1c2575a78b5
+BambooTracker url=https://github.com/BambooTracker/BambooTracker/releases/download/v0.6.3/BambooTracker-v0.6.3-windows-7-32bit.zip exec=BambooTracker.exe sha256=f642f604037375af0b40ea7bc7561f17a76df8a99f6a3559eeffc660a6a69f95
+HivelyTracker url=https://github.com/pete-gordon/hivelytracker/releases/download/V1_9/ht19_win32.zip
+Klystrack url=https://github.com/kometbomb/klystrack/releases/download/1.7.6/klystrack-1.7.6-win32.zip exec=klystrack.exe sha256=74961a3a15b537a681a1db14c9a3429f0ffdd44978518cff6e0dc8c100f3a7ce
+MadTracker url=http://www.tucows.com/download/windows/files/mt261_full.exe version='261' exec='mt261_full.exe' alturl='https://ro.softpedia-secure-download.com/dl/9a0acd3616acc08554385294ab74ab8e/5adba468/100054321/software/MULTIMEDIA/AUDIO/mt261_full.zip' sha256='57e2a03779daf0197ef3ddeca954c4a75b24b93b5d72a62ff3b4b140f6162e75' comment='Another Modtracker' 
+OpenMPT url=https://openmpt.org/download_file.php?file=OpenMPT-1.30.10.00-portable-x86-legacy.zip donate=https://openmpt.org/donate sha256=e3cb6ec26732392e0a7073b004a8f01900f67928f37243c8553632682cbc8cd4
 
 * category='MediaTagEditor;Audio' platform=windows
 Mp3Tag url="https://download.mp3tag.de/mp3tagv321setup.exe" sha256=cdc540b1d3f2f53366bfb97ee6d5e93fcfc07d993251d00d19f29cfa9f2921d3 donate=https://www.mp3tag.de/en/donations.html

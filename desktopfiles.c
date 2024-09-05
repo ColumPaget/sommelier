@@ -27,13 +27,13 @@ static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
     const char *ptr;
 
     RetStr=CopyStr(RetStr, "");
-		FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
+    FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
     ptr=GetToken(SearchPath, ":", &Path, 0);
     while (ptr)
     {
         Dir=SubstituteVarsInString(Dir, Path, Act->Vars, 0);
-			
-				Tempstr=GlobNoCase(Tempstr, Dir, FName);
+
+        Tempstr=GlobNoCase(Tempstr, Dir, FName);
         if (StrValid(Tempstr))
         {
             RetStr=CopyStr(RetStr, Tempstr);

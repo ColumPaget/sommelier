@@ -17,10 +17,10 @@ static void RunInstallerForPlatform(TAction *Act, const char *Path, const char *
     char *Tempstr=NULL, *Cmd=NULL, *CmdConfig=NULL;
     const char *ptr;
 
-     if (StrValid(Path))
-	{
-    if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
-    else CmdConfig=CopyStr(CmdConfig, "outnull");
+    if (StrValid(Path))
+    {
+        if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
+        else CmdConfig=CopyStr(CmdConfig, "outnull");
 
 
         SetVar(Act->Vars, "run-installer-path", Path);
@@ -45,9 +45,10 @@ static void RunInstallerForPlatform(TAction *Act, const char *Path, const char *
         }
 
         Cmd=SubstituteVarsInString(Cmd, Tempstr, Act->Vars, 0);
-        printf("RUN INSTALLER: %s    in %s\n", Cmd, get_current_dir_name()); fflush(NULL);
+        printf("RUN INSTALLER: %s    in %s\n", Cmd, get_current_dir_name());
+        fflush(NULL);
         RunProgramAndConsumeOutput(Cmd, CmdConfig);
-      }
+    }
 
     Destroy(CmdConfig);
     Destroy(Tempstr);
@@ -76,8 +77,8 @@ static void RunInstallers(TAction *Act)
 
         if (RegFlags) RegEdit(Act, RegFlags, NULL, NULL, NULL);
 
-	Path=CopyStr(Path, GetVar(Act->Vars, "installer-path"));
-	Args=CopyStr(Args, GetVar(Act->Vars, "installer-args"));
+        Path=CopyStr(Path, GetVar(Act->Vars, "installer-path"));
+        Args=CopyStr(Args, GetVar(Act->Vars, "installer-args"));
         RunInstallerForPlatform(Act, Path, Args);
     }
 
@@ -85,7 +86,7 @@ static void RunInstallers(TAction *Act)
     if (StrValid(ptr))
     {
         Path=FindSingleFile(Path, GetVar(Act->Vars, "prefix"), ptr);
-	Args=CopyStr(Args, GetVar(Act->Vars, "stage2-args"));
+        Args=CopyStr(Args, GetVar(Act->Vars, "stage2-args"));
         RunInstallerForPlatform(Act, Path, Args);
     }
 
@@ -123,6 +124,12 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
 
     switch (Act->PlatformID)
     {
+    case PLATFORM_LINUX32:
+    case PLATFORM_LINUX64:
+        ptr=strrchr(Act->SrcPath, '.');
+        if (ptr && (strcmp(ptr, ".AppImage")==0)) Act->InstallType=INSTALL_EXECUTABLE;
+        break;
+
     case PLATFORM_SCUMMVM:
         ForcedFileType=FILETYPE_ZIP;
         break;
@@ -525,7 +532,7 @@ void InstallFindIcon(TAction *Act)
     Curr=ListGetNext(Founds);
     if (Curr)
     {
-	Tempstr=MCopyStr(Tempstr, "~g~eFound AppIcon: ~w", Curr->Item, "~0\n", NULL);
+        Tempstr=MCopyStr(Tempstr, "~g~eFound AppIcon: ~w", Curr->Item, "~0\n", NULL);
         TerminalPutStr(Tempstr, NULL);
         SetVar(Act->Vars, "app-icon", Curr->Item);
     }
@@ -805,7 +812,7 @@ static void InstallSingleItem(TAction *Act)
             (Act->Flags & FLAG_DOWNLOADED)
         )
         {
-	    printf("Remove installer: %s\n", Act->SrcPath);
+            printf("Remove installer: %s\n", Act->SrcPath);
             unlink(Act->SrcPath);
         }
 

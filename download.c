@@ -6,7 +6,7 @@
 static void DownloadCallback(const char *URL, int bytes, int total)
 {
     static float last_perc=0;
-    float perc;
+    float perc=0;
     char *ProgBar=NULL;
     int len=0;
 
@@ -27,12 +27,12 @@ static void DownloadCallback(const char *URL, int bytes, int total)
             last_perc=perc;
         }
     }
-    else if ((perc-last_perc) > 10)
+    else if ((last_perc) > 10)
     {
         printf("%s                   \r", ToMetric((double) bytes, 2));
-        perc=0;
+        last_perc=0;
     }
-    else perc++;
+    else last_perc++;
 
     Destroy(ProgBar);
 }
@@ -107,6 +107,46 @@ STREAM *DownloadHTTPOpen(TAction *Act, const char *URL)
 }
 
 
+static char *DownloadGetFileNameFromContentDisposition(char *RetStr, const char *ContentDisposition)
+{
+    char *Name=NULL, *Value=NULL;
+    const char *ptr;
+
+    RetStr=CopyStr(RetStr, "");
+    ptr=GetNameValuePair(ContentDisposition, ";", "=", &Name, &Value);
+    while (ptr)
+    {
+        StripLeadingWhitespace(Name);
+        StripTrailingWhitespace(Name);
+        StripLeadingWhitespace(Value);
+        StripTrailingWhitespace(Value);
+        if (strcasecmp(Name, "filename")==0) RetStr=CopyStr(RetStr, Value);
+        ptr=GetNameValuePair(ptr, ";", "=", &Name, &Value);
+    }
+
+    Destroy(Name);
+    Destroy(Value);
+
+    return(RetStr);
+}
+
+
+static char *DownloadResolveFileName(char *FName, TAction *Act, const char *URL, STREAM *S)
+{
+//get rid of any crap that might be in the name
+    FName=CopyStr(FName, "");
+
+    if (StrValid(Act->DownName)) FName=CopyStr(FName, Act->DownName);
+    else FName=DownloadGetFileNameFromContentDisposition(FName, STREAMGetValue(S, "HTTP:Content-Disposition"));
+
+//if we still haven´t got a filename, then try using the basename of the url
+//must do this even if url proves to be a file on disk, as we will want to ignore it
+//if it's an .exe file, so that we don't mistake it for an installed executable
+    if (! StrValid(FName)) FName=URLBasename(FName, URL);
+
+    return(FName);
+}
+
 
 
 static int DownloadCopyFile(TAction *Act)
@@ -120,20 +160,22 @@ static int DownloadCopyFile(TAction *Act)
     Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
     TerminalPutStr(Tempstr, NULL);
 
-    //must do this even if url proves to be a file on disk, as we will want to ignore it
-    //if it's an .exe file, so that we don't mistake it for and installed exectuable
-    if (! StrValid(Act->DownName)) Act->DownName=URLBasename(Act->DownName, URL);
-    if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
+    if (strncmp(URL, "https:", 6)==0) S=DownloadHTTPOpen(Act, URL);
+    else if (strncmp(URL, "http:", 5)==0) S=DownloadHTTPOpen(Act, URL);
+    else S=STREAMOpen(URL, "r");
 
-
-    if (StrValid(Act->DownName))
+    if (S)
     {
-        if (strncmp(URL, "https:", 6)==0) S=DownloadHTTPOpen(Act, URL);
-        else if (strncmp(URL, "http:", 5)==0) S=DownloadHTTPOpen(Act, URL);
-        else S=STREAMOpen(URL, "r");
+        //we must do this in two steps, because otherise we might be copying
+        //Act->DownName into itself, and that will cause big trouble
+        Tempstr=DownloadResolveFileName(Tempstr, Act, URL, S);
+        Act->DownName=CopyStr(Act->DownName, Tempstr);
 
-        if (S)
+        if (StrValid(Act->DownName))
         {
+printf("Download To: %s\n", Act->DownName);
+
+            if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
             STREAMAddProgressCallback(S, DownloadCallback);
 
             if (StrValid(Config->InstallerCache))
@@ -150,23 +192,24 @@ static int DownloadCopyFile(TAction *Act)
 
             Act->Flags |= FLAG_DOWNLOADED;
             bytes=STREAMCopy(S,  Act->SrcPath);
-            STREAMClose(S);
         }
         else
         {
-            Tempstr=MCopyStr(Tempstr, "~rERROR: failed to download:~0  ", URL, NULL);
+            Tempstr=MCopyStr(Tempstr, "~rERROR: failed to extract basename from:~0  ", URL, NULL);
             TerminalPutStr(Tempstr, NULL);
         }
 
-
-        //terminate 'downloading' message
-        printf("\n");
+        STREAMClose(S);
     }
     else
     {
-        Tempstr=MCopyStr(Tempstr, "~rERROR: failed to extract basename from:~0  ", URL, NULL);
+        Tempstr=MCopyStr(Tempstr, "~rERROR: failed to download:~0  ", URL, NULL);
         TerminalPutStr(Tempstr, NULL);
     }
+
+
+    //terminate 'downloading' message
+    printf("\n");
 
     Destroy(Tempstr);
     Destroy(CurrDir);

@@ -68,8 +68,13 @@ char *FindProgram(char *RetStr, TAction *Act)
     char *Exec=NULL, *Tempstr=NULL;
     const char *ptr;
 
+    if (Act->InstallType == INSTALL_EXECUTABLE) Exec=CopyStr(Exec, Act->SrcPath);
+    else
+    {
     ptr=GetVar(Act->Vars, "exec");
     if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
+    }
+
 
 //full path given to executable, so it must exist at this path
     if (StrValid(Exec) && *Exec == '/')
