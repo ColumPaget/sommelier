@@ -1,4 +1,4 @@
-* platform=turbografx category="Game;Games/Turbografx16
+* platform=turbografx category="Game;Turbografx16"
 
 Alddee url=http://sebastianmihai.com/downloads/alddee/alddee.pce install-type=executable sha256=473898b1c8df0459f4f5bfdee19dcafcbcd3f64845b2deec30ec52f42087f13b
 FractalGenerator url=https://pdroms.de/?__df=231704061104093a200b020c0b003a3a4d280c1606000909040b000a10164c4b1f0c151b191b545d50511b191b56525d525c comment="Not a game, it's a mandlebrot generator"

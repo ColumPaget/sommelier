@@ -1,4 +1,4 @@
-* platform=atarilynx category=Game;Games/AtariLynx
+* platform=atarilynx category=Game;AtariLynx
 
 BastionDemo url=http://enthusi.de/bastion_demo_priorart.zip comment="not a game, but a tech demo" sha256=56c368a0e5a7c0cd3b231a560df3e9c851107d44702954b5c1725ea62c92d224
 Catkanoid url=http://sebastianmihai.com/downloads/catkanoid/catkanoid.lnx

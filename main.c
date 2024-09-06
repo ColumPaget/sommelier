@@ -9,6 +9,7 @@
 #include "command-line.h"
 #include "download.h"
 #include "platforms.h"
+#include "categories.h"
 #include "apps.h"
 #include "run-application.h"
 
@@ -130,6 +131,7 @@ int main(int argc, char *argv[])
 
     Acts=ParseCommandLine(argc, argv);
     PlatformsInit(Config->PlatformsPath);
+    CategoriesLoad(Config->CategoriesPath);
     AppsLoad(Config->AppConfigPath);
 
     Curr=ListGetNext(Acts);
@@ -141,6 +143,7 @@ int main(int argc, char *argv[])
 
         if (Act)
         {
+
             switch (Act->Type)
             {
             case ACT_INSTALL:
@@ -187,6 +190,11 @@ int main(int argc, char *argv[])
             case ACT_LIST_PLATFORMS:
                 PlatformsList();
                 break;
+
+            case ACT_LIST_CATEGORIES:
+                CategoriesList();
+                break;
+
 
             case ACT_DOWNLOAD:
                 if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);

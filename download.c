@@ -173,7 +173,7 @@ static int DownloadCopyFile(TAction *Act)
 
         if (StrValid(Act->DownName))
         {
-printf("Download To: %s\n", Act->DownName);
+            printf("Download To: %s\n", Act->DownName);
 
             if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
             STREAMAddProgressCallback(S, DownloadCallback);

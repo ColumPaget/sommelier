@@ -49,10 +49,15 @@ char *URLBasename(char *RetStr, const char *URL)
 
 int InList(const char *Item, const char *List)
 {
-    char *Match=NULL;
+    char *Match=NULL, *ItemLwr=NULL;
     const char *ptr;
 
     if (! StrValid(Item)) return(FALSE);
+
+    //strlwr everything to handle case
+    ItemLwr=CopyStr(ItemLwr, Item);
+    strlwr(ItemLwr);
+
     ptr=GetToken(List, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
     while (ptr)
     {
@@ -64,14 +69,16 @@ int InList(const char *Item, const char *List)
         {
             if (*Match=='!')
             {
-                if (fnmatch(Match+1, Item, 0) != 0)
+                if (fnmatch(Match+1, ItemLwr, 0) != 0)
                 {
+                    Destroy(ItemLwr);
                     Destroy(Match);
                     return(TRUE);
                 }
             }
-            else if (fnmatch(Match, Item, 0) == 0)
+            else if (fnmatch(Match, ItemLwr, 0) == 0)
             {
+                Destroy(ItemLwr);
                 Destroy(Match);
                 return(TRUE);
             }
@@ -80,6 +87,7 @@ int InList(const char *Item, const char *List)
         ptr=GetToken(ptr, ",|;", &Match, GETTOKEN_QUOTES|GETTOKEN_MULTI_SEP);
     }
 
+    Destroy(ItemLwr);
     Destroy(Match);
 
     return(FALSE);

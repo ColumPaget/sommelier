@@ -1,5 +1,6 @@
 #include "apps.h"
 #include "config.h"
+#include "categories.h"
 #include <fnmatch.h>
 
 ListNode *Apps=NULL;
@@ -84,7 +85,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                     if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
                     if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
                 }
-                else fprintf(stderr, "PLATFORM NOT FOUND: %s\n", Act->Platform);
+                else fprintf(stderr, "PLATFORM NOT FOUND: '%s' for %s\n", Act->Platform, Act->Name);
             }
             //locale is a special case, we want to be able to use 'locale=' to set a locale string, but we
             //also want to be able to use $(locale) as a variable in config. Further, we want to be able to say
@@ -126,6 +127,17 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
             else if (strcasecmp(Name,"install_stage2")==0) SetVar(Act->Vars, "install-stage2", Value);
+            else if (strcasecmp(Name,"category")==0)
+            {
+                Tempstr=CategoriesExpand(Tempstr, Value);
+                SetVar(Act->Vars, "category", Tempstr);
+            }
+            else if (strcasecmp(Name,"extra_category")==0)
+            {
+                Tempstr=CategoriesExpand(Tempstr, Value);
+                AppendVar(Act->Vars, "category", Tempstr);
+            }
+ 
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);

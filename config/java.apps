@@ -22,7 +22,7 @@ MuCommander url=https://github.com/mucommander/mucommander/releases/download/0.9
 InfiniteTux url=https://github.com/qbancoffee/infinite-tux/releases/download/1.1sfx/infinitetux.jar install-type='executable' sha256='e638061cfecf79f39edf5706e6e9e813b88630f5ad40b2a21eb873767e62caf9' 
 Magarena url=https://github.com/magarena/magarena/releases/download/1.96/Magarena-1.96.zip movefiles-from='Magarena-1.96/*' exec='Magarena.jar' sha256='355010fba4e14dbc30415749ec96e69557ac2d3829e32b90da629cf91f173438' 
 
-* platform=java category=LogicGame;Game
+* platform=java category=Sokoban
 JSoko url=https://prdownloads.sourceforge.net/jsokoapplet/JSoko_1.97.zip?download sha256='ff62382384712fbd06aced49a3fa2ac053d4868d755f5c369362521d641249ef' 
 
 * platform=java category=StrategyGame;Game

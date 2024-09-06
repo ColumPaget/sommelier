@@ -1,4 +1,4 @@
-* platform=scummvm category='Game;Game/Adventure;Game/Scummvm'
+* platform=scummvm category='AdventureGame;ScummVM'
 
 BeneathASteelSky url=https://downloads.scummvm.org/frs/extras/Beneath%20a%20Steel%20Sky/bass-cd-1.2.zip movefiles-from='bass-cd-1.2/*' sha256='53209b9400eab6fd7fa71518b2f357c8de75cfeaa5ba57024575ab79cc974593' 
 BrokenSword2.5 url=https://downloads.scummvm.org/frs/extras/Broken%20Sword%202.5/sword25-v1.0.zip sha256='ff63f910fbb5aa7ba61bca8fcadd398d688496aa022455f42a305e47dd0e7247' 

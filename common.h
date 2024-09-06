@@ -25,6 +25,7 @@
 #define ACT_RUN 3
 #define ACT_LIST 5
 #define ACT_LIST_PLATFORMS 6
+#define ACT_LIST_CATEGORIES 7
 #define ACT_SET 8
 #define ACT_REBUILD 13
 #define ACT_REBUILD_HASHES 14

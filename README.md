@@ -117,6 +117,7 @@ DETAILED USAGE
 
 ```
 sommelier platforms                                print list of supported platforms
+sommelier categories                               print list of application categories
 sommelier list [options]                           print list of apps available for install
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name

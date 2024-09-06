@@ -1,44 +1,58 @@
-* platform=gba category=Game;Games/GameBoyAdvanced install-type=executable
 
-3WeeksInParadise url=https://github.com/retrobrews/gba-games/blob/master/3weeksinparadise.gba?raw=true sha256='4871446c5ca8916a2564fac54bfb7eda2af91e8275bfe36895d09f558ea869a2' 
-AGBHack url=https://github.com/retrobrews/gba-games/blob/master/agbhack.bin?raw=true sha256='6a93aacd69bac183d87cb6228ba34709f4e138058ed7cae6cf39273537c8b720' 
-AirBall url=https://github.com/retrobrews/gba-games/blob/master/airball.gba?raw=true sha256='a8e1bb07c7186c6297d3a1d9c334bb2c158e017d790c1d6b7f444bf669326d4a' 
-Asteroids url=https://github.com/retrobrews/gba-games/blob/master/asteroidsp.bin?raw=true sha256='d7d594f8c8a165a46e04a9f82e6be4e6a85c674f1df51853211758433df4d785' 
-Astrohawk url=https://github.com/retrobrews/gba-games/blob/master/astrohawk.bin?raw=true sha256='94e4f345f3e48274f227a82e32b65680238d23c1a5dc85c011dd98900fbf91c5' 
-BustAMove url=https://github.com/retrobrews/gba-games/blob/master/bustamove.bin?raw=true sha256='de5b01f41a46f0efc38b9f0b3c70b04fa83b4a23f4d23f6d07c12cb63abbec55' 
+* platform=gba category=TurnBasedStrategy;GameBoyAdvanced install-type=executable
+LordsOfMidnight url=https://github.com/retrobrews/gba-games/blob/master/thelordsofmidnight.gba?raw=true sha256='ee9801b5dc94086ac4249ec9a0daf90d6dde2c7ac5cdbbf15c4daa934685adbe' 
+DoomdarksRevenge url=https://github.com/retrobrews/gba-games/blob/master/doomdarksrevenge.gba?raw=true sha256='85d4a4fb15d1e5a59fe7ced4bc2da43c1e50f3c6d86ea94de282bb3bd80b7b5f' 
 Chaos url=https://github.com/retrobrews/gba-games/blob/master/chaos.bin?raw=true sha256='71ee6f648c822fdf674afad7bed8a8cdcb6e237ceb34e4043da1e345680ffa20' 
 ChaosTheBattleOfWizards url=https://github.com/retrobrews/gba-games/blob/master/chaosthebattleofwizards.gba?raw=true sha256='7aec93a7391bc89dfab8564f8f037af1df86ab601de9eec671e4de57fe986fdb' 
-Deflektor url=https://github.com/retrobrews/gba-games/blob/master/deflektor.gba?raw=true sha256='021f4faef033b42df99001e40d5eb7dd2ed8acbb98565256035977f516af8187' 
-DoomdarksRevenge url=https://github.com/retrobrews/gba-games/blob/master/doomdarksrevenge.gba?raw=true sha256='85d4a4fb15d1e5a59fe7ced4bc2da43c1e50f3c6d86ea94de282bb3bd80b7b5f' 
+
+
+* platform=gba category=Roguelike;RPG;GameBoyAdvanced install-type=executable
+AGBHack url=https://github.com/retrobrews/gba-games/blob/master/agbhack.bin?raw=true sha256='6a93aacd69bac183d87cb6228ba34709f4e138058ed7cae6cf39273537c8b720' 
+DumblinDungeon url=https://hh3.gbdev.io/entries/Dumblin-Dungeon/Dumblin%20Dungeon%20(GB).gb
+PorklikeGB url=https://hh3.gbdev.io/entries/porklike-gb/porklike.gb
+
+* platform=gba category=ShootEmUp;GameBoyAdvanced install-type=executable
+DanganGB url=https://hh3.gbdev.io/entries/dangan/dangan.gb
+SuperWings url=https://github.com/retrobrews/gba-games/blob/master/superwings.gba?raw=true sha256='d15243ad300b955715255938901b397d5f683261394cd5d03232c2d12b5b86fe' 
 Eliminator url=https://github.com/retrobrews/gba-games/blob/master/eliminator.gba?raw=true sha256='1144c9385871e442aedd9939dbe5aa76d0d85d4751059c2a7ab3755426ceeb60' 
+Sworld url=https://github.com/retrobrews/gba-games/blob/master/sworld3.gba?raw=true sha256='43784aa43b4a6e26563afee4f3a1e307909330fe283f4da5a4d7c8f2800f970b' 
+
+* platform=gba category=Racing;GameBoyAdvanced install-type=executable
+Varoom3D url=https://hh3.gbdev.io/entries/varooom3d/varooom-3d.gba
+
+* platform=gba category=RPG;GameBoyAdvanced install-type=executable
+ShockLobster url=https://hh3.gbdev.io/entries/shock-lobster/shocklobster.gb
+MatrixRunner url=https://github.com/retrobrews/gba-games/blob/master/matrixrunner.gba?raw=true sha256='028d9ccaf247d6e6022c08f98cb32d17ac04de9a08899984611e1a3ff470b845' 
+
+* platform=gba category=AsteriodsGame;GameBoyAdvanced install-type=executable
+Asteroids url=https://github.com/retrobrews/gba-games/blob/master/asteroidsp.bin?raw=true sha256='d7d594f8c8a165a46e04a9f82e6be4e6a85c674f1df51853211758433df4d785'
+Astrohawk url=https://github.com/retrobrews/gba-games/blob/master/astrohawk.bin?raw=true sha256='94e4f345f3e48274f227a82e32b65680238d23c1a5dc85c011dd98900fbf91c5' 
+
+* platform=gba category=PuzzleGame;GameBoyAdvanced install-type=executable
+Tetravex url=https://github.com/retrobrews/gba-games/blob/master/tetravex.gba?raw=true sha256='6b23dfc292af016826dcc0087e32fb9c26a35bd2f46760403e04a436b04f722a' 
+HergsYahtzee url=https://github.com/retrobrews/gba-games/blob/master/yahtzeeherg.gba?raw=true sha256='80a8836108ca5843e8bfd38b6e7d2697cac94f53e4d3d390496aa092f2303c7b' category="LogicGame;GameBoyAdvanced"
+HexaVirus url=https://github.com/retrobrews/gba-games/blob/master/hexavirus.gba?raw=true sha256='84a12dded1f68f3dcdcb63f3550f2cfe7968fbfe64526c7caa087b89a44ffab5'
+Unearthed url=https://hh3.gbdev.io/entries/unearthed/Unearthed%20Zero.gb
+
+* platform=gba category=GameBoyAdvanced install-type=executable
+3WeeksInParadise url=https://github.com/retrobrews/gba-games/blob/master/3weeksinparadise.gba?raw=true sha256='4871446c5ca8916a2564fac54bfb7eda2af91e8275bfe36895d09f558ea869a2' category"AdventureGame;GameBoyAdvanced"
+AirBall url=https://github.com/retrobrews/gba-games/blob/master/airball.gba?raw=true sha256='a8e1bb07c7186c6297d3a1d9c334bb2c158e017d790c1d6b7f444bf669326d4a' 
+BustAMove url=https://github.com/retrobrews/gba-games/blob/master/bustamove.bin?raw=true sha256='de5b01f41a46f0efc38b9f0b3c70b04fa83b4a23f4d23f6d07c12cb63abbec55' 
+Deflektor url=https://github.com/retrobrews/gba-games/blob/master/deflektor.gba?raw=true sha256='021f4faef033b42df99001e40d5eb7dd2ed8acbb98565256035977f516af8187' 
 GBACards url=https://github.com/retrobrews/gba-games/blob/master/gbacards.gba?raw=true sha256='ad4fb579c9f73921b9ca69c4721b27eb7d9ef51fd6aef0343d6fdd499ebe9139' 
 Gorf url=https://github.com/retrobrews/gba-games/blob/master/gorf.gba?raw=true sha256='20307d75b2df24661fcb34a440f5b5770e91f5a8453d53fb4b95cf508002ccee' 
-HexaVirus url=https://github.com/retrobrews/gba-games/blob/master/hexavirus.gba?raw=true sha256='84a12dded1f68f3dcdcb63f3550f2cfe7968fbfe64526c7caa087b89a44ffab5' 
 LaserChess url=https://github.com/retrobrews/gba-games/blob/master/laserchess.bin?raw=true sha256='a802cd2eda4ee052fd82971d7236d75aeef0c5253961f57283f3443a9f0bca07' 
-LordsOfMidnight url=https://github.com/retrobrews/gba-games/blob/master/thelordsofmidnight.gba?raw=true sha256='ee9801b5dc94086ac4249ec9a0daf90d6dde2c7ac5cdbbf15c4daa934685adbe' 
-MatrixRunner url=https://github.com/retrobrews/gba-games/blob/master/matrixrunner.gba?raw=true sha256='028d9ccaf247d6e6022c08f98cb32d17ac04de9a08899984611e1a3ff470b845' 
-SuperWings url=https://github.com/retrobrews/gba-games/blob/master/superwings.gba?raw=true sha256='d15243ad300b955715255938901b397d5f683261394cd5d03232c2d12b5b86fe' 
-Sworld url=https://github.com/retrobrews/gba-games/blob/master/sworld3.gba?raw=true sha256='43784aa43b4a6e26563afee4f3a1e307909330fe283f4da5a4d7c8f2800f970b' 
 Tailgunner url=https://github.com/retrobrews/gba-games/blob/master/tailgunner.gba?raw=true sha256='bf5acc18d60c9fc443aa36610dd41db05303e043103bca55b8fb54f4f2821457' 
-Tetravex url=https://github.com/retrobrews/gba-games/blob/master/tetravex.gba?raw=true sha256='6b23dfc292af016826dcc0087e32fb9c26a35bd2f46760403e04a436b04f722a' 
-HergsYahtzee url=https://github.com/retrobrews/gba-games/blob/master/yahtzeeherg.gba?raw=true sha256='80a8836108ca5843e8bfd38b6e7d2697cac94f53e4d3d390496aa092f2303c7b' 
-
 Apache url="https://hh3.gbdev.io/entries/Apache/Apache.cgb"
 3DSnowTankGBA url=https://hh3.gbdev.io/entries/3d-snowtank-gba/3D_SnowTank_v1.gba
 FireGear url=https://hh3.gbdev.io/entries/Firegear/Firegear.cgb
-DumblinDungeon url=https://hh3.gbdev.io/entries/Dumblin-Dungeon/Dumblin%20Dungeon%20(GB).gb
-Varoom3D url=https://hh3.gbdev.io/entries/varooom3d/varooom-3d.gba
 CoreMachina url=https://hh3.gbdev.io/entries/core-machina/Core%20Machina%20v1.2c%20DEMO.gb
 SkyLand url=https://hh3.gbdev.io/entries/skyland/Skyland.gba
-PorklikeGB url=https://hh3.gbdev.io/entries/porklike-gb/porklike.gb
 DangoDash url=https://hh3.gbdev.io/entries/dango-dash/Dango%20Dash_v01.gb
-DanganGB url=https://hh3.gbdev.io/entries/dangan/dangan.gb
 HeroCoreGBA url=https://hh3.gbdev.io/entries/hero-core-gba-port/HeroCore.gba
 InheritorsOfTheOubliette url=https://hh3.gbdev.io/entries/inheritors-of-the-oubliette/inheritors-of-the-oubliette.gba
-Apotris url=https://hh3.gbdev.io/entries/apotris/Apotris.gba
-ShockLobster url=https://hh3.gbdev.io/entries/shock-lobster/shocklobster.gb
-uCity url=https://hh3.gbdev.io/entries/ucity/ucity.gbc
+Apotris url=https://hh3.gbdev.io/entries/apotris/Apotris.gba category="Tetris;GameBoyAdvanced"
+uCity url=https://hh3.gbdev.io/entries/ucity/ucity.gbc category="CityBuilder; GameBoyAdvanced"
 Feline url=https://hh3.gbdev.io/entries/feline/feline.gba
-Unearthed url=https://hh3.gbdev.io/entries/unearthed/Unearthed%20Zero.gb
 
 

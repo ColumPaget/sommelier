@@ -1,8 +1,8 @@
-* platform=vectrex category=Game;Games/Vectrex
+* platform=vectrex category=Game;Vectrex
 
 ArmorAttack url=https://archive.org/compress/vectrex-armorattack exec=ArmorAttack-1982.vec
 Bedlam url=https://archive.org/compress/vectrex-bedlam
-Berzerk url=https://archive.org/compress/vectrex-berzerk exec=Berzerk-1982.vec
+Berzerk url=https://archive.org/compress/vectrex-berzerk exec=Berzerk-1982.vec category=BezerkGame
 BirdsOfPrey url=https://archive.org/compress/vectrex-birdsofprey
 CleanSweep url=https://archive.org/compress/vectrex-cleansweep
 CosmicChasm url=https://archive.org/compress/vectrex-cosmicchasm
@@ -10,12 +10,12 @@ FortressOfNarzod url=https://archive.org/compress/vectrex-fortressofnarzon
 Hyperchase url=https://archive.org/compress/vectrex-hyperchase exec=Hyperchase-1982.vec
 MineStorm url=https://archive.org/compress/vectrex-3dminestorm
 PolarRescue url=https://archive.org/compress/vectrex-polarrescue exec=PolarRescue-1983.vec
-PolePosition url=https://archive.org/compress/vectrex-poleposition exec=PolePosition-1982.vec
+PolePosition url=https://archive.org/compress/vectrex-poleposition exec=PolePosition-1982.vec category="Racing;Vectrex"
 RipOff url=https://archive.org/compress/vectrex-ripoff
 Scramble url=https://archive.org/compress/vectrex-scramble exec=Scramble-1982.vec
 SolarQuest url=https://archive.org/compress/vectrex-solarquest
 SpaceWars url=https://archive.org/compress/vectrex-spacewars
-Spinball url=https://archive.org/compress/vectrex-spinball exec=Spinball-1983.vec
+Spinball url=https://archive.org/compress/vectrex-spinball exec=Spinball-1983.vec category="Pinball;Vectrex"
 StarCastle url=https://archive.org/compress/vectrex-starcastle
 StarHawk url=https://archive.org/compress/vectrex-starhawk
 StarSeige url=https://archive.org/compress/vectrex-starseige

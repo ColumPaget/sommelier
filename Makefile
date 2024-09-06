@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o elf.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
+OBJ=common.o config.o apps.o platforms.o categories.o elf.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
 LIBS= -lssl -lcrypto -lUseful-5  
 prefix=/usr/local
 exec_prefix=${prefix}
@@ -30,6 +30,9 @@ elf.o: elf.h elf.c
 
 platforms.o: platforms.h platforms.c
 	$(CC) $(CFLAGS) -c platforms.c
+
+categories.o: categories.h categories.c
+	$(CC) $(CFLAGS) -c categories.c
 
 command-line.o: command-line.h command-line.c
 	$(CC) $(CFLAGS) -c command-line.c

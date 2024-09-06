@@ -1,4 +1,4 @@
-* platform=megadrive category=Game;Games/MegaDrive install-type=executable
+* platform=megadrive category=Game;MegaDrive install-type=executable
 
 Barbarian url=https://github.com/retrobrews/md-games/raw/master/barbarian.bin sha256='b395649e30ab1f8e9c2b1d41b94dd88b3ecab3ffd2ebdbb862ef0e98d443dd1e' 
 UltimateTetris url=https://github.com/retrobrews/md-games/raw/master/ultimatetetris.bin sha256='9ead4ff94926a1b041e2722f8ce89d7e5d60898b59c6fe5b4136b7c636706ad5' 
@@ -9,6 +9,6 @@ IKPlusDeluxe url=https://github.com/retrobrews/md-games/raw/master/ikplusdeluxe.
 OmegaBlast url=https://drive.google.com/uc?export=download&id=1NEB8T38ZY1PDqEBcAB3g-cwjWZaMhLuV sha256='87516e710a5e43ea6f70f09671aea01e97f69d93ad6b88abb310514d81deed67' 
 
 
-* platform=megadrive category=Chess;Game;Games/MegaDrive install-type=executable
+* platform=megadrive category=Chess;Game;MegaDrive install-type=executable
 PadisChess url="https://archive.org/download/Chess_Russia_En_Unl.md/Chess_Russia_En_Unl.md"
 ChineseChess url="https://archive.org/download/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md"

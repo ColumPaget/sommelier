@@ -1,8 +1,8 @@
-* platform=atarist category=Game;Games/AtariST
+* platform=atarist category=Game;AtariST
 
 AndesAttack url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/andes%20attack.zip sha256=0b9a1d9469c2f1068e968267339a46f17321b9c09cf97a5984606d5283c8cc31
 ColorSpace url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/cspace.zip sha256=167f849744ce22f66010fcc08247f55b12a162dd446a5d376ac9aee96cebcc72
-Defender2 url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/defender2.zip sha256=4efdf36c47e14d839a145f5baa6521c63da6688b705911a7a4a1952773176a5a
+Defender2 url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/defender2.zip sha256=4efdf36c47e14d839a145f5baa6521c63da6688b705911a7a4a1952773176a5a category="DefenderGame;AtariST"
 Hardcore url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/hardcore.zip sha256=c003c4f900a6bb3b54b2de4b04c4d347e39a082e7167b994c618b5e27925e80d
 Llamatron url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/llama.zip sha256=bd3dca8101e76dde70bb0b7147fdaf7a4be333a037ab10046a65d41a1db760a2
 PhotonStorm url=http://www.llamasoftarchive.org/oldsite/llamasoft/atarist/photonstorm.zip sha256=507d415cf5091c321cd4fe8e69226bdc311312677d2da5fab80c0d43493f6cc8

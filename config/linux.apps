@@ -102,7 +102,8 @@ RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v
 * category='IRC;Chat;Internet;Network'
 SeaMonkeyChat platform=linux32 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyChat platform=linux64 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
-
+DxIRCQt platform=linux64 url=https://download.opensuse.org/repositories/home:/dvx13/AppImage/dxirc-qt-latest-x86_64.AppImage
+DxIRCFox platform=linux64 url=https://download.opensuse.org/repositories/home:/dvx13/AppImage/dxirc-fox-latest-x86_64.AppImage
 
 * category='Conferencing;VOIP;Telephony;Chat;Internet;Network'
 Zoom platform=linux32 url=https://cdn.zoom.us/prod/5.4.53391.1108/zoom_i686.tar.xz download-type='tar.xz' exec='ZoomLauncher' category='Chat' warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'  sha256='713d12969cd16361fd22025f65f0bd900153b37bafc348807629355affdb5862' 
@@ -128,6 +129,8 @@ Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.19-linux64
 Arduino2 platform=linux64 url=https://downloads.arduino.cc/arduino-ide/arduino-ide_2.1.1_Linux_64bit.zip download-type='zip' exec='arduino-ide' category='Electronics' comment='Arduino Programming IDE' sha256='7033b5a37506bd7c19a2a7717311fd931a5db3ba120ace27a4166cf911bba4a8' 
 
 
+*category=Forensics;Security;Utility
+MobiusFT url=https://download.savannah.gnu.org/releases/mobiusft/mobiusft-2.6-x86_64.AppImage
 
 
 * category=Development
@@ -145,23 +148,50 @@ GHC platform=linux64 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-x86_
 DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Qt5 2-pane filemanager' name='DoubleCommanderQt5' sha256='c250011f7bb8c0c0de044f83bf968d0ccc213e5b28245db204d995398a94b376' 
 DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
 
-* category='Roguelike;Roleplaying;Game'
+* category='Roguelike;Roleplaying;Game' platform=linux32
 TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
-TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
 UnRealWorld platform=linux32 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-i686-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
-UnRealWorld platform=linux64 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-x86_64-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
 
-* category='Game'
-TorusTrooper platform=linux32 url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60
-Xump platform=linux32 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32
-Xump platform=linux64 url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64
-Hermes platform=linux32 url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes
-Hermes platform=linux64 url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
-Taisei platform=linux64 url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei
+* category='Roguelike;Roleplaying;Game' platform=linux64
+TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
+UnRealWorld url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-x86_64-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
+
+* category='Game' platform=linux32
+TorusTrooper url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60
+Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32
+Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes
+
+* category='Game' platform=linux64
+Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame
+Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64
+Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
+Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei
+Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame
+Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb'
+
+
 
 * category='Notes;Office;Utility'
 SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz sha256=6df10d5f29d3cdacae437b35b3cc5e102150b8b4714711f95b8a8f667496c173
 SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-x64.tar.gz exec=simplenote download-type=tar.gz
+
+* category='AudioVideoEditor;Audio' platform=linux64
+Audacity url=https://github.com/audacity/audacity/releases/download/Audacity-3.6.2/audacity-linux-3.6.2-x64.AppImage sha256=b009504d0f74b7fca7092d3c0fdb866b8894ab66473b951c2b7ed7e454282058 
+Giada url=https://www.giadamusic.com/data/Giada-1.0.0-x86_64.AppImage
+OcenAudio url=https://www.ocenaudio.com/start_download/ocenaudio_debian10.deb
+Qtractor url=https://download.sf.net/qtractor/qtractor-1.2.0-4.1.x86_64.AppImage
+QSampler url=https://sourceforge.net/projects/qsampler/files/qsampler/1.0.0/qsampler-1.0.0-1.1.x86_64.AppImage/download
+LMMS url=https://github.com/LMMS/lmms/releases/download/v1.2.2/lmms-1.2.2-linux-x86_64.AppImage
+
+* category='AudioVideoEditor;Video' platform=linux32
+CinelleraGG url=https://cinelerra-gg.org/download/images/CinGG-20240731-i386.AppImage
+
+* category='AudioVideoEditor;Video' platform=linux64
+Openshot url=https://github.com/OpenShot/openshot-qt/releases/download/v3.2.1/OpenShot-v3.2.1-x86_64.AppImage
+ShotcutAI url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.AppImage/download
+Shotcut  url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.txz/download download-type="tar.xz" exec=shotcut
+CinelleraGG url=https://cinelerra-gg.org/download/images/CinGG-20240731-x86_64.AppImage
+VidCutter url=https://github.com/ozmartian/vidcutter/releases/download/6.0.5.1/VidCutter-6.0.5.1-x86_64.AppImage
 
 * category='MusicTracker;AudioVideoEditor;Audio' platform=linux64
 MilkyTracker.zip url=https://github.com/milkytracker/MilkyTracker/releases/download/v1.04.00/milkytracker-1.04.00-Linux.zip exec=milkytracker sha256=36ed8cc8224998876e5bcba971290ec8c1ef07dbec1df0e80cd1f396e63541c3

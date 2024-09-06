@@ -1,7 +1,7 @@
 #These are homebrews and demo CDs.
 
 # From Archive.org 
-* platform=ps1 category=Game;Games/PlayStation1 icon=$(install-dir)/__ia_thumb.jpg
+* platform=ps1 category=Game;PlayStation1 icon=$(install-dir)/__ia_thumb.jpg
 
 ArmoredCoreDemo url=https://archive.org/compress/slpm-80119
 ResidentEvil2Demo url=https://archive.org/compress/resident-evil-2-demo-europe sha256=a1263f0b257e0b07e0526441882551e2639579c377a8ddb957d88897276173dd
@@ -12,6 +12,6 @@ MagicCastle url=https://archive.org/download/magic-castle-2021-07-may/Magic_Cast
 Warzone2100Demo url=https://archive.org/compress/warzone2100demo-pal-sled-01787-sonyplaystation1/formats=TEXT,JPEG,UNKNOWN,CUE%20SHEET,ZIP,ITEM%20TILE,ARCHIVE%20BITTORRENT,METADATA sha256=d4cfe3ae48360f2dd5e2c4afcedc3b11810f9d74436107b752cd8ec03a42cbb4
 
 # From elsewhere
-* platform=ps1 category=Game;Games/PlayStation1 
+* platform=ps1 category=Game;PlayStation1 
 
 BuzzyBee url=https://github.com/NDR008/BuzzyBee/releases/download/v1.1_release/BuzzyBee_v1.1_image.zip sha256=4df87120d6cf6e01312295cb8233ee211ebdcb12b216061b702a333396c60052 warn="This rom only plays the music in the mednafen emulator"

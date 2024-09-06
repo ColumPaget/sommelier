@@ -1,123 +1,169 @@
 #Things available through gog.com
 
-#these games have worked for me in native linux
+# 32 bit and 32/64 bit linux games
+# these games have worked for me in native linux
 
-
-* category='Game;GOG' platform=gog:linux
-140  exec="140Linux.x86" exec64="140Linux.x86_64"
-AirlineTycoonDeluxe  exec="ATDeluxe"
+* category='TowerDefence;GOG' platform=gog:linux
 AnomalyWarzoneEarth  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
 Anomaly2  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=Anomaly2
 AnomalyKorea  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exec=AnomalyKorea
+
+* category='RealTimeStrategy;GOG' platform=gog:linux
 AIWarFleetCommand  exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
-Ascendant 
 Battlevoid  exec=harbinger
-BionicDues  exec="BionicLinux.x86" exec64="BionicLinux.x86_64"
-Braveland  exec="Braveland.x86" exec64="Braveland.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-BravelandWizard  exec="Braveland Wizard.x86" exec64="Braveland Wizard.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-BravelandPirate  exec="Braveland Pirate.x86" exec64="Braveland Pirate.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
-CelestianTales  
+Defcon  warn="This game has been seen to fail on some linux platforms"
+Realpolitiks  
+
+* category='RealTimeTactics;GOG' platform=gog:linux
+ShadowTacticsBladesOfTheShogun exec="Shadow Tactics" warn="This game runs, but on some systems doesn't respond to any input"
+DoorKickers 
+
+* category='TurnBasedStrategy;GOG' platform=gog:linux
 ChaosReborn  warn="This game has been seen to have graphics issues on some linux platforms"
+
+* category='TurnBasedTactics;GOG' platform=gog:linux
+BionicDues  exec="BionicLinux.x86" exec64="BionicLinux.x86_64"
+HardWest  
+InvisibleInc  working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
+Halcyon6
+Halcyon6StarbaseCommander
+ShadowrunReturns  exec="Shadowrun.sh"
+
+* category='DungeonCrawl;Roguelike;GOG' platform=gog:linux
 Convoy  exec="Convoy.x86" exec64="Convoy.x86_64"
-CryptOfTheNecrodancer  exec="NecroDancer.sh"
 DarkestDungeon  exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
 DarkestDungeon:Sheildbreaker  dlc parent=DarkestDungeon
 DarkestDungeon:Musketeer  dlc parent=DarkestDungeon
 DarkestDungeon:CrimsonCourt  dlc parent=DarkestDungeon
 DarkestDungeon:ColorOfMadness  dlc parent=DarkestDungeon
-Darwinia 
-Defcon  warn="This game has been seen to fail on some linux platforms"
-DemonLordReincarnation
-Deadnaut  exec="Deadnaut.x86"
-DoorKickers  
-Duskers  exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
-DungeonSouls  exec=runner 
-EndlessSky
 FTL   exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
-FistPuncher   warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64" 
+Monolith  exec=runner
+Starcrawlers  exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
+
+* category='TurnBasedRPG;GOG' platform=gog:linux
+NeoScavenger  exec="NEOScavenger"
+DemonLordReincarnation
+Tangledeep 
+
+* category='ActionRPG;GOG' platform=gog:linux
+DungeonSouls  exec=runner 
+Hammerwatch  exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+Jotun  exec='Jotun.x86' exec64="Jotun.x86_64"
+LegendOfGrimrock  exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
+MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64" warn="This game runs, but on some systems doesn't respond to any input"
+SepterraCore 
+Transistor  exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
+
+
+* category='Platformer;RPG;GOG' platform=gog:linux
+Ascendant 
+RogueLegacy extra_category="Roguelike"
+
+* category='TransportGame;TycoonGame;GOG' platform=gog:linux
+AirlineTycoonDeluxe  exec="ATDeluxe"
+TrainValley  exec="train-valley.x86" exec64="train-valley.x86_64" 
+
+* category='LogicGame;GOG' platform=gog:linux
+TIS100 extra_category="Zachtronics"
+
+* category='BeatEmUp;GOG' platform=gog:linux
+FistPuncher   warn="This game REQUIRES a game controller/gamepad, keyboard controls are unusable." exec="FistPuncher.bin.x86" exec64="FistPuncher.bin.x86_64"
+MotherRussiaBleeds
+
+
+* category='Game;GOG' platform=gog:linux
+140  exec="140Linux.x86" exec64="140Linux.x86_64"
+Braveland  exec="Braveland.x86" exec64="Braveland.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandWizard  exec="Braveland Wizard.x86" exec64="Braveland Wizard.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+BravelandPirate  exec="Braveland Pirate.x86" exec64="Braveland Pirate.x86_64" warn="This game has input issues if other processes are watching the evdev interface. If clicking doesn't work, try shutting down any joystick drivers, keyboard mappers etc"
+CelestianTales  
+CryptOfTheNecrodancer  exec="NecroDancer.sh" category="RhythmGame;RogueLike;GOG"
+Darwinia 
+Deadnaut  exec="Deadnaut.x86"
+Duskers  exec="Duskers_linux.x86" exec64="Duskers_linux.x86_64"
+EndlessSky category="EscapeVelocityGame;GOG" 
 GalaxySquad 
 Hacknet  working-dir="$(install-dir)/data/noarch/game" exec="Hacknet.bin.x86" exec64="Hacknet.bin.x86_64"
-HardWest  
-HandOfFate 
-Halcyon6
-Halcyon6StarbaseCommander
-Hammerwatch  exec="Hammerwatch.bin.x86" exec64="Hammerwatch.bin.x86_64" 
+HandOfFate category="Deckbuilder;Roguelike"
 HeadsWillRoll exec="headswillroll_downfall.sh"
 HeroinesQuest exec="heroine\'squest" exec-args="--windowed"
 HotlineMiami  exec="hotline_launcher"
 Huniepop  warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
-InvisibleInc  working-dir="$(install-dir)/data/noarch/game" exec="InvisibleInc32" exec64="InvisibleInc64"
-Jotun  exec='Jotun.x86' exec64="Jotun.x86_64"
-LegendOfGrimrock  exec="Grimrock.bin.x86" exec64="Grimrock.bin.x86_64"
 LostSea 
 MartialLaw exec="martial-law" warn="This game has some graphics problems at certain resolutions"
-MoonHunters  exec="MoonHunters.x86" exec64="MoonHunters.x86_64" warn="This game runs, but on some systems doesn't respond to any input"
-Monolith  exec=runner
-MotherRussiaBleeds  
-NeoScavenger  exec="NEOScavenger"
 Overfall  exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 PapersPlease  exec="PapersPlease "
 QuestForInfamy  
-RaceTheSun  
-Realpolitiks  
-RogueLegacy 
-SepterraCore 
-ShadowrunReturns  exec="Shadowrun.sh"
-ShadowTacticsBladesOfTheShogun exec="Shadow Tactics" warn="This game runs, but on some systems doesn't respond to any input"
+RaceTheSun category="Racing;GOG"
 Silver  exec="silver_launcher.sh"
-SpaceCom  exec="SPACECOM.x86"
-Starcrawlers  exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
+SpaceCom  exec="SPACECOM.x86" category="4XGame;SpaceGame"
 StarVikingsForever 
 SteamWorldDig  exec="SteamWorldDig"
 SteamWorldHeist  exec="Heist"
 SuperHexagon  exec="SuperHexagon.x86" exec64="SuperHexagon.x86_64" working-dir="$(exec-dir)"
-TIS100  
-Tangledeep 
 TheWestportIndependent  exec=the_westport_independent
-TrainValley  exec="train-valley.x86" exec64="train-valley.x86_64"
-Transistor  exec="Transistor.bin.x86" exec64="Transistor.bin.x86_64"
 VoidScrappers
 WayOfTheSamurai 
-VolgarrTheViking exec=Volgarr
+VolgarrTheViking exec=Volgarr category="Platformer;GOG"
 
 
 #64-bit only linux gog games
-* category='Game;GOG' platform=gog:linux64
+* category='DeckBuilder;Roguelike;GOG' platform=gog:linux64
+DeepSkyDerelicts
+IratusLordOfTheDead  exec64='Iratus'
+SlayTheSpire  exec64="SlayTheSpire"
+
+* category='Roguelike;GOG' platform=gog:linux64
+OutThere  exec64="outthereomega.x86"
+
+* category='ShootEmUp;GOG' platform=gog:linux64
+BlazingStar exec64=BlazingStar
+Pulstar exec64=Pulstar 
+DokiDokiGravityDive exec="start.sh"
+
+* category='BeatEmUp;GOG' platform=gog:linux64
+Shing  exec64="Shing!.x86_64"
+StreetsOfRage4 exec="SOR4" category="BeatEmUp"
+
+* category='TurnBasedTactics;GOG' platform=gog:linux64
+MainframeDefenders 
+SkullsOfTheShogun
+IntoTheBreach  exec64="Breach"
+
+* category='TransportGame;TycoonGame;GOG' platform=gog:linux64
+MiniMetro  exec64="Mini Metro"
+PrisonArchitect  exec64="PrisonArchitect.sh"
+OpenTTD  exec64=openttd
+
+* category='ActionRPG;GOG' platform=gog:linux64
 Aragami warn="Game requires a powerful system"
 BaldursGate  exec64="BaldursGate"
-BlazingStar exec64=BlazingStar
+
+* category='RealTimeStrategy;GOG' platform=gog:linux64
+Loria 
+RadioCommander  exec64="RC.x86_64"
+
+
+* category='LogicGame;GOG' platform=gog:linux64
+SpaceChem  exec="SpaceChem" extra_category="Zachtronics"
+Shapez exec64=shapezio
+
+
+* category='Game;GOG' platform=gog:linux64
 BridgeConstructor exec="BridgeConstructor.x86_64"
 BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
-DeepSkyDerelicts 
-DiceyDungeons  exec64="diceydungeons"
-DokiDokiGravityDive exec="start.sh"
+DiceyDungeons  exec64="diceydungeons" category="Roguelike;GOG"
 Everspace exec="EverspaceWithShippedLibraries.sh"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
 HeroOfTheKingdom2 
-IntoTheBreach  exec64="Breach"
-IratusLordOfTheDead  exec64='Iratus'
 KerbalSpaceProgram  category='Game' exec64="KSPLauncher.x86_64"
-KingdomRush  exec="run.sh" 
-MainframeDefenders 
-MiniMetro  exec64="Mini Metro"
-Loria 
-OpenTTD  exec64=openttd
-OutThere  exec64="outthereomega.x86"
-PrisonArchitect  exec64="PrisonArchitect.sh"
-Pulstar exec64=Pulstar
-RadioCommander  exec64="RC.x86_64"
+KingdomRush  exec="run.sh" category="TowerDefence"
 ScarletHoodAndTheWickedWood
-Shapez exec64=shapezio
-Shing  exec64="Shing!.x86_64"
 SilmarisDiceKingdom  exec64="silmaris.x86_64"
-SkullsOfTheShogun
-SlayTheSpire  exec64="SlayTheSpire"
-SpaceChem  exec="SpaceChem"
 StardewValley  exec64="StardewValley"
-Stellaris  category='Game;StrategyGame;4xGame' exec='stellaris'
-StreetsOfRage4 exec="SOR4"
+Stellaris  exec='stellaris' category='4XGame' 
 
 
 #setup_snk_40th_anniversary_collection_1016_(64bit)_(45677).exe:Zone.Identifier
@@ -125,10 +171,8 @@ StreetsOfRage4 exec="SOR4"
 # neo-geo games on gog. The linux downloads for these come with an emulator, but that's for 64-bit linux only. These entries allow you to run them under a neo-geo
 # emulator. At time of writing mame, xmame and gngeo are set up in platforms.conf
 # For some of these games the linux package is in the 'extras' section of the games gog page
-* category='Game;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
+* category='FightingGame;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
 ArtOfFighting2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/aof2.zip" inner-package="neogeo.zip aof2.zip" emu-name="aof2" chext="056-*:.bin" zip="aof2.zip:056-*"
-BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blazstar.zip:239-*"
-Pulstar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/pulstar.zip" inner-package="neogeo.zip pulstar.zip" emu-name="pulstar" chext="089-*:.bin" zip="pulstar.zip:089-*"
 SamuraiShodown2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/samsho2.zip" inner-package="neogeo.zip samsho2.zip" emu-name="samsho2" chext="063-*:.bin" zip="samsho2.zip:063-*" 
 Sengoku3 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/sengoku3.zip" inner-package="neogeo.zip sengoku3.zip" emu-name="sengoku3" chext="261-*:.bin" link="261-ph1.bin:261-p1.bin" zip="sengoku3.zip:261-*"
 FatalFurySpecial extract-filter="$(extract-root)/neogeo.zip $(extract-root)/fatfursp.zip" inner-package="neogeo.zip fatfursp.zip" emu-name="fatfursp" chext="058-*:.bin" zip="fatfursp.zip:058-*"
@@ -136,99 +180,142 @@ RealBoutFatalFury2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/rb
 GarouMarkOfTheWolves extract-filter="$(extract-root)/neogeo.zip $(extract-root)/garou.zip" inner-package="neogeo.zip garou.zip" emu-name="garou" chext="253-*:.bin" zip="garou.zip:253-*"
 TheLastBlade extract-filter="$(extract-root)/neogeo.zip $(extract-root)/lastblad.zip" inner-package="neogeo.zip lastblad.zip" emu-name="lastblad" chext="234-*:.bin" zip="lastblad.zip:234-*"
 TheLastBlade2 extract-filter="$(extract-root)/neogeo.zip $(extract-root)/lastblad2.zip" inner-package="neogeo.zip lastblad2.zip" emu-name="lastblad2" chext="240-*:.bin" zip="lastblad2.zip:240-*"
+
+* category='ShootEmUp;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
+BlazingStar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/blazstar.zip" inner-package="neogeo.zip blazstar.zip" emu-name="blazstar" chext="239-*:.bin" zip="blazstar.zip:239-*"
+Pulstar extract-filter="$(extract-root)/neogeo.zip $(extract-root)/pulstar.zip" inner-package="neogeo.zip pulstar.zip" emu-name="pulstar" chext="089-*:.bin" zip="pulstar.zip:089-*"
+
+* category='Game;GOG' platform=gog:neogeo extract-root="data/noarch/game" exec="sfix.sfix" emu-dir="$(prefix)/$(emu-name)" link="sfix.sfix:sfix.sfx"   zip="neogeo.zip:*bios*,sfix*,sp*,sm1.sm1,usa*,asia*,japan*,000-lo.lo"
 TwinkleStarSprites extract-filter="$(extract-root)/neogeo.zip $(extract-root)/twinspri.zip" inner-package="neogeo.zip twinspri.zip" emu-name="twinspri" chext="224-*:.bin" zip="twinspri.zip:224-*"
 
-
-#MSDOS platform 
+#
+# MSDOS platform 
 # 'lindos' means linux package, dos executable
 # 'windos' means windows installer, dos executable
 # for many of these either of the windows or linux packages can be used
+* category='Chess;GOG' 
+BattleChess  platform=gog:lindos exec="CHESS.EXE" 
+BattleChess  platform=gog:windos exec="CHESS.EXE"
+ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=ChineseChess
+ChineseChess platform=gog:windos exec="CHESSII.EXE" category=ChineseChess
 
-* category='Game;GOG' 
-Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" no-exec-arg="y"
-AloneInTheDark platform=gog:windos exec="INDARK.EXE" 
-AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE" no-exec-arg="y"
-ArchimedeanDynasty platform=gog:windos exe="AD2.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/DAT/SAVE/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/DAT/SAVE" commands="mount c .; imgmount d game.ins -t iso; c:; AD2.EXE" no-exec-arg="y"
-BattleChess  platform=gog:lindos exec="CHESS.EXE" category=Chess;BoardGame;Game
-BattleChess  platform=gog:windos exec="CHESS.EXE" category=Chess;BoardGame;Game
+* category='FightingGame;GOG' 
+MortalKombat platform=gog:windos exec="MK1.EXE" 
+MortalKombat2 platform=gog:windos exec="MK2.EXE"
+MortalKombat3 platform=gog:windos exec="START.BAT"
+
+* category='RacingGame;GOG' 
+MegaRace platform=gog:windos exec="MEGARACE.exe"
+MegaRace2 platform=gog:windos exec="MEGARACE.exe" commands="mount c .; imgmount d MEGARACE2.gog -t iso; c:; megarace2.exe" no-exec-arg="y"
+Slipstream5000 platform=gog:lindos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
+Slipstream5000 platform=gog:windos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
+
+* category='RealTimeStrategy;GOG' 
 BattleIsle platform=gog:windos exec="BI.EXE"
-BioMenace platform=gog:windos exec="BMENACE1.EXE"
-BioMenace platform=gog:lindos exec="BMENACE1.EXE"
-Castles  platform=gog:lindos exec="CASTLES.BAT"
-Castles  platform=gog:windos exec="CASTLES.BAT"
-ChallengeOfTheFiveRealms  platform=gog:windos exec="C5.COM"
-ChallengeOfTheFiveRealms  platform=gog:lindos exec="C5.COM"
-ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=Chess;BoardGame;Game
-ChineseChess platform=gog:windos exec="CHESSII.EXE" category=Chess;BoardGame;Game
-Darklands platform=gog:lindos exec="DARKLAND.EXE"
-Darklands platform=gog:windos exec="DARKLAND.EXE"
-DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
-DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
-EarthwormJim platform=gog:windos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"  no-exec-arg="y" 
-EarthwormJim platform=gog:lindos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE" no-exec-arg="y" 
-EarthwormJim2 platform=gog:windos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
-EarthwormJim2 platform=gog:lindos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
-ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y" 
-ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)"
-EpicPinball platform=gog:windos exec="PINBALL.EXE"
-EpicPinball platform=gog:lindos exec="PINBALL.EXE"
-FantasyGeneral platform=gog:windos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" patches-dir="$(sommelier_root)/patches/FantasyGeneral/" copyfiles-to="$(patches-dir)/*:$(exec-dir)" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
+
+
+* category='TurnBasedStrategy;GOG' 
 FantasyGeneral platform=gog:lindos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
+FantasyGeneral platform=gog:windos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" patches-dir="$(sommelier_root)/patches/FantasyGeneral/" copyfiles-to="$(patches-dir)/*:$(exec-dir)" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
 HeroesOfMightAndMagic platform=gog:windos exec=HEROES.EXE saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/GAMES/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/GAMES" commands='mount c .; imgmount d homm1.gog -t iso; ; c:; loadfix -4 heroes.exe' no-exec-arg="y"
 HeroesOfMightAndMagic2 platform=gog:windos exec=HEROES2.EXE saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/GAMES/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/GAMES" commands='mount c .;  imgmount d homm2.gog -t iso; c:; heroes2.exe' no-exec-arg="y"
-HocusPocus platform=gog:lindos exec="hocus.exe"
-HocusPocus platform=gog:windos exec="hocus.exe"
-Ishar platform=gog:windos exec="start.exe"
-Ishar2 platform=gog:windos exec="start.exe"
-ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE" 
+
+* category='TurnBasedTactics;GOG' 
 JaggedAlliance platform=gog:windos exec="JA.EXE"
 JaggedAlliance2 platform=gog:windos exec="JA2.EXE"
-JillOfTheJungle  platform=gog:windos exec="jill1.exe" bundled=JillOfTheJungle
-JillOfTheJungle2 platform=gog:windos exec="jill2.exe" bundled=JillOfTheJungle
-JillOfTheJungle3 platform=gog:windos exec="jill3.exe" bundled=JillOfTheJungle
-MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
-MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
+
+
+* category='XComGame;GOG' 
+XComUFODefense platform=gog:windos 
+XComTerrorFromTheDeep platform=gog:windos exec="Terror From the Deep_patched.exe"
+
+
+* category='4XGame;GOG' 
+ImperiumGalactica platform=gog:windos exec="IMPERIUM.EXE" 
 MasterOfOrion platform=gog:lindos exec="ORION.EXE"
 MasterOfOrion platform=gog:windos exec="ORION.EXE"
 MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
-MegaRace platform=gog:windos exec="MEGARACE.exe"
-MegaRace2 platform=gog:windos exec="MEGARACE.exe" commands="mount c .; imgmount d MEGARACE2.gog -t iso; c:; megarace2.exe" no-exec-arg="y"
-MortalKombat platform=gog:windos exec="MK1.EXE" 
-MortalKombat2 platform=gog:windos exec="MK2.EXE"
-MortalKombat3 platform=gog:windos exec="START.BAT"
+
+* category='CityBuilder;GOG' 
+DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
+DungeonKeeperDeeper platform=gog:windos exec="DEEPER.EXE" bundled=DungeonKeeperGold saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
+Castles  platform=gog:lindos exec="CASTLES.BAT"
+Castles  platform=gog:windos exec="CASTLES.BAT"
+
+* category='Pinball;GOG' 
+EpicPinball platform=gog:windos exec="PINBALL.EXE"
+EpicPinball platform=gog:lindos exec="PINBALL.EXE"
+
+
+* category='DungeonCrawler;GOG' 
+AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE" no-exec-arg="y"
+UltimaUnderworld platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw.bat" no-exec-arg="y"
+UltimaUnderworld2 platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw2.bat" no-exec-arg="y"
+MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
+MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
+Ishar platform=gog:windos exec="start.exe"
+Ishar2 platform=gog:windos exec="start.exe"
+
+* category='RPG;GOG' 
+Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" no-exec-arg="y"
+ChallengeOfTheFiveRealms  platform=gog:windos exec="C5.COM"
+ChallengeOfTheFiveRealms  platform=gog:lindos exec="C5.COM"
+Darklands platform=gog:lindos exec="DARKLAND.EXE"
+Darklands platform=gog:windos exec="DARKLAND.EXE"
+ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y" 
+ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)"
+
+
+* category='Platformer;GOG' 
+BioMenace platform=gog:windos exec="BMENACE1.EXE"
+BioMenace platform=gog:lindos exec="BMENACE1.EXE"
+EarthwormJim platform=gog:windos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE"  no-exec-arg="y" 
+EarthwormJim platform=gog:lindos exec="EWJ1.EXE" commands="mount c .; imgmount d EWJ1.inst -t iso; c:; EWJ1.EXE" no-exec-arg="y" 
+EarthwormJim2 platform=gog:windos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
+EarthwormJim2 platform=gog:lindos exec="EWJ2.EXE" commands="mount c .; imgmount d EWJ2.inst -t iso; c:; EWJ2.EXE" no-exec-arg="y" 
+JillOfTheJungle  platform=gog:windos exec="jill1.exe" bundled=JillOfTheJungle
+JillOfTheJungle2 platform=gog:windos exec="jill2.exe" bundled=JillOfTheJungle
+JillOfTheJungle3 platform=gog:windos exec="jill3.exe" bundled=JillOfTheJungle
 RealmsOfChaos platform=gog:lindos exec="ROC.EXE"
 RealmsOfChaos platform=gog:windos exec="ROC.EXE"
-SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT"
-SidMeiersCovertAction platform=gog:windos exec="COVERT.BAT"
+
+* category='ShootEmUp;GOG' 
+Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
+Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
+Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+
+* category='SubmarineSimulator;GOG' 
 SilentService platform=gog:lindos exec="sservice.exe"
 SilentService platform=gog:windos exec="sservice.exe"
 SilentService2 platform=gog:lindos exec="SILENT.BAT"
 SilentService2 platform=gog:windos exec="SILENT.BAT"
 SilentHunter platform=gog:lindos 
 SilentHunter platform=gog:windos 
-Slipstream5000 platform=gog:lindos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
-Slipstream5000 platform=gog:windos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
+SubWar2050 platform=gog:windos exec="subwar.bat"
+
+* category='ManagementGame;GOG' 
+SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT"
+SidMeiersCovertAction platform=gog:windos exec="COVERT.BAT"
+ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
+WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
+
+* category='Game;GOG' 
+AloneInTheDark platform=gog:windos exec="INDARK.EXE" 
+ArchimedeanDynasty platform=gog:windos exe="AD2.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(exec-dir)/DAT/SAVE/*:$(saves-dir)" link="$(saves-dir):$(exec-dir)/DAT/SAVE" commands="mount c .; imgmount d game.ins -t iso; c:; AD2.EXE" no-exec-arg="y"
+HocusPocus platform=gog:lindos exec="hocus.exe"
+HocusPocus platform=gog:windos exec="hocus.exe"
 SpaceRogue platform=gog:lindos
 SpaceRogue platform=gog:windos
-Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
-Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
-SubWar2050 platform=gog:windos exec="subwar.bat"
-ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 Timelapse platform=gog:windos 
-TombRaider platform=gog:windos exec="GAME.DAT" patches-dir="$(sommelier_root)/patches/TombRaider/" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(patches-dir)/*:$(saves-dir)" emulator-args="-conf $(saves-dir)/dosbox.conf" commands='mount c $(saves-dir); imgmount d "GAME.DAT" -fs iso; c:; copy d:*.386 c:; d:DOS4GW.EXE d:TOMB.EXE'  no-exec-arg="y"
-Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
-UltimaUnderworld platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw.bat" no-exec-arg="y"
-UltimaUnderworld2 platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw2.bat" no-exec-arg="y"
-WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
+TombRaider platform=gog:windos exec="GAME.DAT" patches-dir="$(sommelier_root)/patches/TombRaider/" saves-dir="$(homedir)/.game-saves/$(name)/" copyfiles-to="$(patches-dir)/*:$(saves-dir)" emulator-args="-conf $(saves-dir)/dosbox.conf" commands='mount c $(saves-dir); imgmount d "GAME.DAT" -fs iso; c:; copy d:*.386 c:; d:DOS4GW.EXE d:TOMB.EXE'  no-exec-arg="y" extra_category="ActionRPG"
 WormsUnited platform=gog:windos exec="WORMS.DAT" commands="mount c .; imgmount d WORMS.DAT -t iso; SET dos4g=quiet; SET wormscfg=D:\worms.cfg; SET wormscd=D:; c:; d:dos4gw.exe d:bin\wrms.exe" no-exec-arg="y"
 Wolfenstein platform=gog:windos exec="wolf3d.exe" commands="mount c .; c:; launcher\start.bat" no-exec-arg="y"
 Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
-XComUFODefense platform=gog:windos 
 
 
-* category='Game;GOG' platform=gog:scummvm
+* category='AdventureGame;ScummVM;GOG' platform=gog:scummvm
 #SCUMMVM platform
 LureOfTheTemptress
 BeneathASteelSky
@@ -239,281 +326,357 @@ Bladerunner
 
 
 
-* category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-# windows via wine
-1nsane vdesk=y warn="This game runs in a virtual desktop because of issues with window focus and textures at fullscreen"
-99LevelsToHell  
-ABCMurders  
-AgarestGenerationsOfWar 
-AgeOfWonders  exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
-AimRacing 
-AncientEnemy  
+* category='TowerDefence;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AnomalyDefenders  
 AnomalyWarzoneEarth
-Aragami
-Arrow warn="This game has been seen to freeze at startup on some systems/wine versions, though it runs on others"
+SpaceRun  exec="oSpaceGame.exe"
+KingdomRush  
+
+* category='FightingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 ArtOfFighting exec="aof.exe"
-ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Ascendant 
+StreetFighterAlpha  
+GarouMarkOfTheWolves exec="GarouApp.exe"
+MortalKombat4  exec="mk4.exe"
+SamuraiShodownV
+TheLastBlade exec=LastBlade.exe
+TheLastBlade2 exec=LastBlade2App.exe
+
+
+* category='BeatEmUp;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+PunchClub
+FinalVendetta
+FightNRage category=BeatEmUp
+Legend
+
+* category='RacingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+1nsane vdesk=y warn="This game runs in a virtual desktop because of issues with window focus and textures at fullscreen"
+AimRacing 
+Flatout  
+HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
+HoverAce
+MegaRace3  exec="Megarace3.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
+MotoRacer2 platform=windows exec="moto.exe"
+MotoRacer3 platform=windows exec="MotoRacer3.exe" warn="You must turn on 'no intro' in the 'display' tab of the launcher, or the game will freeze on startup"
+Pod  exec=PODX3Dfx.exe
+RaceTheSun  
+RCCars  ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Screamer4x4
+StreetRacingSyndicate  warn="This game doesn't have focus when it starts up. You will have to use alt-tab, or whatever your window-manager supports, to find it's window"
+TerminalVelocity 
+
+* category='4XGame;SpaceGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+DistantWorlds 
+EmperorOfTheFadingSuns  vdesk=y
+EndlessSpace exec="Endless space.exe"
+GalacticCivilizations1  exec="galciv.exe" vdesk=y
+SpaceCom  
+SpaceEmpiresDeluxe4  exec="Se4.exe"
+StarsInShadow  
+SwordOfTheStars  exec="Sword of the Stars.exe" 
+WeirdWorlds exec=weirdworlds.exe
+
+* category='StealthGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+StealthBastard  exec="Stealth Bastard Deluxe.exe"
+Thief  exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Thief2  
+Thief3  
+
+* category='RealTimeStrategy;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BadNorth
-Ballance vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Battlevoid
-BeatHazardUltra  
-Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
+CovidTheOutbreak 
+DangerousWaters exec=LaunchDW.exe
+Defcon  
+FantasyWars  exec="fw.exe"
+GroundControl 
+HaegemoniaLegionsOfIron  
+HaegemoniaSolonHeritage
+InfestedPlanet 
+KingdomUnderFireHeroes  
+KingdomUnderFireCrusaders  
+OffworldResourceBase  exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+OriginalWar  exec=Owar.exe
+Perimeter
+Praetorians  
+StrongholdHD 
+GhostMaster
+KnightShift  exec="KnightShift.exe"
+CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
+RageOfMages  exec="rom.exe"
+StarWolves  
+StarWolves2 warn="This game installs but has been seen to have severe performance issues"
+StarWolves3  
+SubmarineTitans  exec="ST.exe" 
+
+
+
+* category='TurnBasedStrategy;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+AgeOfWonders  exec=AoW.exe vdesk=y rename="'$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro.avi' '$(drive_c)/GOG Games/Age of Wonders/Images/Scenes/Intro_disabled.avi'" warn="The intro movie of this game does not display under WINE and thus has been disabled. The game runs in a virtual desktop as it has issues with fullscreen at modern resolutions"
+ChaosReborn  
+CrusaderKings 
+DoomdarksRevenge  exec=Revenge.exe
+Etherlords  
+EuropaUniversalis   exec="europa.exe"
+EuropaUniversalis2  exec="eu2.exe"
+FrozenSynapse  exec="FrozenSynapse.exe"
+GalacticAssault  
+HeroesOfMightAndMagic3  
+Imperialism  
+KingOfDragonPass1999  vdesk=y exec=KoDP.exe warn="This installer is for the 1999 original version distributed with the remaster on gog"
+LordsOfMidnight  exec="Midnight.exe"
+MoonbaseCommander  exec=moonbase.exe
+MortalGlory winmanager=n
+Victoria 
+ChaosOverlords  
+SpaceRangersHD  exec="Rangers.exe"
+W4kRitesOfWar  vdesk=y exec=RoW.exe extra_category="Warhammer"
+
+* category='TurnBasedTactics;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BionicDues
+ShadowrunReturns  
+ShadowWatch  
+StarRenegades 
+IntoTheBreach 
+
+* category='RealTimeTactics;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+FreedomForce exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
+FTL extra_category="SpaceGame"
+Nexus exec=nexus.exe extra_category="SpaceGame"
+StarfleetCommand  vdesk=y os-version=winxp exec="sfc.exe"
+StarfleetAcademy  vdesk=y os-version=winxp exec="sfa.exe"
+
+
+* category='XComGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+UFO:Aftermath  
+UFO:Aftershock  
+UFO:Afterlight exec="UFO.exe"
+
+
+* category='CityBuilder;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Civilization3  exec="Civ3Launcher.exe" 
+RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+SimCity3000 
+PopulousTheBeginning  exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
+SpaceColony  
+DungeonKeeper2  vdesk=y os-version=winxp exec="DKII.EXE "
+PrisonArchitect  exec="Prison Architect.exe"
+Tropico  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Tropico2  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+
+* category='DetectiveGame;PointAndClickGame;AdventureGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+ABCMurders  
+SherlockHolmesVsJackTheRipper  
+
+
+* category='TransportGame;TycoonGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+FreightTycoon 
+RailroadTycoon3 
+OpenTTD  exec=openttd.exe
+Locomotion  exec="LOCO.EXE" vdesk=y
+RollerCoasterTycoon 
+MiniMetro  exec="Mini Metro.exe"
+IndustryGiant2  exec="ig2_Addon.exe"
+TransportGiant2 
+
+
+* category='TradingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
+PortRoyale2  exec=PR2.exe
+
+
+* category='ActionRPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Aragami
+ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 BladesOfTime
-BlazingStar exec="blazstar.exe"
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
-BloodrayneBetrayal
 CallOfJuarez exec="CoJ.exe"
 CallOfJuarez:BoundInBlood warn="This game cannot play it's video cutscenes. This creates a black screen at startup and at other points in the game. Press 'escape' to break out of thse"
 CallOfJuarez:GunSlinger exec="CoJGunslinger.exe"
-CardaclysmShardsOfTheFour
-Caravan  
-Carcassonne 
-Caveblazers
-CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
-ChaosReborn  
-ChaosOverlords  
-Civilization3  exec="Civ3Launcher.exe"
-CombatChess 
-CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
-CosmicStarHeroine exec="CSH.exe"
-CovidTheOutbreak 
-CrusaderKings 
-DangerousWaters exec=LaunchDW.exe
-DarkestDungeon  
-DarkQuest  
-DarkQuest2  
 Darkstone  exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 DeadSpace  exec="Dead Space.exe"
-DeathTrap
-Defcon  
-DesertLaw
 DeusEx exec="DeusEx.exe"
 DeusEx:HumanRevolution
 DeusEx:InvisibleWar
-DiceyDungeons 
-Diluvion  
+DeathTrap
 DinsCurse  rename="$(drive_c)/GOG\ Games/Din\'s\ Curse '$(drive_c)/GOG Games/DinsCurse'"
-DistantWorlds 
-DivineDivinity  exec=div.exe
-DoomdarksRevenge  exec=Revenge.exe
-Downwell 
-DraculaTheResurrection  
-DungeonKeeper2  vdesk=y os-version=winxp exec="DKII.EXE "
-DungeonRats  exec="DR.EXE"
 DungeonSiege  exec="DungeonSiege.exe" comment="This game works, but does a lot of alarming screen-switching when moving between the menu and the main game at fullscreen. Thus the game is installed in a virtual desktop by default" vdesk=y
 DungeonSiege2  exec="DungeonSiege2.exe"
 DungeonSiege3  exec="Dungeon Siege III.exe"
 DungeonSouls  exec="DungeonSouls.exe"
-Duskers  
+DivineDivinity  exec=div.exe
 ElderScrollsMorrowind 
-EmperorOfTheFadingSuns  vdesk=y
-EndlessSpace exec="Endless space.exe"
-Etherlords  
-EuropaUniversalis   exec="europa.exe"
-EuropaUniversalis2  exec="eu2.exe"
-Fallout  exec="FalloutLauncher.exe"
-FantasyWars  exec="fw.exe"
-FeudalAlloy
-FinalVendetta
-FightNRage
-FrailHearts
-FreedomForce  exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
-FreightTycoon 
-Flatout  
-FrozenSynapse  exec="FrozenSynapse.exe"
-FTL  
-GalacticAssault  
-GalacticCivilizations1  exec="galciv.exe" vdesk=y
-GalaxySquad 
-GarouMarkOfTheWolves exec="GarouApp.exe"
-GhostMaster
 Gothic warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
-GroundControl 
-HardTruck2  exec=king.exe warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
-HaegemoniaLegionsOfIron  
-HaegemoniaSolonHeritage
-HeadsWillRoll
-HeroinesQuest vdesk=y warn="Game is low-resolution, and thus a virtual desktop/window mode makes sense for it"
-HeroesOfMightAndMagic3  
-HeroOfTheKingdom  
-HeroOfTheKingdom2  
-Hexplore  exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
-HitmanCodename47  
-HotlineMiami  exec="HotlineLauncher.exe"
-HoverAce
-Huniepop 
-Imperialism  
-IndustryGiant2  exec="ig2_Addon.exe"
-InfestedPlanet 
-IntoTheBreach 
-KingdomRush  
-KingdomUnderFireHeroes  
-KingdomUnderFireCrusaders  
-KingOfDragonPass1999  vdesk=y exec=KoDP.exe warn="This installer is for the 1999 original version distributed with the remaster on gog"
-KingsBounty  
-KnightShift  exec="KnightShift.exe"
-Locomotion  exec="LOCO.EXE" vdesk=y
-LordsOfMidnight  exec="Midnight.exe"
-Legend
-MainLining 
-MagicMaker  
-MegaRace3  exec="Megarace3.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
-MiniMetro  exec="Mini Metro.exe"
-Monolith  exec=Monolith.exe
-MoonbaseCommander  exec=moonbase.exe
-MortalGlory winmanager=n
-MortalKombat4  exec="mk4.exe"
-MotoRacer2 platform=windows exec="moto.exe"
-MotoRacer3 platform=windows exec="MotoRacer3.exe" warn="You must turn on 'no intro' in the 'display' tab of the launcher, or the game will freeze on startup"
-NeoScavenger 
-Nexus  exec=nexus.exe
+MastersOfAnima
 Nox  warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
-OffworldResourceBase  exec="orb.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-OriginalWar  exec=Owar.exe
-Overfall  
-OpenTTD  exec=openttd.exe
-PapersPlease
-PaperSorcerer
-Parkan2  
-Patrician3  exec=Patrician3.exe
-Perimeter
-PhoningHome warn="Game appears to run, but very slowly."
-Pod  exec=PODX3Dfx.exe
-PopulousTheBeginning  exec="popTB.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
-PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
-PortRoyale2  exec=PR2.exe
 PrinceOfPersia exec="PrinceOfPersia_Launcher.exe"
 PrinceOfPersia:WarriorWithin warn="You must go to options and TURN OFF FOG or else you won't be able to see anything"
-Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
-Praetorians  
-PrisonArchitect  exec="Prison Architect.exe"
-PunchClub
-RaceTheSun  
-RaidenLegacy
-RailroadTycoon3 
-RageOfMages  exec="rom.exe"
-RCCars  ydesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-RebelGalaxy 
-Reigns  
-RestaurantEmpire
-RelicHuntersZeroRemix
-Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
-Revolver360 
-RiseOfTheMiddleKingdom  warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-RollerCoasterTycoon 
-RogueLegacy
-RunestoneKeeper
-SacredGold exec="Sacred.exe"
-Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
-SamuraiShodownV
-Screamer4x4
-SepterraCore  exec="septerra.exe"
-SealOfEvil
-ShadowHand
-ShadowrunReturns  
-ShadowWatch  
-SherlockHolmesVsJackTheRipper  
-SimCity3000 
-SilmarisDiceKingdom
-SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
-SlayTheSpire exec="SlayTheSpire.exe"
-SmugglersV  
-SpaceColony  
-SpaceCom  
-SpaceEmpiresDeluxe4  exec="Se4.exe"
-SpaceRangersHD  exec="Rangers.exe"
-SpaceRun  exec="oSpaceGame.exe"
-Spellforce  warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
-Spellforce2
-StardewValley platform=windows exec=StardewValley
-StarfleetCommand  vdesk=y os-version=winxp exec="sfc.exe"
-StarfleetAcademy  vdesk=y os-version=winxp exec="sfa.exe"
-StarsInShadow  
-StarRenegades 
-StarWolves  
-StarWolves2 warn="This game installs but has been seen to have severe performance issues"
-StarWolves3  
-StarVikingsForever 
-StealthBastard  exec="Stealth Bastard Deluxe.exe"
-StreetFighterAlpha  
-StreetRacingSyndicate  warn="This game doesn't have focus when it starts up. You will have to use alt-tab, or whatever your window-manager supports, to find it's window"
-StrongholdHD 
-SubmarineTitans  exec="ST.exe"
-SwordOfTheStars  exec="Sword of the Stars.exe" 
-SystemShock2  os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Tangledeep 
-TalismanOrigins 
-TachyonFringe  exec=Tachyon.exe
-TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem"
-Tempest 
-TerminalVelocity 
-TheGuild  
-TheLastBlade exec=LastBlade.exe
-TheLastBlade2 exec=LastBlade2App.exe
-TheSwindle 
-Thief  exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Thief2  
-Thief3  
-ThisIsThePolice  
+PrinceOfQin exec="Poq.exe"
 ThroneOfDarkness 
 TombRaider2
 Torchlight  os-version=winxp
 Torchlight2  os-version=winxp exec=Torchlight2.exe
+SealOfEvil
+SepterraCore  exec="septerra.exe"
+SacredGold exec="Sacred.exe"
+Spellforce  warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
+Spellforce2
+SystemShock2  os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 TotalOverdose
-TransportGiant2 
-Tropico  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Tropico2  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+VtmBloodlines  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+VtmRedemption  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
+Hexplore  exec="hexplore.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
+
+* category='DungeonCrawl;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+AncientEnemy  
+DarkestDungeon  
+DiceyDungeons 
+Monolith  exec=Monolith.exe
+RunestoneKeeper
+
+
+* category='Platformer;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+99LevelsToHell  
+Ascendant 
+Caveblazers 
+BloodrayneBetrayal
+Downwell 
+FeudalAlloy
+RogueLegacy
+WizardsAndWarriors  vdesk=y
+
+* category='ShootEmUp;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+BlazingStar exec="blazstar.exe"
+BeatHazardUltra  
+RaidenLegacy
+Revolver360 
+RelicHuntersZeroRemix
+
+
+* category='RPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+AgarestGenerationsOfWar 
+HeroinesQuest vdesk=y warn="Game is low-resolution, and thus a virtual desktop/window mode makes sense for it"
+HeroOfTheKingdom  
+HeroOfTheKingdom2  
+
+* category='TurnBasedRPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+DungeonRats  exec="DR.EXE"
+CosmicStarHeroine exec="CSH.exe"
+Tangledeep 
+DarkQuest  
+DarkQuest2  
+KingsBounty  
+NeoScavenger 
+TalismanOrigins 
+PaperSorcerer
+Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+
+
+* category='DeckBuilder;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+CardaclysmShardsOfTheFour
+SlayTheSpire exec="SlayTheSpire.exe" category="DeckBuilder"
+
+
+* category='PuzzleGame;LogicGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Arrow warn="This game has been seen to freeze at startup on some systems/wine versions, though it runs on others"
+Ballance vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+TIS100 exec="tis100.exe" extra_category="Zachtronics"
+#requires wine mono, which strangely doesn´t install
+#SpaceChem exec="SpaceChem.exe" extra_category="Zachtronics"
+
+
+* category='EliteGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Parkan2  
+RebelGalaxy 
+SmugglersV  
+X:BeyondTheFrontier 
+
+* category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+# windows via wine
+Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
+Caravan  
+Carcassonne category="TurnBasedStrategy;BoardGame"
+CombatChess category="Chess;GOG"
+CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
+DesertLaw
+Diluvion  
+DraculaTheResurrection  
+Duskers  
+Fallout  exec="FalloutLauncher.exe"
+FrailHearts
+GalaxySquad 
+HeadsWillRoll
+HitmanCodename47  
+HotlineMiami  exec="HotlineLauncher.exe"
+Huniepop 
+MainLining 
+MagicMaker  
+Overfall  
+PapersPlease
+Patrician3  exec=Patrician3.exe
+PhoningHome warn="Game appears to run, but very slowly."
+Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
+Reigns  
+RestaurantEmpire
+Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
+Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
+ShadowHand
+SilmarisDiceKingdom
+SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
+StardewValley platform=windows exec=StardewValley
+StarVikingsForever 
+TachyonFringe  exec=Tachyon.exe
+TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem" category=Poker
+Tempest 
+TheGuild  
+TheSwindle 
+ThisIsThePolice  
 TwinkleStarSprites exec=twinspri.exe
 Uplink  exec=uplink.exe vdesk=y
 TheWitcherAdventureGame  
-UFO:Aftermath  
-UFO:Aftershock  
-UFO:Afterlight exec="UFO.exe"
-Victoria 
 VoidPrison exec="Void Prison.exe"
-VtmBloodlines  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-VtmRedemption  exec="vampire.exe" warn="This game installs in a virtual desktop because it has issues with fullscreen mode at some resolutions" vdesk=y
-W4kRitesOfWar  vdesk=y exec=RoW.exe
-WeirdWorlds exec=weirdworlds.exe
 Westerado  exec=WesteradoDB.exe
-Witchaven 
-Witchaven2 
-Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-WizardsAndWarriors  vdesk=y
-X:BeyondTheFrontier 
 XComInterceptor exec="Interceptor.exe"
 
+
 # 64-bit windows/wine only
-* category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+* category='DeckBuilder;Roguelike;GOG' platform=gog:linux64
+DeepSkyDerelicts 
+Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
+
+* category='Roguelike;GOG' platform=gog:linux64
+Necrosmith exec="Necrosmith.exe"
+OutThere  exec="outthereomega.exe"
+
+* category='LogicGame;GOG' platform=gog:windows64
 AltFrequencies 
-ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe"
+MachinikaMuseum exec="MachinikaMuseum.exe"
+Shapez exec=shapezio.exe
+
+* category='RealTimeStrategy;GOG' platform=gog:linux64
+NomadsOfTheDriftland exec="Nomads.exe"
+RadioCommander
+
+* category='TurnBasedStrategy;GOG' platform=gog:linux64
 BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
-DeepSkyDerelicts 
-DefendTheRook exec="Defend the Rook.exe"
-EndlessSky exec="Endless_Sky-v0.10.6-x86_64.AppImage" warn="This game is an AppImage, you'll need a kernel that supports fuse, squashfs, etc"
-FlashOut3D
-Furi
 KingOfDragonPass exec="King of Dragon Pass.exe"
-MachinikaMuseum exec="MachinikaMuseum.exe"
-Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
-Necrosmith exec="Necrosmith.exe"
-NomadsOfTheDriftland exec="Nomads.exe"
-OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others"
+
+* category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe" category="BreakoutGame"
+DefendTheRook exec="Defend the Rook.exe" category="TowerDefence;TurnBasedTactics;GOG"
+EndlessSky exec="Endless_Sky-v0.10.6-x86_64.AppImage" warn="This game is an AppImage, you'll need a kernel that supports fuse, squashfs, etc" category="EscapeVelocityGame;GOG"
+FlashOut3D category="RacingGame"
+Furi
+GraveyardKeeper category="ManagementGame;GOG"
+OneFingerDeathPunch2 warn="This game has been seen to work under some versions of wine/linux, but not others" category="BeatEmUp"
 OrbitalBullet exec=OrbitalBullet.exe warn="Game runs, but is slow under wine"
-OutThere  exec="outthereomega.exe"
 PanzerDragoon exec='Panzer Dragoon Remake.exe' warn="This game runs, but suffers from bugs and crashes"
 PaqueretteDownTheBunburrows exec='Paquerette Down the Bunburrows.exe' warn="This game has been seen to work on ubuntu wine-6.0.3, but fail on other systems"
-RadioCommander 
 RiseEterna 
 RoadWarden warn="Only the demo version of this game has been tested"
 SNK40thAnniversary exec="SNK40thCollection.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
-Shapez exec=shapezio.exe
-StarGeneral
+StarGeneral category="4XGame"
 StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hold down left mouse button to skip them. Exiting game has issues. This game has been seen to work under some versions of wine/linux, but not others"
 SwordsAndSandals exec="Swords and Sandals Classic Collection.exe"
 Tharsis exec="tharsis.exe"

@@ -7,6 +7,7 @@ static void PrintUsage()
 {
     printf("\n");
     printf("sommelier platforms                                print list of supported platforms\n");
+    printf("sommelier categories                               print list of application categories\n");
     printf("sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform\n");
     printf("sommelier install <name> [<name>] [options]        install an application by name\n");
     printf("sommelier uninstall <name> [<name>]                uninstall an application by name\n");
@@ -83,6 +84,7 @@ void PrintVersion()
 static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 {
     const char *p_Opt;
+    char *Tempstr=NULL;
 
     if (! Act) return;
     if (! CmdLine) return;
@@ -108,12 +110,12 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-emu")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-emulator")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
-    else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED;
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
     {
         Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
@@ -129,6 +131,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     }
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
 
+    Destroy(Tempstr);
 }
 
 
@@ -156,7 +159,7 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     //list is one of the few actions that doesn't need an argument
     //so if we were asked to list, but there are no arguments, just add
     //a blank 'list all'.
-    if ((Type==ACT_LIST) || (Type==ACT_LIST_PLATFORMS))
+    if ((Type==ACT_LIST) || (Type==ACT_LIST_PLATFORMS) || (Type==ACT_LIST_CATEGORIES))
     {
         Act=ActionCreate(Type, "");
         ListAddItem(Acts, Act);
@@ -237,6 +240,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strcmp(arg, "run")==0) ParseSimpleAction(Acts, ACT_RUN, CmdLine);
         else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, CmdLine);
         else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
+        else if (strcmp(arg, "categories")==0) ParseSimpleAction(Acts, ACT_LIST_CATEGORIES, CmdLine);
         else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
         else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
         else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);

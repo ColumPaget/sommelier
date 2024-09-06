@@ -71,8 +71,8 @@ char *FindProgram(char *RetStr, TAction *Act)
     if (Act->InstallType == INSTALL_EXECUTABLE) Exec=CopyStr(Exec, Act->SrcPath);
     else
     {
-    ptr=GetVar(Act->Vars, "exec");
-    if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
+        ptr=GetVar(Act->Vars, "exec");
+        if (StrValid(ptr)) Exec=SubstituteVarsInString(Exec, ptr, Act->Vars, 0);
     }
 
 

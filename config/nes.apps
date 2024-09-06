@@ -1,7 +1,7 @@
-* platform=nes category=Game;Games/NES download-type=zip
+* platform=nes category=Game;NES download-type=zip
 BladeBuster url=http://hlc6502.web.fc2.com/BB_20120301.zip download-type='zip' sha256='b298c2c97dc6253f5ef1e2aeeb2f40d1ff1b72fd6cc68fb788b64b88b5de908a' 
 
-* platform=nes category=Game;Games/NES install-type=executable
+* platform=nes category=Game;NES install-type=executable
 Assimilate url=https://github.com/retrobrews/nes-games/raw/master/assimilate.nes sha256='891d331b06a1c3e14cadce7b621151d7c947e0be36dff150fdeb568faf8956a3' 
 Bootee url=https://github.com/retrobrews/nes-games/raw/master/bootee.nes sha256='9e3daee355eb56a80e73ce314feabe8f0bae380cb80a32468e0a1962e8c9c9ec' 
 Indivisible url=https://github.com/retrobrews/nes-games/raw/master/indivisibleonnes.nes sha256='904831dffab808eecb78b597675ff6f868978f385fbb52c1447ca04c9f9ad0df' 
