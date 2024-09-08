@@ -23,7 +23,6 @@ void HTTPServerParseClientCookies(ListNode *Vars, const char *Str)
 {
     const char *ptr;
     char *Name=NULL, *Value=NULL, *Tempstr=NULL;
-    ListNode *Item;
 
     ptr=GetNameValuePair(Str, ";", "=", &Name, &Value);
     while (ptr)
@@ -104,7 +103,7 @@ void HTTPServerParseClientHeaders(STREAM *S)
 
 void HTTPServerAccept(STREAM *S)
 {
-HTTPServerParseClientHeaders(S);
+    HTTPServerParseClientHeaders(S);
 }
 
 
@@ -164,7 +163,7 @@ int HTTPServerSendFile(STREAM *S, const char *Path, const char *iContentType, co
 {
     struct stat FStat;
     char *Tempstr=NULL, *ContentType=NULL;
-		int bytes_sent=0;
+    int bytes_sent=0;
     STREAM *F;
 
     if (stat(Path, &FStat) != 0) HTTPServerSendHeaders(S, 404, "NOT FOUND", NULL);
@@ -188,5 +187,5 @@ int HTTPServerSendFile(STREAM *S, const char *Path, const char *iContentType, co
     Destroy(Tempstr);
     Destroy(ContentType);
 
-return(bytes_sent);
+    return(bytes_sent);
 }

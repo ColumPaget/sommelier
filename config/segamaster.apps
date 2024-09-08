@@ -4,6 +4,6 @@ HeroesAgainstDemons url=https://www.smspower.org/uploads/Homebrew/HeroesAgainstD
 WingWarriors url=https://www.smspower.org/uploads/Homebrew/WingWarriors-SMS-1.00.zip sha256='4ad9f56f41c504b269e331f828a8c5cab8021ccf43bb64ea3a09a7d66e7d38b4' 
 
 
-* platform=segamaster category=Mahjong;SegaMS
+* platform=segamaster category=MahjongGame;SegaMS
 MahjongSolitaire url=https://www.smspower.org/uploads/Homebrew/MahjongSolitaire-SG-1.02.zip sha256='04c6c12841e7511f5b9a46093a925cecfb0a34595c89325c6f935d5ce77754e4' 
 

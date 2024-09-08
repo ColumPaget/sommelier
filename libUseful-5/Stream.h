@@ -22,10 +22,11 @@ The first argument can be any of the following types:
 file:///tmp/myfile.txt                   file, web-browser style. Note 3 '/' symbols. 
 mmap:/tmp/myfile.txt                     memory mapped file
 tty:/dev/ttyS0:38400                     open a serial device, in this case at 38400 baud
-udp:192.168.2.1:53                       udp network connection
+udp:192.168.2.1:53                       udp socket (Use STREAMSendDgram, from Socket.h to send packets)
 tcp:192.168.2.1:25                       tcp network connection
 ssl:192.168.2.1:443                      tcp network connection with encryption
 tls:192.168.2.1:443                      tcp network connection with encryption
+bcast:255.255.255.255:5353               udp broadcast socket (Use STREAMSendDgram, from Socket.h to send packets)
 ws:nos.lol/                              websocket
 wss:nos.lol/                             secure websocket
 unix:/tmp/socket                         unix socket
@@ -76,6 +77,21 @@ t     make a unique temporary file name. the file path must be a mktemp style te
 S     file contents are sorted
 x     exclusive open using O_EXCL. Only create/open file if it doesn't exist.
 z     compress/uncompress with gzip
+e     encrypt using openssl compatible file format
+
+
+
+for encrypted files with the 'e' option, a password must be supplied using the 'encrypt' argument. The key and inputvector are calculated from this password.
+e.g.
+
+S=STREAMOpen("myfile.enc", "we encrypt=T0PSekrit");
+
+The default cipher used is aes-256-cbc, however the cipher can be overridden like so:
+
+
+S=STREAMOpen("myfile.enc", "we encrypt=T0PSekrit encrypt_cipher=blowfish");
+
+Encryption only supports either read only or write only files, not read-write.
 
 
 for tcp/unix/udp network connections the 'config argument' defaults to 'rw' if blank. 
@@ -207,19 +223,21 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 #define SF_RDLOCK 2048     //lock file on every read
 #define SF_FOLLOW 4096     //ONLY FOR FILES: follow symbolic links
 #define SF_TLS    4096     //ONLY FOR SOCKETS: use SSL/TLS
-#define SF_SECURE 8192     //lock internal buffers into memory so they aren't written to swap or coredumps
-#define SF_NONBLOCK 16384  //nonblocking open (you must use select to check that the file is ready to use)
-#define SF_EXCL     32768  //ONLY FOR FILES: exclusive create with O_EXCL, file must not pre-exist
-#define SF_TLS_AUTO 32768  //nothing to see here, move along
-#define SF_ERROR 65536     //raise an error if open or connect fails
-#define SF_EXEC_INHERIT 131072  //allow stream to be inherited across an exec (default is close-on-exec)
-#define SF_BINARY       262144  //'binary mode' for websocket etc
-#define SF_NOCACHE 524288       //don't cache file data in filesystem cache
-#define SF_SORTED  1048576      //file is sorted, this is a hint to 'STREAMFind'
-#define STREAM_IMMUTABLE  2097152   //file is immutable (if supported by fs)
+#define SF_SECURE             8192  //lock internal buffers into memory so they aren't written to swap or coredumps
+#define SF_NONBLOCK          16384  //nonblocking open (you must use select to check that the file is ready to use)
+#define SF_EXCL              32768  //ONLY FOR FILES: exclusive create with O_EXCL, file must not pre-exist
+#define SF_TLS_AUTO          32768  //nothing to see here, move along
+#define SF_ERROR             65536  //raise an error if open or connect fails
+#define SF_EXEC_INHERIT     131072  //allow stream to be inherited across an exec (default is close-on-exec)
+#define SF_BINARY           262144  //'binary mode' for websocket etc
+#define SF_NOCACHE          524288  //don't cache file data in filesystem cache
+#define SF_LIST             524288  //only for SSH streams: list files
+#define SF_SORTED          1048576  //file is sorted, this is a hint to 'STREAMFind'
+#define STREAM_IMMUTABLE   2097152  //file is immutable (if supported by fs)
 #define STREAM_APPENDONLY  4194304  //file is append-only (if supported by fs)
-#define SF_COMPRESSED  8388608  //enable compression, this requests compression
-#define SF_TMPNAME  16777216    //file path is a template to create a temporary file name (must end in 'XXXXXX')
+#define SF_COMPRESSED      8388608  //enable compression, this requests compression
+#define SF_TMPNAME        16777216  //file path is a template to create a temporary file name (must end in 'XXXXXX')
+#define SF_ENCRYPT        33554432  //file path is a template to create a temporary file name (must end in 'XXXXXX')
 
 
 //Stream state values, set in S->State

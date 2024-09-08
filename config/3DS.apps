@@ -3,7 +3,7 @@
 Breakout url=https://github.com/Magicrafter13/Breakout/releases/download/B_1.07.02/Breakout.3dsx install-type='executable' sha256='84c052828e6eac1d78831df9f4cac9eb8d5e580c766e567ed3e029ee75b77ac6' category=BreakoutGame;3DS
 ColossalCaveAdventure url=https://github.com/nop90/Colossal-Cave-Adventure-2.5-for-3ds/releases/download/v1.1/Advent_3DSX_v1.1.zip sha256='57de0c3df074b0afdb1da75f43bc85d99fc07a65b13fea809a4a4bf3f3d13a6c' category=DungeonCrawl;3DS
 GriffonLegend url=https://github.com/nop90/Griffon-Legend-3DS/releases/download/v1.0/GriffonLegend.v1.0.zip sha256='be29b374dcd722715fe24bae835174abb446e136ac306a5507dda92b5661c24f' 
-InsectoidDefence url=https://github.com/sgowen/insectoid-defense/releases/download/v1.0-all/insectoid-defense-3DS.zip sha256='e960ffc827bf052454c04316546530675dcf2a14be6783ab9807ebf7261bd760' category=TowerDefence;3DS
+InsectoidDefence url=https://github.com/sgowen/insectoid-defense/releases/download/v1.0-all/insectoid-defense-3DS.zip sha256='e960ffc827bf052454c04316546530675dcf2a14be6783ab9807ebf7261bd760' category=TowerDefenceGame;3DS
 
 Sokoban url=https://github.com/landm2000/sokoban/blob/master/sokoban.3dsx?raw=true install-type='executable' sha256='2b1106e70c8180b7b16dddec8097b76a7e56691736dac2475a37f8465a0fbb12' category=Sokoban;3DS
-Xump url=https://www.retroguru.com/xump/xump-v.latest-nintendo3ds.zip sha256=75b1ea08f62da32ffb809c8b4a859f711c8c1624bf16456a53a2e2a9c5464dc1
+Xump url=https://www.retroguru.com/xump/xump-v.latest-nintendo3ds.zip sha256=75b1ea08f62da32ffb809c8b4a859f711c8c1624bf16456a53a2e2a9c5464dc1 category=Platformer

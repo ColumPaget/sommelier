@@ -1,9 +1,15 @@
-* platform=vectrex category=Game;Vectrex
 
-ArmorAttack url=https://archive.org/compress/vectrex-armorattack exec=ArmorAttack-1982.vec
-Bedlam url=https://archive.org/compress/vectrex-bedlam
-Berzerk url=https://archive.org/compress/vectrex-berzerk exec=Berzerk-1982.vec category=BezerkGame
+* platform=vectrex category=InvadersGame;Vectrex
 BirdsOfPrey url=https://archive.org/compress/vectrex-birdsofprey
+Vectrexians url=https://archive.org/compress/vectrex-vectrexians
+
+* platform=vectrex category=TempestGame;Vectrex
+Bedlam url=https://archive.org/compress/vectrex-bedlam
+WebWarp url=https://archive.org/compress/vectrex-webwarp exec=WebWarp-1983.vec
+
+* platform=vectrex category=ArcadeGame;Vectrex
+ArmorAttack url=https://archive.org/compress/vectrex-armorattack exec=ArmorAttack-1982.vec
+Berzerk url=https://archive.org/compress/vectrex-berzerk exec=Berzerk-1982.vec category=BezerkGame
 CleanSweep url=https://archive.org/compress/vectrex-cleansweep
 CosmicChasm url=https://archive.org/compress/vectrex-cosmicchasm
 FortressOfNarzod url=https://archive.org/compress/vectrex-fortressofnarzon
@@ -21,6 +27,4 @@ StarHawk url=https://archive.org/compress/vectrex-starhawk
 StarSeige url=https://archive.org/compress/vectrex-starseige
 StarTrek url=https://archive.org/compress/vectrex-startrek
 Gravitrex url=https://archive.org/compress/vectrex-gravitrex exec=GravitrexbyJohnDondzila-2002.vec
-Vectrexians url=https://archive.org/compress/vectrex-vectrexians
-WebWarp url=https://archive.org/compress/vectrex-webwarp exec=WebWarp-1983.vec
 ScalarOwnage url=http://sebastianmihai.com/downloads/scalar/scalar.bin

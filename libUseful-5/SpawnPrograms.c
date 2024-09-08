@@ -7,6 +7,7 @@
 #include "String.h"
 #include "Errors.h"
 #include "FileSystem.h"
+#include "Container.h"
 #include <sys/ioctl.h>
 #include <sys/wait.h>
 
@@ -43,7 +44,7 @@ int SpawnParseConfig(const char *Config)
 //This is the function we call in the child process for 'SpawnCommand'
 int BASIC_FUNC_EXEC_COMMAND(void *Command, int Flags)
 {
-    int result;
+    int result=-1;
     char *Token=NULL, *FinalCommand=NULL, *ExecPath=NULL;
     char **argv;
     const char *ptr;
@@ -76,7 +77,7 @@ int BASIC_FUNC_EXEC_COMMAND(void *Command, int Flags)
             argv[i]=CopyStr(argv[i],Token);
         }
 
-        execv(ExecPath, argv);
+        result=execv(ExecPath, argv);
     }
     else result=execl("/bin/sh","/bin/sh","-c",(char *) Command,NULL);
 
@@ -116,7 +117,6 @@ pid_t xfork(const char *Config)
 pid_t xforkio(int StdIn, int StdOut, int StdErr)
 {
     pid_t pid;
-    int fd;
 
     pid=xfork("");
     if (pid==0)
@@ -184,25 +184,25 @@ pid_t SpawnWithIO(const char *CommandLine, const char *Config, int StdIn, int St
 //This creates an STDIO pipe, unless 'ToNull' is true
 static int PipeSpawnCreateStdOutPipe(const char *Type, int channel[2], int ToNull)
 {
-int fd=-1, result;
+    int fd=-1, result;
 
-channel[0]=-1;
-channel[1]=-1;
+    channel[0]=-1;
+    channel[1]=-1;
 
 //if we ask for this to be set to null, then we map leave fd set to -1
 //which maps to /dev/null in xforkio
-if (! ToNull) 
-{
-	result=pipe(channel);
-  if (result==0) 
-	{
-	  if (strcmp(Type, "stdin")==0) fd=channel[0];
-		else fd=channel[1];
-	}
-  else RaiseError(ERRFLAG_ERRNO, "PipeSpawnFunction", "Failed to create pipe for %s", Type);
-}
+    if (! ToNull)
+    {
+        result=pipe(channel);
+        if (result==0)
+        {
+            if (strcmp(Type, "stdin")==0) fd=channel[0];
+            else fd=channel[1];
+        }
+        else RaiseError(ERRFLAG_ERRNO, "PipeSpawnFunction", "Failed to create pipe for %s", Type);
+    }
 
-return(fd);
+    return(fd);
 }
 
 
@@ -213,7 +213,6 @@ pid_t PipeSpawnFunction(int *infd, int *outfd, int *errfd, BASIC_FUNC Func, void
     //default these to stdin, stdout and stderr and then override those later
     int c1=0, c2=1, c3=2;
     int channel1[2], channel2[2], channel3[2];
-    int result;
     int Flags=0;
 
     Flags=SpawnParseConfig(Config);
@@ -233,6 +232,7 @@ pid_t PipeSpawnFunction(int *infd, int *outfd, int *errfd, BASIC_FUNC Func, void
 
         //if Func is NULL we effectively do a fork, rather than calling a function we just
         //continue exectution from where we were
+
         Flags=ProcessApplyConfig(Config);
         if (Func)
         {
@@ -247,13 +247,13 @@ pid_t PipeSpawnFunction(int *infd, int *outfd, int *errfd, BASIC_FUNC Func, void
         {
             close(channel1[0]);
             *infd=channel1[1];
-						if (*infd == -1) *infd=open("/dev/null", O_RDWR);
+            if (*infd == -1) *infd=open("/dev/null", O_RDWR);
         }
         if (outfd)
         {
             close(channel2[1]);
             *outfd=channel2[0];
-						if (*outfd == -1) *outfd=open("/dev/null", O_RDWR);
+            if (*outfd == -1) *outfd=open("/dev/null", O_RDWR);
         }
 
         if (errfd)
@@ -281,23 +281,25 @@ pid_t PipeSpawn(int *infd,int  *outfd,int  *errfd, const char *Command, const ch
 pid_t PseudoTTYSpawnFunction(int *ret_pty, BASIC_FUNC Func, void *Data, int Flags, const char *Config)
 {
     pid_t pid=-1, ConfigFlags=0;
-    int tty, pty, i;
+    int tty, pty;
 
     if (PseudoTTYGrab(&pty, &tty, Flags))
     {
+        //ContainerApplyConfig(Config);
         pid=xforkio(tty, tty, tty);
         if (pid==0)
         {
             close(pty);
 
-            ProcessSetControlTTY(tty);
+            ConfigFlags=ProcessApplyConfig(Config);
+
             setsid();
+            ProcessSetControlTTY(tty);
 
             ///now that we've dupped it, we don't need to keep it open
             //as it will be open on stdin/stdout
             close(tty);
 
-            ConfigFlags=ProcessApplyConfig(Config);
 
             //if Func is NULL we effectively do a fork, rather than calling a function we just
             //continue exectution from where we were
@@ -413,6 +415,7 @@ int STREAMSpawnCommandAndPty(const char *Command, const char *Config, STREAM **C
 
     if (PseudoTTYGrab(&pty, &tty, TTYFLAG_PTY))
     {
+        //ContainerApplyConfig(Config);
         //handle situation where Config might be null
         if (StrValid(Config)) Tempstr=CopyStr(Tempstr, Config);
         else Tempstr=CopyStr(Tempstr, "rw");

@@ -137,7 +137,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 Tempstr=CategoriesExpand(Tempstr, Value);
                 AppendVar(Act->Vars, "category", Tempstr);
             }
- 
+
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);

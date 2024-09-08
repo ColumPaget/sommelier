@@ -1,14 +1,16 @@
 * platform=megadrive category=Game;MegaDrive install-type=executable
-
-Barbarian url=https://github.com/retrobrews/md-games/raw/master/barbarian.bin sha256='b395649e30ab1f8e9c2b1d41b94dd88b3ecab3ffd2ebdbb862ef0e98d443dd1e' 
-UltimateTetris url=https://github.com/retrobrews/md-games/raw/master/ultimatetetris.bin sha256='9ead4ff94926a1b041e2722f8ce89d7e5d60898b59c6fe5b4136b7c636706ad5' 
-MegamindTris url=https://github.com/retrobrews/md-games/raw/master/megamindtris.bin sha256='c162149db0e7ffc1045057a4fd29d704c988aaed2d0b243c292bcab47b72d855' 
-PapiCommandTennis url=https://github.com/retrobrews/md-games/raw/master/papicommandotennis.bin sha256='35d600a862bc26d414c68f774aa9444084f110110588fb6c1543e163aa5b6f87' 
+PapiCommandTennis url=https://github.com/retrobrews/md-games/raw/master/papicommandotennis.bin sha256='35d600a862bc26d414c68f774aa9444084f110110588fb6c1543e163aa5b6f87' category=TennisGame
 OldTowers url=https://github.com/retrobrews/md-games/raw/master/oldtowers.bin sha256='39cd650d9225785e9c93d3beb8ba95334eb16077ab930cbfe5f75d9999991576' 
-IKPlusDeluxe url=https://github.com/retrobrews/md-games/raw/master/ikplusdeluxe.bin sha256='abb5c9acd77d4f169523c0f27b9585b47a10079865a439f6e17cbdb39e4d4ed1' 
 OmegaBlast url=https://drive.google.com/uc?export=download&id=1NEB8T38ZY1PDqEBcAB3g-cwjWZaMhLuV sha256='87516e710a5e43ea6f70f09671aea01e97f69d93ad6b88abb310514d81deed67' 
 
+* platform=megadrive category=FightingGame;MegaDrive install-type=executable
+Barbarian url=https://github.com/retrobrews/md-games/raw/master/barbarian.bin sha256='b395649e30ab1f8e9c2b1d41b94dd88b3ecab3ffd2ebdbb862ef0e98d443dd1e' 
+IKPlusDeluxe url=https://github.com/retrobrews/md-games/raw/master/ikplusdeluxe.bin sha256='abb5c9acd77d4f169523c0f27b9585b47a10079865a439f6e17cbdb39e4d4ed1' 
 
-* platform=megadrive category=Chess;Game;MegaDrive install-type=executable
+* platform=megadrive category=Tetris;MegaDrive install-type=executable
+UltimateTetris url=https://github.com/retrobrews/md-games/raw/master/ultimatetetris.bin sha256='9ead4ff94926a1b041e2722f8ce89d7e5d60898b59c6fe5b4136b7c636706ad5' 
+MegamindTris url=https://github.com/retrobrews/md-games/raw/master/megamindtris.bin sha256='c162149db0e7ffc1045057a4fd29d704c988aaed2d0b243c292bcab47b72d855' 
+
+* platform=megadrive category=Chess;MegaDrive install-type=executable
 PadisChess url="https://archive.org/download/Chess_Russia_En_Unl.md/Chess_Russia_En_Unl.md"
-ChineseChess url="https://archive.org/download/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md"
+ChineseChess url="https://archive.org/download/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md" extra_category="ChineseChess"

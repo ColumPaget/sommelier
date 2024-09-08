@@ -32,14 +32,13 @@ Qalculate platform=linux64 url="https://github.com/Qalculate/qalculate-gtk/relea
 * category='InstantMessaging;Chat;Internet'
 Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger'  sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
 Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 
-HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz'
+HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz' sha256=99154d43b1a997aa996fe5efd14eb5d66c88b5cd65f804b9df13bb42c31898a9
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
 Discord platform=linux64 url=https://discord.com/api/download?platform=linux&format=tar.gz download-type=tar.gz exec=Discord exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode." icon=discord.png
 
 
 
 category='RemoteAccess'
-#Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/version_14x/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' 
 Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
 Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
  
@@ -66,7 +65,7 @@ KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitt
 PaleMoon  url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz'  sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
 SeaMonkey  url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-i686/$(locale)/seamonkey-2.53.2.$(locale).linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='0e3dc36afe0a66e83e2d33687f0d2988704c2c2aac137ad1a4bcdb96e34d2f9e' donate=https://www.seamonkey-project.org/donate/
 GnuIcecat  url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='8d3e3038ec1a1f5b871c5c54b97fb13bc42eb10f85ecd3b096529ed7d290f571' 
-Midori  url=https://github.com/goastian/midori-desktop/releases/download/v11.3.3/midori-11.3.3.linux-i686.tar.bz2 download-type=tar.bz2 exec=midori icon=default48.png
+Midori  url=https://github.com/goastian/midori-desktop/releases/download/v11.3.3/midori-11.3.3.linux-i686.tar.bz2 download-type=tar.bz2 exec=midori icon=default48.png sha256=9d7d2d777d283ce86394ff6cf97c33f528fd4d8a8c4b8a9a7c12232ca51bfb48
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)' platform=linux64
 Basilisk  url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
@@ -74,7 +73,6 @@ PaleMoonGTK2  url=https://www.palemoon.org/download.php?mirror=eu&bits=64&type=l
 PaleMoon  url=https://www.palemoon.org/download.php?mirror=eu&bits=64&type=linuxgtk3 exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' 
 SeaMonkey  url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.2/linux-x86_64/$(locale)/seamonkey-2.53.2.$(locale).linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox'  sha256='d2624d65f41ee3f3be6a74102c30283b21520982a17411129139cbb83d5c7206' donate=https://www.seamonkey-project.org/donate/
 GnuIcecat  url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-x86_64.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  sha256='4f0dffe7ae5d98a63bd44b2b0dbd39f93d60056391214e8565892ab1ade36a85' 
-#Waterfox  url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/waterfox-G4.1.4.en-US.linux-x86_64.tar.bz2 download-type='tar.bz2' exec=waterfox sha256=1748266754bb35bbaa47042a6ee208f345d3b5da4b65adf7675f85980fe97de4
 Waterfox  url=https://cdn1.waterfox.net/waterfox/releases/G6.0.11/Linux_x86_64/waterfox-G6.0.11.tar.bz2 download-type='tar.bz2' exec=waterfox sha256=c6268cb325af37178b3519b14ed082f199a8abb5f37e45ab073123757af8201e icon=default48.png
 Librewolf  url=https://gitlab.com/api/v4/projects/12829184/packages/generic/librewolf/103.0-3/LibreWolf-103.0-3.x86_64.tar.bz2 download-type=tar.bz2 exec=librewolf sha256=635710c32092491bd3e34490f245296171dc04a81dc236110ac0989bbe0ad593 icon=default64.png comment="Privacy centric Firefox"
 Vivaldi  url=https://downloads.vivaldi.com/stable/vivaldi-stable_5.3.2679.73-1_amd64.deb download-type=deb exec=vivaldi exec-args="--no-sandbox" sha256=c0444c4a8955c3d20e9c72aa8e97a365eb8500b5414d0ac1cf958c84b861cb7b warn="This program installs in 'no sandbox' mode."
@@ -99,7 +97,7 @@ DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 do
 RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone sha256=bb8b44e0fab088c4f5e40878b4213ce15fa474763f1355f597b0a6ad2aa96c6d
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
-* category='IRC;Chat;Internet;Network'
+* category='IRCClient;Chat;Internet;Network'
 SeaMonkeyChat platform=linux32 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyChat platform=linux64 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 DxIRCQt platform=linux64 url=https://download.opensuse.org/repositories/home:/dvx13/AppImage/dxirc-qt-latest-x86_64.AppImage
@@ -148,27 +146,34 @@ GHC platform=linux64 url=https://downloads.haskell.org/~ghc/9.0.1/ghc-9.0.1-x86_
 DoubleCommanderQt5 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.qt5.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Qt5 2-pane filemanager' name='DoubleCommanderQt5' sha256='c250011f7bb8c0c0de044f83bf968d0ccc213e5b28245db204d995398a94b376' 
 DoubleCommanderGtk2 platform=linux32 url=http://sourceforge.net/projects/doublecmd/files/DC%20for%20Linux%2032%20bit/Double%20Commander%200.9.8%20beta/doublecmd-0.9.8.gtk2.i386.tar.xz/download download-type='tar.bz2' exec='doublecmd.sh' category='FileManager' comment='Gtk2 2-pane filemanager' name='DoubleCommanderGtk2' sha256='301dc3ba35d600be05a0e62e345c217d637e4ebfc5f9c0fd1d21f85cc02a3e16' 
 
-* category='Roguelike;Roleplaying;Game' platform=linux32
+* category='Roguelike;RolePlaying;Game' platform=linux32
 TalesOfMajeyal platform=linux32 url=http://te4.org/dl/t-engine/t-engine4-linux32-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='9d07dc8d05729279b6d82a3bb44dced2a80700ddb0405c72b5883b9ce8b594c5' 
-UnRealWorld platform=linux32 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-i686-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
+UnRealWorld platform=linux32 url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-i686-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png sha256=d54ddced733abcc86e6a91f3e4a4d2d26915dc46eddf98da0b1f59d21823b9bb
 
-* category='Roguelike;Roleplaying;Game' platform=linux64
+* category='Roguelike;RolePlaying;Game' platform=linux64
 TalesOfMajeyal platform=linux64 url=http://te4.org/dl/t-engine/t-engine4-linux64-1.6.7.tar.bz2 download-type='tar.bz2' exec='t-engine' comment='Roguelike RPG'  sha256='944cc54478b36179b2967b8e58575fe768705e7d7b2b83cd843f2d0129416428' 
 UnRealWorld url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-x86_64-linux-gnu.tar.gz download-type='tar.gz' donate=https://www.unrealworld.fi/urw_donate.html exec=urw3-bin icon=urwicon-256.png
 
+
+
+
 * category='Game' platform=linux32
-TorusTrooper url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60
-Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32
-Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes
+TorusTrooper url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60 category="TempestGame"
+Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32 category="Platformer"
+Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes 
 
 * category='Game' platform=linux64
 Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame
-Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64
+Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64 category="Platformer"
 Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
-Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei
+Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei category="ShootEmUp"
 Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame
-Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb'
+Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb' category=StrategyGame
+Typhoon2001 url=https://archive.org/download/typhoon-2001/typhoon_2001_r3992_LINUX.tar.gz download-type=tar.gz" platform=linux32 category=TempestGame
 
+* category="OfficeSuite" platform=linux64 locale='$(lang)-$(country)'
+WPSOffice url=https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11723/wps-office_11.1.0.11723.XA_amd64.deb download-type="deb"
+LibreOffice url=https://appimages.libreitalia.org/LibreOffice-still.full-x86_64.AppImage
 
 
 * category='Notes;Office;Utility'
@@ -178,7 +183,7 @@ SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electro
 * category='AudioVideoEditor;Audio' platform=linux64
 Audacity url=https://github.com/audacity/audacity/releases/download/Audacity-3.6.2/audacity-linux-3.6.2-x64.AppImage sha256=b009504d0f74b7fca7092d3c0fdb866b8894ab66473b951c2b7ed7e454282058 
 Giada url=https://www.giadamusic.com/data/Giada-1.0.0-x86_64.AppImage
-OcenAudio url=https://www.ocenaudio.com/start_download/ocenaudio_debian10.deb
+OcenAudio url=https://www.ocenaudio.com/start_download/ocenaudio_debian10.deb download-type=deb
 Qtractor url=https://download.sf.net/qtractor/qtractor-1.2.0-4.1.x86_64.AppImage
 QSampler url=https://sourceforge.net/projects/qsampler/files/qsampler/1.0.0/qsampler-1.0.0-1.1.x86_64.AppImage/download
 LMMS url=https://github.com/LMMS/lmms/releases/download/v1.2.2/lmms-1.2.2-linux-x86_64.AppImage

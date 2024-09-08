@@ -62,6 +62,9 @@ static void CategoriesAddExpansions(ListNode *Cats, const char *Cat)
         ptr=GetToken(Expanse, ";", &Name, 0);
         while (ptr)
         {
+            StripLeadingWhitespace(Name);
+            StripTrailingWhitespace(Name);
+
             if (StrValid(Name)) SetVar(Cats, Name, Name);
             ptr=GetToken(ptr, ";", &Name, 0);
         }
@@ -73,24 +76,27 @@ static void CategoriesAddExpansions(ListNode *Cats, const char *Cat)
 }
 
 
-char *CategoriesExpand(char *RetStr, const char *Input)
+static char *CategoriesExpandInternal(char *RetStr, const char *Input, int Count)
 {
     ListNode *Cats, *Curr, *Node;
     const char *ptr;
-    char *Cat=NULL;
+    char *Name=NULL;
 
     Cats=ListCreate();
 
-    ptr=GetToken(Input, ";", &Cat, 0);
+    ptr=GetToken(Input, ";", &Name, 0);
     while (ptr)
     {
-	if (StrValid(Cat))
-	{
-        SetVar(Cats, Cat, Cat);
-        CategoriesAddExpansions(Cats, Cat);
-	}
+        StripLeadingWhitespace(Name);
+        StripTrailingWhitespace(Name);
 
-        ptr=GetToken(ptr, ";", &Cat, 0);
+        if (StrValid(Name))
+        {
+            SetVar(Cats, Name, Name);
+            CategoriesAddExpansions(Cats, Name);
+        }
+
+        ptr=GetToken(ptr, ";", &Name, 0);
     }
 
     RetStr=CopyStr(RetStr, "");
@@ -98,47 +104,69 @@ char *CategoriesExpand(char *RetStr, const char *Input)
     while (Curr)
     {
         RetStr=MCatStr(RetStr, Curr->Tag, ";", NULL);
-	//we do this here, not earlier in the process,
-	//in order to be sure we only count once
-        Node=ListFindNamedItem(CatMap, Curr->Tag);
-	if (! Node) Node=ListAddNamedItem(CatMap, Curr->Tag, NULL);
-	
-	//we are abusing item type here, because ListNodeHits records number of lookups
-	//and there´s no way of using it as a counter, without changing libuseful
-	Node->ItemType++;
+
+        //beware of counting ´blank' items where a category list ended with ´;´
+        if (Count && StrValid(Curr->Tag))
+        {
+            //we do this here, not earlier in the process,
+            //in order to be sure we only count once
+            Node=ListFindNamedItem(CatMap, Curr->Tag);
+            if (! Node) Node=ListAddNamedItem(CatMap, Curr->Tag, NULL);
+
+            //we are abusing item type here, because ListNodeHits records number of lookups
+            //and there´s no way of using it as a counter, without changing libuseful
+            Node->ItemType++;
+        }
 
         Curr=ListGetNext(Curr);
     }
 
-
     ListDestroy(Cats, Destroy);
-    Destroy(Cat);
+    Destroy(Name);
 
     return(RetStr);
 }
 
 
+char *CategoriesExpand(char *RetStr, const char *Input)
+{
+    return(CategoriesExpandInternal(RetStr, Input, FALSE));
+}
+
+
 void CategoriesList()
 {
-ListNode *Curr;
-char *Tempstr=NULL;
-TAction *App;
+    ListNode *Curr, *Sorted;
+    char *Tempstr=NULL;
+    TAction *App;
 
-Curr=ListGetNext(AppsGetList());
-while (Curr)
-{
-  App=(TAction *) Curr->Item;
-  Tempstr=CategoriesExpand(Tempstr, GetVar(App->Vars, "category"));
-  Curr=ListGetNext(Curr);
-}
+    Curr=ListGetNext(AppsGetList());
+    while (Curr)
+    {
+        App=(TAction *) Curr->Item;
+        Tempstr=CategoriesExpandInternal(Tempstr, GetVar(App->Vars, "category"), TRUE);
+        Curr=ListGetNext(Curr);
+    }
 
 
-Curr=ListGetNext(CatMap);
-while (Curr)
-{
-if (Curr->ItemType > 0) printf("%30s  %6d items\n", Curr->Tag, Curr->ItemType);
-Curr=ListGetNext(Curr);
-}
+    Sorted=ListCreate();
+    Curr=ListGetNext(CatMap);
+    while (Curr)
+    {
+        if (Curr->ItemType > 0) ListAddTypedItem(Sorted, Curr->ItemType, Curr->Tag, Curr->Item);
+        Curr=ListGetNext(Curr);
+    }
 
-Destroy(Tempstr);
+    ListSortNamedItems(Sorted);
+
+    Curr=ListGetNext(Sorted);
+    while (Curr)
+    {
+        printf("%30s  %6d items\n", Curr->Tag, Curr->ItemType);
+        Curr=ListGetNext(Curr);
+    }
+
+    ListDestroy(Sorted, NULL);
+
+    Destroy(Tempstr);
 }

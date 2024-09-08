@@ -20,60 +20,60 @@ void Destroy(void *Obj)
 
 uint32_t reverse_uint32(uint32_t Input)
 {
-uint32_t Output;
+    uint32_t Output;
 
-Output = (Input & 0xFF) << 24;
-Output |= (Input & 0xFF00) << 8;
-Output |= (Input & 0xFF0000) >> 8;
-Output |= (Input & 0xFF000000) >> 24;
+    Output = (Input & 0xFF) << 24;
+    Output |= (Input & 0xFF00) << 8;
+    Output |= (Input & 0xFF0000) >> 8;
+    Output |= (Input & 0xFF000000) >> 24;
 
-return(Output);
+    return(Output);
 }
 
 
 uint8_t parse_bcd_byte(const char *In)
 {
-uint8_t val=0;
-int bit, len, i;
-const char *ptr;
+    uint8_t val=0;
+    int bit, len, i;
+    const char *ptr;
 
-len=StrLen(In);
-if (len < 1) return(0);
-if (len > 8) len=8;
-bit=1 << (len -1);
+    len=StrLen(In);
+    if (len < 1) return(0);
+    if (len > 8) len=8;
+    bit=1 << (len -1);
 
-ptr=In;
-for (i=0; i < len; i++)
-{
-if (*ptr=='1') val |= bit;
-ptr++;
-bit=bit >> 1;
-}
+    ptr=In;
+    for (i=0; i < len; i++)
+    {
+        if (*ptr=='1') val |= bit;
+        ptr++;
+        bit=bit >> 1;
+    }
 
-return(val);
+    return(val);
 }
 
 
 
 char *encode_bcd_bytes(char *RetStr, unsigned const char *Bytes, int Len)
 {
-unsigned const char *ptr, *end;
-int bit, i;
+    unsigned const char *ptr, *end;
+    int bit, i;
 
-end=Bytes+Len;
+    end=Bytes+Len;
 
-for (ptr=Bytes; ptr < end; ptr++)
-{
-bit=128;
-for (i=0; i < 8; i++)
-{
-	if (*ptr & bit) RetStr=CatStr(RetStr, "1");
-	else RetStr=CatStr(RetStr, "0");
-	bit = bit >> 1;
-}
-}
+    for (ptr=Bytes; ptr < end; ptr++)
+    {
+        bit=128;
+        for (i=0; i < 8; i++)
+        {
+            if (*ptr & bit) RetStr=CatStr(RetStr, "1");
+            else RetStr=CatStr(RetStr, "0");
+            bit = bit >> 1;
+        }
+    }
 
-return(RetStr);
+    return(RetStr);
 }
 
 
@@ -180,7 +180,8 @@ int fd_remap_path(int fd, const char *Path, int Flags)
 char *MakeShellSafeString(char *RetStr, const char *String, int SafeLevel)
 {
     char *Tempstr=NULL;
-    char *BadChars=";|&`";
+    char *BadChars=";|&`$";
+    int ErrFlags=0;
 
     if (SafeLevel==SHELLSAFE_BLANK)
     {
@@ -189,9 +190,12 @@ char *MakeShellSafeString(char *RetStr, const char *String, int SafeLevel)
     }
     else Tempstr=QuoteCharsInStr(RetStr,String,BadChars);
 
-    if (CompareStr(Tempstr,String) !=0)
+
+    if ( (SafeLevel & (SHELLSAFE_REPORT | SHELLSAFE_ABORT)) && (CompareStr(Tempstr,String) !=0) )
     {
-        //if (EventCallback) EventCallback(String);
+        ErrFlags=ERRFLAG_SYSLOG;
+        if (SafeLevel & SHELLSAFE_ABORT) ErrFlags |= ERRFLAG_ABORT;
+        RaiseError(ErrFlags, "MakeShellSafeString", "unsafe chars found in %s", String);
     }
     return(Tempstr);
 }

@@ -8,12 +8,13 @@ Kosmonaut  url=https://image.dosgamesarchive.com/games/kosmonaut.zip exec='KOSMO
 Skyroads  url=http://www.completelyfreesoftware.com/software/skyroads.zip exec='SKYROADS.EXE'  sha256='24762fe14196a642224288fe2063c9d0c0033be9c5b4b2f97fded09390803ee4' comment='Guide a spaceship through and obstacle course' 
 StarHammer  url=https://archive.org/download/StarHammer/shammer.zip exec='HAMMER.EXE' sha256='67bdb9b26f41eebb2a2a77deb8b41180b4510edb86ec19af3d2cabcd9111b88d' 
 
-* category='ArcadeGame' platform=dos
+* category='InvadersGame' platform=dos
 CloneInvader  url=https://image.dosgamesarchive.com/games/cloneinv.zip exec='CLONINV.EXE'  sha256='2914412bd650b78c4b146b4589d14ea3a7478c0f612354127c8432314b60931f' warn='This game runs too fast in dosbox' 
 
 * category='BombermanGame' platform=dos
 MrBoom  url=https://image.dosgamesarchive.com/games/mrboom30.zip exec='MRBOOM30.EXE'  sha256='0d8d13ba7f9e62bb3360b3c1f542219f10b131a8afb04202fefd783d7c2a156c' 
 Pyromania  url=https://archive.org/download/download_20170418/download.zip exec='PYRO.EXE'  sha256='24b8f3f105a12b62c1d27215a0d380ee1b7c91e777cee7af0845ec50b72c14cf' 
+DynaBlaster url=https://archive.org/compress/chenall_dyna 
 
 * category='ShootEmUp' platform=dos
 OperationSpacehog  url=https://image.dosgamesarchive.com/games/spacehog.zip exec='SH.EXE'  sha256='a620d38f6e75e8e85baa41f5b5693423e14f3b5d6013aeb0323989ef63f7398d' 

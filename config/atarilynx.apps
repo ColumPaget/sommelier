@@ -3,6 +3,6 @@
 BastionDemo url=http://enthusi.de/bastion_demo_priorart.zip comment="not a game, but a tech demo" sha256=56c368a0e5a7c0cd3b231a560df3e9c851107d44702954b5c1725ea62c92d224
 Catkanoid url=http://sebastianmihai.com/downloads/catkanoid/catkanoid.lnx
 SuperNutmeg url=https://www.retroguru.com/super-nutmeg/nutmeg-v.latest-atarilynx.zip sha256=229386ed0e01bf227608af08d21f78ea7a4838946a92d25b4e01e5942fc4cf15
-StarBlader url=https://www.retroguru.com/star-blader/starblader-v.latest-atarilynx.zip sha256=598d30e273a496e8c2e320ceba0b500b3d8cfebd739aab2c9102d880b51d32fc
-Xump url=https://www.retroguru.com/xump/xump-v.latest-atarilynx.zip sha256=4f66ae35ef6a852f0fcb64853eb86417b46c38528aaa9933b6961e573db73272
+StarBlader url=https://www.retroguru.com/star-blader/starblader-v.latest-atarilynx.zip sha256=598d30e273a496e8c2e320ceba0b500b3d8cfebd739aab2c9102d880b51d32fc extra_category="StarStrikeGame"
+Xump url=https://www.retroguru.com/xump/xump-v.latest-atarilynx.zip sha256=4f66ae35ef6a852f0fcb64853eb86417b46c38528aaa9933b6961e573db73272 extra_category="Platformer"
 

@@ -12,16 +12,12 @@
 #include "String.h"
 #include "Users.h"
 #include "UnitsOfMeasure.h"
+#include "FileSystem.h"
 #include "WebSocket.h"
 #include <sys/file.h>
 #include "SecureMem.h"
 #include <sys/mman.h>
 #include <sys/ioctl.h>
-
-#ifdef linux
-#include <linux/fs.h>
-#endif
-
 
 
 
@@ -62,7 +58,7 @@ static void SelectAddFD(TSelectSet *Set, int type, int fd)
 
 static int SelectWait(TSelectSet *Set, struct timeval *tv)
 {
-    long long timeout, next;
+    long long timeout;
     uint64_t start, diff;
     int result;
 
@@ -241,27 +237,12 @@ void STREAMSetFlags(STREAM *S, int Set, int UnSet)
     fcntl(S->in_fd, F_SETFD, val);
     fcntl(S->out_fd, F_SETFD, val);
 
+#ifdef USE_FSFLAGS
     //immutable and append only flags are a special case as
     //they are not io flags, but permanent file flags so we
     //only touch those if explicitly set in Set or UnSet
-    if ((Set | UnSet) & (STREAM_IMMUTABLE | STREAM_APPENDONLY))
-    {
-#ifdef FS_IOC_SETFLAGS
-        ioctl(S->out_fd, FS_IOC_GETFLAGS, &val);
-
-#ifdef FS_IMMUTABLE_FL
-        if (Set & STREAM_IMMUTABLE) val |= FS_IMMUTABLE_FL;
-        else if (UnSet & STREAM_IMMUTABLE) val &= ~FS_IMMUTABLE_FL;
+    if ((Set | UnSet) & (STREAM_IMMUTABLE | STREAM_APPENDONLY)) FileSystemSetSTREAMFlags(S->out_fd, Set, UnSet);
 #endif
-
-#ifdef FS_APPEND_FL
-        if (Set & STREAM_APPENDONLY) val |= FS_APPEND_FL;
-        else if (UnSet & STREAM_APPENDONLY) val |= FS_APPEND_FL;
-#endif
-
-        ioctl(S->out_fd, FS_IOC_SETFLAGS, &val);
-#endif
-    }
 }
 
 
@@ -286,7 +267,7 @@ void STREAMSetFlushType(STREAM *S, int Type, int StartPoint, int BlockSize)
 /* the file pointer to that position */
 void STREAMReAllocBuffer(STREAM *S, int size, int Flags)
 {
-    char *ibuf=NULL, *obuf=NULL;
+    unsigned char *ibuf=NULL, *obuf=NULL;
     int RW;
 
     if (S->Flags & SF_MMAP) return;
@@ -314,8 +295,8 @@ void STREAMReAllocBuffer(STREAM *S, int size, int Flags)
     }
     else
     {
-        if (! (RW & SF_WRONLY)) S->InputBuff =(char *) realloc(S->InputBuff,size);
-        if (! (RW & SF_RDONLY)) S->OutputBuff=(char *) realloc(S->OutputBuff,size);
+        if (! (RW & SF_WRONLY)) S->InputBuff =(unsigned char *) realloc(S->InputBuff,size);
+        if (! (RW & SF_RDONLY)) S->OutputBuff=(unsigned char *) realloc(S->OutputBuff,size);
     }
 
     if (ibuf)
@@ -535,8 +516,7 @@ int STREAMPushBytes(STREAM *S, const char *Data, int DataLen)
 
 static int STREAMInternalPushBytes(STREAM *S, const char *Data, int DataLen)
 {
-    int result=0, count=0, len;
-    void *vptr;
+    int result=0, count=0;
 
     if (! S) return(STREAM_CLOSED);
     if (S->out_fd==-1) return(STREAM_CLOSED);
@@ -598,7 +578,9 @@ static int STREAMInternalPushBytes(STREAM *S, const char *Data, int DataLen)
 int STREAMFlush(STREAM *S)
 {
     int val;
+
     val=STREAMInternalPushBytes(S, S->OutputBuff, S->OutEnd);
+
     //if nothing left in stream (There shouldn't be) then wipe data because
     //there might have been passwords sent on the stream, and we don't want
     //that hanging about in memory
@@ -768,12 +750,12 @@ STREAM *STREAMFromDualFD(int in_fd, int out_fd)
 
 int STREAMOpenMMap(STREAM *S, int offset, int len, int Flags)
 {
-    char *ptr;
+    unsigned char *ptr;
     int MProt=PROT_READ;
 
     if (S->InputBuff) free(S->InputBuff);
     if (Flags & (SF_WRONLY | SF_RDWR)) MProt |= PROT_WRITE;
-    ptr=(char *) mmap(0, len, MProt, MAP_SHARED, S->in_fd, offset);
+    ptr=(unsigned char *) mmap(0, len, MProt, MAP_SHARED, S->in_fd, offset);
     if (ptr==MAP_FAILED) return(FALSE);
     S->InEnd=len;
     S->InStart=0;
@@ -791,7 +773,7 @@ STREAM *STREAMFileOpen(const char *Path, int Flags)
     STREAM *Stream;
     struct stat myStat;
     char *Tempstr=NULL, *NewPath=NULL;
-    const char *p_Path, *ptr;
+    const char *p_Path;
 
     p_Path=Path;
     if (Flags & SF_WRONLY) Mode=O_WRONLY;
@@ -955,6 +937,9 @@ static int STREAMParseConfig(const char *Config)
             case 'a':
                 Flags |= STREAM_APPEND | SF_CREATE;
                 break;
+            case 'e':
+                Flags |= SF_ENCRYPT;
+                break;
             case 'E':
                 Flags |= SF_ERROR;
                 break;
@@ -992,10 +977,10 @@ static int STREAMParseConfig(const char *Config)
                 Flags |= SF_TMPNAME;
                 break;
             case 'x':
-		//for local files this is 'exclusive open' with O_EXCL. 
-		//for ssh connections this is the 'execute' flag that indicates
-		//a command is to be run
-                Flags |= SF_EXCL; 
+                //for local files this is 'exclusive open' with O_EXCL.
+                //for ssh connections this is the 'execute' flag that indicates
+                //a command is to be run
+                Flags |= SF_EXCL;
                 break;
             case 'z':
                 Flags |= SF_COMPRESSED;
@@ -1036,6 +1021,32 @@ static const char *STREAMExtractMasterURL(const char *URL)
 
 
 #define STREAMFileOpenWithConfig(url, config) STREAMFileOpen((url), STREAMParseConfig(config))
+
+
+
+//Add Processor Modules. if any of these fail, then close the stream and return NULL
+//so that we don't for instance, write to a file without encryption when that was asked for
+static STREAM *STREAMSetupDataProcessorModules(STREAM *S, const char *Config)
+{
+//if no processors are needed, then we consider things 'good'
+    int SetupGood=TRUE;
+
+    if (S->Flags & SF_COMPRESSED)
+    {
+        if (S->Flags & SF_RDONLY) if (! STREAMAddStandardDataProcessor(S, "decompress", "gzip", "")) SetupGood=FALSE;
+            else if (S->Flags & SF_WRONLY) if (! STREAMAddStandardDataProcessor(S, "compress", "gzip", "")) SetupGood=FALSE;
+    }
+
+    if (S->Flags & SF_ENCRYPT) if (! STREAMAddStandardDataProcessor(S, "crypto", "", Config)) SetupGood=FALSE;
+
+    if (! SetupGood)
+    {
+        STREAMClose(S);
+        S=NULL;
+    }
+
+    return(S);
+}
 
 
 //URL can be a file path or a number of different network/file URL types
@@ -1094,10 +1105,11 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
     case 't':
     case 's':
     case 'u':
+    case 'b': //b for 'bcast'
         if ( (CompareStr(URL,"-")==0) || (strcasecmp(URL,"stdio:")==0) ) S=STREAMFromDualFD(dup(0), dup(1));
         else if (strcasecmp(URL,"stdin:")==0) S=STREAMFromFD(dup(0));
         else if (strcasecmp(URL,"stdout:")==0) S=STREAMFromFD(dup(1));
-        else if (strcasecmp(Proto,"ssh")==0) S=SSHOpen(Host, Port, User, Pass, Path, STREAMParseConfig(Config));
+        else if (strcasecmp(Proto,"ssh")==0) S=SSHOpen(Host, Port, User, Pass, Path, Config);
         else if (strcasecmp(Proto,"tty")==0)
         {
             S=STREAMFromFD(TTYConfigOpen(URL+4, Config));
@@ -1133,14 +1145,15 @@ STREAM *STREAMOpen(const char *URL, const char *Config)
         break;
     }
 
+
+    if (S) S=STREAMSetupDataProcessorModules(S, Config);
+
+
+
     if (S)
     {
         if (S->Flags & SF_SECURE) STREAMResizeBuffer(S, S->BuffSize);
-        if (S->Flags & SF_COMPRESSED)
-        {
-            if (S->Flags & SF_RDONLY) STREAMAddStandardDataProcessor(S, "decompress", "gzip", "");
-            else if (S->Flags & SF_WRONLY) STREAMAddStandardDataProcessor(S, "compress", "gzip", "");
-        }
+
 
         switch (S->Type)
         {
@@ -1277,6 +1290,7 @@ void STREAMShutdown(STREAM *S)
 
     //-1 means 'FLUSH'
     STREAMReadThroughProcessors(S, NULL, -1);
+    STREAMWriteBytes(S, NULL, 0); //means flush any processors
     STREAMFlush(S);
 
     switch (S->Type)
@@ -1426,7 +1440,7 @@ int STREAMPullBytes(STREAM *S, char *Buffer, int Len)
 int STREAMReadCharsToBuffer(STREAM *S)
 {
     int val=0, read_result=0;
-    long bytes_read;
+    long bytes_read=0;
     char *tmpBuff=NULL;
 
     if (! S) return(0);
@@ -1783,7 +1797,11 @@ int STREAMWriteBytes(STREAM *S, const char *Data, int DataLen)
 
     if (ListSize(S->ProcessingModules))
     {
-        STREAMInternalPushProcessingModules(S, i_data, len, &TempBuff, &len);
+        if (len < 4096) len=4096;
+
+        TempBuff=SetStrLen(TempBuff, len * 2);
+        len=0;
+        STREAMInternalPushProcessingModules(S, i_data, DataLen, &TempBuff, &len);
         i_data=TempBuff;
     }
 
@@ -1962,6 +1980,12 @@ char *STREAMReadToTerminator(char *Buffer, STREAM *S, unsigned char Term)
     const unsigned char *p_Term;
     int IsClosed=FALSE;
 
+    if (! S)
+    {
+        RaiseError(0, "STREAMReadToterminator", "NULL stream object passed to function");
+        Destroy(Buffer);
+        return(NULL);
+    }
 
     RetStr=CopyStr(Buffer,"");
     while (1)
@@ -2130,11 +2154,18 @@ int STREAMReadToString(STREAM *S, char **RetStr, int *len, const char *Term)
 char *STREAMReadDocument(char *RetStr, STREAM *S)
 {
     char *Tempstr=NULL;
-    int result, size, bytes_read=0, max;
+    const char *ptr;
+    int result=0, size, bytes_read=0, max;
 
-    max=LibUsefulGetInteger("MaxDocumentSize");
+
+    //for documents where we know the size, e.g. HTTP documents where we've had 'Content-Length'
+    //there will be a size booked against the stream 'S'
     if ( (S->Size > 0) && (! (S->State & SS_COMPRESSED)) ) size=S->Size;
-    else size=max;
+
+    //we can set a program-wide max document size
+    max=LibUsefulGetInteger("MaxDocumentSize");
+    if (max > 0) size=max;
+
 
     while (bytes_read < size)
     {
@@ -2143,8 +2174,17 @@ char *STREAMReadDocument(char *RetStr, STREAM *S)
         if (result >= 0) bytes_read+=result;
         else break;
     }
-    StrTrunc(RetStr,bytes_read);
 
+    //don't trust StrTrunc here, as we might have read
+    //binary data that can include '\0' characters
+    //StrTrunc(RetStr,bytes_read);
+
+    //instead of StrTrunc do this.
+    RetStr[bytes_read]='\0';
+    StrLenCacheAdd(RetStr, bytes_read);
+
+
+    //if result > 0 then we didn't break out on reading a 'STREAM_CLOSED' or other close condition, we broke out because we had hit the size limit
     if ((bytes_read==size) && (result > 0))
     {
         if (bytes_read==max) RaiseError(0, "STREAMReadDocument", "Document size is greater than Max Document Size of %s bytes", ToIEC(max, 1));
@@ -2326,20 +2366,22 @@ int STREAMFind(STREAM *S, const char *Item, const char *Delimiter, char **RetStr
 
 static int UseKernelSendFile(STREAM *In, STREAM *Out, int Flags)
 {
-if (! (Flags & SENDFILE_KERNEL)) return(FALSE);
-switch (In->Type)
-{
-case STREAM_TYPE_FILE:
-case STREAM_TYPE_PIPE:
-break;
+    if (! (Flags & SENDFILE_KERNEL)) return(FALSE);
+    switch (In->Type)
+    {
+    case STREAM_TYPE_FILE:
+    case STREAM_TYPE_PIPE:
+        break;
 
-default: return(FALSE); break;
-}
+    default:
+        return(FALSE);
+        break;
+    }
 
-if  (ListSize(In->ProcessingModules) > 0) return(FALSE);
-if  (ListSize(Out->ProcessingModules) > 0) return(FALSE);
+    if  (ListSize(In->ProcessingModules) > 0) return(FALSE);
+    if  (ListSize(Out->ProcessingModules) > 0) return(FALSE);
 
-return(TRUE);
+    return(TRUE);
 }
 
 

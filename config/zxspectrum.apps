@@ -1,4 +1,13 @@
 
+* platform=spectrum category=InvadersGame;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+Arcadia url=https://archive.org/compress/zx_Arcadia_1982_Imagine_Software sha256='b785179641a483faeac898ce89f5006c647c26bbdb7b2c59ba5781b1f7ce81a1' 
+dkCentipede url=https://archive.org/compress/zx_Centipede_1982_DKTronics sha256='aacd9e65d0ac81ce1dd7e2d31964ffe4c3f761d1c3fdd11d21936eb2cf04bc85' 
+Galaxians url=https://archive.org/compress/zx_Galaxians_1982_Artic_Computing_16K sha256='2bfdfad71b5bbfe8ce5bd3f16bae2faafcfc8c13c654e073ec753334985ed7ec' 
+SpaceIntruders url=https://archive.org/compress/zx_Space_Intruders_1982_Quicksilva_a3_16K
+SpaceRaiders url=https://archive.org/compress/zx_Space_Raiders_1982_Sinclair_Research_16K
+GalacticTrooper url=https://archive.org/compress/zx_Galactic_Trooper_1984_Romik_Software_16K
+
+
 * platform=spectrum category=BattlezoneGame;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
 3DCombatZone url=https://archive.org/compress/zx_3D_Combat_Zone_1983_Artic_Computing sha256='f5039cddc075c42dd0ba624a2330484f255bc47db7a24e962df54e272d3e90f5' 
 Battlezone url=https://archive.org/compress/zx_Battle_Zone_1984_Quicksilva sha256='e8d295097ffb27604ee244ef21a0e0e0e2f0ed23ad0214936c06e38f307fa7bd' 
@@ -50,38 +59,48 @@ RType url=https://archive.org/compress/zx_R_Type_1988_Electric_Dreams_Software_b
 Sidewize url=https://archive.org/compress/zx_Sidewize_1987_Firebird_Software sha256='645f9e6cf761e07c75540515a98e3ad8249495f6410b92890e61c98ba135eeb3' 
 FlyingShark url=https://archive.org/compress/zx_Flying_Shark_1987_Firebird_Software sha256='61f6ec2988906d087909dc36914020d36f1248dfcb9ffef6c7b913b35b3b1e57' 
 
+* platform=spectrum category=StarStrikeGame;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+3DStarStrike url=https://archive.org/compress/zx_3D_Starstrike_1984_Realtime_Games_Software sha256='bfad8733b2c4cd0256e7b9d81b6af7d940c2da4a9ca0f84bf7c2d79b8a2facc0' 
+DarkStar url=https://archive.org/compress/zx_Dark_Star_1985_Design_Design_Software sha256='2072f77b29d51168b86b392102179e1bd18cc3a30b3cac9d48ad7e7dfac07091' 
+
+* platform=spectrum category=FightingGame;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+Barbarian url=https://archive.org/compress/zx_Barbarian_1_Player_1987_Palace_Software
+WayOfTheExplodingFist url=https://archive.org/compress/zx_Way_of_the_Exploding_Fist_The_1985_Melbourne_House
+YieArKungFu url=https://archive.org/compress/zx_Yie_Ar_Kung_Fu_1985_Imagine_Software
+
+* platform=spectrum category=BeatEmUp;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
+FightingWarrior url=https://archive.org/compress/zx_Fighting_Warrior_1985_Melbourne_House
+Fist2 url=https://archive.org/compress/zx_Fist_II_The_Legend_Continues_1986_Melbourne_House
+Renegade url=https://archive.org/compress/zx_Renegade_1987_Imagine_Software
+
 * platform=spectrum category=Game;ZXspectrum icon=$(install-dir)/__ia_thumb.jpg
 3DSpaceWars url=https://archive.org/compress/zx_3D_Space_Wars_1983_Hewson_Consultants_16K sha256='349893d0d27555ca763ca91f0503808c97428f3a1cf9389aa326a292c1666e70' 
 3DSeddiabAttack url=https://archive.org/compress/zx_3D_Seiddab_Attack_1983_Hewson_Consultants_16K sha256='dc9210b78ecad60a6da0cff6f35e347ffc1047faa79b181d8c13179f8af40b7c' 
 3DLunattack url=https://archive.org/compress/zx_3D_Lunattack_1984_Hewson_Consultants sha256='a3b853815ae0650f81c9412d8ef64478dcd8d3dd6aff99ba8b02016beea4a845' 
-3DStarstrike url=https://archive.org/compress/zx_3D_Starstrike_1984_Realtime_Games_Software sha256='bfad8733b2c4cd0256e7b9d81b6af7d940c2da4a9ca0f84bf7c2d79b8a2facc0' 
 Alien8 url=https://archive.org/compress/zx_Alien_8_1985_Ultimate_Play_The_Game sha256='d65fc3949e966d9efcfad51322e3de8e17befaaa041f1f486ad8da3ab8ee3d2f' 
-Arcadia url=https://archive.org/compress/zx_Arcadia_1982_Imagine_Software sha256='b785179641a483faeac898ce89f5006c647c26bbdb7b2c59ba5781b1f7ce81a1' 
-Arkanoid url=https://archive.org/compress/zx_Arkanoid_1987_Imagine_Software sha256='9bd9f007b3eb3a2191e8aff2ffa544889ebe4e81d05ca07dfc6768a31b20ea45' category="BreakoutGame;ZXSpectrum"
+Arkanoid url=https://archive.org/compress/zx_Arkanoid_1987_Imagine_Software sha256='9bd9f007b3eb3a2191e8aff2ffa544889ebe4e81d05ca07dfc6768a31b20ea45' extra_category="BreakoutGame"
 Athena url=https://archive.org/compress/zx_Athena_1987_Imagine_Software_128K sha256='a12cf7fdc4401e5ecaea56b6c8af93f5b311d0323437550b9e486a4b500925ec' 
 ATF url=https://archive.org/compress/zx_ATF_Advanced_Tactical_Fighter_1988_Digital_Integration sha256='600c6895a073671c4ea6c526f7971c8b1792a6f818a9579a55dcfaca0513d9a6' 
 AticAtac url=https://archive.org/compress/zx_Atic_Atac_1983_Ultimate_Play_The_Game sha256='f7abc9d339d231d1ab922a5a1adb20708ba9d46e6775b6fcc77c40842770febb' 
-Chaos url=https://archive.org/compress/zx_Chaos_The_Battle_of_the_Wizards_1985_Games_Workshop sha256='1728a436d6382b3b6ea4aca3b1d6cb6a4da5f94f44567c3fd84ae12979471700' 
+Chaos url=https://archive.org/compress/zx_Chaos_The_Battle_of_the_Wizards_1985_Games_Workshop sha256='1728a436d6382b3b6ea4aca3b1d6cb6a4da5f94f44567c3fd84ae12979471700' extra_category=WizardBattle
 BubbleBobble url=https://archive.org/compress/zx_Bubble_Bobble_1987_Firebird_Software sha256='8e8cd8c0f767f8bc6520b389b3e27c63cb94133384ecfaa5e121f01f8e208830' 
-dkCentipede url=https://archive.org/compress/zx_Centipede_1982_DKTronics sha256='aacd9e65d0ac81ce1dd7e2d31964ffe4c3f761d1c3fdd11d21936eb2cf04bc85' 
-DarkStar url=https://archive.org/compress/zx_Dark_Star_1985_Design_Design_Software sha256='2072f77b29d51168b86b392102179e1bd18cc3a30b3cac9d48ad7e7dfac07091' 
-Elite url=https://archive.org/compress/zx_Elite_1985_Firebird_Software sha256='42f57735260fd49f6fe63e75c89105ffddca0bab9f4402f4d973346fd47b08df' 
+Elite url=https://archive.org/compress/zx_Elite_1985_Firebird_Software sha256='42f57735260fd49f6fe63e75c89105ffddca0bab9f4402f4d973346fd47b08df' extra_category=EliteGame
 Earthlight url=https://archive.org/compress/zx_Earthlight_1988_Firebird_Software_128K sha256='ee6b243e4d6c2f70d1b96502af98055ebf2f9215dfb41449452596a0f824e068' 
 Fairlight url=https://archive.org/compress/zx_Fairlight_A_Prelude_1985_The_Edge_Software_128K sha256='39760595b81fdfd7bbaec7dd4ec7a61dd8415cbbd9d2433f83abd7fd36eaadb7' 
 GameOver url=https://archive.org/compress/zx_Game_Over_1987_Imagine_Software_128K_re_release sha256='097c6a8051c5634b98eca7be81ce79cb76eaf81c21548aeb4333f6849a89abab' 
-Galaxians url=https://archive.org/compress/zx_Galaxians_1982_Artic_Computing_16K sha256='2bfdfad71b5bbfe8ce5bd3f16bae2faafcfc8c13c654e073ec753334985ed7ec' 
 HallsOfTheThings url=https://archive.org/compress/zx_Halls_of_the_Things_1983_Crystal_Computing sha256='d17dd9c0de75db6e14d2baa7e401e07b065d6a3ab7c60d96ac6a0bb8b54528d6' 
 HighwayEncounter url=https://archive.org/compress/zx_Highway_Encounter_1985_Vortex_Software sha256='6d938f6821654c0911417ed1a754a6d40643ceea09db3348c398a427c60ff3ca' 
 HoraceGoesSkiing url=https://archive.org/compress/zx_Horace_Goes_Skiing_1982_Sinclair_Research sha256='eb53f1b81eef486b7bee5dff40909419a97bef3bd15de673664c2a5b5d8b2715' 
-MatchPoint url=https://archive.org/compress/zx_Match_Point_1984_Sinclair_Research sha256='052f10b681924f7d4d5e8187b6b2224687d48780606cb9dade5fa6489670c329' 
+MatchPoint url=https://archive.org/compress/zx_Match_Point_1984_Sinclair_Research sha256='052f10b681924f7d4d5e8187b6b2224687d48780606cb9dade5fa6489670c329' category="TennisGame"
 Nebulus url=https://archive.org/compress/zx_Nebulus_1987_Hewson_Consultants sha256='dd541e1a910f45304e401e251edabf3e15c4d0d44be9465ed3991f9baa9bf755' 
 Quazatron url=https://archive.org/compress/zx_Quazatron_1986_Hewson_Consultants sha256='62f64ea1bed7e3422624527149430d1cc71d06c98f768fb0fa52cc009e2c9b5b' 
 Penetrator url=https://archive.org/compress/zx_Penetrator_1982_Melbourne_House sha256='23c0aedeaf26fa61a3ba300b30712c7cb31f8734e5e3858a2664efee3a1ccbaa' 
 SabreWulf url=https://archive.org/compress/zx_Sabre_Wulf_1984_Ultimate_Play_The_Game sha256='1d57895026ada89d664cdb02b039c2a7cfb6601f669140a06e8421e23e6df07f' 
 ScubaDive url=https://archive.org/compress/zx_Scuba_Dive_1983_Durell_Software sha256='79c2d3222fd44731f03b1b11f68dca8305eafed3c0efd4c08410f7759edb85c1' 
-Sentinel url=https://archive.org/compress/zx_Sentinel_The_1987_Firebird_Software sha256='7978c9f238d1a2c8bba5db6d84dba4c75f5b846336c7e88f97a828643fa5c9b9' category="SentinelGame;ZXSpectrum"
+Sentinel url=https://archive.org/compress/zx_Sentinel_The_1987_Firebird_Software sha256='7978c9f238d1a2c8bba5db6d84dba4c75f5b846336c7e88f97a828643fa5c9b9' extra_category="SentinelGame"
 SpaceCrusade url=https://archive.org/compress/zx_Space_Crusade_1992_Gremlin_Graphics_Software_128K sha256='8f2367a5d9e10ab5075022d1b03877d21e8f6b1c93a152ada488c4bc34a78d6f' 
 Starquake url=https://archive.org/compress/zx_Starquake_1985_Bubblebus_Software sha256='0e02e8f39f9b6009f2b044a00c58f3de7efe792ba394c4923575c934088c2956' 
+Tempest url=https://archive.org/compress/zx_Tempest_1987_Electric_Dreams_Software extra_category="TempestGame"
 Thrust url=https://archive.org/compress/zx_Thrust_1986_Firebird_Software_a sha256='43bcabb6d03e58edac3b1d5fbe81aca7735aa928dc6af7d694d6d3beee78a599' 
 Thrust2 url=https://archive.org/compress/zx_Thrust_II_1987_Firebird_Software sha256='877bed3cceba92a2bcf76c168426d391c8492d6510376f72132d2f9d5a9d2613' 
 TornadoLowLevel url=https://archive.org/compress/zx_T.L.L._Tornado_Low_Level_1984_Vortex_Software sha256='1d31d25c35e83758d665b0ad722cb67a701431dfd4d4d32c9a5634ea0ef6d6f5' 

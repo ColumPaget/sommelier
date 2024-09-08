@@ -346,6 +346,29 @@ Any value not recognized from the above list will simply be set as a variable th
 
 
 
+ADDING EMULATORS
+================
+
+emulators can be added in 'platforms.conf'. These have the format:
+
+
+```Â
+<names> platform=<platform> emu=<emulator command line> exec=<exec patterns> 
+```Â
+
+where:
+
+```Â
+names           list of names that this platform is known under
+platform        the actual platform name that sommelier understands and acts on
+emu             emulator command line, which can contain variables
+exec            patterns that match the 'executable' file to pass to the emulator, so '*.jar' for java, '*.z80' for zxspectrum
+
+```Â
+
+the 'exec' pattern is used to find the 'executable' or main rom to pass to the emulator, of which only one is expected. this appears as a variable called 'exec-path' which can then be included in the 'emu' option.
+
+
 
 EMULATOR ROMS
 =============

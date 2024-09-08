@@ -143,15 +143,18 @@ DoubleCommander url=https://sourceforge.net/projects/doublecmd/files/DC%20for%20
 * category='FileTransfer' platform=windows
 FileZilla url=extracted:https\://filezilla-project.org/download.php?show_all=1:*win32-setup.exe?h=* exec='filezilla.exe' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' sha256='f7c5be12cab910e2ed55b79b6f1b5314c5d9c1909a62216c882c8c6dc406f241' 
 
-* category='Office' locale='$(lang)-$(country)' platform=windows
-AbiWord url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
-OpenOffice url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/$(locale)/Apache_OpenOffice_4.1.7_Win_x86_install_$(locale).exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' exec=quickstart.exe
+* category='OfficeSuite' locale='$(lang)-$(country)' platform=windows
+OpenOffice4.1.7 url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.7/binaries/$(locale)/Apache_OpenOffice_4.1.7_Win_x86_install_$(locale).exe/download comment='Office Suite' sha256='d0469863d5e6b8fbfa8ec432603f7b62899b100e65cbd94fe4251f9ce8ac1047' exec=quickstart.exe
+OpenOffice url=https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.15/binaries/$(locale)/Apache_OpenOffice_4.1.15_Win_x86_install_$(locale).exe/download
 LibreOffice url=https://download.documentfoundation.org/libreoffice/stable/7.4.5/win/x86/LibreOffice_7.4.5_Win_x86.msi exec=quickstart.exe warn="Applications runs but crashes a lot on wine 6.0" donate=https://www.libreoffice.org/donate/
-AtlantisWordProcessor url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 FreeOfficeTextMaker url=https://www.freeoffice.com/download.php?filename=https://www.softmaker.net/down/freeoffice2018.msi exec=TextMaker.exe
-FreeOfficePlanMaker exec=PlanMaker.exe bundled=FreeOfficeTextMaker
+FreeOfficePlanMaker exec=PlanMaker.exe bundled=FreeOfficeTextMaker 
 FreeOfficePresentations exec=Presentations.exe bundled=FreeOfficeTextMaker
-WinMerge url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/winmerge-2.16.28-exe.zip comment="GUI to diff/merge text files" sha256=5df7528f94432360b5c7a05f5a0a605344c18acf94f22d7c8d5506f07220c133 exec=WinMergeU.exe
+Joeffice platform=windows64 url=https://www.joeffice.com/Joeffice.exe install-type=executable
+
+* category='WordProcessor' locale='$(lang)-$(country)' platform=windows
+AbiWord url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
+AtlantisWordProcessor url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 
 * category='PDF;Viewer;Office' platform=windows
 SumatraPDF url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
@@ -278,6 +281,7 @@ Wireshark url=https://www.wireshark.org/download/win32/Wireshark-win32-latest.ms
 BeerSmith url=https://beersmith3-2.s3.amazonaws.com/BeerSmith3_2_7.exe warn="This program only runs for 31 days in Trial mode" sha256=83f0fcf2e7e4d07ada6700462915c2827ca5ec7b797c7fb6542a0c85eba72f53
 SimpleNote url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-win-2.21.0.exe exec=Simplenote.exe sha256=a3f26f4d0d196b152da5cfcafb72ac2f3e82e5041009a20f6958c43f9f478cd8
 EssentialPIM url=https://www.essentialpim.com/download/EssentialPIM.exe dlname=EssentialPIMInstaller.exe exec=EssentialPIM.exe sha256=a780d775936fe73c19af8d39bc5dda5e2ebc15cc54f3f0f7243d7af1a97f8e1e
+WinMerge url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/winmerge-2.16.28-exe.zip comment="GUI to diff/merge text files" sha256=5df7528f94432360b5c7a05f5a0a605344c18acf94f22d7c8d5506f07220c133 exec=WinMergeU.exe
 
 * category='Chess' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 ArenaChess url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
@@ -314,7 +318,7 @@ XmSol url=https://sourceforge.net/projects/xmsol/files/xmsol.zip/download exec='
 XCell url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip version='4.0a' exec='xcell.exe' comment='Freecell Clone' sha256='049615687199033dbab053d114213c37da6a3ac478de79b415b9fcc1ea4ebefe' 
 Hearts url=http://www.tucows.com/download/games/files2/thnoshearts.zip installer-vdesk='Y' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe' 
 
-* category='Roguelike;Roleplaying;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+* category='Roguelike;RolePlaying;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 DesktopDungeons url=http://www.qcfdesign.com/Files/DesktopDungeons/DesktopDungeons_v021.exe exec='DesktopDungeons.exe' comment='Coffebreak Roguelike' sha256='2a6e2b339efebd2e13dec776baa36dda79b1de8c079ba1fccbc053a2f33df86e' icon="HeroPaladin.png"
 DungeonCrawlStoneSoup url=http://crawl.develz.org/release/0.21/stone_soup-0.21.1-tiles-win32.zip exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256='fec60ac700975e3bc1edb1d13c0e74d799bc5431cb6b0ef797bf960e3bb28198' 
 GearHead1 url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/GH1-1.302-sdl-windows-i386.zip movefiles-from='gearhead-1/*' exec='gharena.exe' comment='Mecha Roguelike' sha256='edfdd0c0682ba7e7bbbbc908ca2a092ddc66fd251bb7a6c72700f7d9d9768aa1' 
@@ -341,12 +345,12 @@ SPWW2 url=http://download.shrapnelgames.com/downloads/winSP/winSPWW2.zip install
 Warzone2100 url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_win_x86_portable.exe
 
 * category='ArcadeGame' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-Invader url=https://archive.org/download/749InvaderInstall/749_invader_install.exe comment='Space Invaders clone' sha256='5f9949a69a71d0ede178ef7a0b7f0289824419ecc7dc2d68453ac641d62279ec' 
-Invaders95 url=https://archive.org/download/Invaders95/Invaders95.zip sha256='e5b41178a2beba361cb091f33a0e99febdfac08f6b9f37d8d8fab14ab5f29402' installer-vdesk='Y' comment='Space invaders clone' 
-JphJoust3 url=https://archive.org/download/joust3/joust3.zip exec='Joust3_RevengeOfTheLavaTroll.exe' sha256='25de49988f43e82c40979b05d74291967783af73349cd311d95203a0e2f43294' comment='Joust clone with more complex gameplay than the original' 
+Invader url=https://archive.org/download/749InvaderInstall/749_invader_install.exe comment='Space Invaders clone' sha256='5f9949a69a71d0ede178ef7a0b7f0289824419ecc7dc2d68453ac641d62279ec' category="InvadersGame"
+Invaders95 url=https://archive.org/download/Invaders95/Invaders95.zip sha256='e5b41178a2beba361cb091f33a0e99febdfac08f6b9f37d8d8fab14ab5f29402' installer-vdesk='Y' comment='Space invaders clone' category="InvadersGame"
+JphJoust3 url=https://archive.org/download/joust3/joust3.zip exec='Joust3_RevengeOfTheLavaTroll.exe' sha256='25de49988f43e82c40979b05d74291967783af73349cd311d95203a0e2f43294' comment='Joust clone with more complex gameplay than the original' category="JoustGame"
 OmegaRace url=http://www.tardis.dk/dlcount/click.php?id=20  donate=http://tardis.dk/wordpress/?page_id=981
 SpaceFury url=http://www.tardis.dk/dlcount/click.php?id=18 donate=http://tardis.dk/wordpress/?page_id=981
-SpaceRawks url=http://www.tardis.dk/dlcount/click.php?id=47 donate=http://tardis.dk/wordpress/?page_id=981 comment="Asteriods clone"
+SpaceRawks url=http://www.tardis.dk/dlcount/click.php?id=47 donate=http://tardis.dk/wordpress/?page_id=981 comment="Asteroids clone" catgegory="AsteroidsGame"
 StarCastle url= http://www.tardis.dk/dlcount/click.php?id=27 donate=http://tardis.dk/wordpress/?page_id=981 
 
 
@@ -356,7 +360,7 @@ Sentry url=https://archive.org/download/Sentry_1020/sentry.zip exec='Sentry.exe'
 
 
 * category='Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-3dStarStrike  url=https://archive.org/download/3dstarstrike-remake/3dstarstrike.zip installer='install.exe' comment='Addictive space shooter game' sha256='76212e248ce6d7ae860cce32c022f5346642bacc8453bf6cb0781e06f9672e81' 
+3dStarStrike  url=https://archive.org/download/3dstarstrike-remake/3dstarstrike.zip installer='install.exe' comment='Addictive space shooter game' sha256='76212e248ce6d7ae860cce32c022f5346642bacc8453bf6cb0781e06f9672e81' category="StarStrikeGame"
 ArcAetherAnomalies url=http://www.j-kyle.com/arc/Anomalies_Install_2008-10-31.exe sha256=9b3e937d71a58fa9e9ed475cfbf6e173b840f6262e1a5007b318e2db76faaf3e
 Arcadia url=http://www.tardis.dk/dlcount/click.php?id=41 donate=http://tardis.dk/wordpress/?page_id=981 exec=Arcadia.exe movefiles-from='$(drive_c)/Program Files/Arcadia/Arcad*/*'
 BattleshipsForever url=http://www.wyrdysm.com/battleshipsforever/BFFullInstallerv90d.exe sha256='1158e35fe0129c31e407f6d5f1a751bb0166b3854ac45ca15a09618f456cbe72' 
@@ -365,23 +369,23 @@ CarpeUniversum url=http://www.wyrdysm.com/games/CarpeUniversumv12.zip sha256='d9
 Cybernoid3 url=https://archive.org/download/cybernoid-3-phoenix/C3.zip comment='Addictive space shooter game' vdesk='y' sha256='818d0ae3de84c8884296df02545edc4a1a551f792cb02727df271e0b940f9ae7' 
 GazerStar url=https://archive.org/download/shooter_201705/shooter.zip sha256='d40b326dc24c522180ccb7127827c986c1e66059c9ee6e801e0df9dc68f6aecc' 
 GeneRally url=http://gene-rally.com/download/latest/ comment='little racing car game' sha256='e1ffc2f37d39748f6569c8f166b7b1a7aff2d4f6d385c2b1aa5ba7c2f9feef7e' 
-Glest url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' 
+Glest url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' category="RealTimeStrategy"
 Gwan url=https://archive.org/download/GWANWin/GWANWin.zip sha256='d4937612dbb26a90371159337a805043ab16fa73c805f1a34a67c1b29fd6f946' comment='Innovative vector-style game' 
 JadeEmpire url=https://archive.org/compress/JadePC sha256='3286d52835858ad3b6466722e533c39d759ce746745e1cd6ca155bf6ab2ec9ae' 
 LaserTank url=https://laser-tank.com/game/LaserTank.zip sha256='4c1361a82600ab40390d8c09bd43756b59e9c1d61d2e0e6c47a012cee785a6b3' 
-LockOn url=https://archive.org/download/lockOn/lockOn.zip exec='_lockOn__iteration002.exe' sha256='74b9bf44d8138f3bf99c7e8b3154097250a62a677d8664629b02646e0690f035' comment='Addictive space shooter game' vdesk='y' 
-Oolite url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite-1.90_x86.exe exec=oolite.exe sha256=9bafc8389115dd551300ef0e807c7580cd57b010d31fad0af148ebaaefc08b37
+LockOn url=https://archive.org/download/lockOn/lockOn.zip exec='_lockOn__iteration002.exe' sha256='74b9bf44d8138f3bf99c7e8b3154097250a62a677d8664629b02646e0690f035' comment='Addictive space shooter game' vdesk='y' category="AsteroidsGame" 
+Oolite url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite-1.90_x86.exe exec=oolite.exe sha256=9bafc8389115dd551300ef0e807c7580cd57b010d31fad0af148ebaaefc08b37 category="EliteGame"
 PlasmaWorm url=http://digital-eel.com/plasmaworm/files/plasmaworm_free.exe sha256='c8354e264d32b1ba8bdfd0c543cca99719707ac1135bbb56485a27f589f23be9' comment='Snake game' category="SnakeGame"
 PrivateerRemake url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
 RiftSpace url=https://archive.org/download/RiftSpace/RiftSpace.exe exec='RiftSpace.exe' sha256='c4546ae1cba46c8b1ec6072ed868f0ffc03d6168363853fe2d8e2bf65418c933' 
 SimpleTetris url=https://archive.org/download/SimpleTetris/SimpleTetris.zip movefiles-from='Tetris/*' exec='tetris.exe' sha256='830d947433ed1a710dfb4c71c2eeef705ac2b4c41a86450c2ca42a502595c38a' category=Tetris
 Sokoban++ url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' category=Sokoban
-TinyHeist url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' 
+TinyHeist url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' category="TerryCavanaghGame;Stealth;Roguelike"
 TrackManiaForever url=http://files.trackmaniaforever.com/tmnationsforever_setup.exe exec=TmForeverLauncher.exe
-Transcendance url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' 
-VVVVVV url=http://www.flibitijibibo.com/VVVVVV-MP-10202016.zip comment='Spikes! Why are there always spikes?' sha256='39fbe76e8b7ce8bc8a37b64a7170e9e7e011c9585876bda89c04df7a472bcd91' 
+Transcendance url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' category="EliteGame;EscapeVelocityGame"
+VVVVVV url=http://www.flibitijibibo.com/VVVVVV-MP-10202016.zip comment='Spikes! Why are there always spikes?' sha256='39fbe76e8b7ce8bc8a37b64a7170e9e7e011c9585876bda89c04df7a472bcd91' category="TerryCavanaghGame;Platformer" 
 Zektor url=http://www.tardis.dk/dlcount/click.php?id=17 donate=http://tardis.dk/wordpress/?page_id=981
-NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' 
-KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' 
-Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe
-
+NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' category="TowerDefenceGame"
+KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' catgegory="AdventureGame"
+Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe category="LogicGame"
+Typhoon2001 url=https://archive.org/download/typhoon_2001_r3992/typhoon_2001_r3992.zip exec=typhoon.exe category="TempestGame"

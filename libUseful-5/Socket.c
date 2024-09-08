@@ -280,7 +280,6 @@ int IP4SockAddrCreate(struct sockaddr **ret_sa, const char *Addr, int Port)
 int SockAddrCreate(struct sockaddr **ret_sa, const char *Host, int Port)
 {
     const char *p_Addr="";
-    socklen_t salen;
 
     if (StrValid(Host))
     {
@@ -300,10 +299,10 @@ int SockAddrCreate(struct sockaddr **ret_sa, const char *Host, int Port)
 
 int BindSock(int Type, const char *Address, int Port, int Flags)
 {
-    int result;
     struct sockaddr *sa;
     socklen_t salen;
-    int fd;
+    int fd=-1;
+    int result=-1;
 
     salen=SockAddrCreate(&sa, Address, Port);
     if (salen==0) return(-1);
@@ -314,17 +313,22 @@ int BindSock(int Type, const char *Address, int Port, int Flags)
     }
     else fd=socket(sa->sa_family, Type, 0);
 
-    //REUSEADDR and REUSEPORT must be set BEFORE bind
-    result=1;
+
+    if (fd > -1)
+    {
+        //REUSEADDR and REUSEPORT must be set BEFORE bind
+        result=1;
 #ifdef SO_REUSEADDR
-    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &result, sizeof(result));
+        setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &result, sizeof(result));
 #endif
 
 #ifdef SO_REUSEPORT
-    if (Flags & BIND_REUSEPORT) setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &result, sizeof(result));
+        if (Flags & BIND_REUSEPORT) setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &result, sizeof(result));
 #endif
 
-    result=bind(fd, sa, salen);
+        result=bind(fd, sa, salen);
+    }
+
     free(sa);
 
     if (result !=0)
@@ -346,21 +350,21 @@ int BindSock(int Type, const char *Address, int Port, int Flags)
 int GetHostARP(const char *IP, char **Device, char **MAC)
 {
     char *Tempstr=NULL, *Token=NULL;
-    int result=FALSE, len;
+    int result=FALSE;
     const char *ptr;
-    FILE *F;
+    STREAM *S;
 
     Tempstr=SetStrLen(Tempstr, 255);
-//TODO: why use fopen?
-    F=fopen("/proc/net/arp","r");
-    if (F)
+    S=STREAMOpen("/proc/net/arp","r");
+    if (S)
     {
         *Device=CopyStr(*Device,"remote");
         *MAC=CopyStr(*MAC,"remote");
         //Read Title Line
-        fgets(Tempstr,255,F);
+        Tempstr=STREAMReadLine(Tempstr, S);
 
-        while (fgets(Tempstr,255,F))
+        Tempstr=STREAMReadLine(Tempstr, S);
+        while (Tempstr)
         {
             StripTrailingWhitespace(Tempstr);
             ptr=GetToken(Tempstr," ",&Token,0);
@@ -384,8 +388,9 @@ int GetHostARP(const char *IP, char **Device, char **MAC)
 
                 result=TRUE;
             }
+            Tempstr=STREAMReadLine(Tempstr, S);
         }
-        fclose(F);
+        STREAMClose(S);
     }
 
     DestroyString(Tempstr);
@@ -407,7 +412,7 @@ int GetSockDestination(int sock, char **Host, int *Port)
 #ifdef SO_ORIGINAL_DST
     salen=sizeof(struct sockaddr_in);
 
-    if (getsockopt(sock, SOL_IP, SO_ORIGINAL_DST, (char *) &sa, &salen) ==0)
+    if (getsockopt(sock, SOL_IP, SO_ORIGINAL_DST, (char *) &sa, (unsigned int *) &salen) ==0)
     {
         *Host=SetStrLen(*Host,NI_MAXHOST);
         Tempstr=SetStrLen(Tempstr,NI_MAXSERV);
@@ -560,7 +565,6 @@ int UDPRecv(int sock,  char *Buffer, int len, char **Addr, int *Port)
     struct sockaddr_in sa;
     socklen_t salen;
     int result;
-    int fd;
 
     salen=sizeof(sa);
     result=recvfrom(sock, Buffer, len,0, (struct sockaddr *) &sa, &salen);
@@ -666,7 +670,6 @@ void IP6AddresssFromSA(struct sockaddr_storage *sa, char **ReturnAddr, int *Retu
 int GetSockDetails(int sock, char **LocalAddress, int *LocalPort, char **RemoteAddress, int *RemotePort)
 {
     socklen_t salen;
-    int result;
     struct sockaddr_storage sa;
 
     if (LocalPort) *LocalPort=0;
@@ -764,13 +767,13 @@ int IPReconnect(int sock, const char *Host, int Port, int Flags)
 int NetConnectWithSettings(const char *Proto, const char *LocalHost, const char *InHost, int Port, TSockSettings *Settings)
 {
     const char *p_LocalHost=LocalHost;
-		char *Host=NULL;
+    char *Host=NULL;
     int sock, result;
 
 
-		//we have preserved 'host' with '[ addr ]' wrapper for IP6 until now
-		if (*InHost=='[') Host=CopyStrLen(Host, InHost+1, StrLen(InHost)-2);
-		else Host=CopyStr(Host, InHost);
+    //we have preserved 'host' with '[ addr ]' wrapper for IP6 until now
+    if (*InHost=='[') Host=CopyStrLen(Host, InHost+1, StrLen(InHost)-2);
+    else Host=CopyStr(Host, InHost);
 
 
     if ((! StrValid(p_LocalHost)) && IsIP6Address(Host)) p_LocalHost="::";
@@ -791,8 +794,8 @@ int NetConnectWithSettings(const char *Proto, const char *LocalHost, const char 
 
     result=IPReconnect(sock, Host, Port, Settings->Flags);
 
-		Destroy(Host);
-		
+    Destroy(Host);
+
     if (result==-1)
     {
         close(sock);
@@ -986,9 +989,6 @@ int STREAMConnect(STREAM *S, const char *URL, const char *Config)
     int result=FALSE;
     char *Proto=NULL, *Host=NULL, *Token=NULL, *Path=NULL;
     char *Name=NULL, *Value=NULL;
-    TSockSettings Settings;
-    const char *ptr, *p_val;
-    int Flags=0, fd;
     int Port=0;
 
 

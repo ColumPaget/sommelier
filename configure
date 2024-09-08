@@ -3621,6 +3621,57 @@ fi
 
 	if test "$cf_have_libUseful5" = "yes"
 	then
+	echo "installed libUseful found."
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AppendVars in -lUseful-5" >&5
+$as_echo_n "checking for AppendVars in -lUseful-5... " >&6; }
+if ${ac_cv_lib_Useful_5_AppendVars+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lUseful-5  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char AppendVars ();
+int
+main ()
+{
+return AppendVars ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_Useful_5_AppendVars=yes
+else
+  ac_cv_lib_Useful_5_AppendVars=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Useful_5_AppendVars" >&5
+$as_echo "$ac_cv_lib_Useful_5_AppendVars" >&6; }
+if test "x$ac_cv_lib_Useful_5_AppendVars" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBUSEFUL_5 1
+_ACEOF
+
+  LIBS="-lUseful-5 $LIBS"
+
+else
+  cf_have_libUseful5=no
+fi
+
+
+	if test "$cf_have_libUseful5" = "yes"
+	then
 	# On IRIX 5.3, sys/types and inttypes.h are conflicting.
 for ac_header in sys/types.h sys/stat.h stdlib.h string.h memory.h strings.h \
 		  inttypes.h stdint.h unistd.h
@@ -3650,61 +3701,8 @@ fi
 
 done
 
-	else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for GetToken in -lUseful-4" >&5
-$as_echo_n "checking for GetToken in -lUseful-4... " >&6; }
-if ${ac_cv_lib_Useful_4_GetToken+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lUseful-4  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char GetToken ();
-int
-main ()
-{
-return GetToken ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_Useful_4_GetToken=yes
-else
-  ac_cv_lib_Useful_4_GetToken=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Useful_4_GetToken" >&5
-$as_echo "$ac_cv_lib_Useful_4_GetToken" >&6; }
-if test "x$ac_cv_lib_Useful_4_GetToken" = xyes; then :
-  cf_have_libUseful4=yes
-else
-  cf_have_libUseful4=no
-fi
-
-	for ac_header in libUseful-4/libUseful.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "libUseful-4/libUseful.h" "ac_cv_header_libUseful_4_libUseful_h" "$ac_includes_default"
-if test "x$ac_cv_header_libUseful_4_libUseful_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBUSEFUL_4_LIBUSEFUL_H 1
-_ACEOF
-
-fi
-
-done
-
+	else echo "installed libUseful too old. Must be v5.25 or newer"
+	fi
 	fi
 fi
 
@@ -3851,149 +3849,6 @@ _ACEOF
   LIBS="-lcrypto $LIBS"
 
 fi
-
-elif test "$cf_have_libUseful4" = "yes"
-then
-  echo "installed libUseful-4 found, using that instead of bundled libUseful."
-  echo "if you want to use bundled libUseful, force it with --with-libuseful=no"
-  LIBUSEFUL_BUNDLED=""
-
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GetToken in -lUseful-4" >&5
-$as_echo_n "checking for GetToken in -lUseful-4... " >&6; }
-if ${ac_cv_lib_Useful_4_GetToken+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lUseful-4  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char GetToken ();
-int
-main ()
-{
-return GetToken ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_Useful_4_GetToken=yes
-else
-  ac_cv_lib_Useful_4_GetToken=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Useful_4_GetToken" >&5
-$as_echo "$ac_cv_lib_Useful_4_GetToken" >&6; }
-if test "x$ac_cv_lib_Useful_4_GetToken" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBUSEFUL_4 1
-_ACEOF
-
-  LIBS="-lUseful-4 $LIBS"
-
-fi
-
-
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SSL_library_init in -lssl" >&5
-$as_echo_n "checking for SSL_library_init in -lssl... " >&6; }
-if ${ac_cv_lib_ssl_SSL_library_init+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lssl  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char SSL_library_init ();
-int
-main ()
-{
-return SSL_library_init ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_ssl_SSL_library_init=yes
-else
-  ac_cv_lib_ssl_SSL_library_init=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ssl_SSL_library_init" >&5
-$as_echo "$ac_cv_lib_ssl_SSL_library_init" >&6; }
-if test "x$ac_cv_lib_ssl_SSL_library_init" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBSSL 1
-_ACEOF
-
-  LIBS="-lssl $LIBS"
-
-fi
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for EVP_CIPHER_CTX_init in -lcrypto" >&5
-$as_echo_n "checking for EVP_CIPHER_CTX_init in -lcrypto... " >&6; }
-if ${ac_cv_lib_crypto_EVP_CIPHER_CTX_init+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lcrypto  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char EVP_CIPHER_CTX_init ();
-int
-main ()
-{
-return EVP_CIPHER_CTX_init ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=yes
-else
-  ac_cv_lib_crypto_EVP_CIPHER_CTX_init=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&5
-$as_echo "$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" >&6; }
-if test "x$ac_cv_lib_crypto_EVP_CIPHER_CTX_init" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBCRYPTO 1
-_ACEOF
-
-  LIBS="-lcrypto $LIBS"
-
-fi
-
 
 else
   $as_echo "#define HAVE_LIBUSEFUL5 1" >>confdefs.h

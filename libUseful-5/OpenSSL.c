@@ -61,15 +61,12 @@ static void STREAM_INTERNAL_SSL_ADD_SECURE_KEYS_LIST(STREAM *S, SSL_CTX *ctx, Li
 
 static void STREAM_INTERNAL_SSL_ADD_SECURE_KEYS(STREAM *S, SSL_CTX *ctx)
 {
-    ListNode *Curr;
     char *VerifyFile=NULL, *VerifyPath=NULL;
 
     SSL_CTX_set_default_verify_paths(ctx);
 
 //Default Verify path
 //VerifyFile=CopyStr(VerifyFile,"/etc/ssl/certs/cacert.pem");
-
-    Curr=ListGetNext(LibUsefulValuesGetHead());
 
     STREAM_INTERNAL_SSL_ADD_SECURE_KEYS_LIST(S, ctx, LibUsefulValuesGetHead(), &VerifyPath, &VerifyFile);
     STREAM_INTERNAL_SSL_ADD_SECURE_KEYS_LIST(S, ctx, S->Values, &VerifyPath, &VerifyFile);
@@ -274,7 +271,7 @@ int OpenSSLVerifyCertificate(STREAM *S, int Flags)
     const char *ptr;
     int val;
 
-		#ifdef HAVE_LIBSSL
+#ifdef HAVE_LIBSSL
     X509 *cert=NULL;
     SSL *ssl;
 
@@ -429,7 +426,7 @@ int OpenSSLVerifyCertificate(STREAM *S, int Flags)
     }
     else OpenSSLCertError(S,"peer provided no certificate");
 
-		#endif
+#endif
 
     DestroyString(Value);
 
@@ -609,7 +606,7 @@ void OpenSSLGenerateDHParams()
 
 int DoSSLClientNegotiation(STREAM *S, int Flags)
 {
-    int result=FALSE, i, val;
+    int result=FALSE, i;
     char *Token=NULL;
 #ifdef HAVE_LIBSSL
     const SSL_METHOD *Method;
@@ -696,8 +693,6 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
     const SSL_METHOD *Method;
     SSL_CTX *ctx;
     SSL *ssl;
-    const char *ptr;
-
 
     if (S)
     {
@@ -811,7 +806,7 @@ int OpenSSLSTREAMCheckForBytes(STREAM *S)
 
 int OpenSSLSTREAMReadBytes(STREAM *S, char *Data, int len)
 {
-    int bytes_read=0, val;
+    int bytes_read=0;
 #ifdef HAVE_LIBSSL
     SSL *SSL_OBJ;
 
@@ -832,21 +827,21 @@ int OpenSSLSTREAMReadBytes(STREAM *S, char *Data, int len)
             //and if we don't, the connection is effectively closed
             bytes_read=-1;
 
-	/*
-            val=SSL_get_error(SSL_OBJ, bytes_read);
-            switch (val)
-            {
-            //these all mean SSL is waiting for more data, and has nothing to offer us right now
-            case SSL_ERROR_WANT_READ:
-            	bytes_read=0;
-             break;
+            /*
+                    val=SSL_get_error(SSL_OBJ, bytes_read);
+                    switch (val)
+                    {
+                    //these all mean SSL is waiting for more data, and has nothing to offer us right now
+                    case SSL_ERROR_WANT_READ:
+                    	bytes_read=0;
+                     break;
 
-            //for anything else consider the connection closed
-            default:
-            	bytes_read=-1;
-            break;
-            }
-	 */
+                    //for anything else consider the connection closed
+                    default:
+                    	bytes_read=-1;
+                    break;
+                    }
+             */
         }
     }
 #endif

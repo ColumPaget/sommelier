@@ -3,8 +3,8 @@ Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
 * SPDX-License-Identifier: GPL-3.0
 */
 
-#ifndef LIBUSEFUL_SOCK
-#define LIBUSEFUL_SOCK
+#ifndef LIBUSEFUL_SOCKET_H
+#define LIBUSEFUL_SOCKET_H
 
 #include "includes.h"
 
@@ -203,6 +203,10 @@ const char *GetRemoteIP(int sock);
 int TCPConnect(const char *Host, int Port, const char *Config);
 int STREAMNetConnect(STREAM *S, const char *Proto, const char *Host, int Port, const char *Config);
 int STREAMConnect(STREAM *S, const char *URL, const char *Config);
+
+//Send a UDP dgram (or maybe unix socket dgram) 
+int STREAMSendDgram(STREAM *S, const char *Host, int Port, char *Data, int len);
+
 
 //these are internal functions that you won't usually be concerned with
 int STREAMProtocolConnect(STREAM *S, const char *URL, const char *Config);

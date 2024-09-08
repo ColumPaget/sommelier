@@ -12,5 +12,6 @@ void LoadAppConfigToAct(TAction *Act, const char *Config);
 char *AppFormatPath(char *Path, TAction *Act);
 int AppLoadConfig(TAction *App);
 void AppSetLocale(TAction *App, const char *LocaleStr);
+int AppIsInstalled(TAction *App);
 
 #endif
