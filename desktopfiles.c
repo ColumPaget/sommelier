@@ -4,7 +4,10 @@
 #include "config.h"
 
 
-static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
+//Make a path that we will install a desktop file at.
+//Handle 'modern' sommelier desktop files that have the format $(program name)-$(platform).desktop
+//and also handle old (version 1) desktop files, with format $(program name).desktop
+static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act, int Version)
 {
     char *Tempstr=NULL;
 
@@ -12,7 +15,8 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
     else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local/share/applications/", Act->Vars, 0);
 
     SetVar(Act->Vars, "desktop-path", Tempstr);
-    RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name).desktop",Act->Vars, 0);
+    if (Version==1) RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name).desktop",Act->Vars, 0);
+    else RetStr=SubstituteVarsInString(RetStr, "$(desktop-path)/$(name)-$(platform).desktop",Act->Vars, 0);
 
     Destroy(Tempstr);
 
@@ -20,14 +24,23 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act)
 }
 
 
-static char *DesktopFileMakeSearchPath(char *RetStr, TAction *Act)
+//Search for a desktop file.
+//Handle 'modern' sommelier desktop files that have the format $(program name)-$(platform).desktop
+//and also handle old (version 1) desktop files, with format $(program name).desktop
+static char *DesktopFileSearchPath(char *RetStr, TAction *Act, int Version)
 {
     char *Tempstr=NULL, *Path=NULL, *Dir=NULL, *FName=NULL;
     const char *SearchPath="$(homedir)/.local/share/applications/:/opt/share/applications/";
     const char *ptr;
 
     RetStr=CopyStr(RetStr, "");
-    FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
+
+    ptr=GetVar(Act->Vars, "platform");
+    if (! StrValid(ptr)) ptr="*";
+
+    if (Version==1) FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
+    else FName=MCopyStr(FName, GetVar(Act->Vars, "name"), "-", ptr, ".desktop", NULL);
+
     ptr=GetToken(SearchPath, ":", &Path, 0);
     while (ptr)
     {
@@ -56,8 +69,13 @@ int DesktopFileDelete(TAction *Act)
     char *Tempstr=NULL;
     int result;
 
-    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act);
+    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act, 0);
     result=unlink(Tempstr);
+    if (result != 0)
+    {
+        Tempstr=DesktopFileMakeInstallPath(Tempstr, Act, 1);
+        result=unlink(Tempstr);
+    }
 
     Destroy(Tempstr);
     if (result==0) return(TRUE);
@@ -89,6 +107,24 @@ int DesktopFileRead(const char *Path, TAction *Act)
             {
                 Exec=CopyStr(Exec, ptr);
                 StripQuotes(Exec);
+            }
+            else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0)
+            {
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "x86_ld_library_path", Name);
+            }
+            else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0)
+            {
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "x86_64_ld_library_path", Name);
+            }
+            else if (strcasecmp(Name,"SommelierSecurityLevel")==0)
+            {
+                Name=CopyStr(Name, ptr);
+                StripQuotes(Name);
+                SetVar(Act->Vars, "security_level", Name);
             }
             else if (strcasecmp(Name,"Icon")==0)
             {
@@ -157,11 +193,10 @@ int DesktopFileLoad(TAction *Act)
     char *Tempstr=NULL;
     int result=FALSE;
 
-    Tempstr=DesktopFileMakeSearchPath(Tempstr, Act);
-    if (StrValid(Tempstr))
-    {
-        result=DesktopFileRead(Tempstr, Act);
-    }
+    Tempstr=DesktopFileSearchPath(Tempstr, Act, 0);
+    if (! StrValid(Tempstr)) Tempstr=DesktopFileSearchPath(Tempstr, Act, 1);
+
+    if (StrValid(Tempstr)) result=DesktopFileRead(Tempstr, Act);
     else fprintf(stderr, "ERROR: Failed to find .desktop file '%s' for application\n", Tempstr);
 
     Destroy(Tempstr);
@@ -282,7 +317,7 @@ void DesktopFileGenerate(TAction *Act)
     const char *ptr;
 
 
-    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act);
+    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act, 0);
     printf("Generating desktop File %s\n", Tempstr);
     MakeDirPath(Tempstr, 0744);
     S=STREAMOpen(Tempstr, "w mode=0744");
@@ -336,7 +371,7 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nIcon=$(app-icon)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);

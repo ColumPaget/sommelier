@@ -2,7 +2,7 @@
 #include "config.h"
 #include <fnmatch.h>
 
-#define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)/"
+#define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)-$(platform)/"
 
 const char *ResolveVar(ListNode *Vars, const char *VarName)
 {
@@ -213,15 +213,19 @@ int GetBoolVar(ListNode *Vars, const char *Name)
 char *GlobNoCase(char *RetStr, const char *Dir, const char *Name)
 {
     char *Tempstr=NULL;
+    const char *ptr;
     glob_t Glob;
     int i;
 
     RetStr=CopyStr(RetStr, "");
+    //we go through all the files, and find any that match the request
+    //but we do a case insensitive match
     Tempstr=MCopyStr(Tempstr, Dir, "/*", NULL);
     glob(Tempstr, 0, 0, &Glob);
     for (i=0; i < Glob.gl_pathc; i++)
     {
-        if (strcasecmp(Name, GetBasename(Glob.gl_pathv[i]))==0)
+        ptr=GetBasename(Glob.gl_pathv[i]);
+        if (pmatch_one(Name, ptr, StrLen(ptr), NULL, NULL, PMATCH_NOCASE))
         {
             RetStr=CopyStr(RetStr, Glob.gl_pathv[i]);
             break;

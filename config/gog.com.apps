@@ -1,7 +1,37 @@
 #Things available through gog.com
 
-# 32 bit and 32/64 bit linux games
-# these games have worked for me in native linux
+
+## SCUMMVM platform running on locally installed scummvm
+* category='AdventureGame;ScummVM;GOG' platform=gog:scummvm 
+LureOfTheTemptress
+BeneathASteelSky
+TeenAgent
+Ultima4
+Bladerunner
+TheDig extra_category="LucasArts"
+SamAndMaxHitTheRoad extra_category="LucasArts"
+GrimFandango extra_category="LucasArts"
+IndianaJonesAndTheFateOfAtlantis extra_category="LucasArts"
+IndianaJonesAndTheLastCrusade extra_category="LucasArts"
+ZakMcKrackenAndTheAlienMindbenders extra_category="LucasArts"
+
+
+## SCUMMVM platform, but running under linux using GOG shipped scummvm
+* category='AdventureGame;ScummVM;GOG' platform=gog:linux exec=scummvm_i686 exec64=scummvm_x86_64 x86_ld_library_path="$(install-dir)/data/noarch/scummvm/libs/i686/" x86_64_ld_library_path="$(install-dir)/data/noarch/scummvm/libs/x86_64/"
+LureOfTheTemptress
+BeneathASteelSky
+TeenAgent
+Ultima4
+Bladerunner
+TheDig extra_category="LucasArts"
+SamAndMaxHitTheRoad extra_category="LucasArts"
+GrimFandango extra_category="LucasArts"
+IndianaJonesAndTheFateOfAtlantis extra_category="LucasArts"
+IndianaJonesAndTheLastCrusade extra_category="LucasArts"
+ZakMcKrackenAndTheAlienMindbenders extra_category="LucasArts"
+
+
+## From here on, Linux native games
 
 * category='TowerDefenceGame;GOG' platform=gog:linux
 AnomalyWarzoneEarth  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" delete=data/noarch/game/AnomalywarzoneEarth,data/noarch/game/AnomalyWarzoneEarth-old exec=AnomalyWarzoneEarth
@@ -10,7 +40,8 @@ AnomalyKorea  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exe
 
 * category='RealTimeStrategy;GOG' platform=gog:linux
 AIWarFleetCommand  exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
-Battlevoid  exec=harbinger
+Battlevoid  exec=harbinger 
+
 Defcon  warn="This game has been seen to fail on some linux platforms"
 Realpolitiks  
 
@@ -110,7 +141,7 @@ VoidScrappers
 WayOfTheSamurai 
 VolgarrTheViking exec=Volgarr category="Platformer;GOG"
 
-#64-bit only linux gog games
+## 64-bit only linux namtive gog games
 * category='DeckBuilder;Roguelike;GOG' platform=gog:linux64
 DeepSkyDerelicts
 IratusLordOfTheDead  exec64='Iratus'
@@ -182,7 +213,6 @@ StardewValley  exec64="StardewValley" extra_category="FarmingGame"
 Stellaris  exec='stellaris' category='4XGame' 
 
 
-#setup_snk_40th_anniversary_collection_1016_(64bit)_(45677).exe:Zone.Identifier
 
 # neo-geo games on gog. The linux downloads for these come with an emulator, but that's for 64-bit linux only. These entries allow you to run them under a neo-geo
 # emulator. At time of writing mame, xmame and gngeo are set up in platforms.conf
@@ -216,6 +246,13 @@ BattleChess  platform=gog:windos exec="CHESS.EXE"
 ChineseChess platform=gog:lindos exec="CHESSII.EXE" category=ChineseChess
 ChineseChess platform=gog:windos exec="CHESSII.EXE" category=ChineseChess
 
+* category='FirstPersonShooter;ActionRPG;GOG' platform=gog:windos
+Quake exec="quake.exe" commands="imgmount d game.cue -t iso; quake.exe"
+Quake:ScourgeOfArmagon exec="quake.exe" commands="imgmount d gamea.cue -t iso; quake.exe -game hipnotic" bundled="Quake"
+Quake:DissolutionOfEternity exec="quake.exe" commands="imgmount d gamed.cue -t iso; quake.exe -game rogue" bundled="Quake"
+RiseOfTheTriad
+
+
 * category='FightingGame;GOG' 
 MortalKombat platform=gog:windos exec="MK1.EXE" 
 MortalKombat2 platform=gog:windos exec="MK2.EXE"
@@ -230,6 +267,13 @@ Slipstream5000 platform=gog:windos exec="SLIPSTRM.EXE" warn="This game has no wa
 * category='RealTimeStrategy;GOG' 
 BattleIsle platform=gog:windos exec="BI.EXE"
 
+
+* category='FlightSimulator;AirCombat;GOG' 
+F117Nighthawk platform=gog:lindos exec="F117.COM"
+F117Nighthawk platform=gog:windos exec="F117.COM"
+Echelon platform=gog:lindos working-dir="$(install-dir)/data/noarch/game" commands="mount c data; c:; cd ECH; echelon.exe"
+Echelon platform=gog:windos  commands="mount c data; c:; cd ECH; echelon.exe"
+FleetDefender platform=gog:windos exec="F14.EXE" commands="mount c .; c:; f14"
 
 * category='TurnBasedStrategy;GOG' 
 FantasyGeneral platform=gog:lindos exec="FG.BAT" delete="$(exec-dir)/SAVES/HOLDER.TXT" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" commands="mount c .; imgmount d game.ins -t iso; MIXER CDAUDIO 50; MIXER MASTER 80; c:; fg.bat"  no-exec-arg="y"
@@ -253,6 +297,7 @@ MasterOfOrion platform=gog:lindos exec="ORION.EXE"
 MasterOfOrion platform=gog:windos exec="ORION.EXE"
 MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
+SidMeiersColonization platform=gog:windos exec="COLONIZE.BAT" extra_category="SidMeier"
 
 * category='CityBuilder;GOG' 
 DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
@@ -273,6 +318,8 @@ MasterOfMagic platform=gog:lindos exec="MAGIC.EXE"
 MasterOfMagic platform=gog:windos exec="MAGIC.EXE"
 Ishar platform=gog:windos exec="start.exe"
 Ishar2 platform=gog:windos exec="start.exe"
+Moonstone:AHardDaysKnight platform=gog:lindos exec=MS.EXE
+Moonstone:AHardDaysKnight platform=gog:windos exec=MS.EXE
 
 * category='RPG;GOG' 
 Albion platform=gog:windos exec="ALBION.EXE" commands="mount c .; imgmount d game.ins -t iso; c:; ALBION.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVES" no-exec-arg="y"
@@ -280,8 +327,11 @@ ChallengeOfTheFiveRealms  platform=gog:windos exec="C5.COM"
 ChallengeOfTheFiveRealms  platform=gog:lindos exec="C5.COM"
 Darklands platform=gog:lindos exec="DARKLAND.EXE"
 Darklands platform=gog:windos exec="DARKLAND.EXE"
-ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y" 
-ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)"
+ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y"  extra_category="ElderScrolls"
+ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)" extra_category="ElderScrolls"
+ElderScrollsBattlespire platform=gog:windos extra_category="ElderScrolls" exec="SPIRE.BAT"
+SpiritOfAdventure platform=gog:lindos exec=SOA.EXE
+SpiritOfAdventure platform=gog:windos exec=SOA.EXE
 
 
 * category='Platformer;GOG' 
@@ -312,8 +362,8 @@ SilentHunter platform=gog:windos
 SubWar2050 platform=gog:windos exec="subwar.bat"
 
 * category='ManagementGame;GOG' 
-SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT"
-SidMeiersCovertAction platform=gog:windos exec="COVERT.BAT"
+SidMeiersCovertAction platform=gog:lindos exec="COVERT.BAT" extra_category="SidMeier"
+SidMeiersCovertAction platform=gog:windos exec="COVERT.BAT" extra_category="SidMeier"
 ThemeHospital platform=gog:windos exec="HOSPITAL.EXE"
 WorldChampionshipBoxingManager platform=gog:windos exec="boxing.exe"
 
@@ -330,19 +380,12 @@ WormsUnited platform=gog:windos exec="WORMS.DAT" commands="mount c .; imgmount d
 Wolfenstein platform=gog:windos exec="wolf3d.exe" commands="mount c .; c:; launcher\start.bat" no-exec-arg="y"
 Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
-
-
-* category='AdventureGame;ScummVM;GOG' platform=gog:scummvm
-#SCUMMVM platform
-LureOfTheTemptress
-BeneathASteelSky
-TeenAgent
-TheDig
-Bladerunner
+Pirates platform=gog:lindos exec="pir.exe" extra-files="data/noarch/classic/*" extra_category="SidMeier"
+Pirates platform=gog:windos exec="pir.exe" extra-files="data/noarch/classic/*" extra_category="SidMeier"
 
 
 
-
+## Win32 games that have worked for me under wine
 * category='TowerDefenceGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AnomalyDefenders  
 AnomalyWarzoneEarth
@@ -406,7 +449,7 @@ Thief3
 
 
 * category='RealTimeStrategy;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-Battlevoid
+Battlevoid security_level="syscall_allow=ptrace untrusted"
 CovidTheOutbreak 
 DangerousWaters exec=LaunchDW.exe
 Defcon  
@@ -515,6 +558,17 @@ TransportGiant2
 * category='TradingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
 PortRoyale2  exec=PR2.exe
+Patrician3  exec="Patrician3.exe"
+
+* category='FirstPersonShooter;ActionRPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Outlaws exec="olwin.exe" extra_category="LucasArts"
+CallOfJuarez exec="CoJ.exe"
+CallOfJuarez:BoundInBlood warn="This game cannot play it's video cutscenes. This creates a black screen at startup and at other points in the game. Press 'escape' to break out of thse"
+CallOfJuarez:GunSlinger exec="CoJGunslinger.exe"
+Quake exec="Winquake.exe" 
+XIII exec="XIII.exe"
+NosfuratuWrathOfMalachi
+WolfensteinEnemyTerritory
 
 
 * category='ActionRPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
@@ -523,9 +577,6 @@ ArxFatalis vdesk=y warn="This game installs in a virtual desktop because it has 
 BladesOfTime
 Bloodrayne  vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode. It displays a number of error messages during startup, but click through those and the game runs fine." exec=rayne.exe
 Bloodrayne2 
-CallOfJuarez exec="CoJ.exe"
-CallOfJuarez:BoundInBlood warn="This game cannot play it's video cutscenes. This creates a black screen at startup and at other points in the game. Press 'escape' to break out of thse"
-CallOfJuarez:GunSlinger exec="CoJGunslinger.exe"
 Darkstone  exec=Darkstone.exe exec-args="-nointro" warn="Intro video disabled as it blocks the game"
 DeadSpace  exec="Dead Space.exe"
 DeusEx exec="DeusEx.exe"
@@ -538,8 +589,9 @@ DungeonSiege2  exec="DungeonSiege2.exe"
 DungeonSiege3  exec="Dungeon Siege III.exe"
 DungeonSouls  exec="DungeonSouls.exe"
 DivineDivinity  exec=div.exe
-ElderScrollsMorrowind 
+ElderScrollsMorrowind  extra_category="ElderScrolls"
 Gothic warn="This game installs in a virtual desktop because it has issues with fullscreen mode (works in fullscreen but can be troublesome)" vdesk=y
+StarWarsKnightsOfTheOldRepublic exec="swkotor.exe" extra_category="LucasArts"
 MastersOfAnima
 Nox  warn="This game installs in a virtual desktop because it has issues with fullscreen mode" vdesk=y
 PrinceOfPersia exec="PrinceOfPersia_Launcher.exe"
@@ -552,6 +604,7 @@ Torchlight2  os-version=winxp exec=Torchlight2.exe
 SealOfEvil
 SepterraCore  exec="septerra.exe"
 SacredGold exec="Sacred.exe"
+SleepingDogs 
 Spellforce  warn="You will have to turn off shadows or the game will experience glitches manifesting as black walls. From the start menu go 'Options->Video->Shadowtype' and set it to 'none'."
 Spellforce2
 SystemShock2  os-version=winxp vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
@@ -579,6 +632,8 @@ Downwell
 FeudalAlloy
 RogueLegacy
 WizardsAndWarriors  vdesk=y
+FuryUnleashed exec="Fury Unleashed.exe"
+
 
 * category='ShootEmUp;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BlazingStar exec="blazstar.exe"
@@ -609,7 +664,7 @@ Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop be
 
 * category='DeckBuilder;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 CardaclysmShardsOfTheFour
-SlayTheSpire exec="SlayTheSpire.exe" category="DeckBuilder"
+SlayTheSpire exec="SlayTheSpire.exe" category="DeckBuilder" security_level="syscall_allow=ptrace untrusted"
 ShadowHand
 
 
@@ -637,6 +692,11 @@ Uplink  exec=uplink.exe vdesk=y
 RestaurantEmpire
 Overcooked
 
+* category='ManagementGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+GraveyardKeeper 
+PapersPlease
+Reigns  
+
 
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 # windows via wine
@@ -650,18 +710,14 @@ Diluvion
 DraculaTheResurrection  
 Fallout  exec="FalloutLauncher.exe"
 FrailHearts
-GraveyardKeeper category="ManagementGame;GOG"
 HeadsWillRoll
 HitmanCodename47  
 HotlineMiami  exec="HotlineLauncher.exe"
 Huniepop 
 MagicMaker  
 Overfall  
-PapersPlease
-Patrician3  exec="Patrician3.exe"
 PhoningHome warn="Game appears to run, but very slowly."
 Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
-Reigns  
 Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
 SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
@@ -676,29 +732,41 @@ ThisIsThePolice
 TwinkleStarSprites exec="twinspri.exe"
 TheWitcherAdventureGame  
 VoidPrison exec="Void Prison.exe"
-Westerado  exec=WesteradoDB.exe
+Westerado  exec="WesteradoDB.exe"
 XComInterceptor exec="Interceptor.exe"
+IL2Sturmovik1946 exec="il2fb.exe" category="FlightSimulator;AirCombat;GOG"
+Gigapocalypse exec="Gigapocalypse.exe"
+DoubleDragon
+TrickStyle
+
+## Win64-only games that have worked for me under wine
+* category='DeckBuilder;Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 
 
-# 64-bit windows/wine only
-* category='DeckBuilder;Roguelike;GOG' platform=gog:linux64
 DeepSkyDerelicts 
 Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
 
-* category='Roguelike;GOG' platform=gog:linux64
+* category='Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+
+
 Necrosmith exec="Necrosmith.exe"
 OutThere  exec="outthereomega.exe"
 
-* category='LogicGame;GOG' platform=gog:windows64
+* category='LogicGame;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+
+
 AltFrequencies 
 MachinikaMuseum exec="MachinikaMuseum.exe"
 Shapez exec=shapezio.exe
 
-* category='RealTimeStrategy;GOG' platform=gog:linux64
+* category='RealTimeStrategy;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+
+
 NomadsOfTheDriftland exec="Nomads.exe"
 RadioCommander
 
-* category='TurnBasedStrategy;GOG' platform=gog:linux64
+* category='TurnBasedStrategy;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+
 BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 KingOfDragonPass exec="King of Dragon Pass.exe"
@@ -722,5 +790,5 @@ StarRenegades warn="Cutscenes often don't play, just showing a black screen. Hol
 SwordsAndSandals exec="Swords and Sandals Classic Collection.exe"
 Tharsis exec="tharsis.exe"
 Ultrakill exec="ULTRAKILL.exe" warn="Only the demo version of this game has been tested"
-
+Quake2RTX exec="q2rtx.exe" category="FirstPersonShooter;GOG"
 

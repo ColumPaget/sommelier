@@ -1,3 +1,8 @@
+v10.1 (2024-10-05)
+    * segment gameboy from gameboyadvanced and add more gameboy emulators
+    * GOG scummvm games can now be run using installed, or GOG-supplied scummvm
+    * Versions of a program for different platforms can now co-exist via platform name being included in desktop files and installation prefixes 
+
 v10.0 (2024-09-08)
     * First AppImages added
     * New 'categories' system, allowing better search/listing of apps

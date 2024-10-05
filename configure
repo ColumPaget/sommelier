@@ -3622,9 +3622,9 @@ fi
 	if test "$cf_have_libUseful5" = "yes"
 	then
 	echo "installed libUseful found."
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AppendVars in -lUseful-5" >&5
-$as_echo_n "checking for AppendVars in -lUseful-5... " >&6; }
-if ${ac_cv_lib_Useful_5_AppendVars+:} false; then :
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AppendVar in -lUseful-5" >&5
+$as_echo_n "checking for AppendVar in -lUseful-5... " >&6; }
+if ${ac_cv_lib_Useful_5_AppendVar+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -3638,27 +3638,27 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char AppendVars ();
+char AppendVar ();
 int
 main ()
 {
-return AppendVars ();
+return AppendVar ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_Useful_5_AppendVars=yes
+  ac_cv_lib_Useful_5_AppendVar=yes
 else
-  ac_cv_lib_Useful_5_AppendVars=no
+  ac_cv_lib_Useful_5_AppendVar=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Useful_5_AppendVars" >&5
-$as_echo "$ac_cv_lib_Useful_5_AppendVars" >&6; }
-if test "x$ac_cv_lib_Useful_5_AppendVars" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_Useful_5_AppendVar" >&5
+$as_echo "$ac_cv_lib_Useful_5_AppendVar" >&6; }
+if test "x$ac_cv_lib_Useful_5_AppendVar" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_LIBUSEFUL_5 1
 _ACEOF

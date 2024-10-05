@@ -1,3 +1,4 @@
+# These are homebrew/opensource roms for the GameBoyColor and the GameBoyAdvanced
 
 * platform=gba category=TurnBasedStrategy;GameBoyAdvanced install-type=executable
 LordsOfMidnight url=https://github.com/retrobrews/gba-games/blob/master/thelordsofmidnight.gba?raw=true sha256='ee9801b5dc94086ac4249ec9a0daf90d6dde2c7ac5cdbbf15c4daa934685adbe' 
@@ -57,7 +58,7 @@ DangoDash url=https://hh3.gbdev.io/entries/dango-dash/Dango%20Dash_v01.gb
 HeroCoreGBA url=https://hh3.gbdev.io/entries/hero-core-gba-port/HeroCore.gba
 InheritorsOfTheOubliette url=https://hh3.gbdev.io/entries/inheritors-of-the-oubliette/inheritors-of-the-oubliette.gba
 Apotris url=https://hh3.gbdev.io/entries/apotris/Apotris.gba category="Tetris;GameBoyAdvanced"
-uCity url=https://hh3.gbdev.io/entries/ucity/ucity.gbc category="CityBuilder;GameBoyAdvanced"
+uCity url=https://github.com/AntonioND/ucity/releases/download/v1.2/ucity.gbc version=1.2 category="CityBuilder;GameBoyAdvanced"
 Feline url=https://hh3.gbdev.io/entries/feline/feline.gba
 
 

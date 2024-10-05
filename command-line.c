@@ -91,6 +91,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 
     p_Opt=CommandLineCurr(CmdLine);
 
+
     if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
     else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
@@ -109,13 +110,20 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-emu")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-emulator")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
     else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED;
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-secure")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-platform")==0)
+    {
+        Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
+        //this must be done here, because in situations where no platform is given, we use fallbacks like !linux32
+        //but if the user has not provided a platform, we want the variable to be blank, not populated with the fallback
+        SetVar(Act->Vars, "platform", Act->Platform);
+    }
     else if (strcmp(p_Opt, "-icache")==0)
     {
         Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));

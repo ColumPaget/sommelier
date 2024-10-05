@@ -51,6 +51,29 @@ int AppMatches(TAction *Template, TAction *App)
     return(TRUE);
 }
 
+
+//do some alterations and actions on certain settings
+static void AppPostProcessConfigItem(TAction *Act, const char *Name, const char *Value)
+{
+    if (strcasecmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
+    else if (strcasecmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
+    else if (strcasecmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
+    else if (strcasecmp(Name,"install-type")==0)
+    {
+        if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
+        if (strcasecmp(Value,"executable")==0) Act->InstallType=INSTALL_EXECUTABLE;
+    }
+    else if (strcasecmp(Name,"bundled")==0)
+    {
+        //app is bundled with another app! Set the bundled flag, and set a variable
+        Act->Flags |= FLAG_BUNDLED;
+        SetVar(Act->Vars, "bundled-with", Value);
+    }
+    else if (strcasecmp(Name,"parent")==0) Act->Parent=CopyStr(Act->Parent, Value);
+    else if (strcasecmp(Name,"install_stage2")==0) SetVar(Act->Vars, "install-stage2", Value);
+}
+
+
 void LoadAppConfigToAct(TAction *Act, const char *Config)
 {
     char *Name=NULL, *Value=NULL, *Tempstr=NULL;
@@ -78,6 +101,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcmp(Name,"platform")==0)
             {
                 Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(Value));
+                SetVar(Act->Vars, "platform", Act->Platform);
                 Plt=PlatformFind(Act->Platform);
                 if (Plt)
                 {
@@ -94,28 +118,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             //can't do that. Thus we set 'locale_template' and use that as the template to substitute into 'locale',
             //so 'locale_template' always reamins unchanged.
             else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
-            else SetVar(Act->Vars, Name, Value);
-
-            if (strcasecmp(Name,"install-path")==0) Act->InstallPath=CopyStr(Act->InstallPath, Value);
-            else if (strcasecmp(Name,"install-name")==0) Act->InstallName=CopyStr(Act->InstallName, Value);
-            else if (strcasecmp(Name,"dlname")==0) Act->DownName=CopyStr(Act->DownName, Value);
-            else if (strcasecmp(Name,"install-type")==0)
-            {
-                if (strcasecmp(Value,"unpack")==0) Act->InstallType=INSTALL_UNPACK;
-                if (strcasecmp(Value,"executable")==0) Act->InstallType=INSTALL_EXECUTABLE;
-            }
-            else if (strcasecmp(Name,"sha256")==0)
-            {
-                strlwr(Value);
-                SetVar(Act->Vars, Name, Value);
-            }
-            else if (strcasecmp(Name,"bundled")==0)
-            {
-                //app is bundled with another app! Set the bundled flag, and set a variable
-                Act->Flags |= FLAG_BUNDLED;
-                SetVar(Act->Vars, "bundled-with", Value);
-            }
-            else if (strcasecmp(Name,"parent")==0) Act->Parent=CopyStr(Act->Parent, Value);
+            else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
             else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
@@ -125,8 +128,6 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
             else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
-            else if (strcasecmp(Name,"install_stage2")==0) SetVar(Act->Vars, "install-stage2", Value);
             else if (strcasecmp(Name,"category")==0)
             {
                 Tempstr=CategoriesExpand(Tempstr, Value);
@@ -137,7 +138,14 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 Tempstr=CategoriesExpand(Tempstr, Value);
                 AppendVar(Act->Vars, "category", Tempstr);
             }
+            else if (strcasecmp(Name,"sha256")==0)
+            {
+                strlwr(Value);
+                SetVar(Act->Vars, Name, Value);
+            }
+            else SetVar(Act->Vars, Name, Value);
 
+            AppPostProcessConfigItem(Act, Name, Value);
         }
 
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);

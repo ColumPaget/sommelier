@@ -147,7 +147,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     case PLATFORM_GOGDOS:
     case PLATFORM_GOGNEOGEO:
         ForcedFileType=FILETYPE_ZIP;
-        if (! StrValid(FilesToExtract)) FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/game/* $(extra-files)", Act->Vars, 0);
+        if (! StrValid(FilesToExtract)) FilesToExtract=SubstituteVarsInString(FilesToExtract, "data/noarch/data/* data/noarch/game/* data/noarch/scummvm/* data/noarch/docs/* $(extra-files)", Act->Vars, 0);
         FilesToExtract=CatStr(FilesToExtract, " data/noarch/support/icon.png");
         Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
         SetVar(Act->Vars, "app-icon", Tempstr);
@@ -699,11 +699,7 @@ static void InstallSingleItemPreProcessInstall(TAction *Act)
     ptr=GetVar(Act->Vars, "exec64");
     if (StrValid(ptr))
     {
-        if (PlatformBitWidth(Act->Platform)==64)
-        {
-            SetVar(Act->Vars, "exec", ptr);
-            printf("EXEC64: %s\n", ptr);
-        }
+        if (PlatformBitWidth(Act->Platform)==64) SetVar(Act->Vars, "exec", ptr);
     }
 
 

@@ -98,6 +98,14 @@ STREAM *DownloadHTTPOpen(TAction *Act, const char *URL)
         {
             if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
         }
+				else
+				{
+   				Tempstr=MCopyStr(Tempstr, "~e~rHTTP ERROR:~0 ", STREAMGetValue(S, "HTTP:ResponseReason"), NULL);
+   				TerminalPutStr(Tempstr, NULL);
+
+					STREAMClose(S);
+					S=NULL;
+				}
     }
 
     Destroy(Tempstr);

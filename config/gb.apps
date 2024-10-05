@@ -1,0 +1,22 @@
+# Homebrews and open-source games for the plain gameboy
+
+* platform=gb category=Roguelike;RPG;GameBoy install-type=executable
+DumblinDungeon url=https://hh3.gbdev.io/entries/Dumblin-Dungeon/Dumblin%20Dungeon%20(GB).gb
+PorklikeGB url=https://hh3.gbdev.io/entries/porklike-gb/porklike.gb
+
+* platform=gb category=ShootEmUp;GameBoy install-type=executable
+DanganGB url=https://hh3.gbdev.io/entries/dangan/dangan.gb
+Wyrmhole url=https://github.com/QuinnPainter/Wyrmhole/releases/download/1.1/Wyrmhole.gb version=1.1
+MassDriver url=https://github.com/daniel-dressler/massdriver/releases/download/20140415/massdriver_20140415.gb version=1.0
+
+* platform=gb category=RPG;GameBoy install-type=executable
+ShockLobster url=https://hh3.gbdev.io/entries/shock-lobster/shocklobster.gb
+
+* platform=gb category=AsteroidsGame;GameBoy install-type=executable
+
+* platform=gb category=PuzzleGame;GameBoy install-type=executable
+Unearthed url=https://hh3.gbdev.io/entries/unearthed/Unearthed%20Zero.gb
+
+* platform=gb category=GameBoy install-type=executable
+CoreMachina url=https://hh3.gbdev.io/entries/core-machina/Core%20Machina%20v1.2c%20DEMO.gb
+DangoDash url=https://hh3.gbdev.io/entries/dango-dash/Dango%20Dash_v01.gb

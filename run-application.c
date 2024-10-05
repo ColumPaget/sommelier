@@ -41,6 +41,26 @@ static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
 }
 
 
+static char *GenerateLD_LIBRARY_PATH(char *RetStr, TAction *Act)
+{
+    char *Tempstr=NULL;
+    const char *ptr;
+
+
+    if (PlatformBitWidth(Act->Platform) == 32) ptr=GetVar(Act->Vars, "x86_ld_library_path");
+    else ptr=GetVar(Act->Vars, "x86_64_ld_library_path");
+
+    if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, ptr, ":", NULL);
+    ptr=GetVar(Act->Vars, "sommelier_patches_dir");
+    if (StrValid(ptr)) Tempstr=MCatStr(Tempstr, ptr, ":", NULL);
+
+    if (StrValid(Tempstr)) RetStr=MCatStr(RetStr, "LD_LIBRARY_PATH=", Tempstr, " ", NULL);
+
+    Destroy(Tempstr);
+    return(RetStr);
+}
+
+
 static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
 {
     char *Template=NULL, *Tempstr=NULL, *Token=NULL;
@@ -60,14 +80,16 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
         ptr=GetToken(ptr, "\\S", &Token, 0);
     }
 
-    if (StrValid(Tempstr))
-    {
-        GenerateMissingLibs(Act, Tempstr);
-        Template=MCatStr(Template, "LD_LIBRARY_PATH=", GetVar(Act->Vars, "sommelier_patches_dir"), " ", NULL);
-    }
+    if (StrValid(Tempstr)) GenerateMissingLibs(Act, Tempstr);
 
+    //this will add library paths for our patches, or for applications
+    //that ship with libraries in subdirectories
+    Template=GenerateLD_LIBRARY_PATH(Template, Act);
+
+    //if there's anything to LD_PRELOAD, then add that
     ptr=GetVar(Act->Vars, "ld_preload");
     if (StrValid(ptr)) Template=MCatStr(Template, "LD_PRELOAD=", ptr, " ", NULL);
+
     Template=CatStr(Template, "WINEPREFIX=$(prefix) $(exec) $(exec-args)");
 
     CommandLine=SubstituteVarsInString(CommandLine, Template, Act->Vars, 0);
@@ -129,7 +151,7 @@ pid_t RunSandboxed(TAction *Act)
 
 pid_t RunNormal(TAction *Act)
 {
-    char *SpawnConfig=NULL, *Tempstr=NULL;
+    char *Cmd=NULL, *SpawnConfig=NULL, *Tempstr=NULL;
     const char *ptr;
     pid_t pid=-1;
 
@@ -146,15 +168,25 @@ pid_t RunNormal(TAction *Act)
         if (chdir(ptr) !=0) perror("ERROR switching to directory: ");
     }
 
-    printf("Running '%s' (%s) in dir %s\n", Act->Name, Act->Exec, ptr);
-    Tempstr=GenerateApplicationCommandLine(Tempstr, Act);
+    Cmd=GenerateApplicationCommandLine(Cmd, Act);
+    if (! (Config->Flags & FLAG_DEBUG)) Cmd=CatStr(Cmd, " >/dev/null");
 
-    if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
     SpawnConfig=CopyStr(SpawnConfig, "+stderr");
-    pid=Spawn(Tempstr, SpawnConfig);
+    ptr=GetVar(Act->Vars, "security_level");
+    if (! StrValid(ptr)) ptr="minimal";
 
-    Destroy(Tempstr);
+		//still being worked on due to the need to support wine32 under linux64bit
+    //SpawnConfig=MCatStr(SpawnConfig, " security='", ptr, "'", NULL);
+    //Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), ptr);
+
+    Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"));
+    TerminalPutStr(Tempstr, NULL);
+
+    pid=Spawn(Cmd, SpawnConfig);
+
     Destroy(SpawnConfig);
+    Destroy(Tempstr);
+    Destroy(Cmd);
 
     return(pid);
 }

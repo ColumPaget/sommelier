@@ -18,7 +18,7 @@ then
 	if test "$cf_have_libUseful5" = "yes"
 	then
 	echo "installed libUseful found."
-	AC_CHECK_LIB([Useful-5],AppendVars,,[cf_have_libUseful5=no])
+	AC_CHECK_LIB([Useful-5],AppendVar,,[cf_have_libUseful5=no])
   
 	if test "$cf_have_libUseful5" = "yes"
 	then

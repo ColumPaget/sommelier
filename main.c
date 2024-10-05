@@ -138,9 +138,6 @@ int main(int argc, char *argv[])
     while (Curr)
     {
         Act=(TAction *) Curr->Item;
-        Tempstr=CopyStr(Tempstr, PlatformUnAlias(Act->Platform));
-        Act->Platform=CopyStr(Act->Platform, Tempstr);
-
         if (Act)
         {
 

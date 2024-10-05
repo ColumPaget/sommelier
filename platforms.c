@@ -245,7 +245,9 @@ void PlatformsList()
             ptr=GetToken(ptr, "\\S", &Token, GETTOKEN_QUOTES);
         }
 
-        printf("%-15s  aliases: %-20s   emulators: %-20s  args: %s\n", Name, aliases, EmuList, ArgList);
+        printf("%-15s  aliases: %-20s   emulators: %-20s  ", Name, aliases, EmuList);
+				if (StrValid(ArgList)) printf("args: %s", ArgList);
+				printf("\n");
         Curr=ListGetNext(Curr);
     }
 
