@@ -356,6 +356,7 @@ char *AppFormatPath(char *Path, TAction *Act)
         Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "prefix_template"));
         Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
         Path=SlashTerminateDirectoryPath(Path);
+	strrep(Path, ':', '_');
         SetVar(Act->Vars, "prefix",Path);
     }
     else Path=CopyStr(Path, ptr);
