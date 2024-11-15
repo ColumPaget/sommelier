@@ -153,6 +153,7 @@ OutThere  exec64="outthereomega.x86"
 * category='ShootEmUp;GOG' platform=gog:linux64
 BlazingStar exec64=BlazingStar
 Pulstar exec64=Pulstar 
+Ironclad exec64=Ironclad
 DokiDokiGravityDive exec="start.sh"
 
 
@@ -267,7 +268,6 @@ Slipstream5000 platform=gog:windos exec="SLIPSTRM.EXE" warn="This game has no wa
 * category='RealTimeStrategy;GOG' 
 BattleIsle platform=gog:windos exec="BI.EXE"
 
-
 * category='FlightSimulator;AirCombat;GOG' 
 F117Nighthawk platform=gog:lindos exec="F117.COM"
 F117Nighthawk platform=gog:windos exec="F117.COM"
@@ -298,6 +298,7 @@ MasterOfOrion platform=gog:windos exec="ORION.EXE"
 MasterOfOrion2 platform=gog:lindos exec="Orion2.exe"
 MasterOfOrion2 platform=gog:windos exec="Orion2.exe"
 SidMeiersColonization platform=gog:windos exec="COLONIZE.BAT" extra_category="SidMeier"
+SidMeiersColonization platform=gog:lindos exec="COLONIZE.BAT" extra_category="SidMeier"
 
 * category='CityBuilder;GOG' 
 DungeonKeeperGold platform=gog:windos exec="KEEPER.EXE" saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(exec-dir)/SAVE"
@@ -330,6 +331,8 @@ Darklands platform=gog:windos exec="DARKLAND.EXE"
 ElderScrollsArena platform=gog:windos exec="ACD.EXE" commands='mount c .; mount d . -t cdrom; d:; ACD.EXE' working-dir="$(exec-dir)" no-exec-arg="y"  extra_category="ElderScrolls"
 ElderScrollsDaggerfall platform=gog:windos exec="FALL.EXE" commands='mount c .; mount d . -t cdrom; d:; FALL.EXE Z.CFG' no-exec-arg="y" working-dir="$(exec-dir)" extra_category="ElderScrolls"
 ElderScrollsBattlespire platform=gog:windos extra_category="ElderScrolls" exec="SPIRE.BAT"
+LandsOfLore platform=gog:windos exec="LOLCD.EXE" commands="mount c .; imgmount d GAME.DAT -t iso -fs iso; c:; LOLCD.EXE"
+LandsOfLore2 platform=gog:windos exec="LOLG.EXE" commands="mount c .; c:; LOLG.EXE -CD ."
 SpiritOfAdventure platform=gog:lindos exec=SOA.EXE
 SpiritOfAdventure platform=gog:windos exec=SOA.EXE
 
@@ -351,6 +354,7 @@ RealmsOfChaos platform=gog:windos exec="ROC.EXE"
 Stargunner platform=gog:lindos exec="STARGUN.EXE" extra-files="data/noarch/dosbox_stargun.conf" emulator-args="-conf ../dosbox_stargun.conf"
 Stargunner platform=gog:windos exec="STARGUN.EXE" emulator-args="-conf dosbox_stargun.conf"
 Tyrian2000 platform=gog:windos exec="tyrian.exe" emulator-args="-conf dosboxT2K.conf"
+Hyperspeed platform=gog:windos exec="HYPERSPD.EXE" 
 
 * category='SubmarineSimulator;GOG' 
 SilentService platform=gog:lindos exec="sservice.exe"
@@ -469,6 +473,7 @@ GhostMaster
 KnightShift  exec="KnightShift.exe"
 CelticKings vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
 RageOfMages  exec="rom.exe"
+RageOfMages2 exec="allods2.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode."
 StarWolves  
 StarWolves2 warn="This game installs but has been seen to have severe performance issues"
 StarWolves3  
@@ -498,6 +503,7 @@ SpaceRangersHD  exec="Rangers.exe"
 W4kRitesOfWar  vdesk=y exec=RoW.exe extra_category="Warhammer"
 Carcassonne extra_category="TabletopGame"
 SilmarisDiceKingdom extra_category="TabletopGame"
+7thLegion exec="legion.exe" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 
 
 * category='WizardBattle;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
@@ -637,6 +643,7 @@ FuryUnleashed exec="Fury Unleashed.exe"
 
 * category='ShootEmUp;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BlazingStar exec="blazstar.exe"
+Ironclad exec="Ironclad.exe" warn="This game seems to run too fast under wine"
 BeatHazardUltra  
 RaidenLegacy
 Revolver360 
@@ -698,8 +705,8 @@ PapersPlease
 Reigns  
 
 
-* category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 # windows via wine
+* category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 Caravan  
 CombatChess category="Chess;GOG"
@@ -739,37 +746,34 @@ Gigapocalypse exec="Gigapocalypse.exe"
 DoubleDragon
 TrickStyle
 
+
 ## Win64-only games that have worked for me under wine
 * category='DeckBuilder;Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-
-
 DeepSkyDerelicts 
 Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
 
+
 * category='Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-
-
 Necrosmith exec="Necrosmith.exe"
 OutThere  exec="outthereomega.exe"
 
+
 * category='LogicGame;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-
-
 AltFrequencies 
 MachinikaMuseum exec="MachinikaMuseum.exe"
 Shapez exec=shapezio.exe
 
+
 * category='RealTimeStrategy;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-
-
 NomadsOfTheDriftland exec="Nomads.exe"
 RadioCommander
 
-* category='TurnBasedStrategy;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 
+* category='TurnBasedStrategy;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BattlestarGalacticaDeadlock
 CrusaderKings2 exec="CK2game.exe" warn="This game needs a powerful system"
 KingOfDragonPass exec="King of Dragon Pass.exe"
+
 
 * category='Game;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 ArkanoidEternalBattle exec="Arkanoid-EternalBattle.exe" category="BreakoutGame"

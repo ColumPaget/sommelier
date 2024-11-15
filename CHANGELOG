@@ -1,3 +1,7 @@
+v10.2 (2024-11-15)
+    * fix for programs that can't handle ':' in paths (e.g. StreetsOfRage4 for linux)
+    * addmore gog games, including Rage Of Mages 2, Lands of Lore, Lands of Lore 2
+
 v10.1 (2024-10-05)
     * segment gameboy from gameboyadvanced and add more gameboy emulators
     * GOG scummvm games can now be run using installed, or GOG-supplied scummvm
@@ -13,7 +17,7 @@ v9.4 (2024-05-29)
     * support '2 stage installers' for linux and dos installs
     * added linux webbrowsers, Chrome, UngoogledChrome, SRwareIron and Midori
     * report when app-icon is found during install
-    * app name in 'run' command is no case insensitive
+    * app name in 'run' command is now case insensitive
 
 v9.3 (2024-05-23)
     * fix regression that prevents installing gog:linux games
