@@ -41,7 +41,7 @@ AnomalyKorea  ld_preload="$(sommelier_patches_dir)/anomaly_warzone_patch.so" exe
 * category='RealTimeStrategy;GOG' platform=gog:linux
 AIWarFleetCommand  exec=AIWarLinux.x86 exec64=AIWarLinux.x86_64 working-dir="$(install-dir)/data/noarch/game"
 Battlevoid  exec=harbinger 
-
+CircleEmpires exec=circle_empires.x86  exec64=circle_empires.x86_64 
 Defcon  warn="This game has been seen to fail on some linux platforms"
 Realpolitiks  
 
@@ -254,14 +254,14 @@ Quake:DissolutionOfEternity exec="quake.exe" commands="imgmount d gamed.cue -t i
 RiseOfTheTriad
 
 
-* category='FightingGame;GOG' 
-MortalKombat platform=gog:windos exec="MK1.EXE" 
-MortalKombat2 platform=gog:windos exec="MK2.EXE"
-MortalKombat3 platform=gog:windos exec="START.BAT"
+* category='FightingGame;GOG' platform=gog:windos
+MortalKombat  exec="MK1.EXE" 
+MortalKombat2 exec="MK2.EXE"
+MortalKombat3 exec="START.BAT"
 
-* category='RacingGame;GOG' 
-MegaRace platform=gog:windos exec="MEGARACE.exe"
-MegaRace2 platform=gog:windos exec="MEGARACE.exe" commands="mount c .; imgmount d MEGARACE2.gog -t iso; c:; megarace2.exe" no-exec-arg="y"
+* category='RacingGame;GOG' platform=gog:windos
+MegaRace  exec="MEGARACE.exe"
+MegaRace2 exec="MEGARACE.exe" commands="mount c .; imgmount d MEGARACE2.gog -t iso; c:; megarace2.exe" no-exec-arg="y"
 Slipstream5000 platform=gog:lindos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
 Slipstream5000 platform=gog:windos exec="SLIPSTRM.EXE" warn="This game has no way to exit. Ctrl-F9 closes dosbox, Ctrl-F10 ungrabs mouse"
 
@@ -417,6 +417,7 @@ PunchClub
 FinalVendetta
 FightNRage 
 Legend
+StreetsOfRogue
 
 * category='RacingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 1nsane vdesk=y warn="This game runs in a virtual desktop because of issues with window focus and textures at fullscreen"
@@ -454,6 +455,7 @@ Thief3
 
 * category='RealTimeStrategy;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Battlevoid security_level="syscall_allow=ptrace untrusted"
+CircleEmpires vdesk=1280x1024 warn="This game has some issues running in fullscreen mode. After 'loading' at startup there's a cutscene that doesn't play. Click on the black screen to skip it"
 CovidTheOutbreak 
 DangerousWaters exec=LaunchDW.exe
 Defcon  
@@ -517,6 +519,7 @@ ShadowWatch
 StarRenegades 
 IntoTheBreach
 GalaxySquad extra_category="Roguelike"
+FalloutTactics
 
 * category='RealTimeTactics;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 BadNorth
@@ -625,6 +628,7 @@ SpaceHack vdesk=y warn="This game installs in a virtual desktop because it has i
 AncientEnemy  
 DarkestDungeon  
 DiceyDungeons 
+LoopHero
 Monolith  exec=Monolith.exe
 RunestoneKeeper
 
@@ -666,6 +670,7 @@ KingsBounty
 NeoScavenger 
 TalismanOrigins extra_category="TabletopGame"
 PaperSorcerer
+WarhammerQuest
 Wizardry  exec=Wiz8.exe vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 
 
@@ -716,6 +721,7 @@ DesertLaw
 Diluvion  
 DraculaTheResurrection  
 Fallout  exec="FalloutLauncher.exe"
+Fallout2  exec="Fallout2Launcher.exe"
 FrailHearts
 HeadsWillRoll
 HitmanCodename47  

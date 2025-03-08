@@ -43,13 +43,13 @@ then
 	AC_CHECK_LIB(ssl,SSL_library_init,,)
 	AC_CHECK_LIB(crypto,EVP_CIPHER_CTX_init,,)
 else
-  AC_DEFINE(HAVE_LIBUSEFUL5)
 	AC_CHECK_LIB(z,inflate,,)
 	AC_CHECK_LIB(ssl,SSL_library_init,,)
 	AC_CHECK_LIB(crypto,EVP_CIPHER_CTX_init,,)
 
-  AC_SUBST(LIBUSEFUL_BUNDLED,"libUseful-5/libUseful.a")
-  AC_CONFIG_SUBDIRS([libUseful-5])
+  AC_DEFINE(USE_LIBUSEFUL_BUNDLED)
+  AC_SUBST(LIBUSEFUL_BUNDLED,"libUseful-bundled/libUseful.a")
+  AC_CONFIG_SUBDIRS([libUseful-bundled])
 fi
 
 

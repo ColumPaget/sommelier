@@ -1,3 +1,7 @@
+10.3 (2025-03-08)
+    * Change bundled libUseful to be called 'libUseful-bundled' to prevent confusion over include files
+    * Added gog games Fallout2, FalloutTactics, LoopHero, WarhammerQuest, CircleEmpires and StreetsOfRogue
+
 v10.2 (2024-11-15)
     * fix for programs that can't handle ':' in paths (e.g. StreetsOfRage4 for linux)
     * addmore gog games, including Rage Of Mages 2, Lands of Lore, Lands of Lore 2

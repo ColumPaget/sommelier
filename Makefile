@@ -1,14 +1,14 @@
 OBJ=common.o config.o apps.o platforms.o categories.o elf.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
-LIBS= -lssl -lcrypto -lcrypto -lssl -lUseful-5 -lUseful-5  
+LIBS=libUseful-bundled/libUseful.a -lssl -lcrypto -lcrypto -lssl -lz  
 prefix=/usr/local
 exec_prefix=${prefix}
-CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_LIBUSEFUL_5=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIBUSEFUL_5_LIBUSEFUL_H=1 -DHAVE_LIBUSEFUL5=1 -DHAVE_LIBUSEFUL_5=1 -DHAVE_LIBSSL=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
+CFLAGS=-g -O2 -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DSTDC_HEADERS=1 -D_FILE_OFFSET_BITS=64 -DHAVE_LIBZ=1 -DHAVE_LIBSSL=1 -DHAVE_LIBCRYPTO=1 -DUSE_LIBUSEFUL_BUNDLED=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DINSTALL_PREFIX=\"/usr/local\"
 
-all: $(OBJ) patches-subdir main.c 
+all: $(OBJ) patches-subdir main.c libUseful-bundled/libUseful.a
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
-libUseful-5/libUseful.a:
-	$(MAKE) -C libUseful-5
+libUseful-bundled/libUseful.a:
+	$(MAKE) -C libUseful-bundled
 
 common.o: common.h common.c
 	$(CC) $(CFLAGS) -c common.c
@@ -75,7 +75,7 @@ patches-subdir:
 	- $(MAKE) -C patches
 
 clean:
-	rm -f sommelier *.o libUseful-5/*.o libUseful-5/*.so libUseful-5/*.a patches/*.so *.orig .*.swp */.*.swp
+	rm -f sommelier *.o libUseful-bundled/*.o libUseful-bundled/*.so libUseful-bundled/*.a patches/*.so *.orig .*.swp */.*.swp
 
 install:
 	mkdir -p $(HOME)/bin

@@ -2,7 +2,9 @@
 #ifndef SOMMELIER_COMMON_H
 #define SOMMELIER_COMMON_H
 
-#ifdef HAVE_LIBUSEFUL5
+#if defined(USE_LIBUSEFUL_BUNDLED)
+#include "libUseful-bundled/libUseful.h"
+#elif defined(HAVE_LIBUSEFUL5)
 #include "libUseful-5/libUseful.h"
 #else
 #include "libUseful-4/libUseful.h"
@@ -12,7 +14,7 @@
 #include <glob.h>
 
 
-#define VERSION "10.2"
+#define VERSION "10.3"
 
 
 #define INSTALL_RUN 0

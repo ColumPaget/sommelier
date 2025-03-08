@@ -7,8 +7,8 @@ CFLAGS=@CFLAGS@ @DEFS@ -DINSTALL_PREFIX=\"@prefix@\"
 all: $(OBJ) patches-subdir main.c @LIBUSEFUL_BUNDLED@
 	$(CC) $(CFLAGS) -osommelier $(OBJ) $(LIBUSEFUL) $(LIBS) main.c 
 
-libUseful-5/libUseful.a:
-	$(MAKE) -C libUseful-5
+libUseful-bundled/libUseful.a:
+	$(MAKE) -C libUseful-bundled
 
 common.o: common.h common.c
 	$(CC) $(CFLAGS) -c common.c
@@ -75,7 +75,7 @@ patches-subdir:
 	- $(MAKE) -C patches
 
 clean:
-	rm -f sommelier *.o libUseful-5/*.o libUseful-5/*.so libUseful-5/*.a patches/*.so *.orig .*.swp */.*.swp
+	rm -f sommelier *.o libUseful-bundled/*.o libUseful-bundled/*.so libUseful-bundled/*.a patches/*.so *.orig .*.swp */.*.swp
 
 install:
 	mkdir -p $(HOME)/bin

@@ -692,7 +692,7 @@ LDFLAGS
 LIBS
 CPPFLAGS
 CPP'
-ac_subdirs_all='libUseful-5'
+ac_subdirs_all='libUseful-bundled'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -3851,8 +3851,6 @@ _ACEOF
 fi
 
 else
-  $as_echo "#define HAVE_LIBUSEFUL5 1" >>confdefs.h
-
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for inflate in -lz" >&5
 $as_echo_n "checking for inflate in -lz... " >&6; }
 if ${ac_cv_lib_z_inflate+:} false; then :
@@ -3989,11 +3987,13 @@ _ACEOF
 fi
 
 
-  LIBUSEFUL_BUNDLED="libUseful-5/libUseful.a"
+  $as_echo "#define USE_LIBUSEFUL_BUNDLED 1" >>confdefs.h
+
+  LIBUSEFUL_BUNDLED="libUseful-bundled/libUseful.a"
 
 
 
-subdirs="$subdirs libUseful-5"
+subdirs="$subdirs libUseful-bundled"
 
 fi
 
