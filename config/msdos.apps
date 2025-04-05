@@ -14,28 +14,36 @@ CloneInvader  url=https://image.dosgamesarchive.com/games/cloneinv.zip exec='CLO
 * category='BombermanGame' platform=dos
 MrBoom  url=https://image.dosgamesarchive.com/games/mrboom30.zip exec='MRBOOM30.EXE'  sha256='0d8d13ba7f9e62bb3360b3c1f542219f10b131a8afb04202fefd783d7c2a156c' 
 Pyromania  url=https://archive.org/download/download_20170418/download.zip exec='PYRO.EXE'  sha256='24b8f3f105a12b62c1d27215a0d380ee1b7c91e777cee7af0845ec50b72c14cf' 
-DynaBlaster url=https://archive.org/compress/chenall_dyna 
+DynaBlaster url=https://archive.org/download/chenall_dyna/dyna.zip exec="DYNA.EXE" sha256="2b6b7948cd73bc9c1e2d51cd9dcc3b8cee9e81a83ef960c47e3c91f97eeae588"
 
 * category='ShootEmUp' platform=dos
 OperationSpacehog  url=https://image.dosgamesarchive.com/games/spacehog.zip exec='SH.EXE'  sha256='a620d38f6e75e8e85baa41f5b5693423e14f3b5d6013aeb0323989ef63f7398d' 
 Stargunner  url=http://lutris.net/files/games/stargunner/stargunner.tar.gz exec='SG.exe'  comment='Sidescrolling shooter' sha256='774ee0cf88b067aa44f61bd60a4d3f7aeafd46636d11580d43b309d2b54f725b' 
 Xyphr  url=https://archive.org/download/Xyphr_1020/Xyphrsw1991eugeneLinaction.ZIP exec='XYPHR.EXE' sha256='8d0da142c0dec3e8091d4593adeed47e8352ec965a5f8bfcdeb1b6a71bf162da' 
 OperationCarnage  url=https://image.dosgamesarchive.com/games/ocfull.zip exec='CARNAGE.EXE'  sha256='60e551235fa3ab58ed72ebfe61b3e51bf196fdc942ce25dcf5b28cfef9974cfc' comment='Cool run and gun game' 
+Kiloblaster url=http://www.classicdosgames.com/files/games/epic/Kiloblaster_v2_Commercial.zip exec="KILO.BAT" sha256="2c1729c22eea5f3d70cac6164649e895e7d3db049976ab85f3d7f5504469be88"
 
 * category='RealTimeStrategy' platform=dos
 Dune2  url=http://www.completelyfreesoftware.com/software/dune2.zip exec='DUNE2.EXE' comment='Classic RTS' sha256='fa95ec0c5126b5bdad6a1f74c157e038107c7d296a2bc9f261379000be6c01fb' 
+
 * category='ActionRPG' platform=dos
 4DPrinceOfPersia  url=http://www.completelyfreesoftware.com/software/4dprince.zip exec='4D_PRIN.EXE'  sha256='9a85556ff68a01902914e7b395bee658107198c5ff2c6378d7be8ef943de67f0' 
-AmuletsAndArmor  url=http://lutris.net/files/games/amulets-and-armor/AAClassicV1.04_DOS.zip  sha256='e791afa89d81c07d115bc4771fa9b116c555a1a8bcb27a9cb9aea2e0798acef2' 
 ThorsHammer  url=https://archive.org/download/ThorsHammer/thor10.zip exec='THOR.EXE' sha256='5f1bcae1e151c6ac3dad31f21650dff1945f3c0c177593ed73fc508ee67289db' 
 
 * category='Chess' platform=dos
 PsionChess  url=https://image.dosgamesarchive.com/games/psionchs.zip exec='Chess.exe' comment='Chess' sha256='f2c50e8d46f09c7434e8a26579483586ef92998a4b9ad632b05e367d3741b2d1' 
 CyrusChess  url=https://archive.org/download/msdos_shareware_fb_CHESS/CHESS.ZIP exec='CYRUS.COM' comment='Early 3D chess' sha256='1142b0168d9385d3c6692dff9c4c972b0d5e9df0057b5e4b12532a13bc3e0215' 
 RebelDecadeChess  url=https://image.dosgamesarchive.com/games/rebdec30.zip exec='START.BAT' sha256='5e26ff726236dd6d8476a6b08e0c79aaa86b9a035749439490967daea15acbfe' 
-NovaChess url="https://archive.org/download/NovaChessV1.121996ThomasStarkeStrategyChess/NovaChessv1.12.ZIP"
-KCChess url="https://archive.org/download/KCChess1990CraigBruceAndKevinPhillipsStrategyChess/KCChess.zip"
-ChessSystemTal url="https://archive.org/download/msdos_Chess_System_Tal_1997/Chess_System_Tal_1997.zip"
+NovaChess url="https://archive.org/download/NovaChessV1.121996ThomasStarkeStrategyChess/NovaChessv1.12.ZIP" sha256="38928219d790316f380c942e4bbbcb0b7bf801fdfe433ed1b95ea59eff7f1284" runwarn="Move mouse to top of screen for NovaChess pull-down menu"
+KCChess url="https://archive.org/download/KCChess1990CraigBruceAndKevinPhillipsStrategyChess/KCChess.zip" sha256="7f16819a2d1d572c0957c4ca70578cf8d84d6ec03389b0f47cb60d0d430a0478"
+ChessSystemTal url="https://archive.org/download/msdos_Chess_System_Tal_1997/Chess_System_Tal_1997.zip" exec="run.bat" sha256="97522aece783262304c838540c579045e02f4eb012a9a51353a6fb4fc8252f9d" runwarn="Move mouse to top of screen for ChessSystemTal menu"
+
+* category='PuzzleGame;LogicGame' platform=dos
+Sokoban94 url=https://archive.org/download/Sokoban-sw/soko94sw.zip exec="soko94sw.exe"  sha256="bc7e05d8ec47eb1c1fbfb3612b4505102b52eace1a9b0119cfcea27484fd9041"
+
+* category='DungeonCrawl;Roguelike' platform=dos
+Telengard url=http://www.classicdosgames.com/files/games/daniellawrence/telen.zip exec="TELEN.EXE" sha256="6bf615544586eb81146468b528e239c02ad20487eafc31743a3a6a50a68db804"
+AmuletsAndArmor  url=http://lutris.net/files/games/amulets-and-armor/AAClassicV1.04_DOS.zip exec="AA.BAT" sha256='e791afa89d81c07d115bc4771fa9b116c555a1a8bcb27a9cb9aea2e0798acef2' 
 
 * category='Utility;Clock' platform=dos
 DigiClock  url=http://www.dannyvanderkolk.nl/freeware/utils/digiclck.zip exec='DIGITAL.EXE' sha256='8c7c18a045fb91f3d2e3cfe25b9cf9875479d28d59fd3edeb73559b78d34f63e' 

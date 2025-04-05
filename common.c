@@ -4,6 +4,23 @@
 
 #define DEFAULT_WINEPREFIX "$(sommelier_root)$(name)-$(platform)/"
 
+char *CurrUserName=NULL;
+char *CurrUserHome=NULL;
+
+
+void SetupCurrUser()
+{
+    //if we have an effective uid of 0 (root) then try setting the effective uid
+    //back to our real uid. We shouldn't need root permissions in this app.
+    if (geteuid()==0)
+    {
+        seteuid(getuid());
+    }
+
+    CurrUserName=CopyStr(CurrUserName, LookupUserName(getuid()));
+    CurrUserHome=CopyStr(CurrUserHome, GetCurrUserHomeDir());
+}
+
 const char *ResolveVar(ListNode *Vars, const char *VarName)
 {
     char *Tempstr=NULL;
@@ -22,7 +39,7 @@ char *FormatPath(char *RetStr, const char *Fmt)
     ListNode *Vars;
 
     Vars=ListCreate();
-    SetVar(Vars, "homedir", GetCurrUserHomeDir());
+    SetVar(Vars, "homedir", CurrUserHome);
     SetVar(Vars, "install_prefix", INSTALL_PREFIX);
     RetStr=SubstituteVarsInString(RetStr, Fmt, Vars, 0);
     ListDestroy(Vars, Destroy);
@@ -107,8 +124,9 @@ TAction *ActionCreate(int Type, const char *Name)
     if (StrValid(Name)) SetVar(Act->Vars, "name", Name);
 
     SetVar(Act->Vars, "prefix_template", DEFAULT_WINEPREFIX);
-    SetVar(Act->Vars, "user", LookupUserName(getuid()));
-    SetVar(Act->Vars, "homedir", GetCurrUserHomeDir());
+    SetVar(Act->Vars, "user", CurrUserName);
+    SetVar(Act->Vars, "homedir", CurrUserHome);
+
     return(Act);
 }
 

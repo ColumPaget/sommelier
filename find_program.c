@@ -68,7 +68,21 @@ char *FindProgram(char *RetStr, TAction *Act)
     char *Exec=NULL, *Tempstr=NULL;
     const char *ptr;
 
-    if (Act->InstallType == INSTALL_EXECUTABLE) Exec=CopyStr(Exec, Act->SrcPath);
+
+    if (Act->InstallType == INSTALL_EXECUTABLE)
+    {
+        Exec=CopyStr(Exec, Act->SrcPath);
+
+        //if we don't have a full path to the downloaded executable
+        //then we are likely being called as 'reconfigure' or some other
+        //action that doesn't require/include a download. So we're going
+        //to have to 'guess' the exec name from the URL, and 'go fishing'
+        if (! StrValid(Exec))
+        {
+            Tempstr=URLBasename(Tempstr, Act->URL);
+            SetVar(Act->Vars, "exec", Tempstr);
+        }
+    }
     else
     {
         ptr=GetVar(Act->Vars, "exec");
@@ -76,7 +90,7 @@ char *FindProgram(char *RetStr, TAction *Act)
     }
 
 
-//full path given to executable, so it must exist at this path
+    //full path given to executable, so it must exist at this path
     if (StrValid(Exec) && *Exec == '/')
     {
         //do nothing

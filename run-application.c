@@ -175,7 +175,7 @@ pid_t RunNormal(TAction *Act)
     ptr=GetVar(Act->Vars, "security_level");
     if (! StrValid(ptr)) ptr="minimal";
 
-		//still being worked on due to the need to support wine32 under linux64bit
+    //still being worked on due to the need to support wine32 under linux64bit
     //SpawnConfig=MCatStr(SpawnConfig, " security='", ptr, "'", NULL);
     //Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), ptr);
 
@@ -195,32 +195,44 @@ pid_t RunNormal(TAction *Act)
 void RunApplication(TAction *Act)
 {
     char *Tempstr=NULL;
+    const char *ptr;
     int width, height;
     pid_t pid;
 
-    Tempstr=AppFormatPath(Tempstr,  Act);
-    if (StrValid(Act->Exec))
+    if (AppIsInstalled(Act))
     {
-        if (fork()==0)
+        if (StrValid(Act->Exec))
         {
-            XRandrGetResolution(&width, &height);
-            if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
-            else pid=RunNormal(Act);
 
-            if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+            ptr=GetVar(Act->Vars, "runwarn");
+            if (StrValid(ptr))
             {
-                //wait for the application to exit, and collect any other
-                //pids while we do so
-                while (1)
-                {
-                    if (waitpid(-1, NULL, 0) == pid) break;
-                }
-                XRandrSetResolution(width, height);
+                Tempstr=MCopyStr(Tempstr, "~yWARN: ", ptr, "~0\n", NULL);
+                TerminalPutStr(Tempstr, NULL);
             }
-            _exit(0);
+
+            if (fork()==0)
+            {
+                XRandrGetResolution(&width, &height);
+                if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
+                else pid=RunNormal(Act);
+
+                if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+                {
+                    //wait for the application to exit, and collect any other
+                    //pids while we do so
+                    while (1)
+                    {
+                        if (waitpid(-1, NULL, 0) == pid) break;
+                    }
+                    XRandrSetResolution(width, height);
+                }
+                _exit(0);
+            }
         }
+        else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
     }
-    else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
+    else fprintf(stderr, "ERROR: application not installed\n");
 
     Destroy(Tempstr);
 }
@@ -241,7 +253,7 @@ void RunWineCfg(TAction *Act)
 
     if (DesktopFileLoad(Act))
     {
-        Tempstr=AppFormatPath(Tempstr,  Act);
+        Tempstr=AppFindInstalled(Tempstr,  Act);
         Act->Exec=CopyStr(Act->Exec, "winecfg");
         RunNormal(Act);
     }

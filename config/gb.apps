@@ -17,6 +17,9 @@ ShockLobster url=https://hh3.gbdev.io/entries/shock-lobster/shocklobster.gb
 * platform=gb category=PuzzleGame;GameBoy install-type=executable
 Unearthed url=https://hh3.gbdev.io/entries/unearthed/Unearthed%20Zero.gb
 
+* platform=gb category=BombermanGame;GameBoy install-type=executable
+DynaBlaster url=https://archive.org/download/dynablaster-europe_202212/Dynablaster%20%28Europe%29.gb
+
 * platform=gb category=GameBoy install-type=executable
 CoreMachina url=https://hh3.gbdev.io/entries/core-machina/Core%20Machina%20v1.2c%20DEMO.gb
 DangoDash url=https://hh3.gbdev.io/entries/dango-dash/Dango%20Dash_v01.gb

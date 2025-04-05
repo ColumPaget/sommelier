@@ -141,7 +141,7 @@ VoidScrappers
 WayOfTheSamurai 
 VolgarrTheViking exec=Volgarr category="Platformer;GOG"
 
-## 64-bit only linux namtive gog games
+## 64-bit only linux native gog games
 * category='DeckBuilder;Roguelike;GOG' platform=gog:linux64
 DeepSkyDerelicts
 IratusLordOfTheDead  exec64='Iratus'
@@ -149,6 +149,7 @@ SlayTheSpire  exec64="SlayTheSpire"
 
 * category='Roguelike;GOG' platform=gog:linux64
 OutThere  exec64="outthereomega.x86"
+UltimateADOM exec64="Ultimate ADOM - Caverns of Chaos.x86_64"
 
 * category='ShootEmUp;GOG' platform=gog:linux64
 BlazingStar exec64=BlazingStar
@@ -386,7 +387,7 @@ Witchaven platform=gog:windos exec="Enhanced/run-game.bat"
 Witchaven2 platform=gog:windos exec="run-game.bat"
 Pirates platform=gog:lindos exec="pir.exe" extra-files="data/noarch/classic/*" extra_category="SidMeier"
 Pirates platform=gog:windos exec="pir.exe" extra-files="data/noarch/classic/*" extra_category="SidMeier"
-
+KingsTable platform=gog:windos exec="RAGNAROK.BAT" category="BoardGame;GOG" rename="$(drive_c)/GOG\ Games/King\'s\ Table\ -\ The\ Legend\ of\ Ragnarok $(drive_c)/GOG\ Games/KingsTable-TheLegendOfRagnarok"
 
 
 ## Win32 games that have worked for me under wine
@@ -562,7 +563,7 @@ RollerCoasterTycoon
 MiniMetro  exec="Mini Metro.exe"
 IndustryGiant2  exec="ig2_Addon.exe"
 TransportGiant2
-
+TrafficGiant exec="trafficgiant.exe"
 
 * category='TradingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 PortRoyale  exec=PortRoyale.exe delete="$(drive_c)/GOG Games/Port Royale/*.bik" vdesk=y
@@ -713,7 +714,7 @@ Reigns
 # windows via wine
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
-Caravan  
+Caravan
 CombatChess category="Chess;GOG"
 Convoy category="Roguelike" exec="Convoy.exe"
 CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y

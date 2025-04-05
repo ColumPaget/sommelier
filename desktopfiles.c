@@ -110,36 +110,43 @@ int DesktopFileRead(const char *Path, TAction *Act)
             }
             else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "x86_ld_library_path", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "x86_ld_library_path", Token);
             }
             else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "x86_64_ld_library_path", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "x86_64_ld_library_path", Token);
             }
             else if (strcasecmp(Name,"SommelierSecurityLevel")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "security_level", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "security_level", Token);
+            }
+            else if (strcasecmp(Name,"SommelierRunWarn")==0)
+            {
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "runwarn", Token);
             }
             else if (strcasecmp(Name,"Icon")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "icon", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "icon", Token);
             }
             else if (strcasecmp(Name,"Platform")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "platform", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "platform", Token);
             }
             else if (strcasecmp(Name,"Emulator")==0)
             {
+                //naughty reuse of name here
                 Name=CopyStr(Name, ptr);
                 StripQuotes(Name);
                 SetVar(Act->Vars, "emulator", Name);
@@ -148,9 +155,9 @@ int DesktopFileRead(const char *Path, TAction *Act)
             }
             else if (strcasecmp(Name,"Path")==0)
             {
-                Name=CopyStr(Name, ptr);
-                StripQuotes(Name);
-                SetVar(Act->Vars, "working-dir", Name);
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                SetVar(Act->Vars, "working-dir", Token);
             }
             Tempstr=STREAMReadLine(Tempstr, S);
         }
@@ -371,7 +378,7 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);

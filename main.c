@@ -114,22 +114,65 @@ void RebuildAppList(TAction *RebuildAct)
 }
 
 
+int SetNoSU()
+{
+#ifdef HAVE_PRCTL
+#include <sys/prctl.h>
+#ifdef PR_SET_NO_NEW_PRIVS
+
+//set, then check that the set worked. This correctly handles situations where we ask to set more than once
+//as the second attempt may 'fail', but we already have the desired result
+    prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+    if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) == 1)
+    {
+        TerminalPutStr("~gNO_NEW_PRIVS set for process~0 (security feature that prevents su/sudo)\n", NULL);
+        return(TRUE);
+    }
+
+    //if we get here then something went wrong
+    RaiseError(ERRFLAG_ERRNO, "SetNoSU", "Failed to set 'no new privs', even though this seems to be supported");
+#endif
+
+#endif
+
+    return(FALSE);
+}
+
+
+//there's a chicken-and-egg situation in parsing the command-line, as some things depend on config files that
+//can be changed by command-line switches. We do those things here, as early as possible after loading config files
+void ActionPrepare(TAction *Act)
+{
+    char *Tempstr=NULL;
+
+    if (StrValid(Act->Platform))
+    {
+        Tempstr=CopyStr(Tempstr, Act->Platform);
+        Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(Tempstr));
+				//we must only set the platform variable if the user has specified a platform,
+				//as this is how we distinguish between 'the user insists this platform'
+        //and 'dunno, go with the first thing you can find'
+    		SetVar(Act->Vars, "platform", Act->Platform);
+    }
+		//PlatformDefault will tend to be something like "!linux32" rather than an 
+		//actual platform, so we mustn't set the 'platform' variable to this
+    else Act->Platform=CopyStr(Act->Platform, PlatformDefault());
+
+    Destroy(Tempstr);
+}
+
+
 int main(int argc, char *argv[])
 {
     ListNode *Acts, *Curr;
     TAction *Act;
     char *Tempstr=NULL;
 
-    //if we have an effective uid of 0 (root) then try setting the effective uid
-    //back to our real uid. We shouldn't need root permissions in this app.
-    if (geteuid()==0)
-    {
-        seteuid(getuid());
-    }
-
+    SetupCurrUser();
     ConfigInit();
 
     Acts=ParseCommandLine(argc, argv);
+
     PlatformsInit(Config->PlatformsPath);
     CategoriesLoad(Config->CategoriesPath);
     AppsLoad(Config->AppConfigPath);
@@ -138,6 +181,8 @@ int main(int argc, char *argv[])
     while (Curr)
     {
         Act=(TAction *) Curr->Item;
+        ActionPrepare(Act);
+
         if (Act)
         {
 
@@ -163,15 +208,6 @@ int main(int argc, char *argv[])
                 else PlatformApplySettings(Act);
                 break;
 
-            case ACT_RUN:
-                RunApplicationFromDesktopFile(Act);
-                break;
-
-            case ACT_AUTOSTART:
-                Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
-                DesktopFileDirectoryRunAll(Tempstr);
-                break;
-
             case ACT_REBUILD_HASHES:
                 RebuildAppList(Act);
                 break;
@@ -192,13 +228,24 @@ int main(int argc, char *argv[])
                 CategoriesList();
                 break;
 
-
             case ACT_DOWNLOAD:
                 if (! AppLoadConfig(Act)) printf("ERROR: no config found for app '%s'\n", Act->Name);
                 else Download(Act);
                 break;
 
+            case ACT_RUN:
+                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
+                RunApplicationFromDesktopFile(Act);
+                break;
+
+            case ACT_AUTOSTART:
+                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
+                Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
+                DesktopFileDirectoryRunAll(Tempstr);
+                break;
+
             case ACT_WINECFG:
+                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
                 RunWineCfg(Act);
                 break;
             }

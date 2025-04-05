@@ -45,6 +45,7 @@ static void PrintUsage()
     printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
     printf("  -user-agent <agent string>    set user-agent to send when communicating over http\n");
     printf("  -ua <agent string>            set user-agent to send when communicating over http\n");
+    printf("  -su                           allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root\n");
     printf("\n");
     printf("Proxy urls have the form: \n");
     printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -93,13 +94,15 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 
 
     if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-su")==0) Config->Flags |= FLAG_ALLOWSU;
+    else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
+    else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
+    else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
     else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
     else if (strcmp(p_Opt, "-s")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-set")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
-    else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
-    else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-hash")==0) Act->Flags |= FLAG_HASH_DOWNLOAD;
     else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
@@ -112,18 +115,12 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-emulator")==0) SetVar(Act->Vars, "required_emulator", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-installed")==0) Act->Flags |= FLAG_INSTALLED;
     else if (strcmp(p_Opt, "-proxy")==0) SetGlobalConnectionChain(CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
     else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-secure")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-platform")==0)
-    {
-        Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(CommandLineNext(CmdLine)));
-        //this must be done here, because in situations where no platform is given, we use fallbacks like !linux32
-        //but if the user has not provided a platform, we want the variable to be blank, not populated with the fallback
-        SetVar(Act->Vars, "platform", Act->Platform);
-    }
+    //we cannot unalias the platform here because here, because we won't have loaded platforms yet
+    else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
     {
         Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
@@ -235,7 +232,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
     CmdLine=CommandLineParserCreate(argc, argv);
 
 //do an options run so that options like -c can be used anywhere on command-line
-//this makes things very messy, 'cos we have to reparse them when examinging the
+//this makes things very messy, 'cos we have to reparse them when examining the
 //command-line proper
     Options=CommandLineParseOptions(CmdLine);
     arg=CommandLineFirst(CmdLine);
@@ -280,6 +277,9 @@ ListNode *ParseCommandLine(int argc, char *argv[])
     }
     else PrintUsage();
 
+
+		//some options can be supplied out-of-order so we preload them into 'Options' and 
+    //retrospectively add them to all apps
     Curr=ListGetNext(Acts);
     while (Curr)
     {
@@ -290,11 +290,10 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         if (StrValid(Options->InstallName)) Act->InstallName=CopyStr(Act->InstallName, Options->InstallName);
         CopyVars(Act->Vars, Options->Vars);
 
-        if (! StrValid(Act->Platform)) Act->Platform=CopyStr(Act->Platform, PlatformDefault());
         Curr=ListGetNext(Curr);
     }
 
-
+		ActionDestroy(Options);
     DestroyString(SettingsStr);
     DestroyString(StdDepsPath);
 

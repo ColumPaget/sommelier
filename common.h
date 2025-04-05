@@ -14,43 +14,44 @@
 #include <glob.h>
 
 
-#define VERSION "10.3"
+#define VERSION "10.4"
 
 
-#define INSTALL_RUN 0
-#define INSTALL_UNPACK 1
-#define INSTALL_EXECUTABLE 2
+#define INSTALL_RUN          0
+#define INSTALL_UNPACK       1
+#define INSTALL_EXECUTABLE   2
 
-#define ACT_NONE 0
-#define ACT_INSTALL 1
-#define ACT_UNINSTALL 2
-#define ACT_RUN 3
-#define ACT_LIST 5
-#define ACT_LIST_PLATFORMS 6
-#define ACT_LIST_CATEGORIES 7
-#define ACT_SET 8
-#define ACT_REBUILD 13
-#define ACT_REBUILD_HASHES 14
-#define ACT_DOWNLOAD 15
-#define ACT_RECONFIGURE 16
-#define ACT_WINECFG 17
-#define ACT_AUTOSTART 18
+#define ACT_NONE             0
+#define ACT_INSTALL          1
+#define ACT_UNINSTALL        2
+#define ACT_RUN              3
+#define ACT_LIST             5
+#define ACT_LIST_PLATFORMS   6
+#define ACT_LIST_CATEGORIES  7
+#define ACT_SET              8
+#define ACT_REBUILD         13
+#define ACT_REBUILD_HASHES  14
+#define ACT_DOWNLOAD        15
+#define ACT_RECONFIGURE     16
+#define ACT_WINECFG         17
+#define ACT_AUTOSTART       18
 
-#define FLAG_DEBUG 1
-#define FLAG_FORCE 2
-#define FLAG_DEPENDANCY 4
-#define FLAG_SYSTEM_INSTALL 8
-#define FLAG_INSTALLED 16
-#define FLAG_NO_XRANDR 32
-#define FLAG_SANDBOX 64
-#define FLAG_NET 128
-#define FLAG_DOWNLOADED 256
+#define FLAG_DEBUG            1
+#define FLAG_FORCE            2
+#define FLAG_DEPENDANCY       4
+#define FLAG_SYSTEM_INSTALL   8
+#define FLAG_INSTALLED       16
+#define FLAG_NO_XRANDR       32
+#define FLAG_SANDBOX         64
+#define FLAG_NET            128
+#define FLAG_DOWNLOADED     256
 #define FLAG_KEEP_INSTALLER 512
 #define FLAG_HASH_DOWNLOAD 1024
-#define FLAG_ABORT 2048
-#define FLAG_BUNDLED 4096
-#define FLAG_NOEXEC 8192
-#define FLAG_DLC 16384
+#define FLAG_ABORT         2048
+#define FLAG_BUNDLED       4096
+#define FLAG_NOEXEC        8192
+#define FLAG_DLC          16384
+#define FLAG_ALLOWSU      32768
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR, FILETYPE_TGZ, FILETYPE_TBZ, FILETYPE_TXZ, FILETYPE_7ZIP, FILETYPE_DEB, FILETYPE_CAB} TEnumFileTypes;
 
@@ -78,6 +79,10 @@ typedef struct
 } TAction;
 
 
+extern char *CurrUserName;
+extern char *CurrUserHome;
+
+void SetupCurrUser();
 const char *ResolveVar(ListNode *Vars, const char *VarName);
 char *FormatPath(char *RetStr, const char *Fmt);
 char *URLBasename(char *RetStr, const char *URL);

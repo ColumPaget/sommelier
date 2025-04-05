@@ -1,3 +1,7 @@
+10.4 (2025-04-05)
+    * Added 'NO_NEW_PRIVS' syscall when running apps under linux, preventing su/sudo from that app.
+    * Better support for listing/installing apps under either old or new install format (with or without platform name included in dirname and desktop file)
+
 10.3 (2025-03-08)
     * Change bundled libUseful to be called 'libUseful-bundled' to prevent confusion over include files
     * Added gog games Fallout2, FalloutTactics, LoopHero, WarhammerQuest, CircleEmpires and StreetsOfRogue

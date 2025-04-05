@@ -39,7 +39,7 @@ ClawsMail url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16
 Sylpheed url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
 Thunderbird url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
 SeaMonkeyMail exec-args='-mail' comment='Email app bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
-FoxMail url=https://www.foxmail.com/win/download exec=Foxmail.exe warn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
+FoxMail url=https://www.foxmail.com/win/download exec=Foxmail.exe runwarn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
 
 * category='Calculator;Office' platform=windows
 SpeedCrunch url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-win32.zip" sha256="024362bccd7908b508192cd90c2f6a716b5aa4fa5c7ff2aea9a1bf49d6580175"
@@ -107,7 +107,7 @@ Pixelformer url=http://downloads.qualibyte.com/Pixelformer.Setup.exe
 Paint.net url=https://www.dotpdn.com/files/paint.net.4.2.16.install.zip requires=DotNet40 sha256=fbe4a86a352154397405ff4e04a3f649a58f8e0c25cab26c6c4fbdfa2ec877dd
 CinePaint url=https://netcologne.dl.sourceforge.net/project/cinepaint/CinePaint/CinePaint-1.4.5-Win32.zip exec=cinepaint1.exe sha256=617946e6e683b1474de0d1fe801a335c527884b09cf5224171f7408bd3689b2a
 PaintToolSAI url=https://www.systemax.jp/bin/sai2-20220527-32bit-en.zip warn="This program only runs for 90 days in Trial Mode"
-TikZit url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-win.zip exec=tikzit.exe warn="program takes a while to initialize and start responding after displaying initial screen" sha256=e97bc93434b719d891e1c24bafb025d9176b94f24b32d675bc1c73fe4aaf0375
+TikZit url=https://github.com/tikzit/tikzit/releases/download/v2.1.6/tikzit-win.zip exec=tikzit.exe runwarn="program takes a while to initialize and start responding after displaying initial screen" sha256=e97bc93434b719d891e1c24bafb025d9176b94f24b32d675bc1c73fe4aaf0375
 
 * category='3DGraphics;Graphics' platform=windows
 Unicorn3D url=http://download.rw-designer.com/2013.1/Unicorn3D.zip sha256='a062e483623a68f8cac9acb4851c72232c3f620135cab65d281ea823d23f26d5' 
@@ -325,9 +325,9 @@ GearHead1 url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/G
 TalesOfMajeal url=http://te4.org/dl/t-engine/t-engine4-windows-1.5.9.zip comment='Very polished fantasy roguelike' sha256='7e05b9168df8caab7412e66daa574121bd5e3231077c4a53b0f781c814b0df61' 
 SplunkyClassic url=http://www.derekyu.com/games/spelunky_1_1.zip comment='Platform Roguelike' sha256='572f0a1976e76ebbd295daae651b8b6f00c6b9cf960d3e1c2cc57128d6437727' 
 DwarfFortress url=http://www.bay12games.com/dwarves/df_44_12_win32.zip exec='Dwarf Fortress.exe' comment='ASCII roguelike' sha256='ef98a150472531260315760a95fadb235c2b8b330f8cc0787bec6d22ff61b92f' donate=http://www.bay12games.com/support.html
+AmuletsAndArmor url=http://amuletsandarmor.com/download/AAClassicV1.04_Windows.zip installer="AAClassicV1.04_Windows.exe" exec="AA.exe" sha256="8d2a094863e771de1102e7eeb4b6ed7387e86c1b9537da278972931604002ec9" vdesk="800x600"
 
-
-* category='LogicGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+* category='PuzzleGame;LogicGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Taipei url=https://archive.org/download/Taipei_1020/TAIPEI50.zip version='1.01' exec='TP.EXE' sha256='f502c9443501866bd873fa77c77cac7d99ccffe91a8feffdf2b10c3f1d439c90' comment='Mahjong tile game for Windows 3.1' category="MahjongGame"
 SegaSwirl url=http://web.archive.org/web/20040207155639/http://www.segaswirl.com:80/pc/sw_large.exe exec='swirl.exe' comment='Another color matching game' sha256='947c4c0a02ce90abbcaba476a1824a55a97f3088ea282da89c1e2c2c8caee3e9'
 Reflexion url=https://archive.org/download/Reflexion_game/reflexion.zip sha256='76b5c0c7cd1c3de8ca7da6c279b97a7e4810cd12acb59dfa5db32fa1f9187707' 
@@ -337,12 +337,17 @@ Codex url=https://archive.org/download/Codex_1020/codex.zip requires='VB5' comme
 Ruckingenur2 url=http://www.zachtronics.com/images/ruckingenur2-installer.exe sha256='c8631d5902930e3563a8195edf0980c4d05b944fda2cefa7630905261ab28400' comment='Hardware Hacking Game. A little strange' category=LogicGame;Zachtronics
 RuckingenurCE url=http://www.zachtronics.com/images/ruckingenur-ce-installer.exe sha256='47a1a4094d5dda86130e5085aa46e3c494e90af084a919848abff6501204a97c' comment='Community Edition of Ruckingenur2 hardware hacking game, with new levels created by players' category=LogicGame;Zachtronics
 7Colors url=https://archive.org/download/7Colors_1020/7colors95.zip exec='7colors.exe' requires='VB5' sha256='bd04d53d18cdb58bd6b4b622c4eb624fd709d610e01dd3591c8cdffb748ad66f' 
+Sokoban++ url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' category=Sokoban
+SimpleTetris url=https://archive.org/download/SimpleTetris/SimpleTetris.zip movefiles-from='Tetris/*' exec='tetris.exe' sha256='830d947433ed1a710dfb4c71c2eeef705ac2b4c41a86450c2ca42a502595c38a' category=Tetris
+
 
 * category='StrategyGame;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AgeOfConquest url=http://www.ageofconquest.com/download/user_aoc/setup_conquest_win32_4.18.221_auto.exe comment='Risk style conquest game' sha256='6b5b3fbb0e08c821e0541edc91c71c3740dbe0dc9b66e062fd98a34bb58df5fe' 
 BattleForWesnoth url=https://sourceforge.net/projects/wesnoth/files/wesnoth-1.14/wesnoth-1.14.4/wesnoth-1.14.4-win32.exe/download sha256='fe6c276970efa5d510a31976c58949b034aa3f393ee7ea75ccfbbfdfd4c5cc22' comment='Very polished Fantasy RPG/RTS' donate=https://liberapay.com/Wesnoth/donate
+Glest url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' category="RealTimeStrategy"
 SPWW2 url=http://download.shrapnelgames.com/downloads/winSP/winSPWW2.zip installer='winSPWW2-DL-version 5.0.exe' comment='Steel Panthers World War 2 game' sha256='b6d8488739493bf5eaa0300bcbce0f7af94217d8d898a9bc7b9038ccc7307a91' 
 Warzone2100 url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_win_x86_portable.exe
+
 
 * category='ArcadeGame' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Invader url=https://archive.org/download/749InvaderInstall/749_invader_install.exe comment='Space Invaders clone' sha256='5f9949a69a71d0ede178ef7a0b7f0289824419ecc7dc2d68453ac641d62279ec' category="InvadersGame"
@@ -369,7 +374,6 @@ CarpeUniversum url=http://www.wyrdysm.com/games/CarpeUniversumv12.zip sha256='d9
 Cybernoid3 url=https://archive.org/download/cybernoid-3-phoenix/C3.zip comment='Addictive space shooter game' vdesk='y' sha256='818d0ae3de84c8884296df02545edc4a1a551f792cb02727df271e0b940f9ae7' 
 GazerStar url=https://archive.org/download/shooter_201705/shooter.zip sha256='d40b326dc24c522180ccb7127827c986c1e66059c9ee6e801e0df9dc68f6aecc' 
 GeneRally url=http://gene-rally.com/download/latest/ comment='little racing car game' sha256='e1ffc2f37d39748f6569c8f166b7b1a7aff2d4f6d385c2b1aa5ba7c2f9feef7e' 
-Glest url=https://sourceforge.net/project/downloading.php?group_id=127297&filename=glest_3.2.2.exe exec='glest.exe' warn='Installer shows some errors while running, just select 'ignore'. Program seems to work okay' sha256='b8b6aac30dec796d66966e7d4ba5a3a6f45d76ddd76c7f09acd601525251eb9d' category="RealTimeStrategy"
 Gwan url=https://archive.org/download/GWANWin/GWANWin.zip sha256='d4937612dbb26a90371159337a805043ab16fa73c805f1a34a67c1b29fd6f946' comment='Innovative vector-style game' 
 JadeEmpire url=https://archive.org/compress/JadePC sha256='3286d52835858ad3b6466722e533c39d759ce746745e1cd6ca155bf6ab2ec9ae' 
 LaserTank url=https://laser-tank.com/game/LaserTank.zip sha256='4c1361a82600ab40390d8c09bd43756b59e9c1d61d2e0e6c47a012cee785a6b3' 
@@ -378,8 +382,6 @@ Oolite url=https://github.com/OoliteProject/oolite/releases/download/1.90/Oolite
 PlasmaWorm url=http://digital-eel.com/plasmaworm/files/plasmaworm_free.exe sha256='c8354e264d32b1ba8bdfd0c543cca99719707ac1135bbb56485a27f589f23be9' comment='Snake game' category="SnakeGame"
 PrivateerRemake url=https://archive.org/download/Privateer_Remake/privateer1.2.exe sha256='5d5c371e463f85b13b1a574f553a328c2366f184c769abd3838b3b2ff93e2c64' 
 RiftSpace url=https://archive.org/download/RiftSpace/RiftSpace.exe exec='RiftSpace.exe' sha256='c4546ae1cba46c8b1ec6072ed868f0ffc03d6168363853fe2d8e2bf65418c933' 
-SimpleTetris url=https://archive.org/download/SimpleTetris/SimpleTetris.zip movefiles-from='Tetris/*' exec='tetris.exe' sha256='830d947433ed1a710dfb4c71c2eeef705ac2b4c41a86450c2ca42a502595c38a' category=Tetris
-Sokoban++ url=http://www.tucows.com/download/games/files/sokopp164.exe sha256='49be8818dbfab6016255098f97b7339b550b6dd6f056295cf741eef7ed38ee82' category=Sokoban
 TinyHeist url=http://terrycavanaghgames.com/tinyheist/tinyheist_windows_v10.zip comment='Sneaking Roguelike' sha256='79194bae6605950b1ead28230f727a2627f189d407e8fac011115ce2a06510a7' category="TerryCavanaghGame;Stealth;Roguelike"
 TrackManiaForever url=http://files.trackmaniaforever.com/tmnationsforever_setup.exe exec=TmForeverLauncher.exe
 Transcendance url=http://kronosaur.com/downloads/Transcendence.zip sha256='befaa240cbeb67383a35b9b1adad9cf053d15e2b18d94e6021bac30af6d97086' category="EliteGame;EscapeVelocityGame"
@@ -388,4 +390,7 @@ Zektor url=http://www.tardis.dk/dlcount/click.php?id=17 donate=http://tardis.dk/
 NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426eb14bf16e0041471eaa2d7ae280b2d1057ae25c7f' comment='simple tower defence game' category="TowerDefenceGame"
 KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' catgegory="AdventureGame"
 Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe category="LogicGame"
-Typhoon2001 url=https://archive.org/download/typhoon_2001_r3992/typhoon_2001_r3992.zip exec=typhoon.exe category="TempestGame"
+Typhoon2001 url=https://archive.org/download/typhoon_2001_r3992/typhoon_2001_r3992.zip exec=typhoon.exe category="TempestGame" sha256="64722fe8e99297fcb235dcf6bff8bf1ae5a510ef420dd2843e1c8f4bec4fd53b"
+
+
+

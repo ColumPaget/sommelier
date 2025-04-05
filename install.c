@@ -412,8 +412,8 @@ static void PostProcessRename(TAction *Act, const char *PostProc)
         ptr=GetToken(ptr, "\\S", &Value, GETTOKEN_QUOTES);
         To=UnQuoteStr(To, Value);
 
-        if (Config->Flags & FLAG_DEBUG) printf("RENAME: '%s' -> '%s'\n", From, To);
         result=rename(From, To);
+        if (Config->Flags & FLAG_DEBUG) printf("RENAME: [%s] -> [%s] result=%d\n", From, To, result);
     }
 
     Destroy(Tempstr);
@@ -598,10 +598,11 @@ char *OffsetPathFromDir(char *Path, const char *Dir)
 For DOS and windows executables that we might have downloaded as a Zip or an MSI file, we finalize here and setup
 the actual program that we're going to run to execute the application
 */
-static void FinalizeExeInstall(TAction *Act)
+static int FinalizeExeInstall(TAction *Act)
 {
     char *Path=NULL, *Tempstr=NULL, *ExecDir=NULL, *WorkDir=NULL;
     const char *ptr;
+    int RetVal=FALSE;
     int len;
 
     PostProcessInstall(Act);
@@ -656,9 +657,14 @@ static void FinalizeExeInstall(TAction *Act)
         break;
     }
 
+		//if we either find an exectuable, or the install is a type that doesn't have an executable
+    //(e.g. scummvm games that are interpreted) then do final setting up
     if (StrValid(Path) || (Act->Flags & FLAG_NOEXEC))
     {
-        //Tempstr=QuoteCharsInStr(Tempstr, GetBasename(Path), " 	");
+				//make sure exectuable is exectuable
+				if (StrValid(Path)) chmod(Path, 0770);
+
+				//if the 'exec' var isn't set, then set it from our found path
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
 
         InstallCheckEnvironment(Act);
@@ -670,17 +676,21 @@ static void FinalizeExeInstall(TAction *Act)
 
 
         if (! (Act->Flags & FLAG_DEPENDANCY)) DesktopFileGenerate(Act);
+        RetVal=TRUE;
     }
     else
     {
         Tempstr=MCopyStr(Tempstr, "~rERROR: Failed to find executable for ", Act->Name, "~0\n", NULL);
         TerminalPutStr(Tempstr, NULL);
+        RetVal=FALSE;
     }
 
     Destroy(Tempstr);
     Destroy(WorkDir);
     Destroy(ExecDir);
     Destroy(Path);
+
+    return(RetVal);
 }
 
 
@@ -860,7 +870,7 @@ static char *InstallStandardDependancies(char *RetStr)
 
     Act=ActionCreate(ACT_INSTALL, "StandardDependancies");
     Act->Platform=CopyStr(Act->Platform, "windows");
-    Tempstr=AppFormatPath(Tempstr,  Act);
+    Tempstr=AppFormatPath(Tempstr,  Act, NULL);
     if (access(Tempstr, F_OK) !=0)
     {
         Act->Flags |= FLAG_DEPENDANCY;
@@ -1006,7 +1016,7 @@ void InstallApp(TAction *Act)
 
         TerminalPutStr(Tempstr, NULL);
 
-        Path=AppFormatPath(Path, Act);
+        Path=AppFormatPath(Path, Act, NULL);
         MakeDirPath(Path, 0700);
 
         if (Act->PlatformID==PLATFORM_WINDOWS) InstallSetupWindowsDependancies(Act);
@@ -1048,7 +1058,7 @@ void InstallReconfigure(TAction *Act)
 //empty string means none is required
         if (InstallFindEmulator(Act))
         {
-            Path=AppFormatPath(Path, Act);
+            Path=AppFindInstalled(Path, Act);
             MakeDirPath(Path, 0700);
 
             InstallSingleItemPreProcessInstall(Act);
@@ -1056,6 +1066,7 @@ void InstallReconfigure(TAction *Act)
 
             chdir(Path);
             TerminalPutStr("~eFinding executables~0\n", NULL);
+
             FinalizeExeInstall(Act);
             InstallBundledItems(Act);
 

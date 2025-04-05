@@ -101,6 +101,10 @@ OPTIONS
 -set
  : set a value at install
 
+-su 
+ : on linux apps are blocked from switching to root superuser (e.g. using su or sudo), this switch allows an app to do that.
+
+
 -no-xrandr
  : don't use xrandr to reset screen resolution after running and application
 

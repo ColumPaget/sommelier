@@ -208,7 +208,6 @@ const char *PlatformUnAlias(const char *Alias)
     TPlatform *Platform;
 
     Platform=PlatformFind(Alias);
-
     if (! Platform) return(Alias);
     return(Platform->Name);
 }
@@ -246,8 +245,8 @@ void PlatformsList()
         }
 
         printf("%-15s  aliases: %-20s   emulators: %-20s  ", Name, aliases, EmuList);
-				if (StrValid(ArgList)) printf("args: %s", ArgList);
-				printf("\n");
+        if (StrValid(ArgList)) printf("args: %s", ArgList);
+        printf("\n");
         Curr=ListGetNext(Curr);
     }
 

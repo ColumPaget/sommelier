@@ -63,7 +63,7 @@ void UnInstallApp(TAction *Act)
     printf("Uninstall: %s\n", Act->Name);
 //We don't need this path, but this function also sets the 'prefix' var,
 //which we do need for this operation
-    Tempstr=AppFormatPath(Tempstr, Act);
+    Tempstr=AppFindInstalled(Tempstr, Act);
     Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "prefix"));
     UninstallDir(Act, Tempstr);
     DesktopFileDelete(Act);

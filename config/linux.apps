@@ -161,6 +161,7 @@ UnRealWorld url=https://www.unrealworld.fi/dl/3.71/linux/deb-ubuntu/urw-3.71-x86
 TorusTrooper url=https://lutris.net/files/games/torus-trooper/tt-0.22b.tar.gz exec=ttrooper download-type='tar.gz' warn='Game requires specific version of libc++" sha256=90679d281252b45146024ba4c3bab76e538dc4a78d8b9a7337282d801d8d1d60 category="TempestGame"
 Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu32 category="Platformer"
 Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha256=6cd6ac9904f87865aa52d326b524c325a47efb83d9dc3d1225a719faf1991c63 download-type="tar.gz" exec=hermes 
+Typhoon2001 url=https://archive.org/download/typhoon-2001/typhoon_2001_r3992_LINUX.tar.gz download-type="tar.gz" exec=typhoon platform=linux32 category=TempestGame sha256="dc61f0bc4b22c8898f252da5daf111a137af57296203c11cc6ce8133981eb18e"
 
 * category='Game' platform=linux64
 Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame
@@ -169,7 +170,6 @@ Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz down
 Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei category="ShootEmUp"
 Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame
 Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb' category=StrategyGame
-Typhoon2001 url=https://archive.org/download/typhoon-2001/typhoon_2001_r3992_LINUX.tar.gz download-type=tar.gz" platform=linux32 category=TempestGame
 
 * category="OfficeSuite" platform=linux64 locale='$(lang)-$(country)'
 WPSOffice url=https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11723/wps-office_11.1.0.11723.XA_amd64.deb download-type="deb"

@@ -9,6 +9,9 @@ AC_PROG_INSTALL
 AC_HEADER_STDC 
 AC_SYS_LARGEFILE
 
+AC_CHECK_LIB([c],[prctl], AC_DEFINE([HAVE_PRCTL]))
+
+
 AC_ARG_ENABLE(ssl, [  --enable-ssl       use Secure Sockets Layer (default='yes')], cf_use_ssl=$enableval, cf_use_ssl=yes )
 AC_ARG_WITH(libuseful, [  --with-libuseful		use system-wide libUseful (default=auto) ], cf_system_libuseful=$withval )
 

@@ -3,6 +3,10 @@
 #include "categories.h"
 #include <fnmatch.h>
 
+#define DEFAULT_PREFIX "$(sommelier_root)$(name)-$(platform)/"
+#define OLD_VERSION_PREFIX "$(sommelier_root)$(name)/"
+
+
 ListNode *Apps=NULL;
 
 ListNode *AppsGetList()
@@ -119,15 +123,15 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             //so 'locale_template' always reamins unchanged.
             else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
-            else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"movefiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"movefiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"chext")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"delete")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
+            else if (strcasecmp(Name,"delete")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"category")==0)
             {
                 Tempstr=CategoriesExpand(Tempstr, Value);
@@ -332,7 +336,7 @@ ListNode *AppsLoad(const char *ConfigFiles)
 
 
 
-char *AppFormatPath(char *Path, TAction *Act)
+char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
 {
     char *Tempstr=NULL;
     const char *ptr;
@@ -350,31 +354,33 @@ char *AppFormatPath(char *Path, TAction *Act)
     Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root"), "/patches", NULL);
     SetVar(Act->Vars, "sommelier_patches_dir", Tempstr);
 
-    ptr=GetVar(Act->Vars, "prefix");
-    if (! StrValid(ptr))
+    if (StrValid(PrefixTemplate))
     {
-        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "prefix_template"));
+        Tempstr=CopyStr(Tempstr, PrefixTemplate);
         Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
         Path=SlashTerminateDirectoryPath(Path);
-	strrep(Path, ':', '_');
+        strrep(Path, ':', '_');
         SetVar(Act->Vars, "prefix",Path);
     }
-    else Path=CopyStr(Path, ptr);
+    else Path=CopyStr(Path, GetVar(Act->Vars, "prefix"));
 
 
 //for dos and golang/go path==prefix
 //for wine path is more complex
-    if (Act->PlatformID==PLATFORM_WINDOWS)
+    switch (Act->PlatformID)
     {
+			case PLATFORM_WINDOWS:
+			case PLATFORM_GOGWINDOS:
         Path=CatStr(Path,"drive_c/");
         SetVar(Act->Vars, "drive_c",Path);
 
         if (StrValid(Act->InstallPath)) Path=SubstituteVarsInString(Path, Act->InstallPath, Act->Vars, 0);
         else Path=SubstituteVarsInString(Path, "$(drive_c)/Program Files/$(name)", Act->Vars, 0);
-    }
-    else
-    {
+			break;
+
+			default:
         SetVar(Act->Vars, "drive_c",Path);
+			break;
     }
 
     Path=SlashTerminateDirectoryPath(Path);
@@ -387,14 +393,26 @@ char *AppFormatPath(char *Path, TAction *Act)
 }
 
 
+char *AppFindInstalled(char *Path, TAction *App)
+{
+    Path=AppFormatPath(Path, App, DEFAULT_PREFIX);
+    if (access(Path, F_OK) !=0)
+    {
+        Path=AppFormatPath(Path, App, OLD_VERSION_PREFIX);
+        if (access(Path, F_OK) !=0) Path=CopyStr(Path, "");
+    }
+
+    return(Path);
+}
+
 
 int AppIsInstalled(TAction *App)
 {
     char *Tempstr=NULL;
     int result=FALSE;
 
-    Tempstr=AppFormatPath(Tempstr, App);
-    if (access(Tempstr, F_OK)==0) result=TRUE;
+    Tempstr=AppFindInstalled(Tempstr, App);
+    if (StrValid(Tempstr)) result=TRUE;
 
     Destroy(Tempstr);
     return(result);
@@ -492,8 +510,10 @@ int AppLoadConfig(TAction *App)
     if (! StrValid(ptr)) ptr="en_US";
     AppSetLocale(App, ptr);
 
-//we don't need the path that is returned here, but this function sets a lot of default variables and paths
-    if (result) Tempstr=AppFormatPath(Tempstr, App);
+    //we don't need the path that is returned here, but this function sets a lot of default variables and paths
+    //we set them using 'DEFAULT_PREFIX' here, anything involving installed apps will call 'AppIsInstalled' which
+    //will consider both DEFAULT_PREFIX and OLD_VERSION_PREFIX
+    if (result) Tempstr=AppFormatPath(Tempstr, App, DEFAULT_PREFIX);
 
     Destroy(Tempstr);
 
