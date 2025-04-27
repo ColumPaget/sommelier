@@ -348,19 +348,20 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
     {
         if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
         else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
-        SetVar(Act->Vars, "sommelier_root",Path);
+        SetVar(Act->Vars, "sommelier_root", Path);
     }
 
     Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root"), "/patches", NULL);
     SetVar(Act->Vars, "sommelier_patches_dir", Tempstr);
 
-    if (StrValid(PrefixTemplate))
+		if (StrValid(Act->InstallPath)) Path=CopyStr(Path, Act->InstallPath);
+		else if (StrValid(PrefixTemplate))
     {
         Tempstr=CopyStr(Tempstr, PrefixTemplate);
         Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
         Path=SlashTerminateDirectoryPath(Path);
         strrep(Path, ':', '_');
-        SetVar(Act->Vars, "prefix",Path);
+        SetVar(Act->Vars, "prefix", Path);
     }
     else Path=CopyStr(Path, GetVar(Act->Vars, "prefix"));
 

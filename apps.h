@@ -15,5 +15,6 @@ void AppSetLocale(TAction *App, const char *LocaleStr);
 char *AppFormatPath(char *Path, TAction *Act, const char *InstallPrefix);
 char *AppFindInstalled(char *, TAction *App);
 int AppIsInstalled(TAction *App);
+int AppPlatformMatches(TAction *App, const char *Platforms);
 
 #endif

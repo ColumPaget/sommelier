@@ -12,27 +12,30 @@ DotNet45 url=https://download.microsoft.com/download/b/a/4/ba4a7e71-2906-4b2d-a0
 DotNet451 url=https://download.microsoft.com/download/1/6/7/167F0D79-9317-48AE-AEDB-17120579F8E2/NDP451-KB2858728-x86-x64-AllOS-ENU.exe
 DotNet48 url=https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/abd170b4b0ec15ad0222a809b761a036/ndp48-x86-x64-allos-enu.exe sha256=95889d6de3f2070c07790ad6cf2000d33d9a1bdfc6a381725ab82ab1c314fd53
 
+#Win32 Browsers
 * category='WebBrowser;Internet;Network' platform=windows locale='$(lang)-$(country)' 
-#Basilisk url=http://eu.basilisk-browser.org/release/basilisk-latest.win32.installer.exe exec='basilisk.exe' type='webrowser' sha256='05240bb65daf43fdda01cc45b483a4a9326cd3f8e4f2123e8ec7d0b7ec958341' 
-Basilisk url=http://archive.basilisk-browser.org/2023.06.20/windows/x86_32/basilisk-20230620135232.win32.installer.exe sha256='db4f482e66c4be6d0f4c14d15d7db2280a48cb639a39cba2bdde2307fa88c764' exec='basilisk.exe' icon=mozicon128.png
+Basilisk url=https://dl.basilisk-browser.org/basilisk-20250422154345.win32.installer.exe exec='basilisk.exe' icon=mozicon128.png sha256=b1c8b770d767fb21f3b320e6c98494d6219764468d3e7b2a419efbd701e1d82d 
+aea84dc5cca8d16388be7e8d2a2b97d50c7c106ad3457d227f8657ea2fec7a29  basilisk-20250422154345.win64.installer.exe
 K-Meleon url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
-SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.18.2/win32/$(locale)/seamonkey-2.53.18.2.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
-SlimBrowser url='https://www.slimbrowser.net/release/sbsetup_x86.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
+SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.20/win32/$(locale)/seamonkey-2.53.20.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
+SlimBrowser url='https://www.slimbrowser.net/release/sb7z_x86.exe' exec=slimbrowser.exe 
 PaleMoon url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
 OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
 FireFox url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
 Waterfox url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
 Opera url=https://download.opera.com/download/get/?partner=www&opsys=Windows&arch=i386
-
 Librewolf url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
 Chromium url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 BraveBrowser url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 
+#Win64 Browsers
 * category='WebBrowser;Internet;Network' platform=windows64 locale='$(lang)-$(country)'
 Librewolf url=https://gitlab.com/librewolf-community/browser/windows/uploads/22dfe2a3b672afe1dac5563e61cbf4e1/librewolf-103.0-3.en-US.win64-portable.zip exec=librewolf.exe
-SlimBrowser url='https://www.slimbrowser.net/release/sbsetup_x64.exe' exec=slimbrowser.exe warn='This program works under wine 6.x but has been seen to crash quite often'
+SlimBrowser url='https://www.slimbrowser.net/release/sb7z_x64.exe' exec=slimbrowser.exe
 Waterfox url=https://cdn1.waterfox.net/waterfox/releases/G6.0.11/WINNT_x86_64/Waterfox%20Setup%20G6.0.11.exe exec=waterfox.exe os-version="win7"
+Basilisk url=https://dl.basilisk-browser.org/basilisk-20250422154345.win64.installer.exe exec='basilisk.exe' icon=mozicon128.png sha256=aea84dc5cca8d16388be7e8d2a2b97d50c7c106ad3457d227f8657ea2fec7a29 
+SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.20/win63/$(locale)/seamonkey-2.53.20.$(locale).win64.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
 
 * category='Email;Office;Network' platform=windows locale='$(lang)-$(country)' 
 ClawsMail url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
@@ -171,7 +174,7 @@ AdobeDigitalEditions url=https://download.adobe.com/pub/adobe/digitaleditions/AD
 * category='Feed;RSS;Internet;Network' platform=windows
 FeedRoller url=https://sector-seven.com/assets/downloads/feedroller.zip comment='RSS/News Desktop Ticker' sha256='5ad7d0680de77e68b3c9a63b8b2bfba5789016b41757c0e24e0adde60b8a6968'
 QuiteRSS url=https://quiterss.org/files/0.18.12/QuiteRSS-0.18.12-Setup.exe comment='RSS Feed Reader' sha256='cb23f619b351b54a34d3bb21a7a37265f21baa2af4e8b614374eee61055b97d3' 
-GPodder url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8' 
+GPodder url=https://github.com/gpodder/gpodder/releases/download/3.10.3/windows-gpodder-3.10.3-installer.exe comment='Podcast Watcher/Downloader' sha256='e020f59b1857722b60e25ff276ae4b6b1fb98a69567f1179b6e5d496ab16d1d8'  exec=gpodder.exe
 Juice url=http://prdownloads.sourceforge.net/juicereceiver/Juice22Setup.exe?download comment='Podcast Watcher/Downloader' sha256='9235ca5cc0720ea09b61df61f546453a98afa10e86d7f02f1f70e234253ca31c' 
 
 * category='Usenet;NNTP;Internet;Network' platform=windows

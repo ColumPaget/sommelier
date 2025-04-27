@@ -742,27 +742,33 @@ static void InstallSingleItemPreProcessInstall(TAction *Act)
 
 static void InstallBundledItems(TAction *Parent)
 {
-    char *Name=NULL;
+    char *Name=NULL, *Tempstr=NULL;
     const char *ptr;
-    ListNode *Node;
+    ListNode *Curr;
     TAction *Child;
 
     ptr=GetToken(GetVar(Parent->Vars, "bundles"), " ", &Name, 0);
     while (ptr)
     {
-        Node=ListFindNamedItem(AppsGetList(), Name);
-        if (Node)
+        Curr=ListGetNext(AppsGetList());
+        while (Curr)
         {
-            Child=(TAction *) Node->Item;
-            Child->Platform=CopyStr(Child->Platform, Parent->Platform);
+            Child=(TAction *) Curr->Item;
+						if ( (strcasecmp(Child->Name, Name)==0) && AppPlatformMatches(Child, Parent->Platform))
+						{
+						Tempstr=MCopyStr(Tempstr, "~eFound Bundled App: '", Child->Name, "'~0\n", NULL);
+            TerminalPutStr(Tempstr, NULL);
             SetVar(Child->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
             SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
             SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
             FinalizeExeInstall(Child);
+						}
+        Curr=ListGetNext(Curr);
         }
         ptr=GetToken(ptr, " ", &Name, 0);
     }
 
+    Destroy(Tempstr);
     Destroy(Name);
 }
 

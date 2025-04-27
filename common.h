@@ -14,7 +14,7 @@
 #include <glob.h>
 
 
-#define VERSION "10.4"
+#define VERSION "10.5"
 
 
 #define INSTALL_RUN          0

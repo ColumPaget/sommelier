@@ -125,6 +125,7 @@ HeroinesQuest exec="heroine\'squest" exec-args="--windowed"
 HotlineMiami  exec="hotline_launcher"
 Huniepop  warn="Linux version of this game has been seen to crash on some systems. Try the windows version under wine in that case"
 LostSea 
+Luftrausers exec="start.sh"
 MartialLaw exec="martial-law" warn="This game has some graphics problems at certain resolutions"
 Overfall  exec="Overfall.x86" exec64="Overfall.x86_64" working-dir="$(install-dir)/data/noarch/game"
 PapersPlease  exec="PapersPlease "
@@ -414,10 +415,11 @@ TheKingOfFighters2002Unlimited exec="KingOfFighters2002UM.exe" warn="press escap
 
 
 * category='BeatEmUp;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-PunchClub
+DoubleDragonTrilogy exec=ddtrilogy.exe vdesk=y  warn="Game runs in a virtual desktop because, even in windowed mode, is makes the screen flash alarmingly"
 FinalVendetta
 FightNRage 
 Legend
+PunchClub
 StreetsOfRogue
 
 * category='RacingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
@@ -448,6 +450,7 @@ SwordOfTheStars  exec="Sword of the Stars.exe"
 WeirdWorlds exec=weirdworlds.exe
 
 * category='StealthGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+MetalGearSolid exec="mgsi.exe"
 StealthBastard  exec="Stealth Bastard Deluxe.exe"
 Thief  exec="THIEF.EXE" vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
 Thief2  
@@ -526,7 +529,6 @@ FalloutTactics
 BadNorth
 Duskers  
 FreedomForce exec-dir="/GOG Games/Freedom Force/" exec="fforce.exe"
-FTL extra_category="SpaceGame"
 Nexus exec=nexus.exe extra_category="SpaceGame"
 StarfleetCommand  vdesk=y os-version=winxp exec="sfc.exe"
 StarfleetAcademy  vdesk=y os-version=winxp exec="sfa.exe"
@@ -578,6 +580,7 @@ CallOfJuarez:GunSlinger exec="CoJGunslinger.exe"
 Quake exec="Winquake.exe" 
 XIII exec="XIII.exe"
 NosfuratuWrathOfMalachi
+Tron2.0 exec=TRON.exe warn="This game runs under wine 10.6 but has been seen to fail under earlier versions"
 WolfensteinEnemyTerritory
 
 
@@ -607,6 +610,7 @@ Nox  warn="This game installs in a virtual desktop because it has issues with fu
 PrinceOfPersia exec="PrinceOfPersia_Launcher.exe"
 PrinceOfPersia:WarriorWithin warn="You must go to options and TURN OFF FOG or else you won't be able to see anything"
 PrinceOfQin exec="Poq.exe"
+Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 ThroneOfDarkness 
 TombRaider2
 Torchlight  os-version=winxp
@@ -634,6 +638,11 @@ Monolith  exec=Monolith.exe
 RunestoneKeeper
 
 
+* category='TacticalRoguelike;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Convoy category="Roguelike" exec="Convoy.exe" extra_category="TurnBasedTactics"
+FTL extra_category="RealTimeTactics;SpaceGame"
+HeadsWillRoll extra_category="HistoricalGame;MedievalSimulator"
+
 * category='Platformer;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 99LevelsToHell  
 Ascendant 
@@ -653,7 +662,7 @@ BeatHazardUltra
 RaidenLegacy
 Revolver360 
 RelicHuntersZeroRemix
-
+TwinkleStarSprites exec="twinspri.exe"
 
 * category='RPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AgarestGenerationsOfWar 
@@ -662,8 +671,10 @@ HeroOfTheKingdom
 HeroOfTheKingdom2  
 
 * category='TurnBasedRPG;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
-DungeonRats  exec="DR.EXE"
+DungeonRats  exec="DR.EXE" 
 CosmicStarHeroine exec="CSH.exe"
+Fallout  exec="FalloutLauncher.exe"
+Fallout2  exec="Fallout2Launcher.exe"
 Tangledeep 
 DarkQuest  
 DarkQuest2  
@@ -684,17 +695,18 @@ ShadowHand
 * category='PuzzleGame;LogicGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Arrow warn="This game has been seen to freeze at startup on some systems/wine versions, though it runs on others"
 Ballance vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode"
+Huniepop 
 TIS100 exec="tis100.exe" extra_category="Zachtronics"
 #requires wine mono, which strangely doesn´t install
 #SpaceChem exec="SpaceChem.exe" extra_category="Zachtronics"
 
 
-* category='EliteGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+* category='EliteGame;SpaceCombatGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Parkan2  
 RebelGalaxy 
 SmugglersV  
 X:BeyondTheFrontier 
-
+TachyonFringe  exec=Tachyon.exe
 
 * category='HackingGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 MainLining 
@@ -711,47 +723,40 @@ PapersPlease
 Reigns  
 
 
-# windows via wine
+# windows via wine, games I've not decided on a category for
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+AxeCop exec=axecop.exe warn="You probably want to know that the 'M' key brings up the game menu"
 Betrayer exec="Betrayer.exe" warn="Game runs, but seems to struggle. May need a powerful system"
 Caravan
 CombatChess category="Chess;GOG"
-Convoy category="Roguelike" exec="Convoy.exe"
 CorsairsGold  exec=corsairs.exe comment="This game has issues with some screen resolutions, and is installed in a virtual desktop by default" vdesk=y
 DesertLaw
 Diluvion  
 DraculaTheResurrection  
-Fallout  exec="FalloutLauncher.exe"
-Fallout2  exec="Fallout2Launcher.exe"
 FrailHearts
-HeadsWillRoll
 HitmanCodename47  
 HotlineMiami  exec="HotlineLauncher.exe"
-Huniepop 
-MagicMaker  
+MagicMaker
 Overfall  
 PhoningHome warn="Game appears to run, but very slowly."
 Pid vdesk=y warn="This game installs in a virtual desktop because it has issues with fullscreen mode at modern resolutions"
-Revenant  exec=Launcher.exe warn="This game only runs in fullscreen mode"
 Samorost warn="This is a very strange point-and-click game where you have to click on everything to make things happen"
 SkyCannoneer warn="This game runs, but slow. Seems like it needs a really powerful system"
 StardewValley platform=windows exec=StardewValley extra_category="FarmingGame"
 StarVikingsForever 
-TachyonFringe  exec=Tachyon.exe
-TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem" category=Poker
+TelltaleTexasHoldem rename="$(drive_c)/GOG\ Games/Telltale\ Texas\ Hold\'em $(drive_c)/GOG\ Games/TelltaleTexasHoldem" category="Poker;CardGame;GOG"
 Tempest 
 TheGuild  
 TheSwindle 
 ThisIsThePolice  
-TwinkleStarSprites exec="twinspri.exe"
 TheWitcherAdventureGame  
 VoidPrison exec="Void Prison.exe"
 Westerado  exec="WesteradoDB.exe"
 XComInterceptor exec="Interceptor.exe"
 IL2Sturmovik1946 exec="il2fb.exe" category="FlightSimulator;AirCombat;GOG"
 Gigapocalypse exec="Gigapocalypse.exe"
-DoubleDragon
 TrickStyle
+
 
 
 ## Win64-only games that have worked for me under wine

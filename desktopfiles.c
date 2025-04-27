@@ -108,6 +108,12 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 Exec=CopyStr(Exec, ptr);
                 StripQuotes(Exec);
             }
+						else if (strcasecmp(Name, "SommelierInstallPath")==0)
+						{
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+								Act->InstallPath=CopyStr(Act->InstallPath, Token);
+						}
             else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0)
             {
                 Token=CopyStr(Token, ptr);
@@ -320,14 +326,16 @@ static void DesktopFileConfigureEmulator(TAction *Act)
 void DesktopFileGenerate(TAction *Act)
 {
     STREAM *S;
-    char *Tempstr=NULL, *Hash=NULL;
+    char *Tempstr=NULL, *Path=NULL, *Hash=NULL;
     const char *ptr;
 
 
-    Tempstr=DesktopFileMakeInstallPath(Tempstr, Act, 0);
-    printf("Generating desktop File %s\n", Tempstr);
-    MakeDirPath(Tempstr, 0744);
-    S=STREAMOpen(Tempstr, "w mode=0744");
+    Path=DesktopFileMakeInstallPath(Path, Act, 0);
+    Tempstr=FormatStr(Tempstr, "~yGenerating desktop File  %s for %s~0\n", Path, Act->Name);
+    TerminalPutStr(Tempstr, NULL);
+
+    MakeDirPath(Path, 0744);
+    S=STREAMOpen(Path, "w mode=0744");
     if (S)
     {
         fchmod(S->out_fd, 0744);
@@ -378,7 +386,7 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelierInstallPath=$(invoke-dir)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
@@ -388,4 +396,5 @@ void DesktopFileGenerate(TAction *Act)
 
     DestroyString(Tempstr);
     DestroyString(Hash);
+    DestroyString(Path);
 }
