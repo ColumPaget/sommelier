@@ -29,16 +29,7 @@ SpeedCrunch platform=linux32 url="https://bitbucket.org/heldercorreia/speedcrunc
 SpeedCrunch platform=linux64 url="https://bitbucket.org/heldercorreia/speedcrunch/downloads/SpeedCrunch-0.12-linux64.tar.bz2" download-type='tar.bz2' exec=speedcrunch
 Qalculate platform=linux64 url="https://github.com/Qalculate/qalculate-gtk/releases/download/v4.6.1/qalculate-4.6.1-x86_64.tar.xz" exec=qalculate download-type='tar.xz' 
 
-* category='InstantMessaging;Chat;Internet'
-Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger'  sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
-Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 
-HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz' sha256=99154d43b1a997aa996fe5efd14eb5d66c88b5cd65f804b9df13bb42c31898a9
-HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
-Discord platform=linux64 url=https://discord.com/api/download?platform=linux&format=tar.gz download-type=tar.gz exec=Discord exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode." icon=discord.png
-
-
-
-category='RemoteAccess'
+* category='RemoteAccess'
 Teamviewer platform=linux32 url=https://download.teamviewer.com/download/linux/teamviewer_i386.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
 Teamviewer platform=linux64 url=https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz download-type='tar.xz' exec='teamviewer' category='RemoteAccess' icon="teamviewer_48.png" comment="Remote control and meetings"
  
@@ -48,11 +39,11 @@ RealVNCViewer platform=linux64 url=https://downloads.realvnc.com/download/file/v
 TigerVNCViewer platform=linux32 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.i386.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='64415624118832054f6a4eea4026815741255c7d6b4a64926f683da2cb02c303' 
 TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-1.11.0.x86_64.tar.gz exec='vncviewer' download-type='tar.gz'  sha256='c0f7417794dfa463a2aec9b14e50c8de0eadc1b393813ed6fd0389f143896bc3' 
 
-*category='Compression;Utilities'
+* category='Compression;Utilities'
 7zip platform=linux32 url=https://7-zip.org/a/7z2400-linux-x86.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz sha256=1125a624244d0e8c9dca99a608823b9f000b1068f35e11b471d76c2190cd7687
 7zip platform=linux64 url=https://7-zip.org/a/7z2400-linux-x64.tar.xz download-type=tar.xz movefiles-to=$(exec):./bin exec=7zz
 
-*category='Network;Utilities;Nettools'
+* category='Network;Utilities;Nettools'
 OoklaSpeedtest platform=linux32 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-i386.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" sha256=9ff7e18dbae7ee0e03c66108445a2fb6ceea6c86f66482e1392f55881b772fe8
 OoklaSpeedtest platform=linux64 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" 
 
@@ -98,6 +89,18 @@ DropBox platform=linux64 url=https://www.dropbox.com/download?plat=lnx.x86_64 do
 RClone platform=linux32 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-386.zip movefiles-to=*/$(exec):./bin exec=rclone sha256=bb8b44e0fab088c4f5e40878b4213ce15fa474763f1355f597b0a6ad2aa96c6d
 RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v1.55.1/rclone-v1.55.1-linux-amd64.zip movefiles-to=*/$(exec):./bin exec=rclone
 
+
+* category='InstantMessaging;Chat;Internet'
+Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger'  sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
+Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 
+HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz' sha256=99154d43b1a997aa996fe5efd14eb5d66c88b5cd65f804b9df13bb42c31898a9
+HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
+Discord platform=linux64 url=https://discord.com/api/download?platform=linux&format=tar.gz download-type=tar.gz exec=Discord exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode." icon=discord.png
+qTox platform=linux64 url=https://github.com/TokTok/qTox/releases/download/v1.18.3/qTox-v1.18.3-x86_64.AppImage sha256=9d026367d47d0f7216f50850ade44420abf36145c1ea37a180ab577cc809574d
+Trillian platform=linux32 url="https://www.trillian.im/get/linux/2.0/?deb=32&gccv=5" download-type=deb exec=trillian sha256=1be8b4d4aa442c087f3cb1885332667bcdd3ede91689198ebc32355679a45159
+Trillian platform=linux64 url="https://www.trillian.im/get/linux/2.0/?deb=64&gccv=5" download-type=deb exec=trillian
+NHeko platform=linux64 url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.11.2/nheko-v0.11.2-x86_64.AppImage
+
 * category='IRCClient;Chat;Internet;Network'
 SeaMonkeyChat platform=linux32 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyChat platform=linux64 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
@@ -128,7 +131,7 @@ Arduino platform=linux64 url=https://downloads.arduino.cc/arduino-1.8.19-linux64
 Arduino2 platform=linux64 url=https://downloads.arduino.cc/arduino-ide/arduino-ide_2.1.1_Linux_64bit.zip download-type='zip' exec='arduino-ide' category='Electronics' comment='Arduino Programming IDE' sha256='7033b5a37506bd7c19a2a7717311fd931a5db3ba120ace27a4166cf911bba4a8' 
 
 
-*category=Forensics;Security;Utility
+* category=Forensics;Security;Utility
 MobiusFT url=https://download.savannah.gnu.org/releases/mobiusft/mobiusft-2.6-x86_64.AppImage
 
 

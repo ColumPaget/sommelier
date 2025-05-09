@@ -40,7 +40,8 @@ SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.20/win63/$(loc
 * category='Email;Office;Network' platform=windows locale='$(lang)-$(country)' 
 ClawsMail url=https://www.claws-mail.org/download.php?file=win32/claws-mail-3.16.0-3-32bit.exe exec='claws-mail.exe' comment='Email client' sha256='3c7de523c9c2c96cfddd5608843b60e8b90f8a2b4503d2eb6ea7d1e35caf2201' 
 Sylpheed url=https://osdn.net/dl/sylpheed/sylpheed-3.7-win32.zip exec='sylpheed.exe' comment='Email client' sha256='b1061aacf7222927e95c291e6211a6ee2034db5d87aae584b0e4234a4513b84e' 
-Thunderbird url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
+#Thunderbird url="https://download.mozilla.org/?product=thunderbird-102.7.2-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
+Thunderbird url="https://download.mozilla.org/?product=thunderbird-128.10.0esr-SSL&os=win&lang=$(locale)" comment="Mozilla's email client" exec='thunderbird.exe'
 SeaMonkeyMail exec-args='-mail' comment='Email app bundled with SeaMonkey'  bundled=SeaMonkey exec='seamonkey.exe' donate=https://www.seamonkey-project.org/donate/
 FoxMail url=https://www.foxmail.com/win/download exec=Foxmail.exe runwarn="some features (e.g. gmail) do not work" sha256=6cece42f31b7499b1e0f96adc579e1dbe8960c5f895363b2f2f489abe12b5abd
 
@@ -54,17 +55,16 @@ Telegram url=https://telegram.org/dl/desktop/win winmanager='N' exec='Telegram.e
 Telegreat url=https://telegre.at/tsetup/tportable.1.9.8.7z winmanager='N' exec='Telegreat.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='41316c85e6bd3822965a60864f6823eabde813569bccc8f8b39d0968a1439dda' 
 Kotatogram url=https://github.com/kotatogram/kotatogram-desktop/releases/download/k1.4.1/1.4.1-win32-portable.zip winmanager='N' exec='Kotatogram.exe' comment='Alternative Telegram Desktop Messenger. Seems very similar to the official client. Requires binding to a messenger app thats installed on a phone.' sha256='58f229acdf5f5e69697040bf9b3f215a1db4497034af86e0626796c6656c7d27' 
 
-qTox url=https://github.com/qTox/qTox/releases/download/v1.16.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='d4a50995124b6663c4aa7398520f023e7a76cba9a179371af5c9e45396b3c551' 
-isotoxin url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' sha256=135945ee38c9e92ea0a6130570a27562d856d479c7d160edf432e447a61547ed
-MirandaIM url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
+qTox url=https://github.com/TokTok/qTox/releases/download/v1.18.3/setup-qtox-i686-release.exe winmanager='N' comment='qTox chat app' sha256='0ed04edde53a1fd01e16904cffa3832b8e4962450e27628571c02570416d0170' 
+Isotoxin url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.zip winmanager='N' comment='isotoxin chat app' sha256=135945ee38c9e92ea0a6130570a27562d856d479c7d160edf432e447a61547ed
+Isotoxin url=https://github.com/isotoxin/isotoxin/releases/download/0.4.528/isotoxin.0.4.528.amd64.zip winmanager='N' comment='isotoxin chat app' platform=windows64
+#MirandaIM url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.78.0/miranda-im-v0.10.78-unicode.exe comment='Multiprotocol messenger' sha256='d2f3435f2022ab468758bc167fb9af700a6c5bb945cb7f01f6fbcc4a5e1d5117' 
+MirandaIM url=https://sourceforge.net/projects/miranda/files/miranda-im/0.10.80.0/miranda-im-v0.10.80-unicode.exe exec=miranda32.exe comment='Multiprotocol messenger' sha256='e81c444c379278c5ad160a599a12d7b047497e08f550c398f88dace7f5ccc9bd' 
 Instantbird url=http://instantbird.com/downloads/1.5/instantbird-1.5.$(locale).win32.installer.exe comment='Multiprotocol Messenger'
-LineIM url=https://desktop.line-scdn.net/win/new/LineInst.exe exec='LineLauncher.exe' sha256='c204ad8465d78cd690d1dfcc81be6db8517e1a7668734eafdbdeabd85ba78758'
-NHeko url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.8.2/nheko-v0.8.2-installer.exe sha256=1b62c4840711eefa4f07664507367fd324419209d4be8922e069d47321cc9712
-WeChat url=https://dldir1.qq.com/weixin/Windows/WeChat_for_XP_SP3_To_Vista.exe  exec=WeChat.exe delete=$(drive_c)/users/*/Temp/*/WeChatSetup/WeChat.exe
-WhatsApp url=https://web.whatsapp.com/desktop/windows/release/ia32/WhatsAppSetup.exe download-type=7za inner-package="WhatsApp*.nupkg" exec=WhatsApp.exe delete="$(drive_c)/Program Files/WhatsApp/lib/*/libEGL.dll,$(drive_c)/Program Files/WhatsApp/lib/*/libGLESv2.dll"
+WeChat url=https://dldir1v6.qq.com/weixin/Windows/WeChatSetup_x86.exe  exec=WeChat.exe 
+Pidgin url=https://sourceforge.net/projects/pidgin/files/Pidgin/2.14.14/pidgin-2.14.14-offline.exe/download exec=pidgin.exe 
 MushClient url=http://www.gammon.com.au/files/mushclient/mushclient506.exe exec=MUSHclient.exe sha256=d6ee92d30eb6e73875283e78826787cdc5309563c1688469c1128ffac0469f07
-
-
+Trillian url=https://trillian.im/get/windows/6.5/trillian-v6.5.0.45.exe exec=trillian.exe sha256=9c8e59840f797db4df40060c73839e9e18f2194f57e719df473b0cd538b4c8ee
 
 #Not working yet
 #Twitch url=https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe requires=DotNet48 os-version=win81
@@ -188,6 +188,9 @@ LTSpice url=https://ltspice.analog.com/software/LTspiceXVII.exe exec=XVIIx86.exe
 
 * category='Astronomy' platform=windows
 RegiStax url=http://www.astronomie.be/registax/setupregistax6.exe sha256=836503d060e0f71f0e2f0d46a06b7d03b94c6e93c3e7947f381329aa1bc1c219
+
+* category='Industrial' platform=windows
+Sopas url=https://www.sick.com/media/zip/9/99/899/SOPAS_Engineering_Tool_32_Bit_Portable_Version_DC0010899.ZIP exec="SopasET.exe" sha256=81fdb45a45c5e990a3302a324239ebde637b6f9e3ef108752ab27f36c6ee1906
 
 * category='TextEditor;Utility' platform=windows
 SublimeText url=https://download.sublimetext.com/Sublime%20Text%20Build%203143%20Setup.exe version='3143' exec='sublime_text.exe' sha256='4fe8289436783cab17336e2c166ce52e6b827dcbd6e421d607d83aa0f474d4b6' 
