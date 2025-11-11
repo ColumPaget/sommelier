@@ -18,13 +18,12 @@ Basilisk url=https://dl.basilisk-browser.org/basilisk-20250422154345.win32.insta
 aea84dc5cca8d16388be7e8d2a2b97d50c7c106ad3457d227f8657ea2fec7a29  basilisk-20250422154345.win64.installer.exe
 K-Meleon url=http://sourceforge.net/projects/kmeleon/files/k-meleon-dev/K-Meleon76RC.exe/download version='0.76' exec='k-meleon.exe' rating='platinum' type='webbrowser' sha256='b678019e7ecc000788b2988d7cfff4e6354338fa4d70c8c35b38eb93cf171246' comment='lightweight web browser' 
 SeaMonkey url=https://archive.seamonkey-project.org/releases/2.53.20/win32/$(locale)/seamonkey-2.53.20.$(locale).win32.installer.exe exec='seamonkey.exe' comment='Mozilla derived webbrowser' warn='This program crashes under wine 6.x' donate=https://www.seamonkey-project.org/donate/ os-version=win7
-SlimBrowser url='https://www.slimbrowser.net/release/sb7z_x86.exe' exec=slimbrowser.exe 
 PaleMoon url=https://www.palemoon.org/download.php?mirror=eu&bits=32&type=installer comment='Webbrowser that is maintaining the old mozilla ecosystem and add-ons' sha256='26e882797606ffa0586c4f4569267e1fcaf3e24f0c046749065ca5e9c1d853fb' donate=https://www.palemoon.org/donations.shtml
 OtterBrowser url=https://sourceforge.net/projects/otter-browser/files/otter-browser-weekly300/otter-browser-win32-1.0.81-weekly300-setup.exe/download sha256='07bfe6f6fdd59851a734f21efb23b43000538d39e5c13654a39386f5dc6419a2'
-FireFox url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) os-version='win7' exec='firefox.exe' warn='This program works only under wine-6.0 and above'
 Sleipnir url='https://download.fenrir.co.jp/sleipnir6415.exe?fid=0&lid=1041&ext=sleipnir6415.exe' exec=sleipnir.exe warn='This program works only under wine-6.0 and above. It has a number of visual issues' winmanager=n vdesk=y
-Waterfox url=https://github.com/WaterfoxCo/Waterfox/releases/download/G4.1.4/Waterfox.G4.1.4.Setup.exe exec=waterfox.exe
-Opera url=https://download.opera.com/download/get/?partner=www&opsys=Windows&arch=i386
+FireFox url=https://download.mozilla.org/?product=firefox-latest&os=win&lang=$(locale) exec='firefox.exe' warn='This program works only under wine-6.0 and above' exec-args="--safe-mode"
+FireFox51.0 url=https://archive.mozilla.org/pub/firefox/releases/51.0/win32/en-GB/Firefox%20Setup%2051.0.exe exec=firefox.exe comment="old version of firefox for compatiblity with some old embedded devices"
+SlimBrowser url='https://www.slimbrowser.net/release/sb7z_x86.exe' exec=slimbrowser.exe exec-args="--safe-mode"
 Librewolf url=https://gitlab.com/api/v4/projects/44042130/packages/generic/librewolf/114.0.2-1/librewolf-114.0.2-1-windows-i686-portable.zip exec=librewolf.exe os-version='win8.1'
 Chromium url='https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/1030088/chrome-win.zip' exec=chrome.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Chrome crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
 BraveBrowser url='https://github.com/brave/brave-browser/releases/download/v1.44.18/brave-v1.44.18-win32-ia32.zip' exec=brave.exe exec-args="--disable-gpu --no-sandbox" warn="WARNING: Brave crashes on most websites, though google.com, duckduckgo.com and bbc.co.uk seem to work"
@@ -155,12 +154,13 @@ FreeOfficePlanMaker exec=PlanMaker.exe bundled=FreeOfficeTextMaker
 FreeOfficePresentations exec=Presentations.exe bundled=FreeOfficeTextMaker
 Joeffice platform=windows64 url=https://www.joeffice.com/Joeffice.exe install-type=executable
 
-* category='WordProcessor' locale='$(lang)-$(country)' platform=windows
-AbiWord url=https://www.abisource.com/downloads/abiword/2.8.6/Windows/abiword-setup-2.8.6.exe exec='bin/AbiWord.exe' sha256='f85c7f32044bbb4d31f1672c86951e35319f8e89fbd6c01ab4c19e960efd9ff8' category='WordProcessor;Office' comment='Word Processor' 
+* category='WordProcessor;Office' locale='$(lang)-$(country)' platform=windows
+AbiWord url=http://www.nl.abisource.com/downloads/abiword/2.9.1/Windows/abiword-setup-2.9.1.exe exec='AbiWord.exe' sha256='8ba8d57d1fe106e17ce51e27b51c7a77a2e4bb9fd906c72a914603d3b11dacc7'
 AtlantisWordProcessor url=https://www.atlantiswordprocessor.com/download/atlantis4en_lite.exe exec=awp.exe 
 
 * category='PDF;Viewer;Office' platform=windows
-SumatraPDF url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
+#SumatraPDF url=https://www.sumatrapdfreader.org/dl/SumatraPDF-3.1.2.zip exec='SumatraPDF.exe' comment='PDF Viewer' sha256='4cac356d04f999c7134d32122c3a031f8e7d1f1d09424a00b9f19b8c05b652f1' 
+SumatraPDF url=https://www.sumatrapdfreader.org/dl/rel/3.5.2/SumatraPDF-3.5.2.zip comment='PDF Viewer' sha256='5f1f460ff72ddd48979dbcfc2d427d53a473d43e18425470c78e94b19fee70b6'
 FoxitPDF url= https://cdn01.foxitsoftware.com/pub/foxit/reader/desktop/win/10.x/10.1/en_us/FoxitReader10_Setup_Prom_IS.exe exec='FoxitReader.exe' comment='PDF Viewer' sha256='8130970e6976a953e98f89fcf24783b67d1080f84b961ac2c1cee2051673ff9a'
 PDF-Xchange url=http://downloads.pdf-xchange.com/PXCViewer_x86.msi comment='PDF Viewer' movefiles-from='$(drive_c)/Program Files/Tracker Software/*' exec='PDFXCview.exe' sha256='36e10e5c05a7085ef6850cff4f02492d6a546058abf478e6770c5baaf7593ae9' 
 
@@ -293,9 +293,11 @@ WinMerge url=https://github.com/WinMerge/winmerge/releases/download/v2.16.28/win
 ArenaChess url=http://www.playwitharena.de/downloads/arena_3.5.1setup.exe exec='Arena.exe' comment='Chess Frontend with several engines' sha256='b00936e8079cd9498f18cfcfe73b4133a3668b45fe1767805c2a179332fa1e2e' 
 Arasan url=https://archive.org/download/ARASAN32/ARASAN32.zip version='3.0' exec='ARASAN32.EXE' sha256='cf7742e7b0e3e00f063bb7b743dfbd4683f9ef40320a3e1e15fb0ad01fd365d7' installer='SETUP.EXE' installer-vdesk='Y' comment='Chess Program' 
 DreamChess url="https://github.com/dreamchess/dreamchess/releases/download/0.3.0/DreamChess-0.3.0-win32.zip" sha256=ba76a227f83dd3a1336f75230847cfe4c173c8cb7f70f770800719aacb6bd9fe
+GnuChess url="https://archive.org/download/GNUChess_1020/chess321.zip" sha256=65536c0cdfa4d051c58698384085d7cb6e1bd0410f5b79e3db2c54b0426a4909 comment="GNU chess for windows, v3.21" 
+OwlChess url="https://archive.org/download/OWL_ZIP/OWL.ZIP" exec="WCHESS.EXE" sha256=12400c640c0e0e51648b740ecf9103b157ec286f196dcb1370c167dbeb314966 comment="OWL chess is a dos chess program from Borland Turbo Pascal Gameworks with a Borland 'OWL' wrapper to make it run under windows"
 WinChess url=https://archive.org/download/WinChess_1020/winchess.zip version='1.01' exec='WINCHESS.EXE' sha256='a42b06d7fd1c76ec2526d763023b0de5dd1e756b159964fb66f5687f94b38929' comment='Chess for Windows 3.1' 
+WindowsChess url="https://archive.org/download/WindowsChess3.1_1020/glchess.zip" exec="WINCHESS.EXE" sha256=1ab5671a95aa2d6c20c0936429e4651cf7625427c6c44444689a16dc5189a230 comment='Windows Chess 3.1 by Melvin G. Lewis" 
 WindowsRebelDecadeChess url=https://image.dosgamesarchive.com/games/r10man_w.zip sha256='2c2b6b1bb6f7bd2df6e5d9483ae70b2fad3b4bd1156fb4de3e19011c3cab8369' comment='Chess Program' 
-
 
 * category='ChineseChess' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 XieXie url=http://www.cc-xiexie.com/files/XXFreeware2.5.XInstaller.exe version='2.5' sha256='c494843e850e122422d673f2004be3bc4b82732d0598ecb13c9e6655144c41a3' comment='Good Xianqi (Chinese Chess) playing program' 
@@ -325,8 +327,9 @@ XCell url=http://efsa.sourceforge.net/archive/ommeren/xcell40a.zip version='4.0a
 Hearts url=http://www.tucows.com/download/games/files2/thnoshearts.zip installer-vdesk='Y' comment='Trick taking card game' sha256='acb68c39253dd5992ffa9c23093088733cb01b4ff7442b8c402a69aae1642be3' installer='setup.exe' 
 
 * category='Roguelike;RolePlaying;Game' platform=windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+Angband url=https://github.com/angband/angband/releases/download/4.2.5/Angband-4.2.5-win.zip sha256=60a529272a0321d9994fbde0ea42e2ab16cbaf6f4ad0c8e06b0451e588cbb5d0
 DesktopDungeons url=http://www.qcfdesign.com/Files/DesktopDungeons/DesktopDungeons_v021.exe exec='DesktopDungeons.exe' comment='Coffebreak Roguelike' sha256='2a6e2b339efebd2e13dec776baa36dda79b1de8c079ba1fccbc053a2f33df86e' icon="HeroPaladin.png"
-DungeonCrawlStoneSoup url=http://crawl.develz.org/release/0.21/stone_soup-0.21.1-tiles-win32.zip exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256='fec60ac700975e3bc1edb1d13c0e74d799bc5431cb6b0ef797bf960e3bb28198' 
+DungeonCrawlStoneSoup url=https://github.com/crawl/crawl/releases/download/0.33.1/dcss-0.33.1-win32-tiles.zip exec='crawl.exe' movefiles-from='stone_soup-tiles-0.21/*' comment='Addictive Roguelike' sha256=acd6dfc0ae5c4bf257bd3939d98e852d072e316c25782ff0a58fe5b42788f65e
 GearHead1 url=https://github.com/jwvhewitt/gearhead-1/releases/download/v1.302/GH1-1.302-sdl-windows-i386.zip movefiles-from='gearhead-1/*' exec='gharena.exe' comment='Mecha Roguelike' sha256='edfdd0c0682ba7e7bbbbc908ca2a092ddc66fd251bb7a6c72700f7d9d9768aa1' 
 TalesOfMajeal url=http://te4.org/dl/t-engine/t-engine4-windows-1.5.9.zip comment='Very polished fantasy roguelike' sha256='7e05b9168df8caab7412e66daa574121bd5e3231077c4a53b0f781c814b0df61' 
 SplunkyClassic url=http://www.derekyu.com/games/spelunky_1_1.zip comment='Platform Roguelike' sha256='572f0a1976e76ebbd295daae651b8b6f00c6b9cf960d3e1c2cc57128d6437727' 
@@ -397,6 +400,6 @@ NUD url=http://www.wyrdysm.com/games/NUDv009.zip sha256='33ae503fdc0b8692f44b426
 KingsQuest1 url=http://agdinteractive.com/countdl.php?action=download&game=11 vdesk='y' comment='Classic Roberta Williams adventure game' rename='$(drive_c)/Program\ Files/AGD\ Interactive/King\'s\ Quest\ I/ $(drive_c)/Program\ Files/AGD\ Interactive/Kings\ Quest\ I/' os-version='winxp' sha256='403c028ee0bfe1b700a93435c0f7d1b94e7f9e1d1f53d8cdf5c786f5f8fce1c2' catgegory="AdventureGame"
 Windle url=https://www.dialup.net/windle/download/WINDLE32_1.00.zip sha256=18823a394912ff2a458a3254bf59002c5ea2544fc5ef9fc5378295829cee4a41 comment="version of the WORDLE word game" exec=WINDLE.exe category="LogicGame"
 Typhoon2001 url=https://archive.org/download/typhoon_2001_r3992/typhoon_2001_r3992.zip exec=typhoon.exe category="TempestGame" sha256="64722fe8e99297fcb235dcf6bff8bf1ae5a510ef420dd2843e1c8f4bec4fd53b"
-
+UniFi url=https://dl.ui.com/unifi/9.2.87/UniFi-installer.exe
 
 

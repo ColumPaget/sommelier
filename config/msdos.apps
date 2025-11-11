@@ -38,6 +38,11 @@ NovaChess url="https://archive.org/download/NovaChessV1.121996ThomasStarkeStrate
 KCChess url="https://archive.org/download/KCChess1990CraigBruceAndKevinPhillipsStrategyChess/KCChess.zip" sha256="7f16819a2d1d572c0957c4ca70578cf8d84d6ec03389b0f47cb60d0d430a0478"
 ChessSystemTal url="https://archive.org/download/msdos_Chess_System_Tal_1997/Chess_System_Tal_1997.zip" exec="run.bat" sha256="97522aece783262304c838540c579045e02f4eb012a9a51353a6fb4fc8252f9d" runwarn="Move mouse to top of screen for ChessSystemTal menu"
 
+
+* category='ChineseChess' platform=dos
+XQ url=https://archive.org/download/CHICHESS_zip/CHICHESS.zip exec="XQ.EXE" "Chinese Chess game for dos"
+ChineseChess url=https://archive.org/download/CHICHESS_zip/CHICHESS.zip exec="CCHESS.EXE" "Chinese Chess game for dos"
+
 * category='PuzzleGame;LogicGame' platform=dos
 Sokoban94 url=https://archive.org/download/Sokoban-sw/soko94sw.zip exec="soko94sw.exe"  sha256="bc7e05d8ec47eb1c1fbfb3612b4505102b52eace1a9b0119cfcea27484fd9041"
 

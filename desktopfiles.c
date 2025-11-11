@@ -2,7 +2,7 @@
 #include "platforms.h"
 #include "run-application.h"
 #include "config.h"
-
+#include "sandbox.h"
 
 //Make a path that we will install a desktop file at.
 //Handle 'modern' sommelier desktop files that have the format $(program name)-$(platform).desktop
@@ -82,6 +82,27 @@ int DesktopFileDelete(TAction *Act)
     return(FALSE);
 }
 
+
+static void DesktopParseVar(TAction *Act, const char *Name, const char *Value, int Force)
+{
+char *Token=NULL;
+const char *ptr;
+
+//don't overwrite anything that's been set on the command-line
+if (! Force)
+{
+ptr=GetVar(Act->Vars, Name);
+if (StrValid(ptr)) return;
+}
+
+Token=CopyStr(Token, Value);
+StripQuotes(Token);
+SetVar(Act->Vars, Name, Token);
+
+Destroy(Token);
+}
+
+
 int DesktopFileRead(const char *Path, TAction *Act)
 {
     char *Tempstr=NULL, *Name=NULL, *Token=NULL, *Exec=NULL;
@@ -108,48 +129,25 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 Exec=CopyStr(Exec, ptr);
                 StripQuotes(Exec);
             }
-						else if (strcasecmp(Name, "SommelierInstallPath")==0)
-						{
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-								Act->InstallPath=CopyStr(Act->InstallPath, Token);
-						}
-            else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0)
+            else if (strcasecmp(Name, "SommelierInstallPath")==0)
             {
                 Token=CopyStr(Token, ptr);
                 StripQuotes(Token);
-                SetVar(Act->Vars, "x86_ld_library_path", Token);
+                Act->InstallPath=CopyStr(Act->InstallPath, Token);
             }
-            else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0)
+            else if (strcasecmp(Name,"SommelierAllowSU")==0)
             {
                 Token=CopyStr(Token, ptr);
                 StripQuotes(Token);
-                SetVar(Act->Vars, "x86_64_ld_library_path", Token);
+                if (strtobool(Token)) Act->Flags |= FLAG_ALLOW_SU;
             }
-            else if (strcasecmp(Name,"SommelierSecurityLevel")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "security_level", Token);
-            }
-            else if (strcasecmp(Name,"SommelierRunWarn")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "runwarn", Token);
-            }
-            else if (strcasecmp(Name,"Icon")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "icon", Token);
-            }
-            else if (strcasecmp(Name,"Platform")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "platform", Token);
-            }
+            else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_ld_library_path", ptr, FALSE);
+            else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_64_ld_library_path", ptr, FALSE);
+            else if (strcasecmp(Name,"SommelierSecurityLevel")==0) DesktopParseVar(Act, "security_level", ptr, FALSE);
+            else if (strcasecmp(Name,"SommelierRunWarn")==0) DesktopParseVar(Act, "runwarn", ptr, FALSE);
+            else if (strcasecmp(Name,"Icon")==0) DesktopParseVar(Act, "icon", ptr, FALSE);
+            else if (strcasecmp(Name,"Platform")==0) DesktopParseVar(Act, "platform", ptr, FALSE);
+            else if (strcasecmp(Name,"Path")==0) DesktopParseVar(Act, "working-dir", ptr, FALSE);
             else if (strcasecmp(Name,"Emulator")==0)
             {
                 //naughty reuse of name here
@@ -158,12 +156,6 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 SetVar(Act->Vars, "emulator", Name);
                 GetToken(Name, "\\S", &Token, 0);
                 SetVar(Act->Vars, "required_emulator", GetBasename(Token));
-            }
-            else if (strcasecmp(Name,"Path")==0)
-            {
-                Token=CopyStr(Token, ptr);
-                StripQuotes(Token);
-                SetVar(Act->Vars, "working-dir", Token);
             }
             Tempstr=STREAMReadLine(Tempstr, S);
         }
@@ -372,6 +364,10 @@ void DesktopFileGenerate(TAction *Act)
         SetVar(Act->Vars, "exec-sha256", Hash);
         SetVar(Act->Vars, "platform", Act->Platform);
 
+        //don't use AppAllowSU to check here,  because that checks if switch user/superuser is allowed
+        //for the app, or for this run of sommelier. It must be explicitly set against the app.
+        if (AppAllowSU(Act)) SetVar(Act->Vars, "allow-su", "Y");
+
 //did we download or otherwise obtain an application icon? If not, then consider the 'icon' setting
 //which may point to an icon for this app on local disk
         ptr=GetVar(Act->Vars, "app-icon");
@@ -386,13 +382,14 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelierInstallPath=$(invoke-dir)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelierInstallPath=$(invoke-dir)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierAllowSU=$(allow-su)\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         STREAMClose(S);
 
     }
+		else TerminalPutStr("~e~rERROR:~0 failed to open desktop file for writing!\n", NULL);
 
     DestroyString(Tempstr);
     DestroyString(Hash);

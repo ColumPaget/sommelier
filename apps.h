@@ -16,5 +16,6 @@ char *AppFormatPath(char *Path, TAction *Act, const char *InstallPrefix);
 char *AppFindInstalled(char *, TAction *App);
 int AppIsInstalled(TAction *App);
 int AppPlatformMatches(TAction *App, const char *Platforms);
+int AppAllowSU(TAction *App);
 
 #endif

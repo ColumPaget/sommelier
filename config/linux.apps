@@ -14,7 +14,7 @@ FireAlpaca platform=linux64 url=https://firealpaca.com/download/linux warn="This
 * category='ImageViewer;Graphics;Viewer'
 XnViewMP platform=linux32 url=https://download.xnview.com/XnViewMP-linux.tgz download-type=tar.gz exec=xnview.sh icon=xnview_2.png
 XnViewMP platform=linux64 url=https://download.xnview.com/XnViewMP-linux-x64.tgz download-type=tar.gz exec=xnview.sh icon=xnview_2.png
-
+Oculante platform=linux64 url=https://github.com/woelper/oculante/releases/download/0.9.2/oculante-0.9.2.deb exec=oculante sha256=5daee442ee8c58af37683ffb58117c42f6c33f01abd82a4dfd16fb53cf5af5e7
 
 * category='Viewer;Office'
 Calibre platform=linux32 url=https://download.calibre-ebook.com/5.3.0/calibre-5.3.0-i686.txz download-type='tar.xz' category='ebook' comment='Ebook Management' exec='Calibre/calibre'  sha256='6ccdaff43d88e536582b7cdf3ba15d17e87920a99f3116df7489ffbb662390dc' 
@@ -47,9 +47,14 @@ TigerVNCViewer platform=linux64 url=https://bintray.com/tigervnc/stable/download
 OoklaSpeedtest platform=linux32 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-i386.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" sha256=9ff7e18dbae7ee0e03c66108445a2fb6ceea6c86f66482e1392f55881b772fe8
 OoklaSpeedtest platform=linux64 url=https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz download-type=tar.gz exec=speedtest exec-args="--accept-gdpr" 
 
-* category=System;Terminals
-KittyTerminal platform=linux32 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-i686.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
-KittyTerminal platform=linux64 url=extracted:https\://github.com/kovidgoyal/kitty/releases/latest:/*/releases/download/*/kitty-*-x86_64.txz download-type='tar.xz' exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
+# Terminals are allowed to 'switch-user/super-user' 
+* category=System;Terminals allow-su=Y
+KittyTerminal platform=linux32 url=https://github.com/kovidgoyal/kitty/releases/download/v0.35.2/kitty-0.35.2-i686.txz warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?'
+KittyTerminal platform=linux64 url=https://github.com/kovidgoyal/kitty/releases/download/v0.44.0/kitty-0.44.0-x86_64.txz exec=kitty warn-missingpath='/usr/share/X11/xkb:This program requires directory /usr/share/X11/xkb: Perhaps symlink to /usr/X11R6/share/X11/xkb?' sha256=5b502801c8814c9fc5a2e8d9cfdf1c2ec5ee78b3e647f898704ad537a2ff452d
+Tabby platform=linux64 url=https://github.com/Eugeny/tabby/releases/download/v1.0.228/tabby-1.0.228-linux-x64.tar.gz exec=tabby sha256=a5ffde4664b22582afe73bbcb066b396f5bfd4028e1c95e81ea3942e554a4a23
+ContourTerminal platform=linux64 url=https://github.com/contour-terminal/contour/releases/download/v0.6.1.7494/contour-0.6.1.7494.AppImage sha256=5ed628b9b11bdfd945a5cfa8cc48b03af651d927b4f98454cce77ed3871b08d0
+GhostTTY platform=linux64 url=https://github.com/pkgforge-dev/ghostty-appimage/releases/download/v1.2.3/Ghostty-1.2.3-x86_64.AppImage sha256=cf239a0a9383aa9a148da2f6c6444993f871618cf4309d4db15d7be992d16725
+ExtraTerm platform=linux64 url=https://github.com/sedwards2009/extraterm/releases/download/v0.81.4/extratermqt-0.81.4-linux-x64.zip exec=extratermqt sha256=d755d7fde91d44ef2bfba4d2a9004c156b48d3c1e3779e58e8ba84f76832aca1 
 
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)' platform=linux32
@@ -68,18 +73,18 @@ GnuIcecat  url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).g
 Waterfox  url=https://cdn1.waterfox.net/waterfox/releases/G6.0.11/Linux_x86_64/waterfox-G6.0.11.tar.bz2 download-type='tar.bz2' exec=waterfox sha256=c6268cb325af37178b3519b14ed082f199a8abb5f37e45ab073123757af8201e icon=default48.png
 Librewolf  url=https://gitlab.com/api/v4/projects/12829184/packages/generic/librewolf/103.0-3/LibreWolf-103.0-3.x86_64.tar.bz2 download-type=tar.bz2 exec=librewolf sha256=635710c32092491bd3e34490f245296171dc04a81dc236110ac0989bbe0ad593 icon=default64.png comment="Privacy centric Firefox"
 Vivaldi  url=https://downloads.vivaldi.com/stable/vivaldi-stable_5.3.2679.73-1_amd64.deb download-type=deb exec=vivaldi exec-args="--no-sandbox" sha256=c0444c4a8955c3d20e9c72aa8e97a365eb8500b5414d0ac1cf958c84b861cb7b warn="This program installs in 'no sandbox' mode."
-Brave  url=https://github.com/brave/brave-browser/releases/download/v1.43.57/brave-browser-beta_1.43.57_amd64.deb download-type=deb exec=brave exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode."
-Chrome  url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb download-type=deb exec=google-chrome icon=product_logo_48.png
+Brave  url=https://github.com/brave/brave-browser/releases/download/v1.86.62/brave-browser-nightly_1.86.62_amd64.deb download-type=deb exec=brave 
+Chrome url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb download-type=deb exec="/opt/google/chrome/google-chrome" icon=product_logo_48.png
 UngoogleChrome  url=https://github.com/ungoogled-software/ungoogled-chromium-portablelinux/releases/download/125.0.6422.76-1/ungoogled-chromium_125.0.6422.76-1_linux.tar.xz download-type=tar.xz exec=chrome icon=product_logo_48.png
 SRwareIron  url=https://www.srware.net/downloads/iron-linux-64.tar.gz download-type=tar.gz install-stage2=iron-linux-64.sh stage2-args="--accept --nox11" exec=chrome icon=product_logo_48.png
 Midori  url=https://github.com/goastian/midori-desktop/releases/download/v11.3.3/midori-11.3.3.linux-x86_64.tar.bz2 download-type=tar.bz2 sha256=f71907cf8f65b10c53db70638457d4e6c2529c5d400924dbe0b8e2eeb460ab9d exec=midori icon=default48.png
 Opera url=https://download3.operacdn.com/ftp/pub/opera/desktop/113.0.5230.62/linux/opera-stable_113.0.5230.62_amd64.deb download-type=deb exec=opera  sha256=fd22cfb176fdafad71b861c6b1dca1f40770e9d02b6a7d3404c23db3e8f49803
+MinBrowser url=https://github.com/minbrowser/min/releases/download/v1.35.2/min-1.35.2-amd64.deb exec=/opt/Min/min sha256=f79952bd29b1f053e79187a398f6495d6951e9d7f33df8ce00cd138cabafecc5
 
 * category=Bittorent;Network
 Frostwire platform=linux64 url=https://www.frostwire.com/download/?os=tarball download-type='tar.gz' exec='frostwire' category='Bittorrent;AudioVideo;Player;Audio' comment='Bittorrent media downloader/player' 
 Tixati platform=linux32 url=https://download2.tixati.com/download/tixati-2.73-1.i686.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='e20950c7b6b07d6d4b46725238659e8ca4b504fb096c3b9cac4f207e4df3987a' 
 Tixati platform=linux64 url=https://download2.tixati.com/download/tixati-2.73-1.x86_64.manualinstall.tar.gz download-type='tar.gz' category='Bittorrent;Network' comment='Bittorrent app' exec='tixati' icon='tixati.png'  sha256='d96596a54b67a9838571e5513144b200a575c067edfe0185a202b8c7097399d9' 
-
 
 * category='FileTransfer;Network'
 FileZilla platform=linux32 url=extracted:https\://filezilla-project.org/download.php?show_all=1:*i686-linux-gnu.tar.bz2* download-type='tar.bz2' exec='filezilla' comment='FTP/SFTP/FTPS file transfer' icon='filezilla.png' 
@@ -96,10 +101,15 @@ Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-typ
 HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz' sha256=99154d43b1a997aa996fe5efd14eb5d66c88b5cd65f804b9df13bb42c31898a9
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'
 Discord platform=linux64 url=https://discord.com/api/download?platform=linux&format=tar.gz download-type=tar.gz exec=Discord exec-args="--no-sandbox" warn="This program installs in 'no sandbox' mode." icon=discord.png
+Dorion  platform=linux64 url=https://github.com/SpikeHD/dorion/releases/download/v6.11.0/Dorion_6.11.0_amd64.deb exec=Dorion comment="lightweight discord app" sha256=409c4ca8d18f3155dd88fda0ef7b5f93396aff5913ed9db93486a050cbb41a0a
 qTox platform=linux64 url=https://github.com/TokTok/qTox/releases/download/v1.18.3/qTox-v1.18.3-x86_64.AppImage sha256=9d026367d47d0f7216f50850ade44420abf36145c1ea37a180ab577cc809574d
 Trillian platform=linux32 url="https://www.trillian.im/get/linux/2.0/?deb=32&gccv=5" download-type=deb exec=trillian sha256=1be8b4d4aa442c087f3cb1885332667bcdd3ede91689198ebc32355679a45159
 Trillian platform=linux64 url="https://www.trillian.im/get/linux/2.0/?deb=64&gccv=5" download-type=deb exec=trillian
 NHeko platform=linux64 url=https://github.com/Nheko-Reborn/nheko/releases/download/v0.11.2/nheko-v0.11.2-x86_64.AppImage
+Ferdium platform=linux64 url=https://github.com/ferdium/ferdium-app/releases/download/v7.1.1/Ferdium-linux-7.1.1.tar.gz exec=ferdium sha256=55fda48ea80951cb179ff093968c8cda65b08392fc78461627cc60c0b33942ee
+Fedistar platform=linux64 url=https://github.com/h3poteto/fedistar/releases/download/v1.11.8/fedistar_1.11.8_amd64.deb comment="Fediverse application supporting mastodon, pleroma, etc, etc" sha256=f9c2242e02d7eed99f404e751505816e5b342589d929a212c91831c48583f904 exec=/usr/bin/fedistar
+Whalebird platform=linux64 url=https://github.com/h3poteto/whalebird-desktop/releases/download/v6.2.5/Whalebird-6.2.5-linux-amd64.deb comment="Fediverse application supporting mastodon, pleroma, etc, etc" sha256=ea06ec9cb1543bff91be8efbabbe98c4a882456725b5718b1b6f514a7e613234 exec=Whalebird
+
 
 * category='IRCClient;Chat;Internet;Network'
 SeaMonkeyChat platform=linux32 exec='seamonkey' exec-args='-chat' comment='"Chatzilla" IRC App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
@@ -114,6 +124,7 @@ Zoom platform=linux64 url=https://zoom.us/client/5.15.0.4063/zoom_x86_64.tar.xz 
 * category='Email;Internet;Network'
 SeaMonkeyMail platform=linux32 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
 SeaMonkeyMail platform=linux64 exec='seamonkey' exec-args='-mail' comment='Email App bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
+MailSpring platform=linux64 url=https://updates.getmailspring.com/download?platform=linuxDeb download-type='deb' exec=/usr/bin/mailspring
 
 * category='TextEditor;Utility'
 SeaMonkeyEdit platform=linux32 exec='seamonkey' exec-args='-edit' comment='HTML Editor bundled with SeaMonkey' bundled=SeaMonkey donate=https://www.seamonkey-project.org/donate/
@@ -168,39 +179,38 @@ Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha2
 Typhoon2001 url=https://archive.org/download/typhoon-2001/typhoon_2001_r3992_LINUX.tar.gz download-type="tar.gz" exec=typhoon platform=linux32 category=TempestGame sha256="dc61f0bc4b22c8898f252da5daf111a137af57296203c11cc6ce8133981eb18e"
 
 * category='Game' platform=linux64
-Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame
-Xump  url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec=xump_ubuntu64 category="Platformer"
-Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes
-Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei category="ShootEmUp"
-Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame
-Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb' category=StrategyGame
+Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame sha256=e6943ed51c5541b2da8e5429ba0914cd2dc9280e67e824da1aa2416bfaf68242
+Xump url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec64=xump_ubuntu64 category="Platformer" exec=xump
+Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes sha256=9a782758c7cb303b6d49f3f9b3726aa40e6636f498b65182472fcee781e869a8
+Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei category="ShootEmUp" sha256=64e1618277706947e4982afd9a04b3d1892b01602299dbb3fc5acc72d37f1ec5
+Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame sha256=971f91376d2c3e21befa92d2d205ba8b1218c37fa0d4a18232b021816fb2648c
+Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb' category=StrategyGame  sha256=b365dc4ddd5a568637f36888cfba18fbd8777557d60d7b1b9e1be3290dc7746c
 
 * category="OfficeSuite" platform=linux64 locale='$(lang)-$(country)'
-WPSOffice url=https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/download/linux/11723/wps-office_11.1.0.11723.XA_amd64.deb download-type="deb"
-LibreOffice url=https://appimages.libreitalia.org/LibreOffice-still.full-x86_64.AppImage
+LibreOffice url=https://appimages.libreitalia.org/portable/LibreOffice-24.2.0.3.full-x86_64.AppImage sha256=8206e77a5ab5048816f7c2db8dfe58e033933c2a7a61fd0343da17d7a82498b8
 
 
 * category='Notes;Office;Utility'
 SimpleNote platform=linux32 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-ia32.tar.gz exec=simplenote download-type=tar.gz sha256=6df10d5f29d3cdacae437b35b3cc5e102150b8b4714711f95b8a8f667496c173
-SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-x64.tar.gz exec=simplenote download-type=tar.gz
+SimpleNote platform=linux64 url=https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0/Simplenote-linux-2.21.0-x64.tar.gz exec=simplenote download-type=tar.gz sha256=e4e7482029628ce52c7a42a1cec9822785b7118aeb3f3ae4007d7da386dd1a3e
+Notable platform=linux64 url=https://download.notable.app/?target=deb download-type=deb exec=/opt/Notable/notable sha256=211dfa89f71af4cd59a50fa9a1e3f1846b254194b661b8aa4a4504702d250579
+
+
+* category='AudioPlayer;Audio' platform=linux64
+DeadBeef url="https://deac-ams.dl.sourceforge.net/project/deadbeef/travis/linux/1.10.0/deadbeef-static_1.10.0-1_x86_64.tar.bz2?viasf=1" exec=deadbeef sha256=e6d89edfaa17a2634bffdb9050ab096f14e39ac71ea6183cd48cae136a5f1a97
 
 * category='AudioVideoEditor;Audio' platform=linux64
-Audacity url=https://github.com/audacity/audacity/releases/download/Audacity-3.6.2/audacity-linux-3.6.2-x64.AppImage sha256=b009504d0f74b7fca7092d3c0fdb866b8894ab66473b951c2b7ed7e454282058 
-Giada url=https://www.giadamusic.com/data/Giada-1.0.0-x86_64.AppImage
-OcenAudio url=https://www.ocenaudio.com/start_download/ocenaudio_debian10.deb download-type=deb
-Qtractor url=https://download.sf.net/qtractor/qtractor-1.2.0-4.1.x86_64.AppImage
-QSampler url=https://sourceforge.net/projects/qsampler/files/qsampler/1.0.0/qsampler-1.0.0-1.1.x86_64.AppImage/download
-LMMS url=https://github.com/LMMS/lmms/releases/download/v1.2.2/lmms-1.2.2-linux-x86_64.AppImage
-
-* category='AudioVideoEditor;Video' platform=linux32
-CinelleraGG url=https://cinelerra-gg.org/download/images/CinGG-20240731-i386.AppImage
+Audacity url=https://github.com/audacity/audacity/releases/download/Audacity-3.7.5/audacity-linux-3.7.5-x64-22.04.AppImage sha256=aa092571e6447b3e82d8cf6b9e31ee4907581e4925b791f49c8563e1cfa93716
+OcenAudio url=https://www.ocenaudio.com/start_download/ocenaudio_debian11.deb download-type=deb
+Qtractor url=https://download.sf.net/qtractor/qtractor-1.5.9-16.1.x86_64.AppImage sha256=9079989a29c52c1de731a4905bd24783fa04f7a1d1668a5f0d917a42798c6dd0
+QSampler url=https://sourceforge.net/projects/qsampler/files/qsampler/1.0.0/qsampler-1.0.0-1.1.x86_64.AppImage/download sha256=fa0f27fbfef3d7267a5e9aceaa763e97b3abd65141674214524d907557f18577
+LMMS url=https://github.com/LMMS/lmms/releases/download/v1.2.2/lmms-1.2.2-linux-x86_64.AppImage sha256=6cdc45a0699b8cd85295c49bcac03fcce6f3d8ffd7da23d646d0cb4258869b76
 
 * category='AudioVideoEditor;Video' platform=linux64
-Openshot url=https://github.com/OpenShot/openshot-qt/releases/download/v3.2.1/OpenShot-v3.2.1-x86_64.AppImage
-ShotcutAI url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.AppImage/download
-Shotcut  url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.txz/download download-type="tar.xz" exec=shotcut
-CinelleraGG url=https://cinelerra-gg.org/download/images/CinGG-20240731-x86_64.AppImage
-VidCutter url=https://github.com/ozmartian/vidcutter/releases/download/6.0.5.1/VidCutter-6.0.5.1-x86_64.AppImage
+Openshot url=https://github.com/OpenShot/openshot-qt/releases/download/v3.3.0/OpenShot-v3.3.0-x86_64.AppImage sha256=3243347d4d3a8996b1a43fc2316830cc00ec1c9a9e2ec1d462c657e059cc8ec1
+Shotcut  url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.txz/download download-type="tar.xz" exec=shotcut sha256=1b55da80b9a9f6bf4536b706ab117571fa3c4247024a82395e89ca5312d2913e
+ShotcutAppImage url=https://sourceforge.net/projects/shotcut/files/v24.08.29/shotcut-linux-x86_64-240829.AppImage/download sha256=30a82d3a428fade7ef54896d2774b28f23a3d75451a8036f6c84746f4e15b976
+VidCutter url=https://github.com/ozmartian/vidcutter/releases/download/6.0.5.1/VidCutter-6.0.5.1-x86_64.AppImage sha256=b92fc1e10cbe3502691fd0b5eab543126cb069c20de04e9df32c8439f4ba6ffb
 
 * category='MusicTracker;AudioVideoEditor;Audio' platform=linux64
 MilkyTracker.zip url=https://github.com/milkytracker/MilkyTracker/releases/download/v1.04.00/milkytracker-1.04.00-Linux.zip exec=milkytracker sha256=36ed8cc8224998876e5bcba971290ec8c1ef07dbec1df0e80cd1f396e63541c3
@@ -208,3 +218,9 @@ MilkyTracker url=https://github.com/milkytracker/MilkyTracker/releases/download/
 SchismTracker url=https://github.com/schismtracker/schismtracker/releases/download/20240809/schismtracker-20240809-linux.zip exec=schismtracker sha256=5dc2119a6c6a249aef2041948167776e9be572c25dbbf880dccebac9307db373
 FurnaceTracker url=https://github.com/tildearrow/furnace/releases/download/v0.6.7/Furnace-0.6.7-x86_64.AppImage sha256sum=9c62269f1bddecdb289631accb682c535da1068cb60538568c96a7e535fbb80e
 BambooTracker url=https://github.com/BambooTracker/BambooTracker/releases/download/v0.6.3/BambooTracker-v0.6.3-linux-64bit.zip exec=BambooTracker sha256=18646ca601c5def37220aea845a0dd6dc9706824d9326723c83650c6aeb4ac8b
+Helio url=https://ci.helio.fm/helio-3.16-x64.tar.gz comment="Music Sequencer/Tracker" sha256=0461351d40e169f43155112f598bc3c82af6057b2e1d696f59be0f707ab506cd exec=helio
+
+
+
+* category='DeviceManager;Network' platform=linux64
+#Unifi url=https://dl.ui.com/unifi/9.2.87/unifi_sysvinit_all.deb comment="Ubiquity wifi access point manager"

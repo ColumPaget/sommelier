@@ -1,8 +1,25 @@
-10.4 (2025-04-05)
+v10.6 (2025-11-11)
+    * added 'emulator help text' (so far only for dosbox and mednafen)
+    * added 'sommelier regedit' command for wine emulation
+    * handle applications (e.g. chrome) that ship with the 'exe' being a symbolic link 
+    * don't use 'seccomp' if application bitwidth does not match system bitwidth (otherwise e.g. 32bit progs won't run on 64bit multilib systems)
+    * allow specifying in the app config that an app can use 'su'
+    * allow overriding su/nosu options at install and runtime with '-su' and '-nosu' flags
+    * delete .deb data.tar.gz and control.tar.gz files after install
+    * added '-end' and '--' command-line options to indicate end of sommelier options
+    * added more linux apps
+    * added more gog games
+
+v10.5 (2025-04-27)
+    * repair 'bundled' apps system. 
+    * Update some wine programs. 
+    * Add gog.com games including Metal Gear Solid and Tron 2.0
+
+v10.4 (2025-04-05)
     * Added 'NO_NEW_PRIVS' syscall when running apps under linux, preventing su/sudo from that app.
     * Better support for listing/installing apps under either old or new install format (with or without platform name included in dirname and desktop file)
 
-10.3 (2025-03-08)
+v10.3 (2025-03-08)
     * Change bundled libUseful to be called 'libUseful-bundled' to prevent confusion over include files
     * Added gog games Fallout2, FalloutTactics, LoopHero, WarhammerQuest, CircleEmpires and StreetsOfRogue
 

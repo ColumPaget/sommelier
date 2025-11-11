@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o categories.o elf.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o install.o uninstall.o run-application.o xrandr.o
+OBJ=common.o config.o apps.o platforms.o categories.o elf.o emulator.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o sandbox.o install.o uninstall.o run-application.o xrandr.o wine-fonts.o
 LIBS=@LIBUSEFUL_BUNDLED@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -27,6 +27,12 @@ msdos.o: msdos.h msdos.c
 
 elf.o: elf.h elf.c
 	$(CC) $(CFLAGS) -c elf.c
+
+sandbox.o: sandbox.h sandbox.c
+	$(CC) $(CFLAGS) -c sandbox.c
+
+emulator.o: emulator.h emulator.c
+	$(CC) $(CFLAGS) -c emulator.c
 
 platforms.o: platforms.h platforms.c
 	$(CC) $(CFLAGS) -c platforms.c
@@ -70,25 +76,30 @@ run-application.o: run-application.h run-application.c
 xrandr.o: xrandr.h xrandr.c
 	$(CC) $(CFLAGS) -c xrandr.c
 
+wine-fonts.o: wine-fonts.h wine-fonts.c
+	$(CC) $(CFLAGS) -c wine-fonts.c
+
 
 patches-subdir:
 	- $(MAKE) -C patches
 
 clean:
-	rm -f sommelier *.o libUseful-bundled/*.o libUseful-bundled/*.so libUseful-bundled/*.a patches/*.so *.orig .*.swp */.*.swp
+	rm -f sommelier *.cs *.c~ *.o libUseful-bundled/*.o libUseful-bundled/*.so libUseful-bundled/*.a patches/*.so *.orig .*.swp */.*.swp 
 
 install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
 	cp -f sommelier $(HOME)/bin/
 	cp config/*.apps config/*.conf $(HOME)/.sommelier/
+	mkdir -p $(HOME)/.sommelier/emuhelp
+	cp config/*.emuhelp $(HOME)/.sommelier/emuhelp/
 	$(MAKE) install -C patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
 	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
 	cp -f sommelier $(DESTDIR)$(exec_prefix)/bin/ 
-	cp config/*.apps config/*.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp config/*.apps config/*.conf config/*.emuhelp $(DESTDIR)$(exec_prefix)/etc/sommelier/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 	$(MAKE) install_global -C patches
 

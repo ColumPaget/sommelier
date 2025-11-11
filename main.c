@@ -12,8 +12,9 @@
 #include "categories.h"
 #include "apps.h"
 #include "run-application.h"
-
-
+#include "regedit.h"
+#include "wine-fonts.h"
+#include "sandbox.h"
 
 
 
@@ -114,30 +115,6 @@ void RebuildAppList(TAction *RebuildAct)
 }
 
 
-int SetNoSU()
-{
-#ifdef HAVE_PRCTL
-#include <sys/prctl.h>
-#ifdef PR_SET_NO_NEW_PRIVS
-
-//set, then check that the set worked. This correctly handles situations where we ask to set more than once
-//as the second attempt may 'fail', but we already have the desired result
-    prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-    if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) == 1)
-    {
-        TerminalPutStr("~gNO_NEW_PRIVS set for process~0 (security feature that prevents su/sudo)\n", NULL);
-        return(TRUE);
-    }
-
-    //if we get here then something went wrong
-    RaiseError(ERRFLAG_ERRNO, "SetNoSU", "Failed to set 'no new privs', even though this seems to be supported");
-#endif
-
-#endif
-
-    return(FALSE);
-}
-
 
 //there's a chicken-and-egg situation in parsing the command-line, as some things depend on config files that
 //can be changed by command-line switches. We do those things here, as early as possible after loading config files
@@ -149,17 +126,18 @@ void ActionPrepare(TAction *Act)
     {
         Tempstr=CopyStr(Tempstr, Act->Platform);
         Act->Platform=CopyStr(Act->Platform, PlatformUnAlias(Tempstr));
-				//we must only set the platform variable if the user has specified a platform,
-				//as this is how we distinguish between 'the user insists this platform'
+        //we must only set the platform variable if the user has specified a platform,
+        //as this is how we distinguish between 'the user insists this platform'
         //and 'dunno, go with the first thing you can find'
-    		SetVar(Act->Vars, "platform", Act->Platform);
+        SetVar(Act->Vars, "platform", Act->Platform);
     }
-		//PlatformDefault will tend to be something like "!linux32" rather than an 
-		//actual platform, so we mustn't set the 'platform' variable to this
+    //PlatformDefault will tend to be something like "!linux32" rather than an
+    //actual platform, so we mustn't set the 'platform' variable to this
     else Act->Platform=CopyStr(Act->Platform, PlatformDefault());
 
     Destroy(Tempstr);
 }
+
 
 
 int main(int argc, char *argv[])
@@ -234,19 +212,27 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_RUN:
-                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
                 RunApplicationFromDesktopFile(Act);
                 break;
 
             case ACT_AUTOSTART:
-                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
                 Tempstr=MCopyStr(Tempstr, GetCurrUserHomeDir(), "/.config/autostart/", NULL);
                 DesktopFileDirectoryRunAll(Tempstr);
                 break;
 
             case ACT_WINECFG:
-                if (! (Config->Flags & FLAG_ALLOWSU)) SetNoSU();
-                RunWineCfg(Act);
+                if (! (Config->Flags & FLAG_ALLOW_SU)) SetNoSU();
+                RunWineUtility(Act, "winecfg");
+                break;
+
+            case ACT_REGEDIT:
+                if (! (Config->Flags & FLAG_ALLOW_SU)) SetNoSU();
+                RunWineUtility(Act, "regedit");
+                break;
+
+            case ACT_FONTS:
+                AppLoadConfig(Act);
+                WineFonts(Act);
                 break;
             }
         }

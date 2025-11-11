@@ -107,6 +107,42 @@ static void RunInstallers(TAction *Act)
 }
 
 
+static void InstallPostProcessForLinux(TAction *Act, const char *Path)
+{
+    const char *ptr, *extn, *extn2;
+    char *Tempstr=NULL;
+
+    extn=strrchr(Act->SrcPath, '.');
+    if (extn)
+    {
+        if (strcmp(extn, ".AppImage")==0) Act->InstallType=INSTALL_EXECUTABLE;
+
+        ptr=GetVar(Act->Vars, "download-type");
+        if (! StrValid(ptr))
+        {
+            Tempstr=CopyStr(Tempstr, Act->SrcPath);
+            StrRTruncChar(Tempstr, '.');
+            extn2=strrchr(Tempstr, '.');
+
+            if (strcasecmp(extn, ".deb")==0) SetVar(Act->Vars, "download-type", "deb");
+            if (strcasecmp(extn, ".tgz")==0) SetVar(Act->Vars, "download-type", "tar.gz");
+            if (strcasecmp(extn, ".txz")==0) SetVar(Act->Vars, "download-type", "tar.xz");
+            if (strcasecmp(extn, ".zip")==0) SetVar(Act->Vars, "download-type", "zip");
+
+            if (StrValid(extn2) && (strcasecmp(extn2, ".tar")==0))
+            {
+                if (strcasecmp(extn, ".gz")==0) SetVar(Act->Vars, "download-type", "tar.gz");
+                if (strcasecmp(extn, ".xz")==0) SetVar(Act->Vars, "download-type", "tar.xz");
+                if (strcasecmp(extn, ".bz2")==0) SetVar(Act->Vars, "download-type", "tar.bz2");
+            }
+
+        }
+    }
+
+    Destroy(Tempstr);
+}
+
+
 
 // This function installs from a downloaded file. This will either mean unzipping a downloaded .zip file
 // or running an installer .exe or .msi file.
@@ -126,8 +162,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
     {
     case PLATFORM_LINUX32:
     case PLATFORM_LINUX64:
-        ptr=strrchr(Act->SrcPath, '.');
-        if (ptr && (strcmp(ptr, ".AppImage")==0)) Act->InstallType=INSTALL_EXECUTABLE;
+        InstallPostProcessForLinux(Act, Path);
         break;
 
     case PLATFORM_SCUMMVM:
@@ -657,14 +692,14 @@ static int FinalizeExeInstall(TAction *Act)
         break;
     }
 
-		//if we either find an exectuable, or the install is a type that doesn't have an executable
+    //if we either find an exectuable, or the install is a type that doesn't have an executable
     //(e.g. scummvm games that are interpreted) then do final setting up
     if (StrValid(Path) || (Act->Flags & FLAG_NOEXEC))
     {
-				//make sure exectuable is exectuable
-				if (StrValid(Path)) chmod(Path, 0770);
+        //make sure exectuable is exectuable
+        if (StrValid(Path)) chmod(Path, 0770);
 
-				//if the 'exec' var isn't set, then set it from our found path
+        //if the 'exec' var isn't set, then set it from our found path
         if (! StrValid(GetVar(Act->Vars, "exec")) ) SetVar(Act->Vars, "exec", GetBasename(Path));
 
         InstallCheckEnvironment(Act);
@@ -754,16 +789,16 @@ static void InstallBundledItems(TAction *Parent)
         while (Curr)
         {
             Child=(TAction *) Curr->Item;
-						if ( (strcasecmp(Child->Name, Name)==0) && AppPlatformMatches(Child, Parent->Platform))
-						{
-						Tempstr=MCopyStr(Tempstr, "~eFound Bundled App: '", Child->Name, "'~0\n", NULL);
-            TerminalPutStr(Tempstr, NULL);
-            SetVar(Child->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
-            SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
-            SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
-            FinalizeExeInstall(Child);
-						}
-        Curr=ListGetNext(Curr);
+            if ( (strcasecmp(Child->Name, Name)==0) && AppPlatformMatches(Child, Parent->Platform))
+            {
+                Tempstr=MCopyStr(Tempstr, "~eFound Bundled App: '", Child->Name, "'~0\n", NULL);
+                TerminalPutStr(Tempstr, NULL);
+                SetVar(Child->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
+                SetVar(Child->Vars, "drive_c", GetVar(Parent->Vars, "drive_c"));
+                SetVar(Child->Vars, "prefix", GetVar(Parent->Vars, "prefix"));
+                FinalizeExeInstall(Child);
+            }
+            Curr=ListGetNext(Curr);
         }
         ptr=GetToken(ptr, " ", &Name, 0);
     }
@@ -773,36 +808,62 @@ static void InstallBundledItems(TAction *Parent)
 }
 
 
-static void InstallSingleItem(TAction *Act)
+
+static void InstallCleanUp(TAction *Act)
 {
-    char *Path=NULL, *InstallPath=NULL, *Tempstr=NULL;
-    int InstallResult=FALSE, exitval;
-    pid_t pid;
+    char *Tempstr=NULL;
 
-//Fork so we don't chdir current app
-    pid=fork();
-    if (pid==0)
+    if (
+        (! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
+        (Act->Flags & FLAG_DOWNLOADED)
+    )
     {
-        InstallSingleItemPreProcessInstall(Act);
-
-        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
-        InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
-        if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
-        mkdir(InstallPath, 0700);
-        chdir(InstallPath);
-
-        if (Download(Act)==0) TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
-        else
+        printf("Remove installer: %s\n", Act->SrcPath);
+        unlink(Act->SrcPath);
+        if (CompareStr(GetVar(Act->Vars, "download-type"), "deb")==0)
         {
-            TerminalPutStr("~eValidating download~0\n", NULL);
-
-            if ( Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
-            else if (! CompareSha256(Act))
+            Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), "data.tar,data.tar.gz,data.bz2,data.tar.xz,data.tar.zst");
+            if (StrValid(Tempstr))
             {
-                TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
-                TerminalPutStr("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n", NULL);
-                Act->Flags |= FLAG_ABORT;
+                printf("Remove .deb data %s\n", Tempstr);
+                unlink(Tempstr);
             }
+
+            Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), "control.tar,control.tar.gz,control.bz2,control.tar.xz,control.tar.zst");
+            if (StrValid(Tempstr))
+            {
+                printf("Remove .deb control %s\n", Tempstr);
+                unlink(Tempstr);
+            }
+        }
+    }
+    Destroy(Tempstr);
+}
+
+
+static void InstallRunSubProcess(TAction *Act)
+{
+    char *Tempstr=NULL, *InstallPath=NULL;
+    int InstallResult=FALSE;
+
+    InstallSingleItemPreProcessInstall(Act);
+
+    Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "unpack-dir"));
+    InstallPath=SubstituteVarsInString(InstallPath, Tempstr, Act->Vars, 0);
+    if (! StrValid(InstallPath)) InstallPath=CopyStr(InstallPath, GetVar(Act->Vars, "install-dir"));
+    mkdir(InstallPath, 0700);
+    chdir(InstallPath);
+
+    if (Download(Act) > 0)
+    {
+        TerminalPutStr("~eValidating download~0\n", NULL);
+
+        if (Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
+        else if (! CompareSha256(Act))
+        {
+            TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
+            TerminalPutStr("File we downloaded was not the one we expected. Run with -force if you want to risk it.\n", NULL);
+            Act->Flags |= FLAG_ABORT;
         }
 
         if (! (Act->Flags & FLAG_ABORT))
@@ -819,20 +880,28 @@ static void InstallSingleItem(TAction *Act)
 
         //make sure executables are... executable
         if (Act->InstallType == INSTALL_EXECUTABLE) chmod(Act->SrcPath, 0770);
-        else if (
-            (! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
-            (Act->Flags & FLAG_DOWNLOADED)
-        )
-        {
-            printf("Remove installer: %s\n", Act->SrcPath);
-            unlink(Act->SrcPath);
-        }
-
-        if (Act->Flags & FLAG_ABORT) _exit(1);
-        //PostProcessInstall(Act);
-
-        _exit(0);
+        else InstallCleanUp(Act);
     }
+    else TerminalPutStr("~r~eERROR: Download Failed, '0' bytes received!~0\n", NULL);
+
+    DestroyString(Tempstr);
+    DestroyString(InstallPath);
+
+    //this is the child process, so we exit
+    if (Act->Flags & FLAG_ABORT) _exit(1);
+    _exit(0);
+}
+
+
+static void InstallSingleItem(TAction *Act)
+{
+    char  *Tempstr=NULL;
+    int exitval;
+    pid_t pid;
+
+//Fork so we don't chdir current app
+    pid=fork();
+    if (pid==0) InstallRunSubProcess(Act);
 
     waitpid(pid, &exitval, 0);
     if (exitval==1)
@@ -842,10 +911,7 @@ static void InstallSingleItem(TAction *Act)
         TerminalPutStr(Tempstr, NULL);
     }
 
-
-    DestroyString(Tempstr);
-    DestroyString(InstallPath);
-    DestroyString(Path);
+    Destroy(Tempstr);
 }
 
 
@@ -993,6 +1059,9 @@ void InstallApp(TAction *Act)
 
     if (StrValid(Act->InstallName)) Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " as ", Act->InstallName, " #########~0\n", NULL);
     else Tempstr=MCopyStr(Tempstr, "\n~e##### Installing ", Act->Name, " #########~0\n", NULL);
+
+    if (AppAllowSU(Act))  Tempstr=CatStr(Tempstr, "~yThis application will be installed with 'allow-su' so it can 'su' (switch user) at runtime~0\n");
+
     TerminalPutStr(Tempstr, NULL);
     Tempstr=CopyStr(Tempstr, "");
 

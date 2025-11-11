@@ -16,6 +16,6 @@
 
 void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *Resolution, const char *DLLOverrides);
 void RegEditApplySettings(TAction *Act);
-
+PARSER *RegEditExport(TAction *Act);
 
 #endif

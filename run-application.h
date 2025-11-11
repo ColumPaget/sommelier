@@ -5,6 +5,6 @@
 
 void RunApplication(TAction *Act);
 void RunApplicationFromDesktopFile(TAction *Act);
-void RunWineCfg(TAction *Act);
+void RunWineUtility(TAction *Act, const char *Utility);
 
 #endif

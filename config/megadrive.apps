@@ -14,3 +14,6 @@ MegamindTris url=https://github.com/retrobrews/md-games/raw/master/megamindtris.
 * platform=megadrive category=Chess;MegaDrive install-type=executable
 PadisChess url="https://archive.org/download/Chess_Russia_En_Unl.md/Chess_Russia_En_Unl.md"
 ChineseChess url="https://archive.org/download/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md/Zhan_Qi_Chinese_Battle_Chess_Taiwan_Unl.md" extra_category="ChineseChess"
+
+* platform=megadrive category=Game install-type=executable
+Lemmings url=https://archive.org/download/sg_lemmings_1992/lemmings.bin 

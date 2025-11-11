@@ -49,8 +49,11 @@ typedef struct
     char *Exe64SearchPattern;
     char *InstallerPattern;
     char *Args;
+		char *HelpFile;
 } TPlatform;
 
+
+int NativeBitWidth();
 const char *PlatformDefault();
 TPlatform *PlatformFindWithEmulator(const char *Name, const char *Emulator, int CheckAvailable);
 const char *PlatformUnAlias(const char *Alias);

@@ -123,6 +123,8 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             //so 'locale_template' always reamins unchanged.
             else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
+            else if (strcasecmp(Name,"su")==0) Act->Flags |= FLAG_ALLOW_SU;
+            else if (strcasecmp(Name,"allow-su")==0) Act->Flags |= FLAG_ALLOW_SU;
             else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
@@ -155,6 +157,10 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
         ptr=GetNameValuePair(ptr," ", "=", &Name, &Value);
     }
 
+
+		//post process some values
+		ptr=GetVar(Act->Vars, "exec64");
+		if (! StrValid(ptr)) SetVar(Act->Vars, "exec64", GetVar(Act->Vars, "exec"));
 
     Destroy(Tempstr);
     Destroy(Value);
@@ -354,8 +360,8 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
     Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root"), "/patches", NULL);
     SetVar(Act->Vars, "sommelier_patches_dir", Tempstr);
 
-		if (StrValid(Act->InstallPath)) Path=CopyStr(Path, Act->InstallPath);
-		else if (StrValid(PrefixTemplate))
+    if (StrValid(Act->InstallPath)) Path=CopyStr(Path, Act->InstallPath);
+    else if (StrValid(PrefixTemplate))
     {
         Tempstr=CopyStr(Tempstr, PrefixTemplate);
         Path=SubstituteVarsInString(Path, Tempstr, Act->Vars, 0);
@@ -370,18 +376,18 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
 //for wine path is more complex
     switch (Act->PlatformID)
     {
-			case PLATFORM_WINDOWS:
-			case PLATFORM_GOGWINDOS:
+    case PLATFORM_WINDOWS:
+    case PLATFORM_GOGWINDOS:
         Path=CatStr(Path,"drive_c/");
         SetVar(Act->Vars, "drive_c",Path);
 
         if (StrValid(Act->InstallPath)) Path=SubstituteVarsInString(Path, Act->InstallPath, Act->Vars, 0);
         else Path=SubstituteVarsInString(Path, "$(drive_c)/Program Files/$(name)", Act->Vars, 0);
-			break;
+        break;
 
-			default:
+    default:
         SetVar(Act->Vars, "drive_c",Path);
-			break;
+        break;
     }
 
     Path=SlashTerminateDirectoryPath(Path);
@@ -553,4 +559,11 @@ int AppsOutputList(TAction *Template)
 }
 
 
-
+int AppAllowSU(TAction *App)
+{
+    if (Config->Flags & FLAG_DENY_SU) return(FALSE);
+    if (Config->Flags & FLAG_ALLOW_SU) return(TRUE);
+    if (App && (App->Flags & FLAG_DENY_SU)) return(FALSE);
+    if (App && (App->Flags & FLAG_ALLOW_SU)) return(TRUE);
+    return(FALSE);
+}

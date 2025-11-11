@@ -1,0 +1,8 @@
+~eMednafen Emulator Controls~0
+  Alt-Enter         -  Toggle Fullscreen
+  Alt-o             -  Rotate screen
+  Ctrl-Shift-Menu   -  Toggle mouse+keyboard grab
+  Esc               -  Exit Emulator
+  F10               -  Reset
+  F11               -  Hard Reset (power off/on)
+  F12               -  Exit Emulator 

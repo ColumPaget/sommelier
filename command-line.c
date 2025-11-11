@@ -15,6 +15,7 @@ static void PrintUsage()
     printf("sommelier reconfigure <name> [<name>]              reconfigure an installed application (seek for executables, re-write desktop file)\n");
     printf("sommelier run <name>                               run an application by name\n");
     printf("sommelier winecfg <name>                           run 'winecfg' for named wine application\n");
+    printf("sommelier regedit <name>                           run 'regedit' for named wine application\n");
     printf("sommelier download <name>                          just download installer/package to current directory\n");
     printf("sommelier set <setting string> <name> [<name>]     change settings of an installed application\n");
     printf("sommelier autostart                                run programs from ~/.config/autostart\n");
@@ -45,7 +46,15 @@ static void PrintUsage()
     printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
     printf("  -user-agent <agent string>    set user-agent to send when communicating over http\n");
     printf("  -ua <agent string>            set user-agent to send when communicating over http\n");
-    printf("  -su                           allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root\n");
+    printf("  -su                           allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.\n");
+		printf("                                If used with action 'run' then the program runs with the ability to su.\n");
+		printf("                                If used with action 'install' then the program is installed with the ability to su.\n");
+    printf("  -nosu                         deny programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.\n");
+		printf("                                If used with action 'run' then the program runs WITHOUT the ability to su.\n");
+		printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
+		printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
+		printf("  -end                          End of sommelier arguments, anything past this point is arguments for the program to run\n");
+		printf("  --                            End of sommelier arguments, anything past this point is arguments for the program to run\n");
     printf("\n");
     printf("Proxy urls have the form: \n");
     printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -82,19 +91,23 @@ void PrintVersion()
 }
 
 
-static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
+static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 {
     const char *p_Opt;
-    char *Tempstr=NULL;
 
-    if (! Act) return;
-    if (! CmdLine) return;
+		//if we don't have an Action yet, we may have one once we've
+		//parsed more of the command-line, so return TRUE to keep going
+    if (! Act) return(TRUE);
+
+    if (! CmdLine) return(FALSE);
 
     p_Opt=CommandLineCurr(CmdLine);
 
-
-    if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-su")==0) Config->Flags |= FLAG_ALLOWSU;
+		if (strcmp(p_Opt, "--")==0) return(FALSE);
+		else if (strcmp(p_Opt, "-end")==0) return(FALSE);
+		else if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-su")==0) Config->Flags |= FLAG_ALLOW_SU;
+    else if (strcmp(p_Opt, "-nosu")==0) Config->Flags |= FLAG_DENY_SU;
     else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
     else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
@@ -119,6 +132,7 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-secure")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-security")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
     //we cannot unalias the platform here because here, because we won't have loaded platforms yet
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
@@ -136,10 +150,15 @@ static void ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     }
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
 
-    Destroy(Tempstr);
+
+		return(TRUE);
 }
 
 
+//this is a 'first run' command-line parser. If we encounter '--' or -end'
+//we just end parsing options. We will later call 'ParseSimpleAction' if we
+//are doing a 'run' command, and in that case we will handle '--' and '-end'
+//more completely
 static TAction *CommandLineParseOptions(CMDLINE *CmdLine)
 {
     TAction *Options=NULL;
@@ -149,11 +168,15 @@ static TAction *CommandLineParseOptions(CMDLINE *CmdLine)
     arg=CommandLineNext(CmdLine);
     while (arg)
     {
-        if (*arg=='-') ParseCommandLineOption(Options, CmdLine);
+        if (*arg=='-') 
+				{
+				if (!	ParseCommandLineOption(Options, CmdLine)) break;
+				}
         arg=CommandLineNext(CmdLine);
     }
     return(Options);
 }
+
 
 
 TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
@@ -175,7 +198,7 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     {
         if (*arg == '-')
         {
-            ParseCommandLineOption(Act, CmdLine);
+						 if	(! ParseCommandLineOption(Act, CmdLine)) break;
         }
         else
         {
@@ -189,6 +212,16 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
         }
         arg=CommandLineNext(CmdLine);
     }
+
+
+		//if we broke out because we hit '--' or '-end' then add any
+		//remaining args to the 'Act->Args' value
+    arg=CommandLineNext(CmdLine);
+		while (arg)
+		{
+      if (Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
+    	arg=CommandLineNext(CmdLine);
+		}
 
 
     return(Act);
@@ -249,6 +282,8 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
         else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
         else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);
+        else if (strcmp(arg, "regedit")==0) ParseSimpleAction(Acts, ACT_REGEDIT, CmdLine);
+        else if (strcmp(arg, "fonts")==0) ParseSimpleAction(Acts, ACT_FONTS, CmdLine);
         else if (strcmp(arg, "version")==0) PrintVersion();
         else if (strcmp(arg, "-version")==0) PrintVersion();
         else if (strcmp(arg, "--version")==0) PrintVersion();
@@ -273,12 +308,14 @@ ListNode *ParseCommandLine(int argc, char *argv[])
                 arg=CommandLineNext(CmdLine);
             }
         }
+				//if no recognized action, print help
         else PrintUsage();
     }
+		//if no arguments, print help
     else PrintUsage();
 
 
-		//some options can be supplied out-of-order so we preload them into 'Options' and 
+    //some options can be supplied out-of-order so we preload them into 'Options' and
     //retrospectively add them to all apps
     Curr=ListGetNext(Acts);
     while (Curr)
@@ -293,7 +330,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         Curr=ListGetNext(Curr);
     }
 
-		ActionDestroy(Options);
+    ActionDestroy(Options);
     DestroyString(SettingsStr);
     DestroyString(StdDepsPath);
 

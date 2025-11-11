@@ -6,6 +6,7 @@ static int FindCheckBitWidth(const char *Path, int BitWidth)
     int FileWidth;
 
     FileWidth=ELFFileGetBitWidth(Path);
+
     if ( (BitWidth==32) && (FileWidth==64)) return(FALSE);
     if ( (BitWidth==64) && (FileWidth==32)) return(FALSE);
 
@@ -44,6 +45,7 @@ void FindItems(const char *Path, const char *Inclusions, const char *Exclusions,
                 Tempstr=CopyStr(Tempstr, p_Basename);
                 //must strlwr here, as InList will do so to Inclusions and Exclusions
                 strlwr(Tempstr);
+
                 if ( InList(Tempstr, Inclusions) && (! InList(Tempstr, Exclusions)) && FindCheckBitWidth(Glob.gl_pathv[i], BitWidth))
                 {
                     //can't use 'SetVar' here as multiple files might have the same basename, but different paths

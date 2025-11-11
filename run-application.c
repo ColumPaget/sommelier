@@ -4,8 +4,9 @@
 #include "native.h"
 #include "apps.h"
 #include "desktopfiles.h"
+#include "emulator.h"
 #include "xrandr.h"
-
+#include "sandbox.h"
 
 static void GenerateMissingLibs(TAction *Act, const char *MissingLibs)
 {
@@ -149,9 +150,10 @@ pid_t RunSandboxed(TAction *Act)
 
 
 
+
 pid_t RunNormal(TAction *Act)
 {
-    char *Cmd=NULL, *SpawnConfig=NULL, *Tempstr=NULL;
+    char *Cmd=NULL, *SpawnConfig=NULL, *Secure=NULL, *Tempstr=NULL;
     const char *ptr;
     pid_t pid=-1;
 
@@ -171,24 +173,49 @@ pid_t RunNormal(TAction *Act)
     Cmd=GenerateApplicationCommandLine(Cmd, Act);
     if (! (Config->Flags & FLAG_DEBUG)) Cmd=CatStr(Cmd, " >/dev/null");
 
+    Tempstr=EmulatorGetHelp(Tempstr, Act);
+    if (StrValid(Tempstr)) TerminalPutStr(Tempstr, NULL);
+
+
+    Secure=SeccompSandboxGetLevel(Secure, Act);
     SpawnConfig=CopyStr(SpawnConfig, "+stderr");
-    ptr=GetVar(Act->Vars, "security_level");
-    if (! StrValid(ptr)) ptr="minimal";
+    if (StrValid(Secure)) SpawnConfig=MCatStr(SpawnConfig, " security='", Secure, "'", NULL);
 
-    //still being worked on due to the need to support wine32 under linux64bit
-    //SpawnConfig=MCatStr(SpawnConfig, " security='", ptr, "'", NULL);
-    //Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), ptr);
+    if (StrValid(Secure)) Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), Secure);
+    else Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"));
 
-    Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"));
+    if (AppAllowSU(Act)) Tempstr=CatStr(Tempstr, "~ySU ALLOWED:~0 This app is allowed to switch-user/super-user via su/sudo/suid etc\n");
     TerminalPutStr(Tempstr, NULL);
 
     pid=Spawn(Cmd, SpawnConfig);
 
     Destroy(SpawnConfig);
+    Destroy(Secure);
     Destroy(Tempstr);
     Destroy(Cmd);
 
     return(pid);
+}
+
+
+//AppImages are such a bad idea, hard to sandbox becuase they need mount!
+static int IsAppImage(const char *Invocation)
+{
+    char *Token=NULL;
+    const char *ptr, *extn;
+    int RetVal=FALSE;
+
+    ptr=GetToken(Invocation, "\\S", &Token, GETTOKEN_QUOTES);
+    while (ptr)
+    {
+        StripQuotes(Token);
+        extn=strrchr(Token, '.');
+        if (StrValid(extn) && (strcasecmp(extn, ".AppImage")==0))  RetVal=TRUE;
+        ptr=GetToken(ptr, "\\S", &Token, GETTOKEN_QUOTES);
+    }
+
+    Destroy(Token);
+    return(RetVal);
 }
 
 
@@ -203,6 +230,13 @@ void RunApplication(TAction *Act)
     {
         if (StrValid(Act->Exec))
         {
+            if (IsAppImage(Act->Exec))
+            {
+                TerminalPutStr("~yWARN: Application is an AppImage and therefore requires enhanced privileges to boot. no SU/Seccomp sandboxing active~0\n", NULL);
+                Config->Flags |= FLAG_ALLOW_SU;
+            }
+
+            if (! AppAllowSU(Act)) SetNoSU();
 
             ptr=GetVar(Act->Vars, "runwarn");
             if (StrValid(ptr))
@@ -234,6 +268,9 @@ void RunApplication(TAction *Act)
     }
     else fprintf(stderr, "ERROR: application not installed\n");
 
+    //sleep for a while so that we can print out all launch output before returning to shell
+    sleep(3);
+
     Destroy(Tempstr);
 }
 
@@ -247,14 +284,14 @@ void RunApplicationFromDesktopFile(TAction *Act)
 }
 
 
-void RunWineCfg(TAction *Act)
+void RunWineUtility(TAction *Act, const char *Utility)
 {
     char *Tempstr=NULL;
 
     if (DesktopFileLoad(Act))
     {
         Tempstr=AppFindInstalled(Tempstr,  Act);
-        Act->Exec=CopyStr(Act->Exec, "winecfg");
+        Act->Exec=CopyStr(Act->Exec, Utility);
         RunNormal(Act);
     }
     else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");

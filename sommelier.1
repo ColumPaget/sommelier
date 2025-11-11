@@ -21,6 +21,7 @@ sommelier download <name>                          just download installer/packa
 sommelier set <setting string> <name> [<name>]     change settings of an installed application
 sommelier autostart                                run programs from \*(ti/.config/autostart
 
+
 .EE
 .fi
 .in
@@ -206,14 +207,7 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 
 .br
 
-.TP
-.B -su
- on linux apps are blocked from switching to root superuser (e.g. using su or sudo), this switch allows an app to do that.
-   
-.P
 
-.br
- 
 .TP
 .B -no-xrandr
  don\(aqt use xrandr to reset screen resolution after running and application
@@ -233,7 +227,36 @@ Installed applications are stored under a \(aq.sommelier\(aq directory in the us
 .TP
 .B -ua <agent string>
  set user-agent to send when communicating over http
-  
+.P
+.br
+
+ .TP
+.B -su
+ allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.  If used with action 'run' then the program runs with the ability to su.  If used with action 'install' then the program is installed with the ability to su.
+.P
+.br
+ 
+ .TP
+.B -nosu
+ deny programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.  If used with action 'run' then the program runs WITHOUT the ability to su.  If used with action 'install' then the program is installed WITHOUT the ability to su.  If used with action 'install' then the program is installed WITHOUT the ability to su.
+.P
+.br
+
+ .TP
+.B -end
+ End of sommelier command-line arguments, anything past this point is arguments for the program to run
+.P
+.br
+
+ .TP
+.B --
+ End of sommelier command-line arguments, anything past this point is arguments for the program to run
+.P
+.br
+
+
+
+ 
 .SH EXAMPLE USAGE
   
 .P

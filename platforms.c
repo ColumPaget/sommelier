@@ -9,6 +9,23 @@ ListNode *Platforms=NULL;
 //make an educated guess what platform we're running on, by checking compiler macros
 //that should be set on 64-bit linux. if we're on 64-bit linux we won't, by default
 //look for 32-bit linux apps, and vis-a-versa
+
+
+int NativeBitWidth()
+{
+#ifdef __x86_64__
+    return(64);
+#endif
+
+#ifdef _____LP64_____
+    return(64);
+#endif
+
+    return(32);
+}
+
+
+
 const char *PlatformDefault()
 {
 #ifdef __x86_64__
@@ -114,6 +131,7 @@ static TPlatform *PlatformsParse(const char *Line)
             if (strcmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
             if (strcmp(Name, "noexec")==0) Plt->Flags |= PLATFORM_FLAG_NOEXEC;
             if (strcmp(Name, "arg")==0) Plt->Args=MCatStr(Plt->Args, "'", Value, "' ", NULL);
+            if (strcmp(Name, "help")==0) Plt->HelpFile=MCatStr(Plt->HelpFile, "'", Value, "' ", NULL);
             ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
         }
 
@@ -211,6 +229,7 @@ const char *PlatformUnAlias(const char *Alias)
     if (! Platform) return(Alias);
     return(Platform->Name);
 }
+
 
 
 void PlatformsList()

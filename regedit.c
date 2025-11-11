@@ -15,7 +15,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
 //Create a windows registry file to change wine settings in the
 //registry
 
-    Path=FormatStr(Path,"/tmp/%d.reg",getpid());
+    Path=FormatStr(Path,"/tmp/.%d.reg",getpid());
 
     S=STREAMOpen(Path, "w");
     if (S)
@@ -156,6 +156,44 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
     Destroy(Path);
 }
 
+
+
+PARSER *RegEditExport(TAction *Act)
+{
+    char *Tempstr=NULL, *Path=NULL;
+    PARSER *P=NULL;
+    STREAM *S;
+
+    Path=FormatStr(Path, "/tmp/.%d", getpid());
+    Tempstr=SubstituteVarsInString(Tempstr, "WINEPREFIX=$(prefix) wine regedit -E ", Act->Vars, 0);
+    Tempstr=MCatStr(Tempstr, Path, ".wchar", NULL);
+    system(Tempstr);
+
+    Tempstr=MCopyStr(Tempstr, "iconv -f UTF-16LE -t UTF-8 ", Path, ".wchar ",  " -o ", Path, ".reg", NULL);
+    system(Tempstr);
+
+    Tempstr=MCopyStr(Tempstr, Path, ".wchar", NULL);
+    unlink(Tempstr);
+
+
+    Path=CatStr(Path, ".reg");
+    S=STREAMOpen(Path, "r");
+    if (S)
+    {
+        Tempstr=STREAMReadDocument(Tempstr, S);
+        fprintf(stderr, "RE: %s\n", Tempstr);
+        fflush(NULL);
+
+        P=ParserParseDocument("ini", Tempstr);
+        STREAMClose(S);
+    }
+    unlink(Path);
+
+    Destroy(Tempstr);
+    Destroy(Path);
+
+    return(P);
+}
 
 
 void RegEditApplySettings(TAction *Act)

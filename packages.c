@@ -120,7 +120,7 @@ static int PackageRunUnpacker(const char *Path, TAction *Act, int PackageType, c
         printf("unpacking: %s\n",GetBasename(Path));
         RunProgramAndConsumeOutput(CmdLine, "noshell");
 
-        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), "data.tar,data.tar.gz,data.bz2,data.tar.xz");
+        Tempstr=FindSingleFile(Tempstr, GetVar(Act->Vars, "install-dir"), "data.tar,data.tar.gz,data.bz2,data.tar.xz,data.tar.zst");
         if (StrValid(Tempstr)) CmdLine=MCopyStr(CmdLine, "tar -xf '",Tempstr, "' ", FilesToExtract, NULL);
         else CmdLine=CopyStr(CmdLine, "");
         break;

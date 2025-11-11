@@ -116,25 +116,10 @@ DETAILED USAGE
 ==============
 
 ```
-sommelier platforms                                print list of supported platforms
-sommelier categories                               print list of application categories
-sommelier list [options]                           print list of apps available for install
-sommelier install <name> [<name>] [options]        install an application by name
-sommelier uninstall <name> [<name>]                uninstall an application by name
-sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
-sommelier reconfigure <name> [<name>]              reconfigure an application by name
-sommelier download <name> [<name>]                 download installers/packages to the current directory
-sommelier run <name> [<options>]                   run an application by name
-sommelier winecfg <name> [<options>]               run winecfg for named wine application
-sommelier set <setting string> <name> [<name>]     change settings of installed applications listed by name
-sommelier autostart                                load programs out of ~/.config/autostart
-
-options are:
   -d                            print debugging (there will be a lot!)
   -debug                        print debugging (there will be a lot!)
   -c <config file>              specify a config (list of apps) file, rather than using the default
   -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)
-  -n <name>                     Name that program will be installed under and called/run under
   -install-name <name>          Name that program will be installed under and called/run under
   -install-as <name>            Name that program will be installed under and called/run under
   -f                            force install even if expected sha256 doesn't match the download
@@ -142,17 +127,29 @@ options are:
   -proxy <url>                  use a proxy for downloading installs
   -platform <platform>          platform to use when installing or displaying lists of apps
   -category <category>          category to use when displaying lists of apps
-  -installed                    display only installed app when displaying lists of apps
+  -installed                    display only installed apps when displaying lists of apps
   -k                            keep installer or .zip file instead of deleting it after install
   -S                            install app system-wide under /opt, to be run as a normal native app
   -system                       install app system-wide under /opt, to be run as a normal native app
-  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
+  -n <name>                     specify name to install the app under, allows installing multiple instances of the same app
+  -install-name <name>          specify name to install the app under, allows installing multiple instances of the same app
+  -install-as <name>            specify name to install the app under, allows installing multiple instances of the same app
   -emu <emulator>               specify a specific emulator to use when installing an app
   -emulator <emulator>          specify a specific emulator to use when installing an app
+  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
   -hash                         hash downloads even if they have no expected hash value
   -no-xrandr                    don't use xrandr to reset screen resolution after running and application
   -user-agent <agent string>    set user-agent to send when communicating over http
   -ua <agent string>            set user-agent to send when communicating over http
+  -su                           allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.
+                                If used with action 'run' then the program runs with the ability to su.
+                                If used with action 'install' then the program is installed with the ability to su.
+  -nosu                         deny programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.
+                                If used with action 'run' then the program runs WITHOUT the ability to su.
+                                If used with action 'install' then the program is installed WITHOUT the ability to su.
+                                If used with action 'install' then the program is installed WITHOUT the ability to su.
+  -end                          End of sommelier arguments, anything past this point is arguments for the program to run
+  --                            End of sommelier arguments, anything past this point is arguments for the program to run
 ```
 
 
@@ -163,6 +160,8 @@ The 'run' command can take arguments that are passed to the program. For instanc
 ```
 	sommelier run Telegram -startintray
 ```
+
+if an argument would clash with something that sommelier would understand the '-end' or '--' options can be used to mark the end of the sommelier options. Anyting beyond that point will be passed to the program being run by sommelier.
 
 Some emulators also have 'extra' arguments that can be used with the 'run' command. `sommelier platforms` should show those.
 
