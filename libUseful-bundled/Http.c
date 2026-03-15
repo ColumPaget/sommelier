@@ -11,6 +11,7 @@
 #include "SecureMem.h"
 #include "Errors.h"
 #include "Entropy.h"
+#include "HttpUtil.h"
 
 /* These functions relate to CLIENT SIDE http/https */
 
@@ -122,8 +123,8 @@ HTTPInfoStruct *HTTPInfoCreate(const char *Protocol, const char *Host, int Port,
     {
         Info->Proxy=CopyStr(Info->Proxy,ptr);
         strlwr(Info->Proxy);
-        if (strncmp(Info->Proxy,"http:",5)==0) Info->Flags |= HTTP_PROXY;
-        else if (strncmp(Info->Proxy,"https:",6)==0) Info->Flags |= HTTP_PROXY;
+        if (CompareStrLen(Info->Proxy,"http:",5)==0) Info->Flags |= HTTP_PROXY;
+        else if (CompareStrLen(Info->Proxy,"https:",6)==0) Info->Flags |= HTTP_PROXY;
         else Info->Flags=HTTP_TUNNEL;
     }
 
@@ -133,16 +134,16 @@ HTTPInfoStruct *HTTPInfoCreate(const char *Protocol, const char *Host, int Port,
 }
 
 
-char *HTTPInfoToURL(char *RetBuff, HTTPInfoStruct *Info)
+char *HTTPInfoToURL(char *RetStr, HTTPInfoStruct *Info)
 {
     char *p_proto;
-    char *Doc=NULL, *RetStr=NULL;
+    char *Doc=NULL;
 
     if (Info->Flags & HTTP_SSL) p_proto="https";
     else p_proto="http";
 
     Doc=HTTPQuoteChars(Doc,Info->Doc," ");
-    RetStr=FormatStr(RetBuff,"%s://%s:%d%s",p_proto,Info->Host,Info->Port,Info->Doc);
+    RetStr=FormatStr(RetStr, "%s://%s:%d%s",p_proto,Info->Host,Info->Port,Info->Doc);
 
     DestroyString(Doc);
     return(RetStr);
@@ -266,7 +267,11 @@ static void HTTPParseServerCookie(const char *Str)
     const char *ptr;
 
 
-    if (! Cookies) Cookies=ListCreate(LIST_FLAG_TIMEOUT);
+    if (! Cookies)
+    {
+        Cookies=ListCreate(LIST_FLAG_TIMEOUT);
+        ListSetDestroyer(Cookies, Destroy);
+    }
 
     ptr=GetNameValuePair(Str, ";", "=", &Name, &Value);
     StripTrailingWhitespace(Name);
@@ -435,6 +440,7 @@ static void HTTPParseHeader(STREAM *S, HTTPInfoStruct *Info, char *Header)
             if (strcasecmp(Token,"Content-length")==0)
             {
                 Info->ContentLength=atoi(ptr);
+                if (S->Size ==0) S->Size=strtoul(ptr, NULL, 10);
             }
             else if (strcasecmp(Token,"Content-type")==0)
             {
@@ -626,7 +632,7 @@ static char *HTTPHeadersAppendAuth(char *RetStr, const char *AuthHeader, HTTPInf
             //We should now have Logon:Password
             Nonce=SetStrLen(Nonce,len * 2);
 
-            to64frombits((unsigned char *) Nonce, (unsigned char *) Tempstr, len);
+            Nonce=EncodeBytes(Nonce, Tempstr, len, ENCODE_BASE64);
             SendStr=MCatStr(SendStr,AuthHeader,": Basic ",Nonce,"\r\n",NULL);
 
             //wipe Tempstr, because it held password for a while
@@ -671,7 +677,7 @@ void HTTPSendHeaders(STREAM *S, HTTPInfoStruct *Info)
     }
 
     //probably need to find some other way of detecting need for sending ContentLength other than whitelisting methods
-    if ((Info->PostContentLength > 0) &&
+    if ((Info->PostContentLength > 0) && StrValid(Info->Method) &&
             (
                 (strcasecmp(Info->Method,"POST")==0) ||
                 (strcasecmp(Info->Method,"PUT")==0) ||
@@ -727,11 +733,11 @@ void HTTPSendHeaders(STREAM *S, HTTPInfoStruct *Info)
         SendStr=MCatStr(SendStr,"If-Modified-Since: ",Tempstr, "\r\n",NULL);
     }
 
-    if (
-        (strcasecmp(Info->Method,"DELETE") !=0) &&
-        (strcasecmp(Info->Method,"HEAD") !=0) &&
-        (strcasecmp(Info->Method,"PUT") !=0)
-    )
+    if ( StrValid(Info->Method) &&
+            (strcasecmp(Info->Method,"DELETE") !=0) &&
+            (strcasecmp(Info->Method,"HEAD") !=0) &&
+            (strcasecmp(Info->Method,"PUT") !=0)
+       )
     {
 
         Tempstr=CopyStr(Tempstr,"");
@@ -962,7 +968,7 @@ STREAM *HTTPSetupConnection(HTTPInfoStruct *Info, int ForceHTTPS)
 
 
     //there's no data to send in a GET, so turn on quickack with 'q'
-    if (strcasecmp(Info->Method,"GET")==0) Tempstr=FormatStr(Tempstr, "rwq timeout=%d", Info->Timeout);
+    if (CompareStrNoCase(Info->Method,"GET")==0) Tempstr=FormatStr(Tempstr, "rwq timeout=%d", Info->Timeout);
     else Tempstr=FormatStr(Tempstr, "rw timeout=%d", Info->Timeout);
 
     //we cannot create Info->S if there is one, but we can't free/destroy it
@@ -1050,10 +1056,9 @@ static int HTTPTransactHandleAuthRequest(HTTPInfoStruct *Info, int AuthResult)
         //Set a flag (HTTP_AUTH_RETURN) that means we'll give up if we fail again
         if (Info->AuthFlags & HTTP_AUTH_OAUTH)
         {
-            //if HTTP_AUTH_RETURN is set, then we alread tried getting a refresh
+            //if HTTP_AUTH_RETURN is set, then we already tried getting a refresh
             if (Info->AuthFlags & HTTP_AUTH_RETURN) return(FALSE);
             Info->Authorization=MCopyStr(Info->Authorization, "Bearer ", OAuthLookup(Info->Credentials, TRUE), NULL);
-            return(TRUE);
         }
         //for normal authentication, if we've sent the authentication, or if we have no auth details, then give up
         else if (
@@ -1081,7 +1086,7 @@ STREAM *HTTPTransact(HTTPInfoStruct *Info)
     int result=HTTP_NOCONNECT;
     STREAM *S=NULL;
 
-    //we cannot close Info->S within this function, as it may be used by functions outside of this one
+    //we cannot destroy Info->S within this function, as it may be used by functions outside of this one
     //so we map it to 'S' and set 'S' to null if connection fails and return that
     while (1)
     {
@@ -1093,8 +1098,7 @@ STREAM *HTTPTransact(HTTPInfoStruct *Info)
 
             if (! (Info->State & HTTP_CLIENTDATA_SENT))
             {
-                //Set this even if no client data to send, so we no we've been
-                //through here once
+                //Set this even if no client data to send, so we know we've been through here once
                 Info->State |= HTTP_CLIENTDATA_SENT;
 
                 if (StrValid(Info->PostData))
@@ -1104,11 +1108,14 @@ STREAM *HTTPTransact(HTTPInfoStruct *Info)
                 }
                 else
                 {
-                    if (strcasecmp(Info->Method,"POST")==0) break;
-                    if (strcasecmp(Info->Method,"PUT")==0) break;
-                    if (strcasecmp(Info->Method,"PATCH")==0) break;
-                    if (strcasecmp(Info->Method,"PROPFIND")==0) break;
-                    if (strcasecmp(Info->Method,"PROPPATCH")==0) break;
+                    if (StrValid(Info->Method))
+                    {
+                        if (strcasecmp(Info->Method,"POST")==0) break;
+                        if (strcasecmp(Info->Method,"PUT")==0) break;
+                        if (strcasecmp(Info->Method,"PATCH")==0) break;
+                        if (strcasecmp(Info->Method,"PROPFIND")==0) break;
+                        if (strcasecmp(Info->Method,"PROPPATCH")==0) break;
+                    }
                 }
             }
 
@@ -1124,6 +1131,7 @@ STREAM *HTTPTransact(HTTPInfoStruct *Info)
             if (result==HTTP_REDIRECT)
             {
                 STREAMShutdown(S);
+                //do not use STREAMDestroy, as S can be used by functions outside this one
                 //STREAMDestroy(S);
                 continue;
             }
@@ -1137,6 +1145,7 @@ STREAM *HTTPTransact(HTTPInfoStruct *Info)
                 if (HTTPTransactHandleAuthRequest(Info, result))
                 {
                     STREAMShutdown(S);
+                    //do not use STREAMDestroy, as S can be used by functions outside this one
                     //STREAMDestroy(S);
                     continue;
                 }

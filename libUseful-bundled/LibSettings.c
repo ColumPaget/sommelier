@@ -19,14 +19,23 @@ void LibUsefulInitSettings()
 {
     char *Tempstr=NULL;
 
-    LibUsefulSettings=ListCreate();
-    SetVar(LibUsefulSettings,"LibUseful:Version",__LIBUSEFUL_VERSION__);
-    Tempstr=MCopyStr(Tempstr,__LIBUSEFUL_BUILD_DATE__," ",__LIBUSEFUL_BUILD_TIME__,NULL);
-    SetVar(LibUsefulSettings,"LibUseful:BuildTime",Tempstr);
-    Tempstr=FormatStr(Tempstr, "%d", 4096 * 10000);
-    SetVar(LibUsefulSettings,"MaxDocumentSize", Tempstr);
-    Tempstr=FormatStr(Tempstr, "%d", 4096 * 10000);
-    SetVar(LibUsefulSettings,"WEBSOCKET:MaxFrameSize", Tempstr);
+    LibUsefulSettings=ListCreate(LIST_FLAG_CACHE);
+    SetVar(LibUsefulSettings, "LibUseful:Version", __LIBUSEFUL_VERSION__);
+
+    Tempstr=MCopyStr(Tempstr, __LIBUSEFUL_BUILD_DATE__, " ", __LIBUSEFUL_BUILD_TIME__, NULL);
+    SetVar(LibUsefulSettings, "LibUseful:BuildTime", Tempstr);
+
+#ifdef USE_LGPL
+    SetVar(LibUsefulSettings, "LibUseful:License", "LGPLv3");
+#else
+    SetVar(LibUsefulSettings, "LibUseful:License", "GPLv3");
+#endif
+
+    Tempstr=FormatStr(Tempstr,  "%d",  4096 * 10000);
+    SetVar(LibUsefulSettings, "MaxDocumentSize",  Tempstr);
+
+    Tempstr=FormatStr(Tempstr,  "%d",  4096 * 10000);
+    SetVar(LibUsefulSettings, "WEBSOCKET:MaxFrameSize",  Tempstr);
 
     DestroyString(Tempstr);
 }
@@ -88,6 +97,25 @@ int LibUsefulDebugActive()
     if (LibUsefulGetBool("libUseful:Debug")) return(TRUE);
     return(FALSE);
 }
+
+
+STREAM *LibUsefulConfigFileOpen(const char *FName, const char *EnvVarName, const char *LibUsefulVar)
+{
+    char *Tempstr=NULL;
+    STREAM *S=NULL;
+
+    if (StrValid(LibUsefulVar)) Tempstr=CopyStr(Tempstr, LibUsefulGetValue(LibUsefulVar));
+    if ( (! StrValid(Tempstr)) && (StrValid(EnvVarName)) ) Tempstr=CopyStr(Tempstr, getenv(EnvVarName));
+
+    if (! StrValid(Tempstr)) Tempstr=MCopyStr(Tempstr, SYSCONFDIR,  "/", FName, NULL);
+    if (access(Tempstr, R_OK) !=0) Tempstr=FindFileInPrefixSubDirectory(Tempstr, getenv("PATH"), "/etc/", FName);
+
+    S=STREAMOpen(Tempstr, "r");
+
+    Destroy(Tempstr);
+    return(S);
+}
+
 
 
 void LibUsefulAtExit()

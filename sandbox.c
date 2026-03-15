@@ -39,13 +39,13 @@ char *SeccompSandboxGetLevel(char *RetStr, TAction *Act)
     if ( NativeBitWidth() == PlatformBitWidth(Platform) )
     {
         ptr=GetVar(Act->Vars, "security_level");
-				if (! StrValid(ptr))
+        if (! StrValid(ptr))
         {
             //if either the app or the config has 'allow su' set, then we cannot use seccomp
             //applications that have a google-chrome/chromium component need capset and bpf for their sandboxing
             if (! AppAllowSU(Act)) ptr="syscall_allow=capset;bpf user";
         }
-				else if (strcasecmp(ptr, "none")==0) ptr="";
+        else if (strcasecmp(ptr, "none")==0) ptr="";
     }
 
     RetStr=CopyStr(RetStr, ptr);

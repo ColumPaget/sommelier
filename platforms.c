@@ -58,6 +58,8 @@ int PlatformType(const char *Platform)
     if (strcasecmp(Platform, "linux32")==0) return(PLATFORM_LINUX32);
     if (strcasecmp(Platform, "linux64")==0) return(PLATFORM_LINUX64);
     if (strcasecmp(Platform, "doom")==0) return(PLATFORM_DOOM);
+    if (strcasecmp(Platform, "mame")==0) return(PLATFORM_MAME);
+    if (strcasecmp(Platform, "xmame")==0) return(PLATFORM_MAME);
 
     return(PLATFORM_UNKNOWN);
 }
@@ -130,6 +132,7 @@ static TPlatform *PlatformsParse(const char *Line)
             if (strcmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
             if (strcmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
             if (strcmp(Name, "noexec")==0) Plt->Flags |= PLATFORM_FLAG_NOEXEC;
+            if (strcmp(Name, "nostderr")==0) Plt->Flags |= PLATFORM_FLAG_NOSTDERR;
             if (strcmp(Name, "arg")==0) Plt->Args=MCatStr(Plt->Args, "'", Value, "' ", NULL);
             if (strcmp(Name, "help")==0) Plt->HelpFile=MCatStr(Plt->HelpFile, "'", Value, "' ", NULL);
             ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
@@ -153,7 +156,10 @@ char *PlatformEmulatorSelect(char *RetStr,  const char *Emulators, const char *R
     char *EmuName=NULL;
     const char *ptr;
 
-    RetStr=CopyStr(RetStr, "");
+// DO NOT RETURN BLANK STRING, unless an emulator isn't needed
+// if an emulator can't be found, return NULL
+//    RetStr=CopyStr(RetStr, "");
+
     ptr=GetToken(Emulators, ",", &EmuInvoke, 0);
     while (ptr)
     {
@@ -232,25 +238,54 @@ const char *PlatformUnAlias(const char *Alias)
 
 
 
-void PlatformsList()
+static void PlatformListOutput(const char *Name, const char *Aliases, const char *EmuList, const char *ArgList, int Supported)
+{
+    char *Tempstr=NULL, *Prefix=NULL;
+
+    if (Supported) Prefix=CopyStr(Prefix, "~e");
+    else Prefix=CopyStr(Prefix, "");
+
+    Tempstr=FormatStr(Tempstr, "%s%-15s~0  aliases: %-20s   emulators: %-20s  ", Prefix, Name, Aliases, EmuList);
+
+    if (StrValid(ArgList)) Tempstr=MCatStr(Tempstr, "args: ", ArgList, NULL);
+    Tempstr=CatStr(Tempstr, "\n");
+    TerminalPutStr(Tempstr, NULL);
+
+    Destroy(Tempstr);
+    Destroy(Prefix);
+}
+
+
+void PlatformsList(TAction *Act)
 {
     ListNode *Curr;
     TPlatform *Plat;
-    char *EmuList=NULL, *ArgList=NULL, *Token=NULL, *Item=NULL, *Name=NULL;
+    char *EmuList=NULL, *ArgList=NULL, *Token=NULL, *Item=NULL, *Name=NULL, *Path=NULL;
     const char *ptr, *aliases;
+    int Supported=FALSE;
 
     Curr=ListGetNext(Platforms);
     while (Curr)
     {
+        Supported=FALSE;
         Plat=(TPlatform *) Curr->Item;
         aliases=GetToken(Curr->Tag, ",", &Name, 0);
 
+        if (! StrValid(Plat->Emulators)) Supported=TRUE;
         EmuList=CopyStr(EmuList, "");
         ptr=GetToken(Plat->Emulators, ",", &Token, GETTOKEN_QUOTES);
+        //if no emulator required, then platform is supported
+
         while (ptr)
         {
             GetToken(Token, "\\S", &Item, GETTOKEN_QUOTES);
-            EmuList=MCatStr(EmuList, GetBasename(Item), " ", NULL);
+            Path=FindFileInPath(Path, Item, getenv("PATH"));
+            if (StrValid(Path))
+            {
+                Supported=TRUE;
+                EmuList=MCatStr(EmuList, "~g", GetBasename(Item), "~0 ", NULL);
+            }
+            else EmuList=MCatStr(EmuList, GetBasename(Item), " ", NULL);
             ptr=GetToken(ptr, ",", &Token, GETTOKEN_QUOTES);
         }
 
@@ -263,9 +298,7 @@ void PlatformsList()
             ptr=GetToken(ptr, "\\S", &Token, GETTOKEN_QUOTES);
         }
 
-        printf("%-15s  aliases: %-20s   emulators: %-20s  ", Name, aliases, EmuList);
-        if (StrValid(ArgList)) printf("args: %s", ArgList);
-        printf("\n");
+        if (Supported || (! (Act->Flags & FLAG_INSTALLED))) PlatformListOutput(Name, aliases, EmuList, ArgList, Supported);
         Curr=ListGetNext(Curr);
     }
 
@@ -274,41 +307,48 @@ void PlatformsList()
     Destroy(Token);
     Destroy(Name);
     Destroy(Item);
+    Destroy(Path);
 }
 
 
 
 char *PlatformLookupInfo(char *RetStr, const char *Name, int Info)
 {
+    ListNode *Curr;
     TPlatform *Plt;
 
     RetStr=CopyStr(RetStr, "");
-    Plt=PlatformFind(Name);
-    if (Plt)
+    Curr=ListGetNext(Platforms);
+    while (Curr)
     {
-        switch (Info)
+        Plt=(TPlatform *) Curr->Item;
+        if (CompareStr(Name, Plt->Name)==0)
         {
-        case PLATFORM_INFO_INSTALL_MESSAGE:
-            RetStr=CopyStr(RetStr, Plt->InstallMessage);
-            break;
+            switch (Info)
+            {
+            case PLATFORM_INFO_INSTALL_MESSAGE:
+                RetStr=CopyStr(RetStr, Plt->InstallMessage);
+                break;
 
-        case PLATFORM_INFO_EXE_SEARCH_PATTERN:
-            RetStr=CopyStr(RetStr, Plt->ExeSearchPattern);
-            break;
+            case PLATFORM_INFO_EXE_SEARCH_PATTERN:
+                RetStr=CopyStr(RetStr, Plt->ExeSearchPattern);
+                break;
 
-        case PLATFORM_INFO_EXE64_SEARCH_PATTERN:
-            RetStr=CopyStr(RetStr, Plt->Exe64SearchPattern);
-            break;
+            case PLATFORM_INFO_EXE64_SEARCH_PATTERN:
+                RetStr=CopyStr(RetStr, Plt->Exe64SearchPattern);
+                break;
 
-        case PLATFORM_INFO_EMULATORS:
-            RetStr=CopyStr(RetStr, Plt->Emulators);
-            break;
+            case PLATFORM_INFO_EMULATORS:
+                RetStr=CatStr(RetStr, Plt->Emulators);
+                break;
 
-        case PLATFORM_INFO_WORKING_DIR:
-            RetStr=CopyStr(RetStr, Plt->WorkingDir);
-            break;
+            case PLATFORM_INFO_WORKING_DIR:
+                RetStr=CopyStr(RetStr, Plt->WorkingDir);
+                break;
 
+            }
         }
+        Curr=ListGetNext(Curr);
     }
 
     return(RetStr);

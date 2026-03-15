@@ -10,6 +10,9 @@ ListNode *TerminalThemeInit()
 
     TermTheme=ListCreate();
 
+    SetVar(TermTheme, "TextPrompt:Active", "~e");
+    SetVar(TermTheme, "TextPrompt:Done", "");
+
     SetVar(TermTheme, "Menu:CursorLeft", ">");
     SetVar(TermTheme, "Menu:SelectedLeft", "*");
     SetVar(TermTheme, "Menu:CursorAttribs", "~e");
@@ -32,7 +35,7 @@ ListNode *TerminalThemeInit()
     SetVar(TermTheme, "Calendar:TitleAttribs", "~B~w");
     SetVar(TermTheme, "Calendar:TitleMonthAttribs", "~y");
     SetVar(TermTheme, "Calendar:OutsideMonthAttribs", "~b");
-    SetVar(TermTheme, "Calendar:TodayAttribs", "~e");
+    SetVar(TermTheme, "Calendar:TodayAttribs", "~r~e");
 
 
 
@@ -63,6 +66,7 @@ const char *TerminalThemeGet(const char *Scope, const char *Attrib)
 
     Destroy(Tempstr);
 
+    if (! p_Value) return("");
     return(p_Value);
 }
 

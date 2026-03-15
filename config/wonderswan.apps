@@ -1,3 +1,5 @@
+#Homebrew/opensource games for the Wonderswan console. These games are all believed to be legal to download and play.
+
 * platform=wonderswan category=Game;Wonderswan
 
 SwanDriving url=http://sebastianmihai.com/downloads/swandriving/swandriving.wsc sha256=d3c35b8e33dd0a930cb7e6de5fdded043788b026151fd58a5d41a16eefff7c1e install-type=executable category="RacingGame;Wonderswan"

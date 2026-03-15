@@ -116,6 +116,23 @@ DETAILED USAGE
 ==============
 
 ```
+sommelier addstore <url>                           add a remote store of apps at an ssh: or http: url
+sommelier refresh                                  re-download files registered with 'addstore'
+sommelier platforms                                print list of supported platforms
+sommelier categories                               print list of application categories
+sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform
+sommelier install <name> [<name>] [options]        install an application by name
+sommelier uninstall <name> [<name>]                uninstall an application by name
+sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier reconfigure <name> [<name>]              reconfigure an installed application (seek for executables, re-write desktop file)
+sommelier run <name>                               run an application by name
+sommelier winecfg <name>                           run 'winecfg' for named wine application
+sommelier regedit <name>                           run 'regedit' for named wine application
+sommelier download <name>                          just download installer/package to current directory
+sommelier set <setting string> <name> [<name>]     change settings of an installed application
+sommelier autostart                                run programs from ~/.config/autostart
+
+options are:
   -d                            print debugging (there will be a lot!)
   -debug                        print debugging (there will be a lot!)
   -c <config file>              specify a config (list of apps) file, rather than using the default
@@ -127,15 +144,15 @@ DETAILED USAGE
   -proxy <url>                  use a proxy for downloading installs
   -platform <platform>          platform to use when installing or displaying lists of apps
   -category <category>          category to use when displaying lists of apps
-  -installed                    display only installed apps when displaying lists of apps
+  -installed                    display only installed apps when displaying lists of apps, or only platforms with installed emulators when displaying platform list
   -k                            keep installer or .zip file instead of deleting it after install
   -S                            install app system-wide under /opt, to be run as a normal native app
   -system                       install app system-wide under /opt, to be run as a normal native app
   -n <name>                     specify name to install the app under, allows installing multiple instances of the same app
   -install-name <name>          specify name to install the app under, allows installing multiple instances of the same app
   -install-as <name>            specify name to install the app under, allows installing multiple instances of the same app
-  -emu <emulator>               specify a specific emulator to use when installing an app
-  -emulator <emulator>          specify a specific emulator to use when installing an app
+  -emu <emulator>               specify a specific emulator to use when installing an app (only for use with 'install' and 'reconfigure' verbs)
+  -emulator <emulator>          specify a specific emulator to use when installing an app (only for use with 'install' and 'reconfigure' verbs)
   -icache <dir>                 installer cache: download installer to directory'dir' and leave it there
   -hash                         hash downloads even if they have no expected hash value
   -no-xrandr                    don't use xrandr to reset screen resolution after running and application

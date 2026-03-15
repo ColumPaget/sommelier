@@ -6,6 +6,7 @@
 
 ListNode *AppsGetList();
 char *AppsListExpand(char *FileList, const char *ConfigFiles);
+void AppsLoadFromFile(const char *Path, ListNode *Apps);
 ListNode *AppsLoad(const char *ConfigFiles);
 int AppsOutputList(TAction *Act);
 void LoadAppConfigToAct(TAction *Act, const char *Config);

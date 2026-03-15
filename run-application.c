@@ -117,7 +117,7 @@ pid_t RunSandboxed(TAction *Act)
     if (Act->Flags & FLAG_NET) SpawnConfig=CatStr(SpawnConfig, "+net ");
     else SpawnConfig=CatStr(SpawnConfig, "-net ");
 
-    SpawnConfig=MCatStr(SpawnConfig,"setenv='LD_LIBRARY_PATH=/lib:/usr/lib:/opt/wine-3.5_GL/lib' ",NULL);
+    SpawnConfig=MCatStr(SpawnConfig,"setenv='LD_LIBRARY_PATH=/lib:/usr/lib' ",NULL);
 
     SetVar(Act->Vars,"path",getenv("PATH"));
     SetVar(Act->Vars,"display",getenv("DISPLAY"));
@@ -154,8 +154,12 @@ pid_t RunSandboxed(TAction *Act)
 pid_t RunNormal(TAction *Act)
 {
     char *Cmd=NULL, *SpawnConfig=NULL, *Secure=NULL, *Tempstr=NULL;
+		TPlatform *Platform;
     const char *ptr;
     pid_t pid=-1;
+
+		Platform=(TPlatform *) PlatformFind(Act->Platform);
+		printf("PLATFORM: %d [%s]\n", Platform, Act->Platform);
 
     ptr=GetVar(Act->Vars, "saves-dir");
     if (StrValid(ptr))
@@ -171,7 +175,11 @@ pid_t RunNormal(TAction *Act)
     }
 
     Cmd=GenerateApplicationCommandLine(Cmd, Act);
+		if (Platform) printf("PLATFORM: %d\n", Platform->Flags & PLATFORM_FLAG_NOSTDERR);
+		if (Platform && (Platform->Flags & PLATFORM_FLAG_NOSTDERR))
+		{
     if (! (Config->Flags & FLAG_DEBUG)) Cmd=CatStr(Cmd, " >/dev/null");
+		}
 
     Tempstr=EmulatorGetHelp(Tempstr, Act);
     if (StrValid(Tempstr)) TerminalPutStr(Tempstr, NULL);

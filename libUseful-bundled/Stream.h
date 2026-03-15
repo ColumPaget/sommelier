@@ -1,6 +1,6 @@
 /*
 Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
-* SPDX-License-Identifier: GPL-3.0
+* SPDX-License-Identifier: LGPL-3.0-or-later
 */
 
 #ifndef LIBUSEFUL_STREAM_H
@@ -77,7 +77,7 @@ i     allow this file to be inherited across an exec (default is close-on-exec)
 t     make a unique temporary file name. the file path must be a mktemp style template, with the last six characters being 'XXXXXX'
 S     file contents are sorted
 x     exclusive open using O_EXCL. Only create/open file if it doesn't exist.
-z     compress/uncompress with gzip
+z     compress/uncompress with gzip (uncompress autodetects gzip,bzip2 or no compression)
 e     encrypt using openssl compatible file format
 R     autorecovery. Take a backup when the file is opened for write, and if the file isn't closed properly, then revert to that backup when next it's opened.
 
@@ -266,7 +266,7 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 #define LU_SS_EMBARGOED 64
 #define LU_SS_SSL  4096
 #define LU_SS_AUTH 8192
-#define LU_SS_COMPRESSED 16384 //compression enabled, specifies compression active on a stream
+#define LU_SS_COMPRESSED 16384 //compression enabled, specifies compression active on a stream. Since libUseful 5.43 reading a compressed file will autodetect gzip,bzip2 or no compression.
 #define LU_SS_MSG_READ 32768
 
 //state values available for programmer use
@@ -278,11 +278,6 @@ typedef enum {STREAM_TYPE_FILE, STREAM_TYPE_PIPE, STREAM_TYPE_TTY, STREAM_TYPE_U
 
 
 #define O_LOCK O_NOCTTY
-
-
-//These flage are used to tell FDSelect whether to watch a stream for read, write, or both
-#define SELECT_READ 1
-#define SELECT_WRITE 2
 
 
 //These flags are used to alter behavior of STREAMSendFile. 
@@ -322,17 +317,6 @@ typedef struct
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-//some functions that work on basic file descriptors
-
-//watch a file descriptor for activity. 'Flags' can be SELECT_READ, and/or SELECT_WRITE depending on what is being watched for
-int FDSelect(int fd, int Flags, struct timeval *tv);
-
-//is file ready to recieve bytes?
-int FDIsWritable(int fd);
-
-//are bytes available to be read? 
-int FDCheckForBytes(int fd);
 
 
 //From here on in it's all functions that effect STREAM objects
@@ -528,7 +512,7 @@ int STREAMLock(STREAM *S, int flags);
 int STREAMFind(STREAM *S, const char *Item, const char *Delimiter, char **RetStr);
 
 //set and get string properties on a STREAM object.
-void STREAMSetValue(STREAM *S, const char *Name, const char *Value);
+ListNode *STREAMSetValue(STREAM *S, const char *Name, const char *Value);
 char *STREAMGetValue(STREAM *S, const char *Name);
 
 //book any type of object against a STREAM object. 

@@ -1,3 +1,5 @@
+#These are free games using the Lucas Arts adventure game engine, and running under the scummVM emulator. They are all believed legal to download and play.
+
 * platform=scummvm category='AdventureGame;ScummVM'
 
 BeneathASteelSky url=https://downloads.scummvm.org/frs/extras/Beneath%20a%20Steel%20Sky/bass-cd-1.2.zip movefiles-from='bass-cd-1.2/*' sha256='53209b9400eab6fd7fa71518b2f357c8de75cfeaa5ba57024575ab79cc974593' 

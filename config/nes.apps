@@ -1,6 +1,15 @@
+#Homebrew/opensource games for the Nintendo NES. These games are all believed to be legal to download and play.
 
 * platform=nes category=Game;NES download-type=zip
 BladeBuster url=http://hlc6502.web.fc2.com/BB_20120301.zip download-type='zip' sha256='b298c2c97dc6253f5ef1e2aeeb2f40d1ff1b72fd6cc68fb788b64b88b5de908a' 
+AlterEgo url=https://www.nesworld.com/homebrew/alter_ego.zip
+Assimilate url=https://www.nesworld.com/homebrew/assimilate_full.zip
+MicroKnight url=https://www.nesworld.com/homebrew/mk_rotfs_1.0.0.zip
+MultiDude url=https://www.nesworld.com/homebrew/mdnes.zip
+SolarWars url=https://www.nesworld.com/homebrew/solarwars.zip
+Sting url=https://www.nesworld.com/homebrew/sting.zip
+Streamerz url=https://www.nesworld.com/homebrew/streemerz-v02.zip
+Elite url=https://www.zophar.net/download_file/11741
 
 * platform=nes category=InvadersGame;NES download-type=zip
 Invaders url=https://github.com/retrobrews/nes-games/raw/master/invaders.nes sha256='47808051322a9c21bc34ee86cc55aedc29948be8bb42ab58c27c3e78d4b6f020' 
@@ -15,3 +24,4 @@ Owlia url=https://github.com/retrobrews/nes-games/raw/master/owlia.nes sha256='2
 TheMadWizard url=https://github.com/retrobrews/nes-games/raw/master/themadwizard.nes sha256='b0e9f13a9d091fffd0565704730d13c3a07d6bc0ea27dac3e98458c0065519af' 
 Yun url=https://github.com/retrobrews/nes-games/blob/master/yun.nes?raw=true sha256='fb0026dd31b0433dd24e81b7c7bee1dbdaa76e2cde60c81a2cdf4778f8e4b4eb' 
 Lemmings url=https://archive.org/download/lemmings_nes_2/Lemmings.nes sha256=def9819dbeeaf9e49e9c438435eccd846e14bd0afe8544a9f0d459ecdae1a270
+

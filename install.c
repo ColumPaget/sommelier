@@ -187,6 +187,7 @@ static int InstallAppFromFile(TAction *Act, const char *Path)
         Tempstr=SubstituteVarsInString(Tempstr, "$(install-dir)/data/noarch/support/icon.png", Act->Vars, 0);
         SetVar(Act->Vars, "app-icon", Tempstr);
         break;
+
     }
 
     PackageUnpack(Act, Path, ForcedFileType, FilesToExtract);
@@ -346,6 +347,7 @@ static void PostProcessMoveFilesTo(TAction *Act, const char *PostProc)
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
         To=SlashTerminateDirectoryPath(To);
 
+				fprintf(stderr, "MFT: [%s] [%s] [%s]\n", GetVar(Act->Vars, "install-dir"), From, To);
         if (Config->Flags & FLAG_DEBUG) printf("movefiles-to: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
 
@@ -629,13 +631,44 @@ char *OffsetPathFromDir(char *Path, const char *Dir)
 }
 
 
+
+static char *FinalizeInstallSetupWorkingDir(char *Path, TAction *Act)
+{
+char *Tempstr=NULL, *WorkDir=NULL;
+
+        //is a working dir set in the app config?
+        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
+
+        //if not set in the app config, is a working dir set in the platform config?
+        if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
+
+        //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
+        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
+
+        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "install-dir"));
+
+        if (StrValid(Tempstr))
+        {
+            WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
+            SetVar(Act->Vars, "working-dir", WorkDir);
+            if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
+        }
+
+				Destroy(Tempstr);
+				Destroy(WorkDir);
+
+				return(Path);
+}
+
+
+
 /*
 For DOS and windows executables that we might have downloaded as a Zip or an MSI file, we finalize here and setup
 the actual program that we're going to run to execute the application
 */
 static int FinalizeExeInstall(TAction *Act)
 {
-    char *Path=NULL, *Tempstr=NULL, *ExecDir=NULL, *WorkDir=NULL;
+    char *Path=NULL, *Tempstr=NULL, *ExecDir=NULL;
     const char *ptr;
     int RetVal=FALSE;
     int len;
@@ -671,24 +704,27 @@ static int FinalizeExeInstall(TAction *Act)
         SetVar(Act->Vars, "working-dir", Path);
         break;
 
+
+    case PLATFORM_MAME:
+				//if we haven't been told the rom name, try to deduce it from the
+				//zip file name. This assumes the rom has been zipped up into a file that
+				//has the name that mame knows the rom by.
+				if (! StrValid(GetVar(Act->Vars, "rom")))
+				{
+        Tempstr=CopyStr(Tempstr, GetBasename(Act->SrcPath));
+				StrRTruncChar(Tempstr, '.');
+				SetVar(Act->Vars, "rom", Tempstr);
+				}
+
+				Tempstr=MCopyStr(Tempstr, "*:", GetVar(Act->Vars, "install-dir"), "/", GetVar(Act->Vars, "rom"), "/", NULL);
+        PostProcessMoveFilesTo(Act, Tempstr);
+
+				Path=FinalizeInstallSetupWorkingDir(Path, Act);
+				break;
+
+
     default:
-        //is a working dir set in the app config?
-        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
-
-        //if not set in the app config, is a working dir set in the platform config?
-        if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
-
-        //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
-        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
-
-        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "install-dir"));
-
-        if (StrValid(Tempstr))
-        {
-            WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
-            SetVar(Act->Vars, "working-dir", WorkDir);
-            if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
-        }
+				Path=FinalizeInstallSetupWorkingDir(Path, Act);
         break;
     }
 
@@ -721,7 +757,6 @@ static int FinalizeExeInstall(TAction *Act)
     }
 
     Destroy(Tempstr);
-    Destroy(WorkDir);
     Destroy(ExecDir);
     Destroy(Path);
 
@@ -734,10 +769,7 @@ static void InstallSingleItemPreProcessInstall(TAction *Act)
     char *Token=NULL, *Tempstr=NULL;
     const char *ptr;
 
-    if (StrValid(Act->InstallName))
-    {
-        Act->Name=CopyStr(Act->Name, Act->InstallName);
-    }
+    if (StrValid(Act->InstallName)) Act->Name=CopyStr(Act->Name, Act->InstallName);
 
 //if package supports both 32 and 64 bit architectures (or only 64, but the package type could support 32-bit, as with GOG games) then if we are running on a 64bit architecture we want to use the
 //64bit version
@@ -893,6 +925,8 @@ static void InstallRunSubProcess(TAction *Act)
 }
 
 
+
+
 static void InstallSingleItem(TAction *Act)
 {
     char  *Tempstr=NULL;
@@ -927,7 +961,13 @@ static int InstallDependancy(TAction *Parent, const char *Name)
         CopyVars(Dependancy->Vars, Parent->Vars);
         //do AppLoadConfig after copy vars, so vars set in dependancy config
         //override those inherited from calling app
-        if (AppLoadConfig(Dependancy)) InstallSingleItem(Dependancy);
+        if (AppLoadConfig(Dependancy)) 
+				{
+				SetVar(Dependancy->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
+				InstallSingleItem(Dependancy);
+				}
+
+printf("INSTALL: %s\n", GetVar(Dependancy->Vars, "install-dir"));
         ActionDestroy(Dependancy);
     }
 
@@ -1038,7 +1078,7 @@ static int InstallFindEmulator(TAction *Act)
     {
         Emulator=PlatformFindEmulatorNames(Emulator, Act->Platform);
         Tempstr=MCopyStr(Tempstr, "\n~rWARN: No emulator found for platform '", Act->Platform, "'~0\n", NULL);
-        Tempstr=MCatStr(Tempstr, "Please install one of: '", Emulator, "'\n", NULL);
+        Tempstr=MCatStr(Tempstr, "Please install one of: ", Emulator, "\n", NULL);
         result=FALSE;
     }
     else Tempstr=CopyStr(Tempstr, "No emulator required\n");

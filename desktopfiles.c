@@ -3,6 +3,7 @@
 #include "run-application.h"
 #include "config.h"
 #include "sandbox.h"
+#include "apps.h"
 
 //Make a path that we will install a desktop file at.
 //Handle 'modern' sommelier desktop files that have the format $(program name)-$(platform).desktop
@@ -38,8 +39,10 @@ static char *DesktopFileSearchPath(char *RetStr, TAction *Act, int Version)
     ptr=GetVar(Act->Vars, "platform");
     if (! StrValid(ptr)) ptr="*";
 
-    if (Version==1) FName=MCopyStr(FName, GetVar(Act->Vars, "name"), ".desktop", NULL);
-    else FName=MCopyStr(FName, GetVar(Act->Vars, "name"), "-", ptr, ".desktop", NULL);
+    if (Version==1) Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "name"), ".desktop", NULL);
+    else Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "name"), "-", ptr, ".desktop", NULL);
+
+    FName=QuoteCharsInStr(FName, Tempstr, "+");
 
     ptr=GetToken(SearchPath, ":", &Path, 0);
     while (ptr)
@@ -85,21 +88,21 @@ int DesktopFileDelete(TAction *Act)
 
 static void DesktopParseVar(TAction *Act, const char *Name, const char *Value, int Force)
 {
-char *Token=NULL;
-const char *ptr;
+    char *Token=NULL;
+    const char *ptr;
 
 //don't overwrite anything that's been set on the command-line
-if (! Force)
-{
-ptr=GetVar(Act->Vars, Name);
-if (StrValid(ptr)) return;
-}
+    if (! Force)
+    {
+        ptr=GetVar(Act->Vars, Name);
+        if (StrValid(ptr)) return;
+    }
 
-Token=CopyStr(Token, Value);
-StripQuotes(Token);
-SetVar(Act->Vars, Name, Token);
+    Token=CopyStr(Token, Value);
+    StripQuotes(Token);
+    SetVar(Act->Vars, Name, Token);
 
-Destroy(Token);
+    Destroy(Token);
 }
 
 
@@ -146,8 +149,13 @@ int DesktopFileRead(const char *Path, TAction *Act)
             else if (strcasecmp(Name,"SommelierSecurityLevel")==0) DesktopParseVar(Act, "security_level", ptr, FALSE);
             else if (strcasecmp(Name,"SommelierRunWarn")==0) DesktopParseVar(Act, "runwarn", ptr, FALSE);
             else if (strcasecmp(Name,"Icon")==0) DesktopParseVar(Act, "icon", ptr, FALSE);
-            else if (strcasecmp(Name,"Platform")==0) DesktopParseVar(Act, "platform", ptr, FALSE);
             else if (strcasecmp(Name,"Path")==0) DesktopParseVar(Act, "working-dir", ptr, FALSE);
+            else if (strcasecmp(Name,"Platform")==0) 
+						{
+						DesktopParseVar(Act, "platform", ptr, FALSE);
+						Act->Platform=CopyStr(Act->Platform, ptr);
+						StripQuotes(Act->Platform);
+						}
             else if (strcasecmp(Name,"Emulator")==0)
             {
                 //naughty reuse of name here
@@ -389,7 +397,7 @@ void DesktopFileGenerate(TAction *Act)
         STREAMClose(S);
 
     }
-		else TerminalPutStr("~e~rERROR:~0 failed to open desktop file for writing!\n", NULL);
+    else TerminalPutStr("~e~rERROR:~0 failed to open desktop file for writing!\n", NULL);
 
     DestroyString(Tempstr);
     DestroyString(Hash);

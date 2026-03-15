@@ -1,6 +1,21 @@
 #include "includes.h"
 #include "List.h"
 #include "Time.h"
+#include "IOPoll.h"
+
+
+//get the root of a list or map. For a list this will return the same
+//as ListGetHead, but for a map it will return the very top level item
+//instead of the head of current list
+ListNode *ListGetRoot(ListNode *Node)
+{
+    ListNode *Head;
+
+    Head=ListGetHead(Node);
+    if (Head->Flags & LIST_FLAG_MAP_CHAIN) Head=Head->Head;
+
+    return(Head);
+}
 
 unsigned long ListSize(ListNode *Node)
 {
@@ -89,11 +104,34 @@ void ListSetFlags(ListNode *List, int Flags)
     Head->Flags=Flags & 0xFFFF;
 }
 
+void ListSetDestroyer(ListNode *List, LIST_ITEM_DESTROY_FUNC Destroyer)
+{
+    ListNode *Head;
+
+    Head=ListGetRoot(List);
+    if (! Head->Stats) Head->Stats=(ListStats *) calloc(1,sizeof(ListStats));
+    Head->Stats->Destroyer=Destroyer;
+}
+
+
+void ListSetMaxItems(ListNode *List, unsigned long val, LIST_ITEM_DESTROY_FUNC Destroyer)
+{
+    ListNode *Head;
+
+    Head=ListGetRoot(List);
+    if (! Head->Stats) Head->Stats=(ListStats *) calloc(1,sizeof(ListStats));
+    Head->Stats->Max=val;
+    Head->Stats->Destroyer=Destroyer;
+}
+
+
 void ListNodeSetHits(ListNode *Node, int val)
 {
     if (! Node->Stats) Node->Stats=(ListStats *) calloc(1,sizeof(ListStats));
     Node->Stats->Hits=val;
 }
+
+
 
 
 int ListNodeAddHits(ListNode *Node, int val)
@@ -108,9 +146,6 @@ void ListNodeSetTime(ListNode *Node, time_t When)
     if (! Node->Stats) Node->Stats=(ListStats *) calloc(1,sizeof(ListStats));
     Node->Stats->Time=When;
 }
-
-
-
 
 
 
@@ -168,16 +203,21 @@ unsigned long ListIncrNoOfItems(ListNode *List)
 {
     ListNode *Head;
 
-    if (List->Flags & LIST_FLAG_MAP_CHAIN) List->Stats->Hits++;
+    //get the head of the list, if we've been passed a map chain
+    //then it's the 'Head' at this stage, otherwise get List->Head
+    Head=ListGetHead(List);
 
-    Head=List->Head;
+    //if the Head is the head of a map chain, then we need to update
+    //it's count, but we also need to update the count for the whole map
     if (Head->Flags & LIST_FLAG_MAP_CHAIN)
     {
         Head->Stats->Hits++;
 
-        //get map head, rather than chain head
+        //get map head, head of whole map,  rather than chain head
         Head=Head->Head;
     }
+
+    //okay, for plain lists, and map heads, update Hits
     Head->Stats->Hits++;
 
     return(Head->Stats->Hits);
@@ -189,8 +229,10 @@ unsigned long ListDecrNoOfItems(ListNode *List)
 {
     ListNode *Head;
 
-    if (List->Flags & LIST_FLAG_MAP_CHAIN) List->Stats->Hits--;
-    Head=List->Head;
+    //get the head of the list, if we've been passed a map chain
+    //then it's the 'Head' at this stage, otherwise get List->Head
+    Head=ListGetHead(List);
+
     if (Head->Flags & LIST_FLAG_MAP_CHAIN)
     {
         Head->Stats->Hits--;
@@ -198,6 +240,7 @@ unsigned long ListDecrNoOfItems(ListNode *List)
         Head=Head->Head;
     }
 
+    //okay, for plain lists, and map heads, update Hits
     Head->Stats->Hits--;
 
     return(Head->Stats->Hits);
@@ -299,13 +342,14 @@ void ListClear(ListNode *ListStart, LIST_ITEM_DESTROY_FUNC ItemDestroyer)
 }
 
 
-void ListDestroy(ListNode *ListStart, LIST_ITEM_DESTROY_FUNC ItemDestroyer)
+void ListDestroy(ListNode *List, LIST_ITEM_DESTROY_FUNC ItemDestroyer)
 {
-    if (! ListStart) return;
-    ListClear(ListStart, ItemDestroyer);
-    if (ListStart->Item) free(ListStart->Item);
-    if (ListStart->Stats) free(ListStart->Stats);
-    free(ListStart);
+    if (! List) return;
+    STREAMSelectUnregister(List);
+    ListClear(List, ItemDestroyer);
+    if (List->Item) free(List->Item);
+    if (List->Stats) free(List->Stats);
+    free(List);
 }
 
 
@@ -340,20 +384,57 @@ ListNode *ListClone(ListNode *ListStart, LIST_ITEM_CLONE_FUNC ItemCloner)
 }
 
 
+//this function handled the 'maximum items in list' feature
+static void ListHandleMaxSize(ListNode *Node, ListNode *Head)
+{
+    ListNode *ChainHead, *Curr;
+    int i;
+
+    //In maps ChainHead will be the head of the current subchain in the map
+    //in lists it will be the same as 'Head'
+    ChainHead=ListGetHead(Node);
+
+    //we delete up to 3 items, as we're only adding 1, then even if somehow the
+    //list has grown over 'Max' it will gradually shrink back
+    for (i=0; (i < 3) && (ChainHead->Stats->Hits > Head->Stats->Max); i++)
+    {
+        Curr=ListGetNext(ChainHead);
+        if (! Curr) break;
+
+        if (Head->Stats->Destroyer) Head->Stats->Destroyer(Curr->Item);
+        ListDeleteNode(Curr);
+    }
+}
+
 
 ListNode *ListInsertTypedItem(ListNode *InsertNode, uint16_t Type, const char *Name, void *Item)
 {
-    ListNode *NewNode;
+    ListNode *NewNode, *Head, *Curr;
+    int i;
 
     if (! InsertNode) return(NULL);
+
+    Head=ListGetRoot(InsertNode);
+
+    if (Head->Stats->Max > 0) ListHandleMaxSize(InsertNode, Head);
+
     NewNode=(ListNode *) calloc(1,sizeof(ListNode));
     ListThreadNode(InsertNode, NewNode);
     NewNode->Item=Item;
-    NewNode->ItemType=Type;
+
+    if (Head->Flags & LIST_FLAG_DELETE) NewNode->ItemType=StrLen(Name);
+    else NewNode->ItemType=Type;
+
     if (StrValid(Name)) NewNode->Tag=CopyStr(NewNode->Tag,Name);
-    if (InsertNode->Head->Flags & LIST_FLAG_STATS)
+
+    if (Head->Flags & LIST_FLAG_STATS)
     {
         NewNode->Stats=(ListStats *) calloc(1,sizeof(ListStats));
+
+
+        //If list is being used with LIST_FLAG_TIMEOUT then user will
+        //call 'ListSetTime' after inserting the item, and overwrite
+        //this time val, so it does no harm to set it here.
         NewNode->Stats->Time=GetTime(TIME_CACHED);
     }
 
@@ -375,18 +456,26 @@ ListNode *ListAddTypedItem(ListNode *ListStart, uint16_t Type, const char *Name,
 }
 
 
+#define LIST_FIND_LESSER  1
+#define LIST_FIND_GREATER 2
 
-int ListConsiderInsertPoint(ListNode *Head, ListNode *Prev, const char *Name)
+static inline int ListConsiderInsertPoint(ListNode *Head, ListNode *Prev, const char *Name, int NameLen, int FindType)
 {
     int result;
 
     if (Prev && (Prev != Head) && Prev->Tag)
     {
-        if (Head->Flags & LIST_FLAG_CASE) result=strcmp(Prev->Tag,Name);
-        else result=strcasecmp(Prev->Tag,Name);
+        if ( (Head->Flags & LIST_FLAG_DELETE) && (NameLen != Prev->ItemType) ) return(FALSE);
+
+        if (Head->Flags & LIST_FLAG_CASE) result=strcmp(Prev->Tag, Name);
+        else result=strcasecmp(Prev->Tag, Name);
 
         if (result == 0) return(TRUE);
-        if ((Head->Flags & LIST_FLAG_ORDERED) && (result < 1)) return(TRUE);
+        if (Head->Flags & LIST_FLAG_ORDERED)
+        {
+            if ((FindType == LIST_FIND_LESSER) && (result < 1)) return(TRUE);
+            if ((FindType == LIST_FIND_GREATER) && (result > 1)) return(TRUE);
+        }
     }
 
     return(FALSE);
@@ -396,24 +485,35 @@ int ListConsiderInsertPoint(ListNode *Head, ListNode *Prev, const char *Name)
 ListNode *ListFindNamedItemInsert(ListNode *Root, const char *Name)
 {
     ListNode *Prev=NULL, *Curr, *Next, *Head;
-    int result=0;
+    int result=0, len;
     unsigned long long val;
 
     if (! Root) return(Root);
     if (! StrValid(Name)) return(Root);
 
+    len=StrLen(Name);
+
     if (Root->Flags & LIST_FLAG_MAP_HEAD) Head=MapGetChain(Root, Name);
     else Head=Root;
 
-    //Check last item in list
-    if (ListConsiderInsertPoint(Head, Head->Prev, Name)) return(Head->Prev);
+    //Check last item in list, it it's a match or we're an ordered list and it's lesser,
+    //then jump to it
+    if (ListConsiderInsertPoint(Head, Head->Prev, Name, len, LIST_FIND_LESSER)) return(Head->Prev);
 
     Prev=Head;
     Curr=Head->Next;
+
     //if LIST_FLAG_CACHE is set, then the general purpose 'Side' pointer of the head node points to a cached item
+    //if it's a match we can jump there, if an ordered list and it's less, we might as well jump to it too
     if ((Root->Flags & LIST_FLAG_CACHE) && Head->Side && Head->Side->Tag)
     {
-        if (ListConsiderInsertPoint(Head, Head->Side, Name)) Curr=Head->Side;
+        if (ListConsiderInsertPoint(Head, Head->Side, Name, len, LIST_FIND_LESSER))
+        {
+            Curr=Head->Side;
+            //we will actually return Prev rather than Curr, because of how the
+            //loop below works
+            Prev=Curr->Prev;
+        }
     }
 
     while (Curr)
@@ -424,7 +524,16 @@ ListNode *ListFindNamedItemInsert(ListNode *Root, const char *Name)
 
         if (Curr->Tag)
         {
-            if (ListConsiderInsertPoint(Head, Curr, Name)) return(Curr);
+            //if the current item is a match, or we are in an ordered list and it's
+            //greater, then insert between it and Prev
+            if (ListConsiderInsertPoint(Head, Curr, Name, len, LIST_FIND_GREATER))
+            {
+                //as we are looking for an insert point, we'd normally return 'Prev'
+                //but if Prev is a List Head or Chain head, return Curr instead
+                if (Prev->Flags & LIST_FLAG_MAP_CHAIN) return(Curr);
+                if (Prev == Curr->Head) return(Curr);
+                return(Prev);
+            }
 
             //Can only get here if it's not a match, in which
             //case we can safely delete any 'timed out' items
@@ -433,7 +542,7 @@ ListNode *ListFindNamedItemInsert(ListNode *Root, const char *Name)
                 val=ListNodeGetTime(Curr);
                 if ((val > 0) && (val < GetTime(TIME_CACHED)))
                 {
-                    Destroy(Curr->Item);
+                    if (Root->Stats && Root->Stats->Destroyer) Root->Stats->Destroyer(Curr->Item);
                     ListDeleteNode(Curr);
                 }
             }
@@ -450,53 +559,83 @@ ListNode *ListFindNamedItemInsert(ListNode *Root, const char *Name)
 ListNode *ListFindTypedItem(ListNode *Root, int Type, const char *Name)
 {
     ListNode *Node, *Head;
-    int result;
+    int result, len;
 
     if (! Root) return(NULL);
     Node=ListFindNamedItemInsert(Root, Name);
+    if (! Node) return(NULL);
+    Head=Node->Head;
+    if (Node == Head) Node=Node->Next;
 
-    //item must have a name, and can't be the 'head' of the list
-    if ((! Node) || (Node==Node->Head) || (! Node->Tag)) return(NULL);
+
+    //beware, we might get retured a null item in lists where some items have null names
+    if (! Node) return(NULL);
 
     //'Root' can be a Map head, rather than a list head, so we call 'ListFindNamedItemInsert' to get the correct
     //insert chain
-    Head=Node->Head;
 
+    len=StrLen(Name);
     if (Head)
     {
+        //rewind, as it's possible that we've found a node mid way through a load of
+        //nodes with the same tag, so rewind to the first before we consider them all
         while (Node)
         {
-            if (Head->Flags & LIST_FLAG_CASE) result=CompareStr(Node->Tag,Name);
+            if (Node->Prev==Head) break;
+            if (! ListConsiderInsertPoint(Head, Node->Prev, Name, len, 0)) break;
+            Node=Node->Prev;
+        }
+
+        while (Node)
+        {
+            if ( (Head->Flags & LIST_FLAG_DELETE) && (len != Node->ItemType) ) result=-1;
+            else if (Head->Flags & LIST_FLAG_CASE) result=CompareStr(Node->Tag,Name);
             else result=CompareStrNoCase(Node->Tag,Name);
 
-            if (
-                (result==0) &&
-                ( (Type==ANYTYPE) || (Type==Node->ItemType) )
-            )
+            if (result==0)
             {
-                if (Head->Flags & LIST_FLAG_CACHE) Head->Side=Node;
-                if (Node->Stats) Node->Stats->Hits++;
-                return(Node);
+                if  ( (Type==LIST_ITEM_ANYTYPE) || (Type==Node->ItemType) )
+                {
+                    if (Head->Flags & LIST_FLAG_CACHE) Head->Side=Node;
+                    if (Node->Stats)
+                    {
+                        Node->Stats->Hits++;
+
+                        //if this list is being used with LIST_FLAG_TIMEOUT then the Time field in ListStats
+                        //will be an expiry time, so we can't update it with a 'last accessed' time
+                        if (! (Head->Flags & LIST_FLAG_TIMEOUT)) Node->Stats->Time=GetTime(TIME_CACHED);
+                    }
+
+                    if (
+                        (Node != Head) &&
+                        (Head->Flags & LIST_FLAG_SELFORG) &&
+                        (! (Head->Flags & LIST_FLAG_ORDERED))
+                    ) ListSwapItems(Node->Prev, Node);
+
+                    return(Node);
+                }
+
+                //if this is set then there's at most one instance of an item with a given name
+                //so if the above didn't match, we won't get a match
+                if (Head->Flags & LIST_FLAG_UNIQ) break;
             }
 
-            //if this is set then there's at most one instance of an item with a given name
-            if (Head->Flags & LIST_FLAG_UNIQ) break;
-
-            //if it's an ordered list and the strcmp didn't match, then give up as there will be no more matching items
-            //past this point
-            if ((Head->Flags & LIST_FLAG_ORDERED) && (result !=0)) break;
+            //if it's an ordered list and the strcmp says we've gone beyond the given name
+            //in the list, then we won't get a match
+            if ((Head->Flags & LIST_FLAG_ORDERED) && (result > 0)) break;
 
 
             Node=ListGetNext(Node);
         }
     }
+
     return(NULL);
 }
 
 
 ListNode *ListFindNamedItem(ListNode *Head, const char *Name)
 {
-    return(ListFindTypedItem(Head, ANYTYPE, Name));
+    return(ListFindTypedItem(Head, LIST_ITEM_ANYTYPE, Name));
 }
 
 
@@ -516,13 +655,22 @@ ListNode *InsertItemIntoSortedList(ListNode *List, void *Item, int (*LessThanFun
     return(ListInsertItem(Prev,Item));
 }
 
-//list get next is just a macro that either calls this for maps, or returns Node->next
+//this function returns the next item in a chain. You are probablly looking for MapGetNext below
+//If this is called on the top node of a map it returns the 'top' node of the first chain in the map
+//otherwise it returns the next node in the chain. Thus, starting from any place in a map, list or a sub-chain
+//we can traverse that chain/list
 ListNode *MapChainGetNext(ListNode *CurrItem)
 {
     if (! CurrItem) return(NULL);
 
     if (CurrItem->Next)
     {
+        if (CurrItem->Next->Next)
+        {
+            __builtin_prefetch (CurrItem->Next->Next, 0, 0);
+            if (CurrItem->Next->Next->Tag) __builtin_prefetch (CurrItem->Next->Next->Tag, 0, 0);
+        }
+
         return(CurrItem->Next);
     }
 
@@ -536,6 +684,10 @@ ListNode *MapChainGetNext(ListNode *CurrItem)
 }
 
 
+//this is the function that actually traverses maps and lists. It handles the situation
+//of traversing a chain in a map, and needing to traverse the NEXT chain when we encounter
+//the end of the current one.
+//list get next is just a macro that either calls this for maps, or returns Node->next
 ListNode *MapGetNext(ListNode *CurrItem)
 {
     ListNode *SubNode, *ChainHead;
@@ -748,3 +900,59 @@ void *ListDeleteNode(ListNode *Node)
     return(Contents);
 }
 
+
+void ListMoveStart(ListNode *Curr)
+{
+    ListNode *Head;
+		
+		if (! Curr) return;
+
+		Head=ListGetHead(Curr);
+		if (! Head) return;
+
+		//if it's already first, don't bother
+    if (Curr->Prev != Head)
+    {
+        ListUnThreadNode(Curr);
+        ListThreadNode(Head, Curr);
+    }
+}
+
+void ListMoveEnd(ListNode *Curr)
+{
+    ListNode *Head, *Last;
+		
+		if (! Curr) return;
+
+		Head=ListGetHead(Curr);
+		if (! Head) return;
+
+		//if it's already last, don't bother
+    if (Curr->Next != NULL)
+    {
+        ListUnThreadNode(Curr);
+        Last=ListGetLast(Head);
+        if (! Last) Last=Head;
+        ListThreadNode(Last, Curr);
+    }
+}
+
+
+
+void ListRotate(ListNode *List, int RotateCount)
+{
+    ListNode *Curr;
+    int i;
+
+    if (ListSize(List) > 1)
+    {
+        for (i=0; i < RotateCount; i++)
+        {
+            Curr=ListGetNext(List);
+            if (! Curr) break;
+            ListUnThreadNode(Curr);
+            ListThreadNode(ListGetLast(List), Curr);
+        }
+    }
+
+}

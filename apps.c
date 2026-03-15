@@ -121,7 +121,9 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             //destroy the variables by subsituting them. So if we want to try a different locale in future, we now
             //can't do that. Thus we set 'locale_template' and use that as the template to substitute into 'locale',
             //so 'locale_template' always reamins unchanged.
-            else if (strcmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
+            else if (strcasecmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
+            else if (strcasecmp(Name, "server_path")==0) SetVar(Act->Vars, "server_path", Value);
+            else if (strcasecmp(Name, "server_apps_file")==0) SetVar(Act->Vars, "server_apps_file", Value);
             else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
             else if (strcasecmp(Name,"su")==0) Act->Flags |= FLAG_ALLOW_SU;
             else if (strcasecmp(Name,"allow-su")==0) Act->Flags |= FLAG_ALLOW_SU;
@@ -149,7 +151,10 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 strlwr(Value);
                 SetVar(Act->Vars, Name, Value);
             }
-            else SetVar(Act->Vars, Name, Value);
+            else 
+						{
+										SetVar(Act->Vars, Name, Value);
+						}
 
             AppPostProcessConfigItem(Act, Name, Value);
         }
@@ -158,9 +163,9 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
     }
 
 
-		//post process some values
-		ptr=GetVar(Act->Vars, "exec64");
-		if (! StrValid(ptr)) SetVar(Act->Vars, "exec64", GetVar(Act->Vars, "exec"));
+    //post process some values
+    ptr=GetVar(Act->Vars, "exec64");
+    if (! StrValid(ptr)) SetVar(Act->Vars, "exec64", GetVar(Act->Vars, "exec"));
 
     Destroy(Tempstr);
     Destroy(Value);
@@ -179,6 +184,10 @@ static TAction *AppConfigure(const char *Name, const char *Settings, ListNode *F
     Curr=ListGetNext(FileWideSettings);
     while (Curr)
     {
+				//lines starting with '!' apply to apps in this file
+        if (strcmp(Curr->Tag, "!")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+
+				//lines starting with '*' apply to apps in this file UNTIL ANOTHER '*' is encounted
         if (strcmp(Curr->Tag, "*")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
 
         //it's possible for an app to not have a url if it comes bundled with something else, so be sure to
@@ -193,6 +202,7 @@ static TAction *AppConfigure(const char *Name, const char *Settings, ListNode *F
 
     return(Act);
 }
+
 
 
 
@@ -219,12 +229,18 @@ void AppsLoadFromFile(const char *Path, ListNode *Apps)
                 // '*' for the app name means this line applies to all apps in this file
                 if (
                     (strcmp(Token, "*")==0) ||
+                    (strcmp(Token, "!")==0) ||
                     (strncmp(Token, "url=", 4)==0)
                 ) SetVar(FileWideSettings, Token, ptr);
                 else if (StrValid(Token))
                 {
                     Act=AppConfigure(Token, ptr, FileWideSettings);
-                    ListAddNamedItem(Apps, Token, Act);
+										if (Act)
+										{
+										// an app could be configured multiple times or in multiple files, so handle that
+										Tempstr=MCopyStr(Tempstr, "'", Token, "' ", Act->Platform, NULL);
+										if (! ListFindNamedItem(Apps, Tempstr)) ListAddNamedItem(Apps, Tempstr, Act);
+										}
                 }
             }
             Tempstr=STREAMReadLine(Tempstr, S);
@@ -234,6 +250,7 @@ void AppsLoadFromFile(const char *Path, ListNode *Apps)
     }
 
     ListDestroy(FileWideSettings, Destroy);
+
     Destroy(AppConfig);
     Destroy(Tempstr);
     Destroy(Token);
@@ -349,13 +366,15 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
 
 //first generate sommelier root (usually ~/.sommelier) if it doesn't exist
 
-    ptr=GetVar(Act->Vars, "sommelier_root");
-    if (! StrValid(ptr))
-    {
-        if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
-        else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
-        SetVar(Act->Vars, "sommelier_root", Path);
-    }
+    /*
+        ptr=GetVar(Act->Vars, "sommelier_root");
+        if (! StrValid(ptr))
+        {
+            if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+            else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
+            SetVar(Act->Vars, "sommelier_root", Path);
+        }
+    */
 
     Tempstr=MCopyStr(Tempstr, GetVar(Act->Vars, "sommelier_root"), "/patches", NULL);
     SetVar(Act->Vars, "sommelier_patches_dir", Tempstr);
@@ -398,6 +417,7 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
     DestroyString(Tempstr);
     return(Path);
 }
+
 
 
 char *AppFindInstalled(char *Path, TAction *App)
@@ -530,7 +550,7 @@ int AppLoadConfig(TAction *App)
 
 int AppsOutputList(TAction *Template)
 {
-    ListNode *Curr;
+		ListNode *Installed=NULL, *Curr;
     int result=FALSE;
     TAction *App;
     const char *p_dl;

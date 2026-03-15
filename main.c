@@ -12,107 +12,13 @@
 #include "categories.h"
 #include "apps.h"
 #include "run-application.h"
+#include "rebuild-app-file.h"
 #include "regedit.h"
 #include "wine-fonts.h"
+#include "remote-store.h"
 #include "sandbox.h"
 
 
-
-int RebuildApp(TAction *Act)
-{
-    if ((Act->Type==ACT_REBUILD_HASHES) && (! (Act->Flags & FLAG_FORCE)))
-    {
-        if (StrValid(GetVar(Act->Vars, "sha256"))) return(TRUE);
-    }
-
-    return(DownloadCheck(Act));
-}
-
-
-
-
-void RebuildAppListFile(TAction *RebuildAct, const char *Path)
-{
-    STREAM *In, *Out;
-    char *Tempstr=NULL;
-    const char *ptr;
-    ListNode *Curr;
-    TAction *Act;
-    const char *IgnoreVars[]= {"name", "sommelier_root_template","prefix_template","homedir","url-basename","url-path",NULL};
-
-
-    Out=STREAMFromFD(1);
-    In=STREAMOpen(Path, "r");
-    if (In)
-    {
-        Tempstr=STREAMReadLine(Tempstr, In);
-        while (Tempstr)
-        {
-            StripTrailingWhitespace(Tempstr);
-            if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
-            {
-                Act=ActionCreate(RebuildAct->Type, "");
-                Act->Flags=RebuildAct->Flags;
-                ptr=GetToken(Tempstr, " ", &Act->Name, 0);
-                LoadAppConfigToAct(Act, ptr);
-
-                if (StrLen(GetVar(Act->Vars,"name"))==0) SetVar(Act->Vars, "name", Act->Name);
-                if (! StrValid(Act->URL)) printf("%s\n", Tempstr);
-                else if (RebuildApp(Act))
-                {
-                    Tempstr=MCopyStr(Tempstr, Act->Name, " ", NULL);
-                    if (StrValid(Act->Platform)) Tempstr=MCatStr(Tempstr, "platform=", Act->Platform, " ", NULL);
-                    Tempstr=MCatStr(Tempstr, "url=", Act->URL, " ", NULL);
-                    Curr=ListGetNext(Act->Vars);
-                    while (Curr)
-                    {
-                        if (MatchTokenFromList(Curr->Tag, IgnoreVars, 0) ==-1) Tempstr=MCatStr(Tempstr, Curr->Tag, "='", (char *) Curr->Item,"' ",NULL);
-                        Curr=ListGetNext(Curr);
-                    }
-                    printf("%s\n",Tempstr);
-                    fflush(NULL);
-                }
-                else printf("ERROR: Rebuild Failed: %s\n", Tempstr);
-
-                ActionDestroy(Act);
-            }
-            else printf("%s\n", Tempstr);
-            Tempstr=STREAMReadLine(Tempstr, In);
-        }
-        STREAMClose(In);
-    }
-
-    STREAMDestroy(Out);
-    Destroy(Tempstr);
-}
-
-
-
-void RebuildAppList(TAction *RebuildAct)
-{
-    char *FileList=NULL, *Path=NULL;
-    char *Tempstr=NULL;
-    const char *ptr;
-
-    ptr=GetToken(RebuildAct->Args, "\\S", &Path, GETTOKEN_QUOTES);
-    while (ptr)
-    {
-        if (StrValid(Path)) Tempstr=MCatStr(Tempstr, Path, ",", NULL);
-        ptr=GetToken(ptr, "\\S", &Path, GETTOKEN_QUOTES);
-    }
-
-    FileList=AppsListExpand(FileList, Tempstr);
-    ptr=GetToken(FileList, ",", &Path, 0);
-    while (ptr)
-    {
-        RebuildAppListFile(RebuildAct, Path);
-        ptr=GetToken(ptr, ",", &Path, 0);
-    }
-
-    Destroy(Tempstr);
-    Destroy(FileList);
-    Destroy(Path);
-}
 
 
 
@@ -186,11 +92,15 @@ int main(int argc, char *argv[])
                 else PlatformApplySettings(Act);
                 break;
 
-            case ACT_REBUILD_HASHES:
+            case ACT_CHECK_APPS:
                 RebuildAppList(Act);
                 break;
 
             case ACT_REBUILD:
+                RebuildAppList(Act);
+                break;
+
+            case ACT_REBUILD_HASHES:
                 RebuildAppList(Act);
                 break;
 
@@ -199,7 +109,7 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_LIST_PLATFORMS:
-                PlatformsList();
+                PlatformsList(Act);
                 break;
 
             case ACT_LIST_CATEGORIES:
@@ -234,6 +144,15 @@ int main(int argc, char *argv[])
                 AppLoadConfig(Act);
                 WineFonts(Act);
                 break;
+
+            case ACT_ADD_STORE:
+								RemoteStoreAdd(Act);
+								break;
+
+           case ACT_REFRESH:
+								RemoteStoresRefresh(Act);
+								break;
+
             }
         }
 

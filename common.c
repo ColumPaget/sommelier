@@ -116,6 +116,8 @@ int InList(const char *Item, const char *List)
 TAction *ActionCreate(int Type, const char *Name)
 {
     TAction *Act;
+    const char *ptr;
+    char *Path=NULL;
 
     Act=(TAction *) calloc(1, sizeof(TAction));
     Act->Type=Type;
@@ -126,6 +128,17 @@ TAction *ActionCreate(int Type, const char *Name)
     SetVar(Act->Vars, "prefix_template", DEFAULT_WINEPREFIX);
     SetVar(Act->Vars, "user", CurrUserName);
     SetVar(Act->Vars, "homedir", CurrUserHome);
+
+    ptr=GetVar(Act->Vars, "sommelier_root");
+    if (! StrValid(ptr))
+    {
+        if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+        else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
+        SetVar(Act->Vars, "sommelier_root", Path);
+    }
+
+    Destroy(Path);
+
 
     return(Act);
 }
@@ -148,10 +161,45 @@ void ActionDestroy(TAction *Act)
 
 
 
+int CheckSha256Hash(TAction *Act)
+{
+    char *Candidate=NULL, *Hash=NULL;
+    const char *ptr;
+    int RetVal=FALSE;
+
+    HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
+    if (StrValid(Hash))
+    {
+        SetVar(Act->Vars, "actual-sha256", Hash);
+        ptr=GetVar(Act->Vars, "sha256");
+        if (StrValid(ptr))
+        {
+            ptr=GetToken(ptr, ",", &Candidate, 0);
+            while (ptr)
+            {
+                if (strcmp(Candidate, Hash) ==0)
+                {
+                    RetVal=TRUE;
+                    break;
+                }
+                ptr=GetToken(ptr, ",", &Candidate, 0);
+            }
+        }
+        //if no hash is configured, then we must say it's okay
+        else RetVal=TRUE;
+    }
+
+    Destroy(Candidate);
+    Destroy(Hash);
+
+    return(RetVal);
+}
+
+
 
 int CompareSha256(TAction *Act)
 {
-    char *Hash=NULL, *Tempstr=NULL;
+    char *Tempstr=NULL, *Hash=NULL;
     const char *p_ExpectedHash;
     int result=FALSE;
 
@@ -159,11 +207,11 @@ int CompareSha256(TAction *Act)
     p_ExpectedHash=GetVar(Act->Vars, "sha256");
     if (StrValid(p_ExpectedHash))
     {
-        HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
-        if (strcmp(Hash, p_ExpectedHash)==0) result=TRUE;
+        if (CheckSha256Hash(Act)) result=TRUE;
+
         Tempstr=CopyStr(Tempstr, "");
         printf("    expected sha256: [%s]\n",p_ExpectedHash);
-        printf("    actual   sha256: [%s]\n",Hash);
+        printf("    actual   sha256: [%s]\n",GetVar(Act->Vars, "actual-sha256"));
         Tempstr=CopyStr(Tempstr, "");
         if (result) TerminalPutStr("~g~eOKAY:~w Hashes match~0\n",NULL);
         else TerminalPutStr("~rERROR: Downloaded file does not match expected hash~0\n",NULL);
@@ -174,7 +222,7 @@ int CompareSha256(TAction *Act)
         if (Act->Flags & FLAG_HASH_DOWNLOAD)
         {
             HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
-            printf("    actual   sha256: [%s]\n",Hash);
+            printf("    actual   sha256: [%s]\n", Hash);
         }
         result=TRUE;
     }
@@ -243,7 +291,7 @@ char *GlobNoCase(char *RetStr, const char *Dir, const char *Name)
     for (i=0; i < Glob.gl_pathc; i++)
     {
         ptr=GetBasename(Glob.gl_pathv[i]);
-        if (pmatch_one(Name, ptr, StrLen(ptr), NULL, NULL, PMATCH_NOCASE))
+        if (fnmatch(Name, ptr, 0)==0)
         {
             RetStr=CopyStr(RetStr, Glob.gl_pathv[i]);
             break;

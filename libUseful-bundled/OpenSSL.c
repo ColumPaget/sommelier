@@ -4,6 +4,7 @@
 #include "Time.h"
 #include "Encodings.h"
 #include "Entropy.h"
+#include "IOPoll.h"
 
 #include <arpa/inet.h>
 #include <net/if.h>
@@ -37,21 +38,64 @@ static DH *CachedDH=NULL;
 #ifdef HAVE_LIBSSL
 
 
+
+static void OpenSSLRaiseError(STREAM *S)
+{
+    int result;
+    const char *ptr;
+
+    result=ERR_get_error();
+    ptr=ERR_error_string(result,NULL);
+    STREAMSetValue(S, "SSL:Error", ptr);
+    RaiseError(0, "OpenSSLRaiseError", "SSL:ERROR %s", ptr);
+}
+
+
 static void STREAM_INTERNAL_SSL_ADD_SECURE_KEYS_LIST(STREAM *S, SSL_CTX *ctx, ListNode *List, char **VerifyPath, char **VerifyFile)
 {
     ListNode *Curr;
+    const char *p_Value;
 
     Curr=ListGetNext(List);
     while (Curr)
     {
         if (StrValid(Curr->Tag))
         {
-            if (strcasecmp(Curr->Tag,"SSL:CertFile")==0) SSL_CTX_use_certificate_chain_file(ctx,(char *) Curr->Item);
-            else if (strcasecmp(Curr->Tag,"SSL:KeyFile")==0) SSL_CTX_use_PrivateKey_file(ctx,(char *) Curr->Item,SSL_FILETYPE_PEM);
-            else if (strncasecmp(Curr->Tag,"SSL:VerifyCertDir",18)==0) *VerifyPath=CopyStr(*VerifyPath,(char *) Curr->Item);
-            else if (strncasecmp(Curr->Tag,"SSL:VerifyCertFile",19)==0) *VerifyFile=CopyStr(*VerifyFile,(char *) Curr->Item);
-            else if (strncasecmp(Curr->Tag,"SSL:VerifyDir",18)==0) *VerifyPath=CopyStr(*VerifyPath,(char *) Curr->Item);
-            else if (strncasecmp(Curr->Tag,"SSL:VerifyFile",19)==0) *VerifyFile=CopyStr(*VerifyFile,(char *) Curr->Item);
+            p_Value=(const char *) Curr->Item;
+
+            if (StrValid(p_Value))
+            {
+                if (strcasecmp(Curr->Tag,"SSL:CertFile")==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Certificate File '%s' not readable", p_Value);
+                    SSL_CTX_use_certificate_chain_file(ctx, p_Value);
+                }
+                else if (strcasecmp(Curr->Tag,"SSL:KeyFile")==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Private Key File '%s' not readable", p_Value);
+                    SSL_CTX_use_PrivateKey_file(ctx, p_Value, SSL_FILETYPE_PEM);
+                }
+                else if (strncasecmp(Curr->Tag,"SSL:VerifyCertDir",18)==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Certificate Verify Directory '%s' not readable", p_Value);
+                    *VerifyPath=CopyStr(*VerifyPath,(char *) Curr->Item);
+                }
+                else if (strncasecmp(Curr->Tag,"SSL:VerifyCertFile",19)==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Certificate Verify File '%s' not readable", p_Value);
+                    *VerifyFile=CopyStr(*VerifyFile, p_Value);
+                }
+                else if (strncasecmp(Curr->Tag,"SSL:VerifyDir",18)==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Certificate Verify Directory '%s' not readable", p_Value);
+                    *VerifyPath=CopyStr(*VerifyPath, p_Value);
+                }
+                else if (strncasecmp(Curr->Tag,"SSL:VerifyFile",19)==0)
+                {
+                    if (access(p_Value, R_OK) != 0) RaiseError(0, "SSL_ADD_SECURE_KEYS", "SSL: Certificate Verify File '%s' not readable", p_Value);
+                    *VerifyFile=CopyStr(*VerifyFile, p_Value);
+                }
+            }
         }
 
         Curr=ListGetNext(Curr);
@@ -121,12 +165,17 @@ static char *OpenSSLGetCertFingerprint(char *RetStr, X509 *cert)
     unsigned len;
 
     RetStr=CopyStr(RetStr, "");
+
+    //digest is a const , and does not need to be freed I THINK.
     digest = EVP_sha1();
-    Buffer=SetStrLen(Buffer, 255); //this will hold raw sha1 fingerprint
-    len=255;
-    if (X509_digest(cert, digest, (unsigned char*) Buffer, &len) > 0)
+    if (digest)
     {
-        RetStr=EncodeBytes(RetStr, Buffer, len, ENCODE_HEX);
+        Buffer=SetStrLen(Buffer, 255); //this will hold raw sha1 fingerprint
+        len=255;
+        if (X509_digest(cert, digest, (unsigned char*) Buffer, &len) > 0)
+        {
+            RetStr=EncodeBytes(RetStr, Buffer, len, ENCODE_HEX);
+        }
     }
 
     Destroy(Buffer);
@@ -137,20 +186,72 @@ static char *OpenSSLGetCertFingerprint(char *RetStr, X509 *cert)
 
 
 
+//setup ECDH keys/keytypes for Perfect Forward Secrecy.
 static void OpenSSLSetupECDH(SSL_CTX *ctx)
 {
     EC_KEY* ecdh;
+    int val;
 
+    //SSL_CTX_set1_groups_list and SSL_CTS_set1_groups are macros, not functions, so we have to check if they are defined
+#if defined (SSL_CTX_set1_groups_list)
+    SSL_CTX_set1_groups_list(ctx, "secp256r1:secp384r1:x25519:GC256A:GC256B:GC256C:GC256D");
+#elif defined (SSL_CTX_set1_groups)
+    val=NID_X9_62_prime256v1;
+    SSL_CTX_set1_groups(ctx, &val, 1);
+#else
+
+    //this old, old method works by generating a key, and then setting it against
+    //the CTX. It's unclear to me if the CTX then uses the key, or just uses it as a
+    //template to set the keytype of subsequently generated keys
+#ifdef HAVE_EC_KEY_NEW_BY_CURVE_NAME
     ecdh = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
-//ecdh = EC_KEY_new_by_curve_name( NID_secp384r1);
-
     if (ecdh)
     {
-        SSL_CTX_set_tmp_ecdh(ctx, ecdh);
+        SSL_CTX_set_tmp_ecdh(ctx, ecdh); //add key to our ctx
         EC_KEY_free(ecdh);
     }
-
+#endif
+#endif
 }
+
+
+
+
+//setup Diffie Helman parameters for Perfect Forward Secrecy.
+static void OpenSSLSetupDH(SSL_CTX *ctx)
+{
+    char *Tempstr=NULL;
+    const char *ptr;
+    DH *dh=NULL;
+    FILE *paramfile;
+
+    if (CachedDH) dh=CachedDH;
+    else
+    {
+        Tempstr=CopyStr(Tempstr, LibUsefulGetValue("SSL:DHParams-File"));
+        if (StrValid(Tempstr))
+        {
+
+            paramfile = fopen(Tempstr, "r");
+            if (paramfile)
+            {
+#ifdef HAVE_PEM_READ_DHPARAMS
+                CachedDH = PEM_read_DHparams(paramfile, NULL, NULL, NULL);
+                dh=CachedDH;
+#endif
+                fclose(paramfile);
+            }
+        }
+    }
+
+    if (dh) SSL_CTX_set_tmp_dh(ctx, dh);
+
+//Don't free these parameters, as they are cached
+//DH_KEY_free(dh);
+
+    DestroyString(Tempstr);
+}
+
 
 
 static void OpenSSLReseedRandom()
@@ -167,43 +268,6 @@ static void OpenSSLReseedRandom()
 }
 
 
-
-
-
-
-
-static void OpenSSLSetupDH(SSL_CTX *ctx)
-{
-    char *Tempstr=NULL;
-    const char *ptr;
-    DH *dh=NULL;
-    FILE *paramfile;
-
-    if (CachedDH) dh=CachedDH;
-    else
-    {
-        ptr=LibUsefulGetValue("SSL:DHParams-File");
-        if (StrValid(ptr))
-        {
-            Tempstr=CopyStr(Tempstr,ptr);
-
-            paramfile = fopen(Tempstr, "r");
-            if (paramfile)
-            {
-                CachedDH = PEM_read_DHparams(paramfile, NULL, NULL, NULL);
-                dh=CachedDH;
-                fclose(paramfile);
-            }
-        }
-    }
-
-    if (dh) SSL_CTX_set_tmp_dh(ctx, dh);
-
-//Don't free these parameters, as they are cached
-//DH_KEY_free(dh);
-
-    DestroyString(Tempstr);
-}
 
 
 
@@ -226,9 +290,28 @@ static int INTERNAL_SSL_INIT()
     Tempstr=MCopyStr(Tempstr,"openssl:",SSLeay_version(SSLEAY_VERSION)," : ", SSLeay_version(SSLEAY_BUILT_ON), " : ",SSLeay_version(SSLEAY_CFLAGS),NULL);
     LibUsefulSetValue("SSL:Library", Tempstr);
     if (! StrValid(LibUsefulGetValue("SSL:Level"))) LibUsefulSetValue("SSL:Level", "tls");
+
     DestroyString(Tempstr);
+
     InitDone=TRUE;
     return(TRUE);
+}
+
+
+static const char *OpenSSLGetCertificateValue(STREAM *S, const char *ValName, X509_NAME *X509name)
+{
+    char *Value=NULL;
+    const char *ptr;
+    ListNode *Node;
+
+//Value is dynamically allocated by X509_NAME_oneline
+    Value=X509_NAME_oneline( X509name, NULL, 0);
+    Node=STREAMSetValue(S, ValName, Value);
+
+    Destroy(Value);
+
+    if (Node) return((const char *) Node->Item);
+    return(NULL);
 }
 
 
@@ -252,7 +335,7 @@ char *OpenSSLCertDetailsGetCommonName(char *RetStr, const char *CertDetails)
     ptr=GetNameValuePair(CertDetails, "/", "=", &Name, &Value);
     while (ptr)
     {
-        if (StrValid(Name) && (strcmp(Name, "CN")==0)) RetStr=CopyStr(RetStr, Value);
+        if (CompareStr(Name, "CN")==0) RetStr=CopyStr(RetStr, Value);
         ptr=GetNameValuePair(ptr, "/", "=", &Name, &Value);
     }
 
@@ -261,6 +344,7 @@ char *OpenSSLCertDetailsGetCommonName(char *RetStr, const char *CertDetails)
 
     return(RetStr);
 }
+
 
 
 
@@ -273,6 +357,7 @@ int OpenSSLVerifyCertificate(STREAM *S, int Flags)
 
 #ifdef HAVE_LIBSSL
     X509 *cert=NULL;
+    const ASN1_TIME *Time;
     SSL *ssl;
 
     ptr=STREAMGetItem(S,"LIBUSEFUL-SSL:OBJ");
@@ -283,17 +368,40 @@ int OpenSSLVerifyCertificate(STREAM *S, int Flags)
     cert=SSL_get_peer_certificate(ssl);
     if (cert)
     {
-        STREAMSetValue(S,"SSL:CertificateIssuer",X509_NAME_oneline( X509_get_issuer_name(cert),NULL, 0));
-        ptr=X509_NAME_oneline( X509_get_subject_name(cert),NULL, 0);
-        STREAMSetValue(S,"SSL:CertificateSubject", ptr);
+        OpenSSLGetCertificateValue(S, "SSL:CertificateIssuer", X509_get_issuer_name(cert));
+        ptr=OpenSSLGetCertificateValue(S, "SSL:CertificateSubject", X509_get_subject_name(cert));
         Value=OpenSSLCertDetailsGetCommonName(Value, ptr);
         if (StrValid(Value)) STREAMSetValue(S, "SSL:CertificateCommonName", Value);
 
-        Value=OpenSSLConvertTime(Value, X509_get_notBefore(cert));
-        STREAMSetValue(S,"SSL:CertificateNotBefore", Value);
-        Value=OpenSSLConvertTime(Value, X509_get_notAfter(cert));
-        STREAMSetValue(S,"SSL:CertificateNotAfter", Value);
-        Value=OpenSSLGetCertFingerprint(Value, cert);
+
+        //values out of X509_get_notBefore etc are returned as internal pointers and must not be freed
+#ifdef HAVE_X509_GET0_NOTBEFORE
+        Time=X509_get0_notBefore(cert);
+#else
+        Time=X509_get_notBefore(cert);
+#endif
+
+        if (Time)
+        {
+            Value=OpenSSLConvertTime(Value, Time);
+            STREAMSetValue(S,"SSL:CertificateNotBefore", Value);
+        }
+
+
+#ifdef HAVE_X509_GET0_NOTAFTER
+        Time=X509_get0_notAfter(cert);
+#else
+        Time=X509_get_notAfter(cert);
+#endif
+
+        if (Time)
+        {
+            Value=OpenSSLConvertTime(Value, Time);
+            STREAMSetValue(S,"SSL:CertificateNotAfter", Value);
+        }
+
+
+
         STREAMSetValue(S,"SSL:CertificateFingerprint", Value);
 
 #ifdef HAVE_X509_CHECK_HOST
@@ -447,7 +555,7 @@ int OpenSSLVerifyCertificate(STREAM *S, int Flags)
 int OpenSSLSetOptions(STREAM *S, SSL *ssl, int Options)
 {
     const char *ptr;
-    int level=LEVEL_SSL3, val;
+    int level=LEVEL_TLS1_2, val;
 
 
     //set Permitted ciphers
@@ -470,15 +578,20 @@ int OpenSSLSetOptions(STREAM *S, SSL *ssl, int Options)
     if (! StrValid(ptr)) ptr=LibUsefulGetValue("SSL:Level");
     if (StrValid(ptr))
     {
+        if (strcasecmp(ptr, "ssl3") !=0) level=LEVEL_SSL3;
         if (strcasecmp(ptr, "ssl") !=0) level=LEVEL_TLS1;
 
+        if (strcasecmp(ptr, "tls") == 0) level=LEVEL_TLS1_2;
+
+        if (strcasecmp(ptr, "tls1.0") == 0) level=LEVEL_TLS1;
         if (strcasecmp(ptr, "tls1.1") == 0) level=LEVEL_TLS1_1;
         if (strcasecmp(ptr, "tls1.2") == 0) level=LEVEL_TLS1_2;
         if (strcasecmp(ptr, "tls1.3") == 0) level=LEVEL_TLS1_3;
     }
 
 #ifdef HAVE_SSL_SET_MIN_PROTO_VERSION
-    val=SSL3_VERSION;
+    val=TLS1_2_VERSION; //default if level not set or not recognized
+
     switch (level)
     {
     case LEVEL_TLS1:
@@ -590,7 +703,7 @@ const char *OpenSSLQueryCipher(STREAM *S)
 //save the resulting params
 void OpenSSLGenerateDHParams()
 {
-#ifdef HAVE_LIBSSL
+#if defined(HAVE_LIBSSL) && defined(HAVE_DH_NEW) && defined(HAVE_DH_GENERATE_PARAMETERS_EX)
     CachedDH = DH_new();
     if(CachedDH)
     {
@@ -621,7 +734,7 @@ int DoSSLClientNegotiation(STREAM *S, int Flags)
         //  SSL_load_ciphers();
         Method=SSLv23_client_method();
         ctx=SSL_CTX_new(Method);
-        if (! ctx) RaiseError(0, "Failed to create SSL_CTX: %s\n",ERR_error_string(ERR_get_error(), NULL));
+        if (! ctx) RaiseError(0, "DoSSLClientNegotiation", "Failed to create SSL_CTX: %s\n",ERR_error_string(ERR_get_error(), NULL));
         else
         {
             STREAM_INTERNAL_SSL_ADD_SECURE_KEYS(S,ctx);
@@ -659,14 +772,23 @@ int DoSSLClientNegotiation(STREAM *S, int Flags)
                 //if we succeeded don't keep looping
                 if (result > -1) break;
                 result=SSL_get_error(ssl, result);
-                if ( (result != SSL_ERROR_WANT_READ) && (result != SSL_ERROR_WANT_WRITE) && (result != SSL_ERROR_WANT_CONNECT)) break;
+                if ( (result != SSL_ERROR_WANT_READ) && (result != SSL_ERROR_WANT_WRITE) && (result != SSL_ERROR_WANT_CONNECT))
+                {
+                    OpenSSLRaiseError(S);
+                    break;
+                }
                 usleep(2000);
                 result=SSL_connect(ssl);
             }
 
             result=SSL_do_handshake(ssl);
+            if (result == 1) S->State |= LU_SS_SSL;
+            else
+            {
+                OpenSSLRaiseError(S);
+                result=FALSE;
+            }
 
-            S->State |= LU_SS_SSL;
 
             OpenSSLQueryCipher(S);
             OpenSSLVerifyCertificate(S, LU_SSL_VERIFY_HOSTNAME);
@@ -691,11 +813,18 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
     int result=FALSE;
 #ifdef HAVE_LIBSSL
     const SSL_METHOD *Method;
+    const char *ptr;
     SSL_CTX *ctx;
     SSL *ssl;
 
     if (S)
     {
+        if (STREAMWaitForBytes(S) < 0)
+        {
+            RaiseError(ERRFLAG_DEBUG, "DoSSLServerNegotiation", "Timeout waiting for SSL negotiation on %s", S->Path);
+            return(FALSE);
+        }
+
         INTERNAL_SSL_INIT();
         Method=SSLv23_server_method();
         if (Method)
@@ -746,8 +875,7 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
                         break;
 
                     default:
-                        result=ERR_get_error();
-                        STREAMSetValue(S, "SSL:Error", ERR_error_string(result,NULL));
+                        OpenSSLRaiseError(S);
                         result=FALSE;
                         break;
                     }

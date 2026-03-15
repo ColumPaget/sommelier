@@ -1,582 +1,565 @@
-.TH  sommelier  1 " 2020/05/17"
+.TH  sommelier  1 "2020/05/17"
 
 .SH NAME
- 
-.P
+
+.PP
 sommelier - installer for apps that run under wine or other emulators
 .SH SYNOPSIS
- 
+
 .nf
+.ft CW
+
+.RS
 .EX
 
+sommelier addstore <url>                           add a remote store of apps at an ssh: or http: url
+sommelier refresh                                  re\-download files registered with \(aqaddstore\(aq
 sommelier platforms                                print list of supported platforms
+sommelier categories                               print list of application categories
 sommelier list [options]                           print list of apps available for install. use \-platform option to display apps for a given platform
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
 sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re\-write desktop file)
-sommelier reconfigure <name> [<name>]                 reconfigure an installed application (seek for executables, re\-write desktop file)
+sommelier reconfigure <name> [<name>]              reconfigure an installed application (seek for executables, re\-write desktop file)
 sommelier run <name>                               run an application by name
 sommelier winecfg <name>                           run \(aqwinecfg\(aq for named wine application
+sommelier regedit <name>                           run \(aqregedit\(aq for named wine application
 sommelier download <name>                          just download installer/package to current directory
 sommelier set <setting string> <name> [<name>]     change settings of an installed application
 sommelier autostart                                run programs from \*(ti/.config/autostart
-
-
+.RE
 .EE
 .fi
 .in
 .ad b
 .nop  
 .SH DESCRIPTION
- 
-.P
+
+.PP
 Sommelier is an installer for downloadable applications that can be run under a number of emulators. The main focus is windows applications that can be run under the \(aqwine\(aq emulator, but currently it also supports ms-dos applications that can be run under \(aqdosbox\(aq; adventure games that can be run under the\(aqscummvm\(aq emulator; zx-spectrum apps that can be run under the \(aqfuse\(aq, \(aqfbzx\(aq and \(aqzesarux\(aq emulators; downloads from gog.com that can be run either under wine, dosbox, a neogeo emulator, or natively on linux; and doom wads that can be run under \(aqchocolate-doom\(aq or \(aqcrispy-doom\(aq. A few other emulators and program types are supported, but less focused on.
-.P
+.PP
 Installed applications are stored under a \(aq.sommelier\(aq directory in the user\(aqs home directory, each in a subdirectory of their own (what\(aqs known as a \(aqwine bottle\(aq for wine apps). Also in this directory are stored \(aq.apps\(aq configuration files that describe the list of installable apps.
 .SH OPTIONS
-  
-.P
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -d
- print debugging (there will be a lot!)
-   
-.P
+print debugging (there will be a lot!)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -debug
- print debugging (there will be a lot!)
-   
-.P
+print debugging (there will be a lot!)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -c <config file>
- specify a config (list of apps) file, rather than using the default search path
-   
-.P
+specify a config (list of apps) file, rather than using the default search path
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -url
- supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path
-   
-.P
+supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -f
- force install even if expected sha256 doesn\(aqt match the download
-   
-.P
+force install even if expected sha256 doesn't match the download
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -force
- force install even if expected sha256 doesn\(aqt match the download
-   
-.P
+force install even if expected sha256 doesn't match the download
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -install-name <name>
- Name that program will be installed under and called/run under
-   
-.P
+Name that program will be installed under and called/run under
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -install-as <name>
- Name that program will be installed under and called/run under
-   
-.P
+Name that program will be installed under and called/run under
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -proxy <url>
- use a proxy for downloading installs
-   
-.P
+use a proxy for downloading installs
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -platform <platform>
- specify platform to display when listing apps, or if installing an app that has multiple platforms
-   
-.P
+specify platform to display when listing apps, or if installing an app that has multiple platforms
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -emu <emulator>
- specify a specific emulator to use when installing an app
-   
-.P
+specify a specific emulator to use when installing an app
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -emulator <emulator>
- specify a specific emulator to use when installing an app
-   
-.P
+specify a specific emulator to use when installing an app
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -category <category>
- category to use when displaying lists of apps
-   
-.P
+category to use when displaying lists of apps
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -installed
- display only installed app when displaying lists of apps
-   
-.P
+display only installed app when displaying lists of apps
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -k
- keep installer or .zip file instead of deleting it after install
-   
-.P
+keep installer or .zip file instead of deleting it after install
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -S
- install app system-wide under /opt, to be run as a normal native app
-   
-.P
+install app system-wide under /opt, to be run as a normal native app
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -system
- install app system-wide under /opt, to be run as a normal native app
-   
-.P
+install app system-wide under /opt, to be run as a normal native app
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -icache <dir>
- installer cache: download installer to directory \(aqdir\(aq and leave it there
-   
-.P
+installer cache: download installer to directory 'dir' and leave it there
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -hash
- hash downloads even if they have no expected hash value
-   
-.P
+hash downloads even if they have no expected hash value
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -s
- set a value at install
-   
-.P
+set a value at install
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -set
- set a value at install
-   
-.P
+set a value at install
+.in
 
-.br
+.PP
+.in +2
 
+.TP
+.B -su
+on linux apps are blocked from switching to root superuser (e.g. using su or sudo), this switch allows an app to do that.
+.in
+
+.PP
+.in +2
 
 .TP
 .B -no-xrandr
- don\(aqt use xrandr to reset screen resolution after running and application
-   
-.P
+don't use xrandr to reset screen resolution after running and application
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -user-agent <agent string>
- set user-agent to send when communicating over http
-   
-.P
+set user-agent to send when communicating over http
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B -ua <agent string>
- set user-agent to send when communicating over http
-.P
-.br
+set user-agent to send when communicating over http
+.in
 
- .TP
-.B -su
- allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.  If used with action 'run' then the program runs with the ability to su.  If used with action 'install' then the program is installed with the ability to su.
-.P
-.br
- 
- .TP
-.B -nosu
- deny programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.  If used with action 'run' then the program runs WITHOUT the ability to su.  If used with action 'install' then the program is installed WITHOUT the ability to su.  If used with action 'install' then the program is installed WITHOUT the ability to su.
-.P
-.br
-
- .TP
-.B -end
- End of sommelier command-line arguments, anything past this point is arguments for the program to run
-.P
-.br
-
- .TP
-.B --
- End of sommelier command-line arguments, anything past this point is arguments for the program to run
-.P
-.br
-
-
-
- 
 .SH EXAMPLE USAGE
-  
-.P
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B List installable applications
- sommelier list 
-   
-.P
+sommelier list
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B List installable applications for a given platform
- sommelier list -platform doom
-   
-.P
+sommelier list -platform doom
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install apps
- sommelier install SeaMonkey PaleMoon
-   
-.P
+sommelier install SeaMonkey PaleMoon
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install app from a predownloaded file
- sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
-   
-.P
+sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install app for a particular platform when it\(aqs available in more than one
- sommelier install DarkestDungeon -platform gog:linux -url setup_darkest_dungeon.sh
-   
-.P
+sommelier install DarkestDungeon -platform gog:linux -url setup_darkest_dungeon.sh
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install app for a particular platform and using a particular emulator when it\(aqs available in more than one
- sommelier install BlazingStar -platform gog:neogeo -emu gngeo -url gog_blazing_star_2.0.0.1.sh
-   
-.P
+sommelier install BlazingStar -platform gog:neogeo -emu gngeo -url gog_blazing_star_2.0.0.1.sh
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install app from a predownloaded file
- sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
-   
-.P
+sommelier install SpaceCom -url setup_spacecom_2.4.0.6.exe
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Install app and set a setting
- sommelier install Doom:Strain -s fullscreen=n
-   
-.P
+sommelier install Doom:Strain -s fullscreen=n
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Uninstall application
- sommelier uninstall PaleMoon
-   
-.P
+sommelier uninstall PaleMoon
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Run application
- sommelier run PaleMoon
-   
-.P
+sommelier run PaleMoon
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Run application and pass it arguments
- sommelier run Telegram -startintray
-   
-.P
+sommelier run Telegram -startintray
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B Set a setting for some apps
- sommelier set fullscreen=n Doom:Strain Doom:Hacx
-  
-.SH PLATFORMS
- 
-.P
-The following platforms are supported for use in the 
-.na
-\-platform
-.ad n
-.nop option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed. 
-.P
+sommelier set fullscreen=n Doom:Strain Doom:Hacx
+.in
 
-.br
- 
+.SH PLATFORMS
+
+.PP
+The following platforms are supported for use in the \(aq-platform\(aq option, or in application configurations in the config files. A platform value not only relates to the emulator that an app will be run under but also to some configuration that might be set for an emulator and also to how a program should be unpacked and installed.
+.PP
+.in +2
+
 .TP
 .B win
- windows apps that run under wine (equivalent to win32)
-   
-.P
+windows apps that run under wine (equivalent to win32)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B windows
- windows apps that run under wine (equivalent to win32)
-   
-.P
+windows apps that run under wine (equivalent to win32)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B wine
- windows apps that run under wine (equivalent to win32)
-   
-.P
+windows apps that run under wine (equivalent to win32)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B win16
- 16-bit windows apps that run under wine
-   
-.P
+16-bit windows apps that run under wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B win32
- 32-bit windows apps that run under wine
-   
-.P
+32-bit windows apps that run under wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B win64
- 64-bit windows apps that run under wine
-   
-.P
+64-bit windows apps that run under wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B linux32
- 32-bit native linux application
-   
-.P
+32-bit native linux application
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B linux64
- 64-bit native linux application
-   
-.P
+64-bit native linux application
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B doom
- doom wad that can be run under a doom source port
-   
-.P
+doom wad that can be run under a doom source port
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B spectrum
- spectrum app that can be run under the fuse emulator
-   
-.P
+spectrum app that can be run under the fuse emulator
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B zx48
- spectrum app that can be run under the fuse emulator
-   
-.P
+spectrum app that can be run under the fuse emulator
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B scummvm
- adventure game that can run under the scummvm emulator
-   
-.P
+adventure game that can run under the scummvm emulator
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:win
- windows app from gog.com that runs under wine
-   
-.P
+.B gog
+windows app from gog.com that runs under wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:windows
- windows app from gog.com that runs under wine
-   
-.P
+.B gog
+windows app from gog.com that runs under wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:lin
- linux app from gog.com that runs natively
-   
-.P
+.B gog
+linux app from gog.com that runs natively
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:linux
- linux app from gog.com that runs natively
-   
-.P
+.B gog
+linux app from gog.com that runs natively
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:lindos
- msdos app from gog.com that\(aqs packaged for linux
-   
-.P
+.B gog
+msdos app from gog.com that\(aqs packaged for linux
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:windos
- msdos app from gog.com that\(aqs packaged for windows
-   
-.P
+.B gog
+msdos app from gog.com that\(aqs packaged for windows
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:scummvm
- scummvm adventure game from gog.com that\(aqs packaged for linux
-   
-.P
+.B gog
+scummvm adventure game from gog.com that\(aqs packaged for linux
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
-.B gog:neogeo
- neogeo game from gog.com that\(aqs packaged for linux
-   
-.P
+.B gog
+neogeo game from gog.com that\(aqs packaged for linux
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B megadrive
- sega megadrive games run under the dgen emulator
-   
-.P
+sega megadrive games run under the dgen emulator
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B segamaster
- sega master system run under the mednafen emulator
-   
-.P
+sega master system run under the mednafen emulator
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B gba
- game boy advanced games run under mgba or mednafen emulators
-   
-.P
+game boy advanced games run under mgba or mednafen emulators
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B nes
- nintendo entertainment system games run under the dnes emulator
-  
+nintendo entertainment system games run under the dnes emulator
+.in
+
 .SH PROXY URLS
- 
-.P
-The 
-.na
-\-proxy
-.ad n
-.nop option is used with the \(aqdownload\(aq or \(aqinstall\(aq commands and accepts proxy urls of the form:
+
+.PP
+The \(aq-proxy\(aq option is used with the \(aqdownload\(aq or \(aqinstall\(aq commands and accepts proxy urls of the form:
 .nf
+.ft CW
+
+.RS
 .EX
 
      <protocol>:<user>:<password>@<host>:<protocol>. 
+.RE
 .EE
 .fi
 .in
 .ad b
 .nop  
-.P
+.PP
 \(aqprotocol\(aq can be \(aqsocks4\(aq, \(aqsocks5\(aq \(aqhttps\(aq or \(aqsshtunnel\(aq. For \(aqsshtunnel\(aq the names defined in the \*(ti/.ssh/config file can be used, so that  most of the information can be ommited.
-.P
+.PP
 examples:
 .nf
+.ft CW
+
+.RS
 .EX
 
    https:bill:secret@proxy.com
@@ -584,110 +567,449 @@ examples:
    socks5:bill:secret@proxy.com:1080
    sshtunnel:bill:secret@ssh_host.com
    sshtunnel:sshproxy
+.RE
 .EE
 .fi
 .in
 .ad b
 .nop  
 .SH SETTINGS
- 
-.P
-There are a number of settings that can be lastingly configured with the \(aqset\(aq command or using the 
-.na
-\-set
-.ad n
-.nop option when installing an application. Currently these settings only relate to programs run under wine, or doom wads run under chocolate-doom or crispy-doom. 
-.P
 
-.br
- 
+.PP
+There are a number of settings that can be lastingly configured with the \(aqset\(aq command or using the \(aq-set\(aq option when installing an application. Currently these settings only relate to programs run under wine, or doom wads run under chocolate-doom or crispy-doom.
+.PP
+.in +2
+
 .TP
 .B vdesk=y/n/<geometry>
- run program within a window/virtual desktop
-   
-.P
+run program within a window/virtual desktop
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B fullscreen=y/n
- run program at fullscreen, or else within a virtual desktop
-   
-.P
+run program at fullscreen, or else within a virtual desktop
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B winmanage=y/n
- wine only: allow window manager to decorate and manage windows of this program
-   
-.P
+wine only: allow window manager to decorate and manage windows of this program
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B smoothfonts=y/n
- wine only: use font anti-aliasing
-   
-.P
+wine only: use font anti-aliasing
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B os-version=<version>
- wine only: set OS version to one of those supported by wine
-   
-.P
+wine only: set OS version to one of those supported by wine
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B sound=y/n/sfx
- DOOM only: sound on/off, or only effects (no music)
-   
-.P
+DOOM only: sound on/off, or only effects (no music)
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B mouse=y/n
- DOOM only: use mouse in-game, or not
-   
-.P
+DOOM only: use mouse in-game, or not
+.in
 
-.br
- 
+.PP
+.in +2
+
 .TP
 .B grab=y/n
- DOOM only: grab mouse, or not
-  
-.P
-For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style 
-.na
-vdesk=600x300
-.ad n
-.nop .
+DOOM only: grab mouse, or not
+.in
+
+.PP
+For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style \(aqvdesk=600x300\(aq.
 .SH ENVIRONMENT VARIABLES
- 
-.P
-Sommelier looks for the variables 
+
+.PP
+Sommelier looks for the variables \(aqSOMMELIER_CA_BUNDLE\(aq, \(aqCURL_CA_BUNDLE\(aq and \(aqSSL_VERIFY_FILE\(aq, in that order, to discover the path of the Certificate Bundle for certificate verification. If \(aqSOMMELIER_INSTALLER_CACHE\(aq is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the \(aq-url\(aq option.
+.SH APPS FILES
+
+.PP
+Installable apps are specified using \(aqapps files\(aq. These are files that contain one-line configurations for each app that can be installed. Each line starts with an application name, followed by a list of name-value pairs that specify configuration variables. The only required variable is \(aqplatform\(aq which specifies the platform for the app, e.g. "linux32", "winxp", "zxspectrum", etc. \(aqurl\(aq is also usually provided, which specifies the url that the app package can be downloaded from, however this can be ommitted if the url is provided at install time using the 
 .na
-SOMMELIER_CA_BUNDLE
-.ad n
-.nop , 
-.na
-CURL_CA_BUNDLE
-.ad n
-.nop and 
-.na
-SSL_VERIFY_FILE
-.ad n
-.nop , in that order, to discover the path of the Certificate Bundle for certificate verification. If 
-.na
-SOMMELIER_INSTALLER_CACHE
-.ad n
-.nop is set, sommelier will download installer and .zip files to the specified directory, and leave them there for future use with the 
-.na
+
+.nf
+.ft CW
 \-url
+.fi
+.ft P
+
 .ad n
-.nop option.   
+.nop command-line option (as in gog.com apps).
+.PP
+There are some special types of line that can be put in the file. Instead of starting with an application name, they start with a single symbol. These symbols are:
+.nf
+.ft CW
+
+.RS
+.EX
+
+#    a comment line
+!    a line of variables that apply to everything below it in the file
+*    a line of variables that apply to everything below it in the file UNTIL another \(aq*\(aq line is encountered
+.RE
+.EE
+.fi
+.in
+.ad b
+.nop  
+.PP
+For example, here is a file the configures a few 3ds homebrew games. Note how \(aqplatform\(aq and \(aqcategory\(aq are set using a \(aq*\(aq line to prevent typing them over and over for each app.
+.nf
+.ft CW
+
+.RS
+.EX
+
+* platform=3ds category=Game;3DS
+
+Breakout url=https://github.com/Magicrafter13/Breakout/releases/download/B_1.07.02/Breakout.3dsx install\-type=\(aqexecutable\(aq sha256=\(aq84c052828e6eac1d78831df9f4cac9eb8d5e580c766e567ed3e029ee75b77ac6\(aq category=BreakoutGame;3DS
+ColossalCaveAdventure url=https://github.com/nop90/Colossal\-Cave\-Adventure\-2.5\-for\-3ds/releases/download/v1.1/Advent_3DSX_v1.1.zip sha256=\(aq57de0c3df074b0afdb1da75f43bc85d99fc07a65b13fea809a4a4bf3f3d13a6c\(aq category=DungeonCrawl;3DS
+GriffonLegend url=https://github.com/nop90/Griffon\-Legend\-3DS/releases/download/v1.0/GriffonLegend.v1.0.zip sha256=\(aqbe29b374dcd722715fe24bae835174abb446e136ac306a5507dda92b5661c24f\(aq
+.RE
+.EE
+.fi
+.in
+.ad b
+.nop  
+.PP
+Custom variables can be used in these configs, and then called up using \(aq\(aq in other variables. However, the following variables are the ones that mean something to sommelier.
+.PP
+.in +2
+
+.TP
+.B platform
+the platform/emulator-type this app will run on
+.in
+
+.PP
+.in +2
+
+.TP
+.B url
+the url this app can be installed from
+.in
+
+.PP
+.in +2
+
+.TP
+.B category
+semi-colon separated list of categories the app belongs to, like \(aqChat\(aq or \(aqGame\(aq etc. The standard categories for desktop files are supported, but custom ones can also be used
+.in
+
+.PP
+.in +2
+
+.TP
+.B extra_category
+if category has been specified using a \(aq*\(aq line, then add the category/categories specified here to it
+.in
+
+.PP
+.in +2
+
+.TP
+.B sha256
+the sha256 sum of the package file that is downloaded, sommelier will throw an error if this specified, but doesn\(aqt match
+.in
+
+.PP
+.in +2
+
+.TP
+.B requires
+name of another app that must be installed before this one, usually a library
+.in
+
+.PP
+.in +2
+
+.TP
+.B bundled
+name of an app that this app is bundled with, install the \(aqparent app\(aq but run the executable specified here
+.in
+
+.PP
+.in +2
+
+.TP
+.B installer
+specify the \(aqinstaller\(aq file for packages that, when unpacked, contain an installer app that must be run.
+.in
+
+.PP
+.in +2
+
+.TP
+.B installer-args
+command-line args to be passed to an installer
+.in
+
+.PP
+.in +2
+
+.TP
+.B installer-vdesk
+for some windows applications run under \(aqwine\(aq the installer needs to be run in a \(aqvdesk\(aq (virtual desktop), in which case specify \(aqinstaller-vdesk=y\(aq
+.in
+
+.PP
+.in +2
+
+.TP
+.B install-stage2
+some installers unpack and then a second installer needs to be run, this specifies the file to be run for that stage2 installer
+.in
+
+.PP
+.in +2
+
+.TP
+.B stage2-args
+arguments to pass to stage2 installer
+.in
+
+.PP
+.in +2
+
+.TP
+.B inner-package
+some packages have a second package inside them, specify the filename of such a package with this variable
+.in
+
+.PP
+.in +2
+
+.TP
+.B exec
+the executable file that is to be found when the package has been unpacked. Sommelier has some ability to auto-find such files, but it\(aqs better to specify them.
+.in
+
+.PP
+.in +2
+
+.TP
+.B exec64
+this allows one to specify a 64-bit executable, that will be searched for first on 64-bit platforms. This can be used in combination with the \(aqexec\(aq variable to specify both 32-bit and 64-bit executables within the same package.
+.in
+
+.PP
+.in +2
+
+.TP
+.B exec-args
+any arguments to be passed to the executable when it\(aqs run
+.in
+
+.PP
+.in +2
+
+.TP
+.B emulator-args
+any arguments to be passed to an emulator when it runs this app
+.in
+
+.PP
+.in +2
+
+.TP
+.B install-type
+the installation type. \(aqexecutable\(aq for apps that are just downloaded and run as executables, otherwise a package-type will be expected.
+.in
+
+.PP
+.in +2
+
+.TP
+.B download-type
+package type of the download. This can be \(aqzip\(aq, \(aqdeb\(aq, \(aq7za\(aq, \(aqtar.xz\(aq, \(aqtar.bz2\(aq, \(aqtar.gz\(aq. This tells sommelier it needs to unpack the file using the appropriate type of unpacker.
+.in
+
+.PP
+.in +2
+
+.TP
+.B working-dir
+usually the main directory that contains the application is decided by the platform, but sometimes one has to specify it using this argument
+.in
+
+.PP
+.in +2
+
+.TP
+.B link
+during install create a symlink to a file/directory. Value has the format "<link path>:<target path>"
+.in
+
+.PP
+.in +2
+
+.TP
+.B rename
+during install rename a file/directory. Argument has the format "<src>:<dest>"
+.in
+
+.PP
+.in +2
+
+.TP
+.B delete
+during install delete files matching this pattern. e.g. to delete video files that don't play under wine.
+.in
+
+.PP
+.in +2
+
+.TP
+.B copyfiles-to
+during install copy files from one directory to another. Value has the format "<src dir>:<dest dir>"
+.in
+
+.PP
+.in +2
+
+.TP
+.B movefiles-from
+Argument is a match pattern that specifies files to be moved into 'working directory' for the application. Working directory is normally specific to a platform
+.in
+
+.PP
+.in +2
+
+.TP
+.B chext
+during install change file-type extension of specified files. Value has the format "<match pattern>:<new extension>". Example: chext="video/m4v:mp4"
+.in
+
+.PP
+.in +2
+
+.TP
+.B zip
+during install zip files up into a zipfile. Used for emulators that expect to 'run' a zipfile. Value is "<zipfile name>:<file match pattern>"
+.in
+
+.PP
+.in +2
+
+.TP
+.B icon
+icon file for the app. This will be specified in the generated .desktop files for this application.
+.in
+
+.PP
+.in +2
+
+.TP
+.B warn
+a warning that is displayed when the app is installed or run
+.in
+
+.PP
+.in +2
+
+.TP
+.B runwarn
+a warning that is displayed when the app is run
+.in
+
+.PP
+.in +2
+
+.TP
+.B winmanager
+for wine applications. Whether the X11 window manager should \(aqmanage\(aq this window. On rare occasions the window manager can get confused by the behavior of a wine app, so set this to \(aqn\(aq to deal with that.
+.in
+
+.PP
+.in +2
+
+.TP
+.B vdesk
+run a windows app in a virtual desktop window. Value can be \(aqy\(aq, \(aqn\(aq or a desktop size like \(aq800x600\(aq.
+.in
+
+.PP
+.in +2
+
+.TP
+.B os-version
+for windows/wine apps, specify the os-version to run the app as. Wine supports versions like "win3.1", "winxp", "vista", "win8" etc. Consule wine documentation for a full list.
+.in
+
+.PP
+.in +2
+
+.TP
+.B comment
+specify a comment that will be displayed against an app in the \(aqsommelier list\(aq command
+.in
+
+.PP
+.in +2
+
+.TP
+.B donate
+url to a webpage where one can donate to an app\(aqs project
+.in
+
+.SH REMOTE STORES
+
+.PP
+sommelier supports \(aqremote stores\(aq, directories containing app list files that can be downloaded from an http, https or ssh server. These are registered using:
+.nf
+.ft CW
+
+.RS
+.EX
+
+	sommelier addstore <url>
+.RE
+.EE
+.fi
+.in
+.ad b
+.nop  
+.PP
+where the url points to an apps list file. App packages can be stored in the same directory as the apps list file, and their urls can be specified using a variable called \(aqserver_path\(aq which specifies the directory part of the URL the apps list file was installed from. 
+.PP
+Installed apps files can be re-downloaded and updated using
+.nf
+.ft CW
+
+.RS
+.EX
+
+	sommelier refresh
+.RE
+.EE
+.fi
+.in
+.ad b
+.nop  

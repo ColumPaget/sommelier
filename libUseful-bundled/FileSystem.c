@@ -20,6 +20,8 @@
 #include <linux/fs.h>
 #endif
 
+#include <fnmatch.h>
+
 #ifndef HAVE_GET_CURR_DIR
 char *get_current_dir_name()
 {
@@ -73,12 +75,26 @@ char *StripDirectorySlash(char *DirPath)
 
 //don't strip '/' (root dir)
     if (! StrValid(DirPath)) return(DirPath);
-    if (strcmp(DirPath,"/")==0) return(DirPath);
+    if (strcmp(DirPath, "/")==0) return(DirPath);
     ptr=DirPath+StrLen(DirPath)-1;
 
     if (*ptr == '/') *ptr='\0';
 
     return(DirPath);
+}
+
+
+char *AppendPath(char *Path, const char *SubDirectory, const char *File)
+{
+    Path=SlashTerminateDirectoryPath(Path);
+    if (StrValid(SubDirectory))
+    {
+        Path=CatStr(Path, SubDirectory);
+        Path=SlashTerminateDirectoryPath(Path);
+    }
+    Path=CatStr(Path, File);
+
+    return(Path);
 }
 
 
@@ -163,9 +179,56 @@ int FileMoveToDir(const char *FilePath, const char *Dir)
 }
 
 
-int FindFilesInPath(const char *File, const char *Path, ListNode *Files)
+int RecursiveFindFilesInDir(const char *Pattern, const char *Dir, ListNode *Files)
 {
-    char *Tempstr=NULL, *CurrPath=NULL;
+    char *Tempstr=NULL;
+    glob_t Glob;
+    struct stat Stat;
+    int i, count=0;
+
+    Tempstr=MCopyStr(Tempstr, Dir, "/*", NULL);
+    glob(Tempstr, 0, 0, &Glob);
+    for (i=0; i < Glob.gl_pathc; i++)
+    {
+        stat(Glob.gl_pathv[i], &Stat);
+        if (S_ISDIR(Stat.st_mode)) count += RecursiveFindFilesInDir(Pattern, Glob.gl_pathv[i],  Files);
+        if (fnmatch(Pattern, GetBasename(Glob.gl_pathv[i]), 0) == 0)
+        {
+            ListAddItem(Files, CopyStr(NULL, Glob.gl_pathv[i]));
+            count++;
+        }
+    }
+    globfree(&Glob);
+
+    Destroy(Tempstr);
+
+    return(count);
+}
+
+
+
+int RecursiveFindFilesInPath(const char *Pattern, const char *Path, ListNode *Files)
+{
+    char *Dir=NULL;
+    const char *ptr;
+
+    ptr=GetToken(Path, ":", &Dir, 0);
+    while (ptr)
+    {
+        RecursiveFindFilesInDir(Pattern, Dir, Files);
+        ptr=GetToken(ptr, ":", &Dir, 0);
+    }
+
+    Destroy(Dir);
+
+    return(ListSize(Files));
+}
+
+
+
+int FindFilesInPathSubDirectory(const char *File, const char *Path, const char *SubDirectory, ListNode *Files)
+{
+    char *CurrPath=NULL;
     const char *ptr;
     int i;
     glob_t Glob;
@@ -179,17 +242,15 @@ int FindFilesInPath(const char *File, const char *Path, ListNode *Files)
 
     while (ptr)
     {
-        CurrPath=SlashTerminateDirectoryPath(CurrPath);
-        Tempstr=MCopyStr(Tempstr,CurrPath,File,NULL);
+        CurrPath=AppendPath(CurrPath, SubDirectory, File);
 
-        glob(Tempstr,0,0,&Glob);
+        glob(CurrPath, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++) ListAddItem(Files,CopyStr(NULL,Glob.gl_pathv[i]));
         globfree(&Glob);
 
         ptr=GetToken(ptr,":",&CurrPath,0);
     }
 
-    DestroyString(Tempstr);
     DestroyString(CurrPath);
 
     return(ListSize(Files));
@@ -197,13 +258,20 @@ int FindFilesInPath(const char *File, const char *Path, ListNode *Files)
 
 
 
-char *FindFileInPath(char *InBuff, const char *File, const char *Path)
+int FindFilesInPath(const char *File, const char *Path, ListNode *Files)
 {
-    char *Tempstr=NULL, *CurrPath=NULL, *RetStr=NULL, *Link=NULL;
+    return(FindFilesInPathSubDirectory(File, Path, NULL, Files));
+}
+
+
+
+char *FindFileInPathSubDirectory(char *RetStr, const char *File, const char *SubDirectory, const char *Path)
+{
+    char *CurrPath=NULL, *Link=NULL;
     struct stat Stat;
     const char *ptr;
 
-    RetStr=CopyStr(InBuff,"");
+    RetStr=CopyStr(RetStr, "");
 
     if (*File=='/')
     {
@@ -214,19 +282,18 @@ char *FindFileInPath(char *InBuff, const char *File, const char *Path)
 
     while (ptr)
     {
-        CurrPath=SlashTerminateDirectoryPath(CurrPath);
-        Tempstr=MCopyStr(Tempstr,CurrPath,File,NULL);
-        if (lstat(Tempstr, &Stat)==0)
+        CurrPath=AppendPath(CurrPath, SubDirectory, File);
+        if (lstat(CurrPath, &Stat)==0)
         {
             //if we find an symlink, then remember it, but don't return it,
             //in the hope that we will find a better match
             if (S_ISLNK(Stat.st_mode))
             {
-                if (! StrValid(Link)) Link=CopyStr(Link, Tempstr);
+                if (! StrValid(Link)) Link=CopyStr(Link, CurrPath);
             }
             else
             {
-                RetStr=CopyStr(RetStr,Tempstr);
+                RetStr=CopyStr(RetStr,CurrPath);
                 break;
             }
         }
@@ -238,9 +305,36 @@ char *FindFileInPath(char *InBuff, const char *File, const char *Path)
     //then return that link
     if (! StrValid(RetStr)) RetStr=CopyStr(RetStr, Link);
 
-    DestroyString(Tempstr);
     DestroyString(CurrPath);
     DestroyString(Link);
+
+    return(RetStr);
+}
+
+
+
+char *FindFileInPath(char *RetStr, const char *File, const char *Path)
+{
+    return(FindFileInPathSubDirectory(RetStr, File, NULL, Path));
+}
+
+
+char *FindFileInPrefixSubDirectory(char *RetStr, const char *File, const char *SubDirectory, const char *Path)
+{
+    char *Dir=NULL;
+    const char *ptr;
+
+    ptr=GetToken(Path, ":", &Dir, 0);
+    while (ptr)
+    {
+        Dir=StripDirectorySlash(Dir);
+        StrRTruncChar(Dir, '/');
+        RetStr=FindFileInPathSubDirectory(RetStr, Path, SubDirectory, File);
+        if (StrValid(RetStr)) break;
+        ptr=GetToken(ptr, ":", &Dir, 0);
+    }
+
+    Destroy(Dir);
 
     return(RetStr);
 }
@@ -254,6 +348,14 @@ int FileExists(const char *FileName)
 
     if (stat(FileName,&StatData) == 0) return(1);
     else return(0);
+}
+
+size_t FileSize(const char *FileName)
+{
+    struct stat StatData;
+
+    if (stat(FileName,&StatData) == 0) return(StatData.st_size);
+    else return(-1);
 }
 
 
@@ -407,7 +509,7 @@ int FileSystemMount(const char *Dev, const char *MountPoint, const char *Type, c
 
     if (! StrValid(p_MountPoint)) return(FALSE);
 
-    if (strcmp(Type,"bind")==0)
+    if (CompareStr(Type, "bind")==0)
     {
 #ifdef MS_BIND
         p_Type="";
@@ -467,7 +569,7 @@ int FileSystemMount(const char *Dev, const char *MountPoint, const char *Type, c
     }
 #endif
 
-#ifdef linux
+#ifdef __linux__
     result=mount(Dev,p_MountPoint,p_Type,Flags,NULL);
 #else
 //assume BSD if not linux
@@ -508,9 +610,9 @@ int FileSystemUnMountFlagsDepth(const char *MountPoint, int UnmountFlags, int Ex
     struct stat FStat;
     glob_t Glob;
 
-    if (strcmp(MountPoint,"/proc")==0) MaxDepth=10;
-    if (strcmp(MountPoint,"/sys")==0) MaxDepth=10;
-    if (strcmp(MountPoint,"/dev")==0) MaxDepth=10;
+    if (CompareStr(MountPoint, "/proc")==0) MaxDepth=10;
+    if (CompareStr(MountPoint, "/sys")==0) MaxDepth=10;
+    if (CompareStr(MountPoint, "/dev")==0) MaxDepth=10;
 
 
 
@@ -615,7 +717,7 @@ int FileSystemCopyDir(const char *Src, const char *Dest)
     {
         ptr=GetBasename(Glob.gl_pathv[i]);
 
-        if ((strcmp(ptr,".") !=0) && (strcmp(ptr, "..") !=0) )
+        if (ptr && (strcmp(ptr,".") !=0) && (strcmp(ptr, "..") !=0) )
         {
             ptr=Glob.gl_pathv[i];
             if (lstat(ptr, &Stat) == 0)
@@ -794,3 +896,39 @@ int FileSetSTREAMFlags(const char *Path, int Set, int Unset)
 }
 
 
+char *FileRead(char *RetStr, const char *Path)
+{
+    STREAM *S;
+
+    S=STREAMOpen(Path, "r");
+    if (S)
+    {
+        RetStr=STREAMReadDocument(RetStr, S);
+        STREAMClose(S);
+        errno=0;
+    }
+    else
+    {
+        RetStr=CopyStr(RetStr, "");
+    }
+
+
+    return(RetStr);
+}
+
+
+
+int FileWrite(const char *Path, const char *Data)
+{
+    STREAM *S;
+    int len=0;
+
+    S=STREAMOpen(Path, "wc");
+    if (S)
+    {
+        len=STREAMWriteBytes(S, Data, StrLen(Data));
+        STREAMClose(S);
+    }
+
+    return(len);
+}

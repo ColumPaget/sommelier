@@ -86,6 +86,19 @@ char *strmrep(char *str, char *oldchars, char newchar)
 }
 
 
+int strcount(const char *Str, char Char)
+{
+    const char *ptr;
+    int count=0;
+
+    for (ptr=Str; *ptr !='\0'; ptr++)
+    {
+        if (*ptr==Char) count++;
+    }
+    return(count);
+}
+
+
 
 inline int CompareStr(const char *S1, const char *S2)
 {
@@ -98,6 +111,19 @@ inline int CompareStr(const char *S1, const char *S2)
     if (! StrValid(S2)) return(1);
 
     return(strcmp(S1,S2));
+}
+
+inline int CompareStrLen(const char *S1, const char *S2, size_t len)
+{
+    if (
+        (! StrValid(S1)) &&
+        (! StrValid(S2))
+    ) return(0);
+
+    if (! StrValid(S1)) return(-1);
+    if (! StrValid(S2)) return(1);
+
+    return(strncmp(S1, S2, len));
 }
 
 
@@ -114,6 +140,19 @@ inline int CompareStrNoCase(const char *S1, const char *S2)
     return(strcasecmp(S1,S2));
 }
 
+
+inline int CompareStrLenNoCase(const char *S1, const char *S2, size_t len)
+{
+    if (
+        (! StrValid(S1)) &&
+        (! StrValid(S2))
+    ) return(0);
+
+    if (! StrValid(S1)) return(-1);
+    if (! StrValid(S2)) return(1);
+
+    return(strncasecmp(S1, S2, len));
+}
 
 
 
@@ -264,11 +303,11 @@ char *InternalMCopyStr(char *Dest, const char *Str1,  ...)
 //it only checks that the string is not NULL
 inline char *StrUnsafeTrunc(char *Str, int Len)
 {
-if (Str)
-{
-    Str[Len]='\0';
-    StrLenCacheAdd(Str, Len);
-}
+    if (Str)
+    {
+        Str[Len]='\0';
+        StrLenCacheAdd(Str, Len);
+    }
     return(Str);
 }
 
@@ -559,6 +598,13 @@ char *StripLeadingWhitespace(char *Str)
 }
 
 
+char *StrTrim(char *Str)
+{
+    StripTrailingWhitespace(Str);
+    StripLeadingWhitespace(Str);
+    return(Str);
+}
+
 
 char *StripCRLF(char *Str)
 {
@@ -583,42 +629,67 @@ char *StripCRLF(char *Str)
 }
 
 
-char *StripQuotes(char *Str)
+char *StripStartEndChars(char *Str, const char *StartChars, const char *EndChars)
 {
-    int len;
-    char *ptr, *end, StartQuote='\0';
+    int len, i;
+    char *ptr, *end, StartChar='\0', EndChar='\0';
 
     if (! Str) return(Str);
+
+    StripTrailingWhitespace(Str);
+    //find actual start of string, we don't count whitespace
     ptr=Str;
     while (isspace(*ptr)) ptr++;
 
-    if ((*ptr=='"') || (*ptr=='\''))
+    //look thorugh the list of 'start chars', and if one is found at the start of string
+    //register both it and it's 'EndChars' companion for removal
+    for (i=0; StartChars[i] != '\0'; i++)
     {
-        StartQuote=*ptr;
-        len=StrLenFromCache(ptr);
+        if (StartChars[i] == *ptr)
+        {
+            //Catch situation where there's no matching item in 'EndChars'
+            if (StrLen(EndChars) > i)
+            {
+                StartChar=*ptr;
+                EndChar=EndChars[i];
+            }
+            else StartChar='\0';
+        }
+    }
 
+    if (StartChar != '\0')
+    {
+        len=StrLenFromCache(ptr);
         end=ptr+len-1;
 
-        if ((len > 0) && (StartQuote != '\0') && (*end==StartQuote))
+        if ((len > 0) && (*end==EndChar))
         {
             *end='\0';
             len--;
+            //note, this memove remotes StartChar and EndChar,
+            //len is 1 byte short, clipping off EndChar,
+            //And we move from ptr+1, which is 1 byte past EndChar
+            //over StartChar
             memmove(Str, ptr+1,len);
-            StrLenCacheAdd(Str, len);
+            StrTrunc(Str, len);
         }
     }
     return(Str);
 }
 
 
-
-char *QuoteCharsInStr(char *Buffer, const char *String, const char *QuoteChars)
+char *StripQuotes(char *Str)
 {
-    char *RetStr=NULL;
+    return(StripStartEndChars(Str, "'\"", "'\""));
+}
+
+
+char *QuoteCharsInStr(char *RetStr, const char *String, const char *QuoteChars)
+{
     const char *sptr;
     size_t olen=0;
 
-    RetStr=CopyStr(Buffer,"");
+    RetStr=CopyStr(RetStr, "");
     if (! String) return(RetStr);
 
     for (sptr=String; *sptr !='\0'; sptr++)
@@ -703,14 +774,14 @@ int MatchTokenFromList(const char *Token,const char **List, int Flags)
 
 #define ESC 0x1B
 
-char *UnQuoteStr(char *Buffer, const char *Line)
+char *UnQuoteStr(char *RetStr, const char *Line)
 {
-    char *out, *in;
+    char *in;
     size_t olen=0;
     char hex[10];
 
     if (Line==NULL) return(NULL);
-    out=CopyStr(Buffer,"");
+    RetStr=CopyStr(RetStr, "");
     in=(char *) Line;
 
     while(in && (*in != '\0') )
@@ -721,23 +792,23 @@ char *UnQuoteStr(char *Buffer, const char *Line)
             switch (*in)
             {
             case 'e':
-                out=AddCharToBuffer(out,olen,ESC);
+                RetStr=AddCharToBuffer(RetStr,olen,ESC);
                 olen++;
                 break;
 
 
             case 'n':
-                out=AddCharToBuffer(out,olen,'\n');
+                RetStr=AddCharToBuffer(RetStr,olen,'\n');
                 olen++;
                 break;
 
             case 'r':
-                out=AddCharToBuffer(out,olen,'\r');
+                RetStr=AddCharToBuffer(RetStr,olen,'\r');
                 olen++;
                 break;
 
             case 't':
-                out=AddCharToBuffer(out,olen,'\t');
+                RetStr=AddCharToBuffer(RetStr,olen,'\t');
                 olen++;
                 break;
 
@@ -748,7 +819,7 @@ char *UnQuoteStr(char *Buffer, const char *Line)
                 ptr_incr((const char **) &in, 1);
                 hex[1]=*in;
                 hex[2]='\0';
-                out=AddCharToBuffer(out,olen,strtol(hex,NULL,16) & 0xFF);
+                RetStr=AddCharToBuffer(RetStr,olen,strtol(hex,NULL,16) & 0xFF);
                 olen++;
                 break;
 
@@ -758,13 +829,13 @@ char *UnQuoteStr(char *Buffer, const char *Line)
                 strncpy(hex, in, 4);
                 hex[4]='\0';
                 ptr_incr((const char **) &in, 3);
-                out=StrAddUnicodeChar(out, strtol(hex,NULL,16));
+                RetStr=StrAddUnicodeChar(RetStr, strtol(hex,NULL,16));
                 olen++;
                 break;
 
             case '\\':
             default:
-                out=AddCharToBuffer(out,olen,*in);
+                RetStr=AddCharToBuffer(RetStr,olen,*in);
                 olen++;
                 break;
 
@@ -772,13 +843,13 @@ char *UnQuoteStr(char *Buffer, const char *Line)
         }
         else
         {
-            out=AddCharToBuffer(out,olen,*in);
+            RetStr=AddCharToBuffer(RetStr,olen,*in);
             olen++;
         }
         in++;
     }
 
-    return(out);
+    return(RetStr);
 }
 
 

@@ -211,9 +211,9 @@ int XMLIsEndTag(const char *TagType, const char *TagData)
 
 
 
-char *HTMLQuote(char *RetBuff, const char *Str)
+char *HTMLQuote(char *RetStr, const char *Str)
 {
-    char *RetStr=NULL, *Token=NULL;
+    char *Token=NULL;
     const char *ptr;
     int len;
 
@@ -310,9 +310,6 @@ char *HTMLUnQuote(char *RetStr, const char *Data)
                 Output=AddCharToBuffer(Output,len,'^');
                 len++;
             }
-
-
-
 
         }
         else

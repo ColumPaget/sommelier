@@ -3,6 +3,9 @@
 #include "apps.h"
 #include <fnmatch.h>
 
+#define DOWNLOAD_SILENT 1
+
+
 static void DownloadCallback(const char *URL, int bytes, int total)
 {
     static float last_perc=0;
@@ -70,7 +73,7 @@ static void DownloadShowSSLStatus(STREAM *S)
 
 
 
-STREAM *DownloadHTTPOpen(TAction *Act, const char *URL)
+static STREAM *DownloadHTTPOpen(TAction *Act, const char *URL, int Flags)
 {
     STREAM *S;
     char *Args=NULL, *Tempstr=NULL;
@@ -96,7 +99,10 @@ STREAM *DownloadHTTPOpen(TAction *Act, const char *URL)
         ptr=STREAMGetValue(S, "HTTP:ResponseCode");
         if (StrValid(ptr) && *ptr=='2')
         {
-            if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+            if (! (Flags & DOWNLOAD_SILENT))
+            {
+                if (strncasecmp(URL, "https:", 6)==0) DownloadShowSSLStatus(S);
+            }
         }
         else
         {
@@ -157,49 +163,72 @@ static char *DownloadResolveFileName(char *FName, TAction *Act, const char *URL,
 
 
 
-static int DownloadCopyFile(TAction *Act)
+static char *DownloadChooseDestDir(char *RetStr, TAction *Act)
 {
-    char *Tempstr=NULL, *URL=NULL, *Args=NULL, *CurrDir=NULL;
-    const char *ptr;
+    char *CurrDir=NULL;
+
+//if an installer cache dir is specified, use that
+    if (Act->Type==ACT_INSTALL)
+    {
+        if (StrValid(Config->InstallerCache))
+        {
+            RetStr=MCopyStr(RetStr, Config->InstallerCache, "/", Act->DownName, NULL);
+            MakeDirPath(RetStr, 0770);
+        }
+        else
+        {
+            //this function allocs memory so 'CopyStr' isn't needed
+            CurrDir=get_current_dir_name();
+            RetStr=MCopyStr(RetStr, CurrDir, "/", Act->DownName, NULL);
+        }
+    }
+    else
+    {
+        RetStr=MCopyStr(RetStr, "/", GetVar(Act->Vars, "sommelier_root"), "/download-tmp/", Act->DownName, NULL);
+    }
+
+    Destroy(CurrDir);
+
+    return(RetStr);
+}
+
+
+static int DownloadCopyFile(TAction *Act, const char *URL, int Flags)
+{
+    char *Tempstr=NULL, *Args=NULL;
     STREAM *S;
     int bytes=0;
 
-    URL=SubstituteVarsInString(URL, Act->URL, Act->Vars, 0);
-    Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
-    TerminalPutStr(Tempstr, NULL);
 
-    if (strncmp(URL, "https:", 6)==0) S=DownloadHTTPOpen(Act, URL);
-    else if (strncmp(URL, "http:", 5)==0) S=DownloadHTTPOpen(Act, URL);
+    if (strncmp(URL, "https:", 6)==0) S=DownloadHTTPOpen(Act, URL, Flags);
+    else if (strncmp(URL, "http:", 5)==0) S=DownloadHTTPOpen(Act, URL, Flags);
     else S=STREAMOpen(URL, "r");
 
     if (S)
     {
+        if (! (Flags & DOWNLOAD_SILENT))
+        {
+            Tempstr=MCopyStr(Tempstr, "~eDownloading:~0  ~b~e", URL, "~0\n", NULL);
+            TerminalPutStr(Tempstr, NULL);
+        }
+
+
         //we must do this in two steps, because otherise we might be copying
-        //Act->DownName into itself, and that will cause big trouble
+        //Act->DownName into itself, and that will cause big trouble,
+        //so we copy to Tempstr first
         Tempstr=DownloadResolveFileName(Tempstr, Act, URL, S);
         Act->DownName=CopyStr(Act->DownName, Tempstr);
 
         if (StrValid(Act->DownName))
         {
-            printf("Download To: %s\n", Act->DownName);
+            SetVar(Act->Vars, "dlfile", Act->DownName);
 
-            if (StrValid(Act->DownName)) SetVar(Act->Vars, "dlfile", Act->DownName);
-            STREAMAddProgressCallback(S, DownloadCallback);
+            Act->SrcPath=DownloadChooseDestDir(Act->SrcPath, Act);
+            MakeDirPath(Act->SrcPath, 0700);
 
-            if (StrValid(Config->InstallerCache))
-            {
-                Act->SrcPath=MCopyStr(Act->SrcPath, Config->InstallerCache, "/", Act->DownName, NULL);
-                MakeDirPath(Act->SrcPath, 0770);
-            }
-            else
-            {
-                //this function allocs memory so 'CopyStr' isn't needed
-                CurrDir=get_current_dir_name();
-                Act->SrcPath=MCopyStr(Act->SrcPath, CurrDir, "/", Act->DownName, NULL);
-            }
-
-            Act->Flags |= FLAG_DOWNLOADED;
+            if (! (Flags & DOWNLOAD_SILENT)) STREAMAddProgressCallback(S, DownloadCallback);
             bytes=STREAMCopy(S,  Act->SrcPath);
+            Act->Flags |= FLAG_DOWNLOADED;
         }
         else
         {
@@ -220,9 +249,7 @@ static int DownloadCopyFile(TAction *Act)
     printf("\n");
 
     Destroy(Tempstr);
-    Destroy(CurrDir);
     Destroy(Args);
-    Destroy(URL);
 
     return(bytes);
 }
@@ -253,22 +280,22 @@ static char *ExtractURLFromHRef(char *RetStr, const char *Data)
 }
 
 
-static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
+static char *ExtractURLFromWebsite(char *RetStr, const char *SrcURL)
 {
     char *Tempstr=NULL, *SrcPage=NULL, *Template=NULL, *Tag=NULL, *Data=NULL, *URL=NULL;
     char *Proto=NULL, *Host=NULL, *Port=NULL, *Path=NULL;
     const char *ptr;
     STREAM *S;
 
-    ptr=GetToken(Act->URL, ":", &Tempstr, 0);
+    ptr=GetToken(SrcURL, ":", &Tempstr, 0);
     ptr=GetToken(ptr, ":", &Tempstr, GETTOKEN_QUOTES);
     SrcPage=UnQuoteStr(SrcPage, Tempstr);
     ptr=GetToken(ptr, ":", &Template, GETTOKEN_QUOTES);
 
     ParseURL(SrcPage, &Proto, &Host, &Port, NULL, NULL, &Path, NULL);
 
-    //do this late in the process so that we can say Act->URL=ExtractURLFromWebsite(Act->URL, Act);
-    //and copy over Act->URL after we've extracted the SrcPage from it
+    //do this late in the process so that we can say URL=ExtractURLFromWebsite(URL, SrcURL);
+    //and copy over URL after we've extracted the SrcPage from it
     RetStr=CopyStr(RetStr, "");
 
     S=STREAMOpen(SrcPage, "");
@@ -321,94 +348,135 @@ static char *ExtractURLFromWebsite(char *RetStr, TAction *Act)
 }
 
 
+static const char *DownloadGetNextURL(const char *URLList, TAction *Act, char **URL)
+{
+    char *Tempstr=NULL, *checkURL=NULL;
+    const char *ptr;
+    struct stat Stat;
 
 
-int DownloadCheck(TAction *Act)
+    ptr=GetToken(URLList, ",", &Tempstr, 0);
+    if (StrValid(Tempstr))
+    {
+        checkURL=SubstituteVarsInString(checkURL, Tempstr, Act->Vars, 0);
+
+        if (strncmp(Tempstr, "extracted:", 10) ==0) *URL=ExtractURLFromWebsite(*URL, checkURL);
+        else if (stat(checkURL, &Stat)==0)
+        {
+            printf("source path is an existing file on disk, skipping download\n");
+            *URL=CopyStr(*URL, checkURL);
+        }
+        else *URL=CopyStr(*URL, checkURL);
+    }
+    else *URL=CopyStr(*URL, "");
+
+    Destroy(Tempstr);
+    Destroy(checkURL);
+
+    return(ptr);
+}
+
+
+static char *DownloadFindWorkingURL(char *RetStr, TAction *Act)
+{
+    char *URL=NULL, *Tempstr=NULL;
+    const char *ptr;
+    STREAM *S=NULL;
+
+    ptr=DownloadGetNextURL(Act->URL, Act, &URL);
+    while (ptr)
+    {
+        S=STREAMOpen(URL, "r");
+        if (S)
+        {
+            Tempstr=CopyStr(Tempstr, STREAMGetValue(S, "HTTP:ResponseCode"));
+            if (! StrValid(Tempstr) || (strncmp(STREAMGetValue(S, "HTTP:ResponseCode"), "2", 1)==0)) break;
+            STREAMClose(S);
+            //must set this to null so later stream close doesn't try to close it twice
+            S=NULL;
+        }
+        ptr=DownloadGetNextURL(ptr, Act, &URL);
+    }
+    if (S) STREAMClose(S);
+
+    RetStr=CopyStr(RetStr, URL);
+
+
+    Destroy(Tempstr);
+    Destroy(URL);
+
+    return(RetStr);
+}
+
+
+
+int DownloadCheck(TAction *Act, char **Reason)
 {
     STREAM *S;
     char *Hash=NULL, *URL=NULL;
     const char *ptr;
     int result;
 
-    if (strncmp(Act->URL, "extracted:", 10) ==0) URL=ExtractURLFromWebsite(URL, Act);
-    else URL=CopyStr(URL, Act->URL);
+    if (Reason) *Reason=CopyStr(*Reason, "");
+    if (! StrValid(Act->URL))
+    {
+        if (Reason) *Reason=FormatStr(*Reason, "ERROR: FAILED URL %s %s\n", Act->Name, Act->URL);
+        Destroy(URL);
+        return(FALSE);
+    }
 
-
+    URL=DownloadFindWorkingURL(URL, Act);
     if (! StrValid(URL))
     {
-        fprintf(stderr, "ERROR: FAILED URL %s %s\n", Act->Name, Act->URL);
+        if (Reason) *Reason=FormatStr(*Reason, "ERROR: FAILED TO GET %s %s\n", Act->Name, Act->URL);
         Destroy(URL);
         return(FALSE);
     }
 
-    S=STREAMOpen(URL, "r");
-    if (! S)
-    {
-        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
-        Destroy(URL);
-        return(FALSE);
-    }
+    DownloadCopyFile(Act, URL, DOWNLOAD_SILENT);
 
-    ptr=STREAMGetValue(S, "HTTP:ResponseCode");
-    if (*ptr != '2')
+    result=TRUE;
+    if (! CheckSha256Hash(Act))
     {
-        fprintf(stderr, "ERROR: FAILED TO GET %s %s\n", Act->Name, URL);
-        STREAMClose(S);
-        Destroy(URL);
-        return(FALSE);
+        result=FALSE;
+        if (Reason) *Reason=FormatStr(*Reason, "ERROR: Hash mismatch for %s %s\n",Act->Name, Act->URL);
     }
-
-    result=HashSTREAM(&Hash, "sha256", S, ENCODE_HEX);
-    STREAMClose(S);
-
-    if (Hash)
-    {
-        ptr=GetVar(Act->Vars, "sha256");
-        if (StrValid(ptr))
-        {
-            if (strcmp(ptr, Hash) !=0)
-            {
-                fprintf(stderr,"ERROR: Hash mismatch for %s %s\n",Act->Name, Act->URL);
-            }
-        }
-        else SetVar(Act->Vars, "sha256", Hash);
-    }
-    else fprintf(stderr,"ERROR: No hash!\n");
 
     waitpid(-1,NULL,WNOHANG);
 
     DestroyString(Hash);
+
     return(result);
 }
 
 
 
-int Download(TAction *Act)
+size_t Download(TAction *Act)
 {
-    char *Tempstr=NULL, *Dest=NULL, *Token=NULL;
+    char *URL=NULL, *Tempstr=NULL, *Dest=NULL, *Token=NULL;
     const char *ptr;
     struct stat Stat;
     size_t bytes=0;
+    STREAM *S;
 
 
-    if (StrValid(Act->URL))
+    URL=DownloadFindWorkingURL(URL, Act);
+    if (StrValid(URL))
     {
-        if (strncmp(Act->URL, "extracted:", 10) ==0) Act->URL=ExtractURLFromWebsite(Act->URL, Act);
-
-        if (stat(Act->URL, &Stat)==0)
+        if (stat(URL, &Stat)==0)
         {
             printf("source path is an existing file on disk, skipping download\n");
-            Act->SrcPath=CopyStr(Act->SrcPath, Act->URL);
+            Act->SrcPath=CopyStr(Act->SrcPath, URL);
             bytes=Stat.st_size;
         }
         else
         {
-            bytes=DownloadCopyFile(Act);
+            bytes=DownloadCopyFile(Act, URL, 0);
             if (bytes < 1)
             {
                 TerminalPutStr("~rERROR: URL download failed. Trying again with default lang/locale setting~0\n",NULL);
                 AppSetLocale(Act, "en_US");
-                bytes=DownloadCopyFile(Act);
+                bytes=DownloadCopyFile(Act, URL, 0);
             }
         }
 
@@ -443,6 +511,7 @@ int Download(TAction *Act)
     DestroyString(Tempstr);
     DestroyString(Token);
     DestroyString(Dest);
+    DestroyString(URL);
 
     return(bytes);
 }

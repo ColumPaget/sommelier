@@ -1,4 +1,4 @@
-# These are homebrew/opensource roms for the GameBoyColor and the GameBoyAdvanced
+# These are homebrew/opensource roms for the GameBoyColor and the GameBoyAdvanced. They are believed to be legal to download and play.
 
 * platform=gba category=TurnBasedStrategy;GameBoyAdvanced install-type=executable
 LordsOfMidnight url=https://github.com/retrobrews/gba-games/blob/master/thelordsofmidnight.gba?raw=true sha256='ee9801b5dc94086ac4249ec9a0daf90d6dde2c7ac5cdbbf15c4daa934685adbe' 

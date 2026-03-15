@@ -4,8 +4,8 @@
 
 #include "common.h"
 
-int Download(TAction *Act);
-int DownloadCheck(TAction *Act);
+size_t Download(TAction *Act);
+int DownloadCheck(TAction *Act, char **Reason);
 
 
 #endif

@@ -1,4 +1,4 @@
-OBJ=common.o config.o apps.o platforms.o categories.o elf.o emulator.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o sandbox.o install.o uninstall.o run-application.o xrandr.o wine-fonts.o
+OBJ=common.o config.o apps.o platforms.o categories.o elf.o emulator.o command-line.o desktopfiles.o regedit.o doom.o msdos.o download.o find_files.o find_program.o packages.o native.o sandbox.o install.o uninstall.o run-application.o xrandr.o wine-fonts.o rebuild-app-file.o remote-store.o
 LIBS=@LIBUSEFUL_BUNDLED@ @LIBS@ 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -76,6 +76,12 @@ run-application.o: run-application.h run-application.c
 xrandr.o: xrandr.h xrandr.c
 	$(CC) $(CFLAGS) -c xrandr.c
 
+rebuild-app-file.o: rebuild-app-file.h rebuild-app-file.c
+	$(CC) $(CFLAGS) -c rebuild-app-file.c
+
+remote-store.o: remote-store.h remote-store.c
+	$(CC) $(CFLAGS) -c remote-store.c
+
 wine-fonts.o: wine-fonts.h wine-fonts.c
 	$(CC) $(CFLAGS) -c wine-fonts.c
 
@@ -90,16 +96,20 @@ install:
 	mkdir -p $(HOME)/bin
 	mkdir -p $(HOME)/.sommelier
 	cp -f sommelier $(HOME)/bin/
-	cp config/*.apps config/*.conf $(HOME)/.sommelier/
+	cp config/*.conf $(HOME)/.sommelier/
+	mkdir -p $(HOME)/.sommelier/apps/
+	cp config/*.apps $(HOME)/.sommelier/apps/
 	mkdir -p $(HOME)/.sommelier/emuhelp
-	cp config/*.emuhelp $(HOME)/.sommelier/emuhelp/
+	cp config/emuhelp/*.emuhelp $(HOME)/.sommelier/emuhelp/
 	$(MAKE) install -C patches
 
 install_global:
 	mkdir -p $(DESTDIR)$(exec_prefix)/bin
 	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier
+	mkdir -p $(DESTDIR)$(exec_prefix)/etc/sommelier/emuhelp
 	cp -f sommelier $(DESTDIR)$(exec_prefix)/bin/ 
-	cp config/*.apps config/*.conf config/*.emuhelp $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp config/*.apps config/*.conf $(DESTDIR)$(exec_prefix)/etc/sommelier/
+	cp config/*.emuhelp $(DESTDIR)$(exec_prefix)/etc/sommelier/emuhelp/
 	cp sommelier.1 $(DESTDIR)$(exec_prefix)/share/man/man1/
 	$(MAKE) install_global -C patches
 

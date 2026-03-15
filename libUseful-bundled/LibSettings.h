@@ -1,6 +1,6 @@
 /*
 Copyright (c) 2015 Colum Paget <colums.projects@googlemail.com>
-* SPDX-License-Identifier: GPL-3.0
+* SPDX-License-Identifier: LGPL-3.0-or-later
 */
 
 #ifndef LIBUSEFUL_SETTINGS
@@ -16,6 +16,8 @@ Possible variables are:
 
 LibUseful:Version      This is set automatically when any of these functions are first called
 LibUseful:BuildTime    This is set automatically when any of these functions are first called.
+LibUseful:License      This is set automatically when any of these functions are first called.
+                       It can be 'GPLv3' or 'LGPLv3' depending on how the build was configured.
 
 Error:Debug            If this is set to 'yes', 'y' or 'true' (case insensitive) then RaiseError
                        will print out debug statements.
@@ -120,6 +122,7 @@ int LibUsefulGetBool(const char *Name);
 
 int LibUsefulGetInteger(const char *Name);
 
+STREAM *LibUsefulConfigFileOpen(const char *FName, const char *EnvVarName, const char *LibUsefulVar);
 
 //returns TRUE if libUseful Debug is active, FALSE otehrwise
 int LibUsefulDebugActive();

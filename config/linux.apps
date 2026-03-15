@@ -59,13 +59,15 @@ ExtraTerm platform=linux64 url=https://github.com/sedwards2009/extraterm/release
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)' platform=linux32
 PaleMoon  url=http://archive.palemoon.org/palemoon/28.x/28.16.0/palemoon-28.16.0.linux-i686.tar.xz exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz'  sha256='9816f3155d5f3147000cda5de5c46002eb2f87232da6018cdf76d078a873a285' 
+Basilisk  url=https://dl.basilisk-browser.org/basilisk-20251009122045.linux-i686-gtk3.tar.xz download-type='tar.xz' exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
 
 SeaMonkey  url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.20/linux-i686/$(locale)/seamonkey-2.53.20.$(locale).linux-i686.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' donate=https://www.seamonkey-project.org/donate/
 GnuIcecat  url=https://ftp.gnu.org/gnu/gnuzilla/60.7.0/icecat-60.7.0.$(locale).gnulinux-i686.tar.bz2 download-type='tar.bz2' exec='icecat' comment='GNU version of firefox' icon='default48.png'  
 Midori  url=https://github.com/goastian/midori-desktop/releases/download/v11.3.3/midori-11.3.3.linux-i686.tar.bz2 download-type=tar.bz2 exec=midori icon=default48.png sha256=9d7d2d777d283ce86394ff6cf97c33f528fd4d8a8c4b8a9a7c12232ca51bfb48
 
 * category=WebBrowser;WWW;Internet;Network locale='$(lang)-$(country)' platform=linux64
-Basilisk  url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
+#Basilisk  url=http://archive.basilisk-browser.org/2023.06.20/linux/x86_64/gtk3/basilisk-20230620160727.linux-x86_64.tar.xz download-type='tar.xz' sha256=d1d7751c43c2dfc3868db0ef990e43e63667b2fb0f112789fd20a121717f1516 exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
+Basilisk  url=https://dl.basilisk-browser.org/basilisk-20251009122226.linux-x86_64-gtk3.tar.xz download-type='tar.xz' exec='basilisk' comment="Browser using the Goanna firefox engine" icon=mozicon128.png
 PaleMoonGTK2  url=https://www.palemoon.org/download.php?mirror=eu&bits=64&type=linuxgtk2 exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' name='PaleMoonGTK2'
 PaleMoon  url=https://www.palemoon.org/download.php?mirror=eu&bits=64&type=linuxgtk3 exec='palemoon' comment='Browser using the old Gecko firefox engine' icon='default48.png' download-type='tar.xz' 
 SeaMonkey  url=https://archive.mozilla.org/pub/seamonkey/releases/2.53.20/linux-x86_64/$(locale)/seamonkey-2.53.20.$(locale).linux-x86_64.tar.bz2 download-type='tar.xz' exec='seamonkey' icon='default48.png' comment='Browser based on firefox' donate=https://www.seamonkey-project.org/donate/
@@ -179,12 +181,14 @@ Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux32.tar.gz sha2
 Typhoon2001 url=https://archive.org/download/typhoon-2001/typhoon_2001_r3992_LINUX.tar.gz download-type="tar.gz" exec=typhoon platform=linux32 category=TempestGame sha256="dc61f0bc4b22c8898f252da5daf111a137af57296203c11cc6ce8133981eb18e"
 
 * category='Game' platform=linux64
-Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame sha256=e6943ed51c5541b2da8e5429ba0914cd2dc9280e67e824da1aa2416bfaf68242
+#Naev url=https://github.com/naev/naev/releases/download/v0.11.5/naev-0.11.5-linux-x86-64.AppImage category=EscapeVelocityGame sha256=e6943ed51c5541b2da8e5429ba0914cd2dc9280e67e824da1aa2416bfaf68242
+Naev url=https://codeberg.org/naev/naev/releases/download/v0.12.6/naev-0.12.6-linux-x86-64.AppImage category=EscapeVelocityGame
 Xump url=https://www.retroguru.com/xump/xump-v.latest-linux.tar.gz sha256=4a6df3fadcf3639c3e4ae0b832cc070a0f216334127b276111ea7378745625c0 download-type=tar.gz exec64=xump_ubuntu64 category="Platformer" exec=xump
 Hermes  url=https://www.retroguru.com/hermes/hermes-v.latest-linux64.tar.gz download-type="tar.gz" exec=hermes sha256=9a782758c7cb303b6d49f3f9b3726aa40e6636f498b65182472fcee781e869a8
 Taisei  url=https://github.com/taisei-project/taisei/releases/download/v1.4.1/Taisei-1.4.1-linux-x86_64.tar.xz download-type="tar.xz" exec=taisei category="ShootEmUp" sha256=64e1618277706947e4982afd9a04b3d1892b01602299dbb3fc5acc72d37f1ec5
 Osu  url=https://github.com/ppy/osu/releases/latest/download/osu.AppImage category=RhythmnGame sha256=971f91376d2c3e21befa92d2d205ba8b1218c37fa0d4a18232b021816fb2648c
 Warzone2100  url=https://downloads.sourceforge.net/project/warzone2100/releases/4.5.2/warzone2100_ubuntu20.04_amd64.deb download-type='deb' category=StrategyGame  sha256=b365dc4ddd5a568637f36888cfba18fbd8777557d60d7b1b9e1be3290dc7746c
+Widelands url=https://github.com/widelands/widelands/releases/download/v1.2.1/Widelands-1.2.1-x86_64.AppImage
 
 * category="OfficeSuite" platform=linux64 locale='$(lang)-$(country)'
 LibreOffice url=https://appimages.libreitalia.org/portable/LibreOffice-24.2.0.3.full-x86_64.AppImage sha256=8206e77a5ab5048816f7c2db8dfe58e033933c2a7a61fd0343da17d7a82498b8
@@ -218,8 +222,9 @@ MilkyTracker url=https://github.com/milkytracker/MilkyTracker/releases/download/
 SchismTracker url=https://github.com/schismtracker/schismtracker/releases/download/20240809/schismtracker-20240809-linux.zip exec=schismtracker sha256=5dc2119a6c6a249aef2041948167776e9be572c25dbbf880dccebac9307db373
 FurnaceTracker url=https://github.com/tildearrow/furnace/releases/download/v0.6.7/Furnace-0.6.7-x86_64.AppImage sha256sum=9c62269f1bddecdb289631accb682c535da1068cb60538568c96a7e535fbb80e
 BambooTracker url=https://github.com/BambooTracker/BambooTracker/releases/download/v0.6.3/BambooTracker-v0.6.3-linux-64bit.zip exec=BambooTracker sha256=18646ca601c5def37220aea845a0dd6dc9706824d9326723c83650c6aeb4ac8b
-Helio url=https://ci.helio.fm/helio-3.16-x64.tar.gz comment="Music Sequencer/Tracker" sha256=0461351d40e169f43155112f598bc3c82af6057b2e1d696f59be0f707ab506cd exec=helio
-
+Helio url=https://ci.helio.fm/helio-3.16-x64.tar.gz comment="Music Sequencer/Tracker" exec=helio sha256=0461351d40e169f43155112f598bc3c82af6057b2e1d696f59be0f707ab506cd 
+Mixxx2.0 url=https://downloads.mixxx.org/releases/2.0.0/mixxx-2.0.0-trusty-amd64.deb exec=mixxx sha256=584d1bc582e9475a3e94c4a391b43ddd7f4d1e4089f183dbdb039ae2aff5527c
+Mixxx2.0 url=https://downloads.mixxx.org/releases/2.0.0/mixxx-2.0.0-trusty-i386.deb platform=linux32 exec=usr/bin/mixxx sha256=3422fc4ca37ede76a6dfe4f03e0561f19f2b932ae765384b6f16d8f10fbe9c9c
 
 
 * category='DeviceManager;Network' platform=linux64

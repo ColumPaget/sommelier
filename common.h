@@ -14,7 +14,7 @@
 #include <glob.h>
 
 
-#define VERSION "10.6"
+#define VERSION "10.7"
 
 
 #define INSTALL_RUN          0
@@ -29,6 +29,9 @@
 #define ACT_LIST_PLATFORMS   6
 #define ACT_LIST_CATEGORIES  7
 #define ACT_SET              8
+#define ACT_ADD_STORE        9
+#define ACT_REFRESH         10
+#define ACT_CHECK_APPS      12
 #define ACT_REBUILD         13
 #define ACT_REBUILD_HASHES  14
 #define ACT_DOWNLOAD        15
@@ -92,6 +95,7 @@ char *URLBasename(char *RetStr, const char *URL);
 int InList(const char *Item, const char *List);
 TAction *ActionCreate(int Type, const char *Name);
 void ActionDestroy(TAction *Act);
+int CheckSha256Hash(TAction *Act);
 int CompareSha256(TAction *Act);
 
 

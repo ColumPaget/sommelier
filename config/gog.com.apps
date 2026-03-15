@@ -1,4 +1,4 @@
-#Things available through gog.com
+#Things available through gog.com. You must download these by hand and use the '-url' option to specify path to the installer file
 
 
 ## SCUMMVM platform running on locally installed scummvm
@@ -63,7 +63,8 @@ Halcyon6StarbaseCommander
 ShadowrunReturns  exec="Shadowrun.sh"
 GalaxySquad extra_category="Roguelike"
 
-* category='DungeonCrawl;Roguelike;GOG' platform=gog:linux
+* category='Dungeoncrawl;Roguelike;GOG' platform=gog:linux
+Crawl exec="Crawl.x86" exec64="Crawl.x86_64" 
 Convoy  exec="Convoy.x86" exec64="Convoy.x86_64"
 DarkestDungeon  exec="darkest.bin.x86" exec64="darkest.bin.x86_64"
 DarkestDungeon:Sheildbreaker  dlc parent=DarkestDungeon
@@ -72,6 +73,7 @@ DarkestDungeon:CrimsonCourt  dlc parent=DarkestDungeon
 DarkestDungeon:ColorOfMadness  dlc parent=DarkestDungeon
 FTL   exec="FTL.x86" exec64="FTL.amd64" working-dir="$(install-dir)/data/noarch/game/data"
 Monolith  exec=runner
+Rezrog exec="Rezrog.x86" exec64="Rezrog.x86_64"
 Starcrawlers  exec='starcrawlers.x86' exec64="starcrawlers.x86_64"
 
 * category='TurnBasedRPG;GOG' platform=gog:linux
@@ -154,7 +156,8 @@ SlayTheSpire  exec64="SlayTheSpire"
 VambraceColdSoul exec64="VambraceColdSoul.x86_64"
 
 
-* category='Roguelike;GOG' platform=gog:linux64
+* category='Dungeoncrawl;Roguelike;GOG' platform=gog:linux64
+DiceyDungeons  exec64="diceydungeons" category="Roguelike;GOG"
 OutThere  exec64="outthereomega.x86"
 UltimateADOM exec64="Ultimate ADOM - Caverns of Chaos.x86_64"
 
@@ -180,12 +183,15 @@ GarouMarkOfTheWolves  exec="GarouMOTW"
 * category='BeatEmUp;GOG' platform=gog:linux64
 Shing  exec64="Shing!.x86_64"
 StreetsOfRage4 exec="SOR4" category="BeatEmUp"
+FinalVendetta exec="Final Vendetta" warn="This game has been seen to freeze on some linux systems, if this happens try running the windows version under wine"
 
 * category='TurnBasedTactics;GOG' platform=gog:linux64
 MainframeDefenders 
 SkullsOfTheShogun
 IntoTheBreach  exec64="Breach"
 ReverieKnightsTactics exec64="Reverie Knights Tactics.x86_64"
+ShogunShowdown exec64="ShogunShowdown.x86_64"
+
 
 * category='TransportGame;TycoonGame;GOG' platform=gog:linux64
 MiniMetro  exec64="Mini Metro"
@@ -211,7 +217,6 @@ Shapez exec64=shapezio
 BridgeConstructor exec="BridgeConstructor.x86_64"
 BridgeConstructorMedieval exec="BridgeConstructorMedieval.x86_64"
 DangerScavenger
-DiceyDungeons  exec64="diceydungeons" category="Roguelike;GOG"
 Everspace exec="EverspaceWithShippedLibraries.sh"
 HeliumRain exec64="HeliumRain-Linux-Shipping" warn="This game takes a long time to start"
 HeroOfTheKingdom 
@@ -324,7 +329,7 @@ EpicPinball platform=gog:windos exec="PINBALL.EXE"
 EpicPinball platform=gog:lindos exec="PINBALL.EXE"
 
 
-* category='RPG;DungeonCrawler;GOG' 
+* category='RPG;DungeonCrawl;GOG' 
 AnvilOfDawn platform=gog:windos exec="ANVIL.EXE" commands="mount c .; imgmount d Anvil.dat -fs iso; c:; ANVIL.EXE" no-exec-arg="y"
 CrystalsOfArborea platform=gog:windos exec="START.EXE"
 UltimaUnderworld platform=gog:windos exec="game.gog" commands="mount c .; imgmount d game.gog -t iso; d:; uw.bat" no-exec-arg="y" warn="The game installer hangs for a long time on 'full progress bar', but does install eventually"
@@ -647,11 +652,13 @@ SpaceHack vdesk=y warn="This game installs in a virtual desktop because it has i
 
 * category='DungeonCrawl;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 AncientEnemy  
+Crawl
 DarkestDungeon  
 DiceyDungeons 
 LoopHero
 Monolith  exec=Monolith.exe
 RunestoneKeeper
+TitanSouls exec="TITAN.exe"
 
 
 * category='TacticalRoguelike;Roguelike;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
@@ -744,7 +751,7 @@ Reigns
 
 * category='BoardGame;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 CombatChess extra_category="Chess"
-
+WarChess extra_category="Chess"
 
 # windows via wine, games I've not decided on a category for
 * category='Game;GOG' platform=gog:windows saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
@@ -786,7 +793,7 @@ DeepSkyDerelicts
 Nadir exec="Nadir.exe" warn="This game has been seen to work under some versions of wine/linux, but not others"
 
 
-* category='Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
+* category='Dungeoncrawl;Roguelike;GOG' platform=gog:windows64 saves-dir="$(homedir)/.game-saves/$(name)/" link="$(saves-dir):$(drive_c)/users/$(user)/Documents"
 Necrosmith exec="Necrosmith.exe"
 OutThere  exec="outthereomega.exe"
 

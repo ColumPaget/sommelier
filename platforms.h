@@ -3,13 +3,15 @@
 
 #include "common.h"
 
-#define PLATFORM_FLAG_NOEXEC 1
+#define PLATFORM_FLAG_NOEXEC    1
+#define PLATFORM_FLAG_NOSTDERR  2
 
-#define PLATFORM_UNKNOWN 0
-#define PLATFORM_WINDOWS 1
-#define PLATFORM_DOS 2
-#define PLATFORM_DOOM 4
-#define PLATFORM_SCUMMVM    5
+#define PLATFORM_UNKNOWN     0
+#define PLATFORM_WINDOWS     1
+#define PLATFORM_DOS         2
+#define PLATFORM_DOOM        4
+#define PLATFORM_SCUMMVM     5
+#define PLATFORM_MAME        6
 #define PLATFORM_GOGLINUX   10
 #define PLATFORM_GOGSCUMMVM 11
 #define PLATFORM_GOGDOS     12
@@ -19,7 +21,7 @@
 #define PLATFORM_LINUX32    32
 #define PLATFORM_LINUX64    64
 #define PLATFORM_ZXSPECTRUM  90
-#define PLATFORM_GENERIC  100
+#define PLATFORM_GENERIC    100
 
 #define PLATFORM_INFO_INSTALL_MESSAGE 1
 #define PLATFORM_INFO_EXE_SEARCH_PATTERN 2
@@ -64,7 +66,7 @@ char *PlatformFindEmulator(char *RetStr, const char *Name, const char *Emulator)
 char *PlatformFindEmulatorNames(char *RetStr, const char *PlatformName);
 void PlatformSetupEmulatorArgs(TAction *Act, const char *Name, const char *Args);
 char *PlatformSelect(char *RetStr, TAction *Act);
-void PlatformsList();
+void PlatformsList(TAction *Act);
 
 
 

@@ -1,26 +1,42 @@
 # Homebrews and open-source games for the plain gameboy
 
 * platform=gb category=Roguelike;RPG;GameBoy install-type=executable
-DumblinDungeon url=https://hh3.gbdev.io/entries/Dumblin-Dungeon/Dumblin%20Dungeon%20(GB).gb
-PorklikeGB url=https://hh3.gbdev.io/entries/porklike-gb/porklike.gb
+DumblinDungeon url="https://pdroms.de/?__df=21100807090c0b3a21100b02000a0b3a135755545d4b55544b575d3a4d22040800070a1c4c4b1f0c151b191b565155561b191b5355565355" sha256="26b09784496cc4585040b93b43d7fe44bd19b523feaf5bd009fb0fc55a0a7974" 
+PorklikeGB url="https://hh3.gbdev.io/static/database-gb/entries/porklike-gb/porklike.gb" sha256="d4ee86833a580c92aa789aef03407b90a6cc6eb27e70d3477c41c970d0cf3f11" 
+DragonSlayer url="https://hh3.gbdev.io/static/database-gb/entries/lazydevs_dragonslayer/files/dragonslayer.gb" sha256="8e38cb9517accd8588e240adc7e4b79aa231b5579a8eeced12080f8d95a57d43"
 
 * platform=gb category=ShootEmUp;GameBoy install-type=executable
-DanganGB url=https://hh3.gbdev.io/entries/dangan/dangan.gb
-Wyrmhole url=https://github.com/QuinnPainter/Wyrmhole/releases/download/1.1/Wyrmhole.gb version=1.1
-MassDriver url=https://github.com/daniel-dressler/massdriver/releases/download/20140415/massdriver_20140415.gb version=1.0
+DanganGB url="https://hh3.gbdev.io/static/database-gb/entries/dangan/dangan.gb" sha256="28a21445177534b9b9a39aa87ef305e2bd240e9b453bbfef549e014ba26cbae0" 
+Wyrmhole url="https://github.com/QuinnPainter/Wyrmhole/releases/download/1.1/Wyrmhole.gb" version="1.1" sha256="a5e07f89119ee9c93aa50ec1ff828b2441781fa9b1a137f03af7b6c53ce03252" 
+MassDriver url="https://github.com/daniel-dressler/massdriver/releases/download/20140415/massdriver_20140415.gb" version="1.0" sha256="f9183522a48e88143cc58507308224d823a1ddc9b851ae4f98e2bbf91c3e7bed" 
+
+* platform=gb category=ShootEmUp;GameBoy
+MoonFighter url="https://www.zophar.net/download_file/11797" sha256="d1c384926f791d80bc2afafbe6c409c0dafcc6d88572a27ba1a08109153000b0" 
+MegaMania url="https://www.zophar.net/download_file/11700" sha256="7d544ede10f41c9d707b4ff966da7af3b429c80a4c9cbffd65473999087f4019" 
+TheyCameFromOuterSpace url="https://www.zophar.net/download_file/11709" sha256="8abb6d93b690c429e0689a476ff43e0cc15c4e9f60556847025bbff8ebb933c7" 
+YarsRevenge url="https://www.zophar.net/download_file/11711" sha256="dd9db8066d75367ec126ec3a5678384a8b06f6840921382111afeca5d00c7416" 
 
 * platform=gb category=RPG;GameBoy install-type=executable
-ShockLobster url=https://hh3.gbdev.io/entries/shock-lobster/shocklobster.gb
+ShockLobster url="https://hh3.gbdev.io/static/database-gb/entries/shock-lobster/shocklobster.gb" sha256="f14efd0340903b1b00d7e8b4b39687d4bc33355ac7742267ccfddfe92f54a611" 
 
 * platform=gb category=AsteroidsGame;GameBoy install-type=executable
 
 * platform=gb category=PuzzleGame;GameBoy install-type=executable
-Unearthed url=https://hh3.gbdev.io/entries/unearthed/Unearthed%20Zero.gb
+Unearthed url="https://hh3.gbdev.io/static/database-gb/entries/unearthed/Unearthed%20Zero.gb" sha256="fb89647d4eda93589f829d4bc92630e55690985173b4349e0abcc45f33ad2ed2" 
+
+* platform=gb category=PuzzleGame;GameBoy
+Shutdown url="https://www.zophar.net/download_file/11705" sha256="08f30cfd07e4dd3ae7bed57a9133b61a2e69fb0467bc5d552ac24ddc090ab431" 
+Sokoban url="https://www.zophar.net/download_file/11704" sha256="003af1efc03796b2b61c021acbe4a6f4ad1bbbde4e0c41802b1f466e4c338f36" 
+
 
 * platform=gb category=BombermanGame;GameBoy install-type=executable
-DynaBlaster url=https://archive.org/download/dynablaster-europe_202212/Dynablaster%20%28Europe%29.gb
+DynaBlaster url="https://archive.org/download/dynablaster-europe_202212/Dynablaster%20%28Europe%29.gb" sha256="037b2a8598b37c76fc3105ed2a773878ec0f886c77c3037e14ad9d536d9630dd" 
 
 * platform=gb category=GameBoy install-type=executable
-CoreMachina url=https://hh3.gbdev.io/entries/core-machina/Core%20Machina%20v1.2c%20DEMO.gb
-DangoDash url=https://hh3.gbdev.io/entries/dango-dash/Dango%20Dash_v01.gb
-Lemmings url=https://archive.org/download/lemmings_gb_2/Lemmings.gb
+CoreMachina url="https://hh3.gbdev.io/static/database-gb/entries/core-machina/Core%20Machina%20v1.2c%20DEMO.gb" sha256="b9cd4f29954e4ba9befeb1e2f6c2d9b0c1a8b2b8b0b1237b1da345b8bbd6b301" 
+DangoDash url="https://hh3.gbdev.io/static/database-gb/entries/dango-dash/Dango%20Dash_v01.gb" sha256="f411692054c2597f4659d2bde6580fceae1364165b9723891faa8c9c192cd8ad" 
+Lemmings url="https://archive.org/download/lemmings_gb_2/Lemmings.gb" sha256="6848ff1d8ee2183ea5bd73210b9215f1cf72e8a7caeccf8ed46a4a331ec621bb" 
+
+* platform=gb category=GameBoy
+JetPakDX url="https://www.nesworld.com/gbc/homebrew/game/jpdx0705.zip,https://www.zophar.net/download_file/11699" sha256="30b068b984949b76417bc03ced1b740566522940cd4899834b358973647830fc" 
+QBert url="https://www.zophar.net/download_file/11823" sha256="51c9f3dfb9bc30545e5d36a3860ed28284c0485fd3734123392643b9092a5135" 

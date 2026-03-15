@@ -1,3 +1,15 @@
+v10.7 (2026-03-15)
+		* added system of remote 'stores' from which apps can be listed and installed
+    * added 'check apps' functionality to check for downloads that fail on 404 or hash mismatch
+    * added zork games from archive.org
+    * windows Telegram now works again
+    * Treat download size as size_t rather than int, as this causes issues with large files on some platforms
+    * Support new emulators: nestopia, fceux, gngb, blastem, osmose-emulator
+    * Fix 'reconfigure' for apps that install as 'plain exectuable mode'
+    * 'platforms' listing now highlights which platforms have required emulators to run
+    * '-installed' command-line option now effects platform listing, showing only platforms that have required emulators to run
+		* handle the same app being configured multiple times or in multiple .apps files, only output it once in 'sommelier list'
+
 v10.6 (2025-11-11)
     * added 'emulator help text' (so far only for dosbox and mednafen)
     * added 'sommelier regedit' command for wine emulation

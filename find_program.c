@@ -123,6 +123,8 @@ static int CheckExecutable(TAction *Act, const char *Exec)
     {
         RetVal=TRUE;
 
+
+
         //we will chmod downloaded executables at the end of install anyways
         if ( (Act->InstallType == INSTALL_EXECUTABLE) || (access(Exec, X_OK) == 0) )
         {
@@ -131,10 +133,14 @@ static int CheckExecutable(TAction *Act, const char *Exec)
         }
         else
         {
-            Tempstr=MCopyStr(Tempstr, "~y~eWARN: ~w Found Program: '", Exec, "' but the file lacks execute permissions~0\nTrying to set permissions... ", NULL);
-            if (chmod(Exec, 0770)==0)  Tempstr=CatStr(Tempstr, "~gPemissions set~0\n");
-            else Tempstr=CatStr(Tempstr, "~rFAILED~0\n");
-            TerminalPutStr(Tempstr, NULL);
+            Tempstr=PlatformFindEmulatorNames(Tempstr, Act->Platform);
+            if (StrValid(Tempstr))
+            {
+                Tempstr=MCopyStr(Tempstr, "~y~eWARN: ~w Found Program: '", Exec, "' but the file lacks execute permissions~0\nTrying to set permissions... ", NULL);
+                if (chmod(Exec, 0770)==0)  Tempstr=CatStr(Tempstr, "~gPemissions set~0\n");
+                else Tempstr=CatStr(Tempstr, "~rFAILED~0\n");
+                TerminalPutStr(Tempstr, NULL);
+            }
         }
     }
 
@@ -158,7 +164,7 @@ char *FindProgram(char *RetStr, TAction *Act)
 
     //if we are installing a downloaded executable then the downloaded file is the actual exectuable
     //and we don't need to go searching
-    if (Act->InstallType == INSTALL_EXECUTABLE)
+    if ((Act->Type == ACT_INSTALL) && (Act->InstallType == INSTALL_EXECUTABLE))
     {
         Exec=CopyStr(Exec, Act->SrcPath);
 

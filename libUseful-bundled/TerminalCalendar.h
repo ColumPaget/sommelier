@@ -1,6 +1,6 @@
 /*
 Copyright (c) 2025 Colum Paget <colums.projects@googlemail.com>
-* SPDX-License-Identifier: GPL-3.0
+* SPDX-License-Identifier: LGPL-3.0-or-later
 */
 
 /* This implements a terminal-based calendar widget
@@ -67,14 +67,32 @@ extern "C" {
 #define TerminalCalendarDestroy TerminalWidgetDestroy
 #define TerminalCalendarSetOptions TerminalWidgetSetOptions
 
+//create, display and run a terminal calendar all in one command
 char *TerminalCalendar(char *RetStr, STREAM *Term, int x, int y, const char *Config);
 
+//create a calendar object
 TERMCALENDAR *TerminalCalendarCreate(STREAM *Term, int x, int y, const char *Config);
+
+void TerminalCalendarParseConfig(TERMCALENDAR *TC, const char *Config);
+
+
+//draw a calendar
 void TerminalCalendarDraw(TERMCALENDAR *TC);
+
+//'run' the calendar
 char *TerminalCalendarProcess(char *RetStr, TERMCALENDAR *TC);
+
+//handle keystrokes (up/down/left/right pgup and pgdown to chance month, enter to select)
 char *TerminalCalendarOnKey(char *RetStr, TERMCALENDAR *TC, int Key);
+
+//get the current selected date
 char *TerminalCalendarReturnDate(char *RetStr, TERMCALENDAR *TC);
+
+//set the month and year of the displayed calendar
 void TerminalCalendarSetMonthYear(TERMCALENDAR *TC, int Month, int Year);
+
+// set a 'state' and attributes for that state against a day/month/year 
+void TerminalCalendarSetDateStrState(TERMCALENDAR *TC, const char *DateStr, const char *State, const char *Attribs);
 void TerminalCalendarSetDateState(TERMCALENDAR *TC, int Day, int Month, int Year, const char *State, const char *Attribs);
 
 #ifdef __cplusplus

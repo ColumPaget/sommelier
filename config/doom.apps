@@ -1,8 +1,10 @@
+#Doom wads for use with freedoom. These games are all believed to be legal to download and play.
+
 * category='Doom' platform=doom
 
-FreeDoomDeathmatch  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedm-0.11.3.zip exec='freedm.wad'  sha256='2af698fb028ccc95993827f88679ea9b246116c2966894a51578755cad800ce0' comment='Freedoom wad' 
-FreeDoomPhase1  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec='freedoom1.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase1 mod' 
-FreeDoomPhase2  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip exec='freedoom2.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase2 mod' 
+FreeDoomDeathmatch  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedm-0.11.3.zip wads=' -iwad freedm.wad'  sha256='2af698fb028ccc95993827f88679ea9b246116c2966894a51578755cad800ce0' comment='Freedoom wad' 
+FreeDoomPhase1  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip wads=' -iwad freedoom1.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase1 mod' 
+FreeDoomPhase2  url=https://github.com/freedoom/freedoom/releases/download/v0.11.3/freedoom-0.11.3.zip wads=' -iwad freedoom2.wad'  sha256='28a5eafbb1285b78937bd408fcdd8f25f915432340eee79da692eae83bce5e8a' comment='Freedoom Phase2 mod' 
 Doom:AliensTC  url=https://www.quaddicted.com/files/idgames/themes/aliens/atcud19.zip requires='FreeDoomDeathmatch' movefiles-from='*/*.wad' wads='-deh ATCUD10.DEH -merge ALITCSF.WAD -file ALITCSND.WAD -iwad ALITCWAD.WAD'  sha256='abd905ff488428582cdc5c650021edf84f0120c0c68ffe4c8fcbf1d221ea25dd' comment='Take off and nuke it from orbit' 
 Doom:AlienVendetta  url=https://www.quaddicted.com/files/idgames/levels/doom2/megawads/av.zip requires='FreeDoomDeathmatch' movefiles-from='*/*.wad' wads='-iwad freedm.wad -merge AV.WAD'  sha256='5c5382cc50b565946b6725b3058cc1fdefe7367ee3067808068900117aabf8fc' comment='Doom Wad' 
 Doom:EternalDoom  url=https://www.quaddicted.com/files/idgames/themes/TeamTNT/eternal/eternal.zip requires='FreeDoomDeathmatch' movefiles-from='*/*.wad' wads='-iwad freedm.wad -merge ETERNALL.WAD'  sha256='aa71d0be4ffb6676214c27c92f213925f1ea5ca11fbb4a379672ba8ca6c84854' comment='Doom Wad' 

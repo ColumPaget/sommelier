@@ -6,6 +6,8 @@
 static void PrintUsage()
 {
     printf("\n");
+    printf("sommelier addstore <url>                           add a remote store of apps at an ssh: or http: url\n");
+    printf("sommelier refresh                                  re-download files registered with 'addstore'\n");
     printf("sommelier platforms                                print list of supported platforms\n");
     printf("sommelier categories                               print list of application categories\n");
     printf("sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform\n");
@@ -32,29 +34,29 @@ static void PrintUsage()
     printf("  -proxy <url>                  use a proxy for downloading installs\n");
     printf("  -platform <platform>          platform to use when installing or displaying lists of apps\n");
     printf("  -category <category>          category to use when displaying lists of apps\n");
-    printf("  -installed                    display only installed apps when displaying lists of apps\n");
+    printf("  -installed                    display only installed apps when displaying lists of apps, or only platforms with installed emulators when displaying platform list\n");
     printf("  -k                            keep installer or .zip file instead of deleting it after install\n");
     printf("  -S                            install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -system                       install app system-wide under /opt, to be run as a normal native app\n");
     printf("  -n <name>                     specify name to install the app under, allows installing multiple instances of the same app\n");
     printf("  -install-name <name>          specify name to install the app under, allows installing multiple instances of the same app\n");
     printf("  -install-as <name>            specify name to install the app under, allows installing multiple instances of the same app\n");
-    printf("  -emu <emulator>               specify a specific emulator to use when installing an app\n");
-    printf("  -emulator <emulator>          specify a specific emulator to use when installing an app\n");
+    printf("  -emu <emulator>               specify a specific emulator to use when installing an app (only for use with 'install' and 'reconfigure' verbs)\n");
+    printf("  -emulator <emulator>          specify a specific emulator to use when installing an app (only for use with 'install' and 'reconfigure' verbs)\n");
     printf("  -icache <dir>                 installer cache: download installer to directory'dir' and leave it there\n");
     printf("  -hash                         hash downloads even if they have no expected hash value\n");
     printf("  -no-xrandr                    don't use xrandr to reset screen resolution after running and application\n");
     printf("  -user-agent <agent string>    set user-agent to send when communicating over http\n");
     printf("  -ua <agent string>            set user-agent to send when communicating over http\n");
     printf("  -su                           allow programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.\n");
-		printf("                                If used with action 'run' then the program runs with the ability to su.\n");
-		printf("                                If used with action 'install' then the program is installed with the ability to su.\n");
+    printf("                                If used with action 'run' then the program runs with the ability to su.\n");
+    printf("                                If used with action 'install' then the program is installed with the ability to su.\n");
     printf("  -nosu                         deny programs to 'su' to root. On linux sommelier sets 'NO_NEW_PRIVS' by default to prevent su/sudo etc to root.\n");
-		printf("                                If used with action 'run' then the program runs WITHOUT the ability to su.\n");
-		printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
-		printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
-		printf("  -end                          End of sommelier arguments, anything past this point is arguments for the program to run\n");
-		printf("  --                            End of sommelier arguments, anything past this point is arguments for the program to run\n");
+    printf("                                If used with action 'run' then the program runs WITHOUT the ability to su.\n");
+    printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
+    printf("                                If used with action 'install' then the program is installed WITHOUT the ability to su.\n");
+    printf("  -end                          End of sommelier arguments, anything past this point is arguments for the program to run\n");
+    printf("  --                            End of sommelier arguments, anything past this point is arguments for the program to run\n");
     printf("\n");
     printf("Proxy urls have the form: \n");
     printf("     <protocol>:<user>:<password>@<host>:<protocol>. \n");
@@ -67,12 +69,13 @@ static void PrintUsage()
     printf("   sshtunnel:sshproxy\n");
     printf("\n");
     printf("There are currently only settings for 'wine' that can be configured with the 'set' command:\n");
+    printf("os-version=<os>        set version of windows to emulate. Choices are: win10, win81, win8, win7, win2008, vista, win2003, winxp, win2k, nt40,  winme, win98, win95, win31\n");
     printf("vdesk=y/n              run program within a virtual desktop, or not\n");
     printf("vdesk=<resolution>     run program within a virtual desktop with supplied resolution\n");
     printf("vdesk=<resolution>     run program within a virtual desktop with supplied resolution\n");
     printf("winmanage=y/n          allow window manager to decorate and manage windows of this program, or not\n");
     printf("smoothfonts=y/n        use font anti-aliasing, or not\n");
-    printf("os-version=<os>        set version of windows to emulate. Choices are: win10, win81, win8, win7, win2008, vista, win2003, winxp, win2k, nt40,  winme, win98, win95, win31\n");
+    printf("allow-su=y/n            allow application to raise priviledges to root user\n");
     printf("sound=y/n/sfx           DOOM only: sound on/off, or only effects (no music)\n");
     printf("mouse=y/n               DOOM only: use mouse in-game, or not\n");
     printf("grab=y/n                DOOM only: grab mouse, or not\n");
@@ -95,17 +98,17 @@ static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
 {
     const char *p_Opt;
 
-		//if we don't have an Action yet, we may have one once we've
-		//parsed more of the command-line, so return TRUE to keep going
+    //if we don't have an Action yet, we may have one once we've
+    //parsed more of the command-line, so return TRUE to keep going
     if (! Act) return(TRUE);
 
     if (! CmdLine) return(FALSE);
 
     p_Opt=CommandLineCurr(CmdLine);
 
-		if (strcmp(p_Opt, "--")==0) return(FALSE);
-		else if (strcmp(p_Opt, "-end")==0) return(FALSE);
-		else if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
+    if (strcmp(p_Opt, "--")==0) return(FALSE);
+    else if (strcmp(p_Opt, "-end")==0) return(FALSE);
+    else if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-su")==0) Config->Flags |= FLAG_ALLOW_SU;
     else if (strcmp(p_Opt, "-nosu")==0) Config->Flags |= FLAG_DENY_SU;
     else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
@@ -151,7 +154,7 @@ static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
 
 
-		return(TRUE);
+    return(TRUE);
 }
 
 
@@ -168,10 +171,10 @@ static TAction *CommandLineParseOptions(CMDLINE *CmdLine)
     arg=CommandLineNext(CmdLine);
     while (arg)
     {
-        if (*arg=='-') 
-				{
-				if (!	ParseCommandLineOption(Options, CmdLine)) break;
-				}
+        if (*arg=='-')
+        {
+            if (!	ParseCommandLineOption(Options, CmdLine)) break;
+        }
         arg=CommandLineNext(CmdLine);
     }
     return(Options);
@@ -187,10 +190,19 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     //list is one of the few actions that doesn't need an argument
     //so if we were asked to list, but there are no arguments, just add
     //a blank 'list all'.
-    if ((Type==ACT_LIST) || (Type==ACT_LIST_PLATFORMS) || (Type==ACT_LIST_CATEGORIES))
+    switch (Type)
     {
+    case ACT_LIST:
+    case ACT_LIST_PLATFORMS:
+    case ACT_LIST_CATEGORIES:
+    case ACT_CHECK_APPS:
+    case ACT_REBUILD:
+    case ACT_REBUILD_HASHES:
+    case ACT_ADD_STORE:
         Act=ActionCreate(Type, "");
+        Act->Flags |= FLAG_HASH_DOWNLOAD;
         ListAddItem(Acts, Act);
+        break;
     }
 
     arg=CommandLineNext(CmdLine);
@@ -198,30 +210,47 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     {
         if (*arg == '-')
         {
-						 if	(! ParseCommandLineOption(Act, CmdLine)) break;
+            if	(! ParseCommandLineOption(Act, CmdLine)) break;
         }
         else
         {
-            if (Type==ACT_LIST) Act->Name=CopyStr(Act->Name, arg);
-            else if ((Type==ACT_RUN) && Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
-            else
+            if (! Act)
             {
                 Act=ActionCreate(Type, arg);
                 ListAddItem(Acts, Act);
             }
+            else switch(Type)
+                {
+                case ACT_LIST:
+                    Act->Name=CopyStr(Act->Name, arg);
+                    break;
+
+                case ACT_RUN:
+                case ACT_CHECK_APPS:
+                case ACT_REBUILD:
+                case ACT_REBUILD_HASHES:
+                case ACT_ADD_STORE:
+                    if (Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
+                    break;
+
+                default:
+                    Act=ActionCreate(Type, arg);
+                    ListAddItem(Acts, Act);
+                    break;
+                }
         }
         arg=CommandLineNext(CmdLine);
     }
 
 
-		//if we broke out because we hit '--' or '-end' then add any
-		//remaining args to the 'Act->Args' value
+    //if we broke out because we hit '--' or '-end' then add any
+    //remaining args to the 'Act->Args' value
     arg=CommandLineNext(CmdLine);
-		while (arg)
-		{
-      if (Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
-    	arg=CommandLineNext(CmdLine);
-		}
+    while (arg)
+    {
+        if (Act) Act->Args=MCatStr(Act->Args, " ", arg, NULL);
+        arg=CommandLineNext(CmdLine);
+    }
 
 
     return(Act);
@@ -279,14 +308,21 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strcmp(arg, "list")==0) ParseSimpleAction(Acts, ACT_LIST, CmdLine);
         else if (strcmp(arg, "platforms")==0) ParseSimpleAction(Acts, ACT_LIST_PLATFORMS, CmdLine);
         else if (strcmp(arg, "categories")==0) ParseSimpleAction(Acts, ACT_LIST_CATEGORIES, CmdLine);
+        else if (strcmp(arg, "check-apps")==0) ParseSimpleAction(Acts, ACT_CHECK_APPS, CmdLine);
         else if (strcmp(arg, "rebuild")==0) ParseSimpleAction(Acts, ACT_REBUILD, CmdLine);
         else if (strcmp(arg, "hashes")==0) ParseSimpleAction(Acts, ACT_REBUILD_HASHES, CmdLine);
         else if (strcmp(arg, "winecfg")==0) ParseSimpleAction(Acts, ACT_WINECFG, CmdLine);
         else if (strcmp(arg, "regedit")==0) ParseSimpleAction(Acts, ACT_REGEDIT, CmdLine);
         else if (strcmp(arg, "fonts")==0) ParseSimpleAction(Acts, ACT_FONTS, CmdLine);
+        else if (strcmp(arg, "addstore")==0) ParseSimpleAction(Acts, ACT_ADD_STORE, CmdLine);
         else if (strcmp(arg, "version")==0) PrintVersion();
         else if (strcmp(arg, "-version")==0) PrintVersion();
         else if (strcmp(arg, "--version")==0) PrintVersion();
+        else if (strcmp(arg, "refresh")==0) 
+        {
+            Act=ActionCreate(ACT_REFRESH, "");
+            ListAddItem(Acts, Act);
+        }
         else if (strcmp(arg, "autostart")==0)
         {
             Act=ActionCreate(ACT_AUTOSTART, "");
@@ -308,10 +344,10 @@ ListNode *ParseCommandLine(int argc, char *argv[])
                 arg=CommandLineNext(CmdLine);
             }
         }
-				//if no recognized action, print help
+        //if no recognized action, print help
         else PrintUsage();
     }
-		//if no arguments, print help
+    //if no arguments, print help
     else PrintUsage();
 
 
