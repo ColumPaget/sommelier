@@ -25,6 +25,7 @@ static void PrintUsage()
     printf("options are:\n");
     printf("  -d                            print debugging (there will be a lot!)\n");
     printf("  -debug                        print debugging (there will be a lot!)\n");
+    printf("  -verbose                      print verbose debugging (currently implies '-debug' but this may change in future)\n");
     printf("  -c <config file>              specify a config (list of apps) file, rather than using the default\n");
     printf("  -url                          supply an alternative url for an install (this can be an http, https, or ssh url, or just a file path. File paths must be absolute, not relative)\n");
     printf("  -install-name <name>          Name that program will be installed under and called/run under\n");
@@ -109,21 +110,21 @@ static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     if (strcmp(p_Opt, "--")==0) return(FALSE);
     else if (strcmp(p_Opt, "-end")==0) return(FALSE);
     else if (strcmp(p_Opt, "-c")==0) Config->AppConfigPath=CopyStr(Config->AppConfigPath, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-su")==0) Config->Flags |= FLAG_ALLOW_SU;
-    else if (strcmp(p_Opt, "-nosu")==0) Config->Flags |= FLAG_DENY_SU;
-    else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
-    else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  FLAG_SYSTEM_INSTALL;
-    else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= FLAG_NO_XRANDR;
-    else if (strcmp(p_Opt, "-f")==0) Act->Flags |=  FLAG_FORCE;
-    else if (strcmp(p_Opt, "-force")==0) Act->Flags |=  FLAG_FORCE;
+    else if (strcmp(p_Opt, "-su")==0) Config->Flags |= CONF_ALLOW_SU;
+    else if (strcmp(p_Opt, "-S")==0) Config->Flags |=  CONF_SYSTEM_INSTALL;
+    else if (strcmp(p_Opt, "-system")==0) Config->Flags |=  CONF_SYSTEM_INSTALL;
+    else if (strcmp(p_Opt, "-no-xrandr")==0) Config->Flags |= CONF_NO_XRANDR;
+    else if (strcmp(p_Opt, "-k")==0) Config->Flags |=  CONF_KEEP_INSTALLER;
+    else if (strcmp(p_Opt, "-hash")==0) Config->Flags |= CONF_HASH_DOWNLOAD;
+    else if (strcmp(p_Opt, "+net")==0) Config->Flags |= CONF_ALLOW_NET;
+    else if (strcmp(p_Opt, "-net")==0) Config->Flags |= CONF_DENY_NET;
+    else if (strcmp(p_Opt, "-nonet")==0) Config->Flags |= CONF_DENY_NET;
+    else if (strcmp(p_Opt, "-f")==0) Config->Flags |=  CONF_FORCE;
+    else if (strcmp(p_Opt, "-force")==0) Config->Flags |=  CONF_FORCE;
+    else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-s")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-set")==0) LoadAppConfigToAct(Act, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-k")==0) Act->Flags |=  FLAG_KEEP_INSTALLER;
-    else if (strcmp(p_Opt, "-n")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-hash")==0) Act->Flags |= FLAG_HASH_DOWNLOAD;
     else if (strcmp(p_Opt, "-sandbox")==0) Act->Flags |= FLAG_SANDBOX;
-    else if (strcmp(p_Opt, "+net")==0) Act->Flags |= FLAG_NET;
-    else if (strcmp(p_Opt, "-net")==0) Act->Flags &= ~FLAG_NET;
     else if (strcmp(p_Opt, "-url")==0) Act->URL=realpath(CommandLineNext(CmdLine), NULL);
     else if (strcmp(p_Opt, "-install-name")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-install-as")==0) Act->InstallName=CopyStr(Act->InstallName, CommandLineNext(CmdLine));
@@ -134,14 +135,14 @@ static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     else if (strcmp(p_Opt, "-user-agent")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-ua")==0) LibUsefulSetValue("HTTP:UserAgent",CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-category")==0) SetVar(Act->Vars, "category", CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-secure")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
-    else if (strcmp(p_Opt, "-security")==0) SetVar(Act->Vars, "security_level", CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-secure")==0) Act->Security=CopyStr(Act->Security, CommandLineNext(CmdLine));
+    else if (strcmp(p_Opt, "-security")==0) Act->Security=CopyStr(Act->Security, CommandLineNext(CmdLine));
     //we cannot unalias the platform here because here, because we won't have loaded platforms yet
     else if (strcmp(p_Opt, "-platform")==0) Act->Platform=CopyStr(Act->Platform, CommandLineNext(CmdLine));
     else if (strcmp(p_Opt, "-icache")==0)
     {
         Config->InstallerCache=CopyStr(Config->InstallerCache, CommandLineNext(CmdLine));
-        Act->Flags |= FLAG_KEEP_INSTALLER;
+        Config->Flags |= CONF_KEEP_INSTALLER;
     }
     else if (
         (strcmp(p_Opt, "-d")==0) ||
@@ -149,8 +150,16 @@ static int ParseCommandLineOption(TAction *Act, CMDLINE *CmdLine)
     )
     {
         LibUsefulSetValue("HTTP:Debug","Y");
-        Config->Flags |= FLAG_DEBUG;
+        Config->Flags |= CONF_DEBUG;
     }
+    else if (
+        (strcmp(p_Opt, "-verbose")==0)
+    )
+    {
+        LibUsefulSetValue("HTTP:Debug","Y");
+        Config->Flags |= CONF_DEBUG | CONF_VERBOSE;
+    }
+
     else Act->Args=MCatStr(Act->Args, " '",p_Opt,"'",NULL);
 
 
@@ -199,8 +208,8 @@ TAction *ParseSimpleAction(ListNode *Acts, int Type, CMDLINE *CmdLine)
     case ACT_REBUILD:
     case ACT_REBUILD_HASHES:
     case ACT_ADD_STORE:
+        Config->Flags |= CONF_HASH_DOWNLOAD;
         Act=ActionCreate(Type, "");
-        Act->Flags |= FLAG_HASH_DOWNLOAD;
         ListAddItem(Acts, Act);
         break;
     }
@@ -318,7 +327,7 @@ ListNode *ParseCommandLine(int argc, char *argv[])
         else if (strcmp(arg, "version")==0) PrintVersion();
         else if (strcmp(arg, "-version")==0) PrintVersion();
         else if (strcmp(arg, "--version")==0) PrintVersion();
-        else if (strcmp(arg, "refresh")==0) 
+        else if (strcmp(arg, "refresh")==0)
         {
             Act=ActionCreate(ACT_REFRESH, "");
             ListAddItem(Acts, Act);

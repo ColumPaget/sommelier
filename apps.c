@@ -112,6 +112,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                     Act->PlatformID=Plt->ID;
                     if (Plt->Flags & PLATFORM_FLAG_NOEXEC) Act->Flags |= FLAG_NOEXEC;
                     if (StrValid(Plt->UnpackDir)) SetVar(Act->Vars, "unpack-dir", Plt->UnpackDir);
+                    if (StrValid(Plt->Secure) && (! StrValid(Act->Security))) Act->Security=CopyStr(Act->Security, Plt->Secure);
                 }
                 else fprintf(stderr, "PLATFORM NOT FOUND: '%s' for %s\n", Act->Platform, Act->Name);
             }
@@ -136,6 +137,7 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
             else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
+            else if (strcasecmp(Name,"security")==0) Act->Security=CopyStr(Act->Security, Value);
             else if (strcasecmp(Name,"category")==0)
             {
                 Tempstr=CategoriesExpand(Tempstr, Value);
@@ -151,10 +153,10 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
                 strlwr(Value);
                 SetVar(Act->Vars, Name, Value);
             }
-            else 
-						{
-										SetVar(Act->Vars, Name, Value);
-						}
+            else
+            {
+                SetVar(Act->Vars, Name, Value);
+            }
 
             AppPostProcessConfigItem(Act, Name, Value);
         }
@@ -177,28 +179,30 @@ static TAction *AppConfigure(const char *Name, const char *Settings, ListNode *F
 {
     ListNode *Curr;
     TAction *Act;
-    char *Config=NULL;
+    char *AppConfig=NULL;
 
     Act=ActionCreate(ACT_NONE, Name);
     LoadAppConfigToAct(Act, Settings);
     Curr=ListGetNext(FileWideSettings);
     while (Curr)
     {
-				//lines starting with '!' apply to apps in this file
-        if (strcmp(Curr->Tag, "!")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+        //lines starting with '!' apply to apps in this file
+        if (strcmp(Curr->Tag, "!")==0) AppConfig=MCatStr(AppConfig, (const char *) Curr->Item, " ", NULL);
 
-				//lines starting with '*' apply to apps in this file UNTIL ANOTHER '*' is encounted
-        if (strcmp(Curr->Tag, "*")==0) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+        //lines starting with '*' apply to apps in this file UNTIL ANOTHER '*' is encounted
+        if (strcmp(Curr->Tag, "*")==0) AppConfig=MCatStr(AppConfig, (const char *) Curr->Item, " ", NULL);
 
         //it's possible for an app to not have a url if it comes bundled with something else, so be sure to
         //check Act->URL exists before feeding to fnmatch
-        if (Act->URL &&  (strncmp(Curr->Tag, "url=",4)==0) && (fnmatch(Curr->Tag+4, Act->URL, 0)==0) ) Config=MCatStr(Config, (const char *) Curr->Item, " ", NULL);
+        if (Act->URL &&  (strncmp(Curr->Tag, "url=",4)==0) && (fnmatch(Curr->Tag+4, Act->URL, 0)==0) ) AppConfig=MCatStr(AppConfig, (const char *) Curr->Item, " ", NULL);
         Curr=ListGetNext(Curr);
     }
-    Config=CatStr(Config, Settings);
+    AppConfig=CatStr(AppConfig, Settings);
 
-    LoadAppConfigToAct(Act, Config);
-    Destroy(Config);
+    if (Config->Flags & CONF_VERBOSE) fprintf(stderr, "Loading App: %s Config=%s\n", Name, AppConfig);
+
+    LoadAppConfigToAct(Act, AppConfig);
+    Destroy(AppConfig);
 
     return(Act);
 }
@@ -217,6 +221,9 @@ void AppsLoadFromFile(const char *Path, ListNode *Apps)
 
     FileWideSettings=ListCreate();
     S=STREAMOpen(Path, "r");
+
+    if (Config->Flags & CONF_DEBUG) printf("LOAD APPS FROM: %s STREAM=%d\n", Path, S);
+
     if (S)
     {
         Tempstr=STREAMReadLine(Tempstr, S);
@@ -226,7 +233,8 @@ void AppsLoadFromFile(const char *Path, ListNode *Apps)
             if ((StrLen(Tempstr) > 0) && (*Tempstr != '#'))
             {
                 ptr=GetToken(Tempstr, "\\S", &Token, GETTOKEN_QUOTES);
-                // '*' for the app name means this line applies to all apps in this file
+                // '!' for the app name means this line applies to all apps in this file
+                // '*' for the app name means this line applies to all apps until the next '*' is encountered
                 if (
                     (strcmp(Token, "*")==0) ||
                     (strcmp(Token, "!")==0) ||
@@ -235,12 +243,12 @@ void AppsLoadFromFile(const char *Path, ListNode *Apps)
                 else if (StrValid(Token))
                 {
                     Act=AppConfigure(Token, ptr, FileWideSettings);
-										if (Act)
-										{
-										// an app could be configured multiple times or in multiple files, so handle that
-										Tempstr=MCopyStr(Tempstr, "'", Token, "' ", Act->Platform, NULL);
-										if (! ListFindNamedItem(Apps, Tempstr)) ListAddNamedItem(Apps, Tempstr, Act);
-										}
+                    if (Act)
+                    {
+                        // an app could be configured multiple times or in multiple files, so handle that
+                        Tempstr=MCopyStr(Tempstr, "'", Token, "' ", Act->Platform, NULL);
+                        if (! ListFindNamedItem(Apps, Tempstr)) ListAddNamedItem(Apps, Tempstr, Act);
+                    }
                 }
             }
             Tempstr=STREAMReadLine(Tempstr, S);
@@ -370,7 +378,7 @@ char *AppFormatPath(char *Path, TAction *Act, const char *PrefixTemplate)
         ptr=GetVar(Act->Vars, "sommelier_root");
         if (! StrValid(ptr))
         {
-            if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+            if (Config->Flags & CONF_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
             else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
             SetVar(Act->Vars, "sommelier_root", Path);
         }
@@ -456,15 +464,19 @@ int AppFindConfig(TAction *App, const char *Platforms)
     Curr=ListGetNext(Apps);
     while (Curr)
     {
-        if (StrValid(Curr->Tag) && (strcasecmp(App->Name, Curr->Tag)==0))
-        {
-            AppConfig=(TAction *) Curr->Item;
+        AppConfig=(TAction *) Curr->Item;
 
+        if (Config->Flags & CONF_VERBOSE) fprintf(stderr, "CMP: %s %s\n", App->Name, AppConfig->Name);
+        if (StrValid(AppConfig->Name) && (strcasecmp(App->Name, AppConfig->Name)==0))
+        {
+
+            if (Config->Flags & CONF_DEBUG) fprintf(stderr, "Config found: %s ...", App->Name);
             //if no platform requested, or app platform matches requested
             //then we've found the right one
 
             if (AppPlatformMatches(AppConfig, Platforms))
             {
+                if (Config->Flags & CONF_DEBUG) fprintf(stderr, "Platform Matches: %s\n", AppConfig->Platform);
                 //flags can already have been set by the command-line, so
                 //we have to | these
                 App->Flags |= AppConfig->Flags;
@@ -479,6 +491,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
                 result=TRUE;
                 break;
             }
+            else fprintf(stderr, "Platform DOESNT match: %s\n", AppConfig->Platform);
         }
 
         Curr=ListGetNext(Curr);
@@ -528,19 +541,22 @@ int AppLoadConfig(TAction *App)
 
 //if no platform specified this will use the first matching app config it finds for any platform
     result=AppFindConfig(App, Tempstr);
+    if (result)
+    {
+        if (StrValid(App->Parent)) SetVar(App->Vars, "name", App->Parent);
+        else if (StrValid(App->InstallName)) SetVar(App->Vars, "name", App->InstallName);
 
-    if (StrValid(App->Parent)) SetVar(App->Vars, "name", App->Parent);
-    else if (StrValid(App->InstallName)) SetVar(App->Vars, "name", App->InstallName);
+        ptr=getenv("LANGUAGE");
+        if (! StrValid(ptr)) ptr=getenv("LANG");
+        if (! StrValid(ptr)) ptr="en_US";
+        AppSetLocale(App, ptr);
 
-    ptr=getenv("LANGUAGE");
-    if (! StrValid(ptr)) ptr=getenv("LANG");
-    if (! StrValid(ptr)) ptr="en_US";
-    AppSetLocale(App, ptr);
-
-    //we don't need the path that is returned here, but this function sets a lot of default variables and paths
-    //we set them using 'DEFAULT_PREFIX' here, anything involving installed apps will call 'AppIsInstalled' which
-    //will consider both DEFAULT_PREFIX and OLD_VERSION_PREFIX
-    if (result) Tempstr=AppFormatPath(Tempstr, App, DEFAULT_PREFIX);
+        //we don't need the path that is returned here, but this function sets a lot of default variables and paths
+        //we set them using 'DEFAULT_PREFIX' here, anything involving installed apps will call 'AppIsInstalled' which
+        //will consider both DEFAULT_PREFIX and OLD_VERSION_PREFIX
+        Tempstr=AppFormatPath(Tempstr, App, DEFAULT_PREFIX);
+    }
+    else fprintf(stderr, "ERROR: no config found for app '%s'\n", App->Name );
 
     Destroy(Tempstr);
 
@@ -550,7 +566,7 @@ int AppLoadConfig(TAction *App)
 
 int AppsOutputList(TAction *Template)
 {
-		ListNode *Installed=NULL, *Curr;
+    ListNode *Installed=NULL, *Curr;
     int result=FALSE;
     TAction *App;
     const char *p_dl;
@@ -581,9 +597,25 @@ int AppsOutputList(TAction *Template)
 
 int AppAllowSU(TAction *App)
 {
-    if (Config->Flags & FLAG_DENY_SU) return(FALSE);
-    if (Config->Flags & FLAG_ALLOW_SU) return(TRUE);
-    if (App && (App->Flags & FLAG_DENY_SU)) return(FALSE);
+    if (Config->Flags & CONF_ALLOW_SU) return(TRUE);
     if (App && (App->Flags & FLAG_ALLOW_SU)) return(TRUE);
     return(FALSE);
+}
+
+
+int AppsListAllowSU(ListNode *Apps)
+{
+ListNode *Curr;
+TAction *App=NULL;
+
+if (Config->Flags & CONF_ALLOW_SU) return(TRUE);
+Curr=ListGetNext(Apps);
+while (Curr)
+{
+App=(TAction *) Curr->Item;
+if (App->Flags & FLAG_ALLOW_SU) return(TRUE);
+Curr=ListGetNext(Curr);
+}
+
+return(FALSE);
 }

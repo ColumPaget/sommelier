@@ -2,7 +2,7 @@ MAJOR=5
 CC = gcc
 AR = ar
 LN = ln
-VERSION = 5.67
+VERSION = 5.74
 LICENSE = GPLv3
 prefix = /usr/local
 exec_prefix = ${prefix}
@@ -29,11 +29,11 @@ else
 endif
 
 
-CFLAGS = -g -O2  -Wl,${LINKER_SONAME_OPTION},${SONAME}
+CFLAGS = -g -O2 -fPIC  -Wl,${LINKER_SONAME_OPTION},${SONAME} -rdynamic
 LDFLAGS = 
-LIBS = -lz -lssl -lcrypto -lc -lc 
-FLAGS=$(LDFLAGS) $(CPPFLAGS) $(CFLAGS) -fPIC -DPACKAGE_NAME=\"libUseful\" -DPACKAGE_TARNAME=\"libuseful\" -DPACKAGE_VERSION=\"5.67\" -DPACKAGE_STRING=\"libUseful\ 5.67\" -DPACKAGE_BUGREPORT=\"colums.projects@gmail.com\" -DPACKAGE_URL=\"\" -D_FILE_OFFSET_BITS=64 -DHAVE_GET_CURR_DIR=1 -DHAVE_GETLOADAVG=1 -DHAVE_SYSINFO=1 -DHAVE_SYSCONF=1 -DHAVE_GETPAGESIZE=1 -DHAVE_PTSNAME_R=1 -DHAVE_CLEARENV=1 -DHAVE_SETRESUID=1 -DHAVE_INITGROUPS=1 -DHAVE_MLOCK=1 -DHAVE_MLOCKALL=1 -DHAVE_MUNLOCKALL=1 -DHAVE_MADVISE=1 -DHAVE_MKOSTEMP=1 -DHAVE_MOUNT=1 -DHAVE_UMOUNT=1 -DHAVE_UMOUNT2=1 -DHAVE_GETENTROPY=1 -DHAVE_PRCTL=1 -DUSE_STRLEN_CACHE=1 -DHAVE_POLL=1 -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_EPOLL=1 -DHAVE_SENDFILE=1 -DHAVE_SYS_RANDOM=1 -DUSE_INET6=1 -DUSE_CRC32=1 -DUSE_MD5=1 -DUSE_SHA1=1 -DUSE_SHA2=1 -DUSE_WHIRL=1 -DUSE_JH=1 -DHAVE_LIBC=1 -DHAVE_UNSHARE=1 -DHAVE_LIBC=1 -DHAVE_SETNS=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DHAVE_EVP_MD_CTX_CREATE=1 -DHAVE_EVP_MD_CTX_NEW=1 -DHAVE_EVP_MD_CTX_DESTROY=1 -DHAVE_EVP_MD_CTX_FREE=1 -DHAVE_X509_CHECK_HOST=1 -DHAVE_SSL_SET_MIN_PROTO_VERSION=1 -DHAVE_X509_GET0_NOTBEFORE=1 -DHAVE_X509_GET0_NOTAFTER=1 -DHAVE_EC_KEY_NEW_BY_CURVE_NAME=1 -DHAVE_DH_GENERATE_PARAMETERS_EX=1 -DHAVE_DH_NEW=1 -DHAVE_PEM_READ_DHPARAMS=1 -DHAVE_DECL_OPENSSL_ADD_ALL_ALGORITHMS=1 -DHAVE_OPENSSL_ADD_ALL_ALGORITHMS=1 -DHAVE_DECL_SSL_SET_TLSEXT_HOST_NAME=1 -DHAVE_SSL_SET_TLSEXT_HOST_NAME=1 -DHAVE_LIBZ=1 -DVERSION=\"$(VERSION)\" -DSYSCONFDIR=\"$(sysconfdir)\"
-OBJ=StrLenCache.o String.o Array.o List.o IPAddress.o Socket.o Server.o UnixSocket.o Stream.o IOPoll.o StreamAuth.o Errors.o Unicode.o TerminalKeys.o Terminal.o TerminalWidget.o TerminalMenu.o TerminalChoice.o TerminalBar.o TerminalProgress.o TerminalCalendar.o TerminalTheme.o FileSystem.o GeneralFunctions.o DataProcessing.o Pty.o Log.o HttpUtil.o HttpChunkedTransfer.o Http.o Gemini.o Smtp.o Inet.o Expect.o baseXX.o md5c.o sha2.o whirlpool.o jh_ref.o HashCRC32.o HashMD5.o HashSHA.o HashJH.o HashWhirlpool.o HashOpenSSL.o Hash.o HMAC.o Ssh.o Compression.o Encryption.o OAuth.o LibSettings.o Vars.o Time.o Markup.o SpawnPrograms.o Tokenizer.o StringList.o PatternMatch.o URL.o DataParser.o ConnectionChain.o OpenSSL.o Seccomp.o Process.o Container.o Encodings.o RawData.o SecureMem.o CommandLineParser.o SysInfo.o Entropy.o Users.o UnitsOfMeasure.o HttpServer.o WebSocket.o ContentType.o PasswordFile.o OTP.o CGI.o LineEdit.o
+LIBS = -lc -lz -lssl -lcrypto -lc -lc 
+FLAGS=$(LDFLAGS) $(CPPFLAGS) $(CFLAGS) -fPIC -DPACKAGE_NAME=\"libUseful\" -DPACKAGE_TARNAME=\"libuseful\" -DPACKAGE_VERSION=\"5.74\" -DPACKAGE_STRING=\"libUseful\ 5.74\" -DPACKAGE_BUGREPORT=\"colums.projects@gmail.com\" -DPACKAGE_URL=\"\" -D_FILE_OFFSET_BITS=64 -DHAVE_GET_CURR_DIR=1 -DHAVE_GETLOADAVG=1 -DHAVE_SYSINFO=1 -DHAVE_SYSCONF=1 -DHAVE_GETPAGESIZE=1 -DHAVE_PTSNAME_R=1 -DHAVE_CLEARENV=1 -DHAVE_SETRESUID=1 -DHAVE_INITGROUPS=1 -DHAVE_MLOCK=1 -DHAVE_MLOCKALL=1 -DHAVE_MUNLOCKALL=1 -DHAVE_MADVISE=1 -DHAVE_MKOSTEMP=1 -DHAVE_MOUNT=1 -DHAVE_UMOUNT=1 -DHAVE_UMOUNT2=1 -DHAVE_GETENTROPY=1 -DUSE_STRLEN_CACHE=1 -DHAVE_POLL=1 -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DSTDC_HEADERS=1 -DHAVE_EPOLL=1 -DHAVE_SENDFILE=1 -DHAVE_SYS_RANDOM=1 -DHAVE_LINUX_NETFILTER_IPV4_H=1 -DUSE_INET6=1 -DUSE_CRC32=1 -DUSE_MD5=1 -DUSE_SHA1=1 -DUSE_SHA2=1 -DUSE_WHIRL=1 -DUSE_JH=1 -DHAVE_LIBC=1 -DHAVE_UNSHARE=1 -DHAVE_LIBC=1 -DHAVE_SETNS=1 -DHAVE_LIBCRYPTO=1 -DHAVE_LIBSSL=1 -DHAVE_EVP_MD_CTX_CREATE=1 -DHAVE_EVP_MD_CTX_NEW=1 -DHAVE_EVP_MD_CTX_DESTROY=1 -DHAVE_EVP_MD_CTX_FREE=1 -DHAVE_X509_CHECK_HOST=1 -DHAVE_SSL_SET_MIN_PROTO_VERSION=1 -DHAVE_X509_GET0_NOTBEFORE=1 -DHAVE_X509_GET0_NOTAFTER=1 -DHAVE_EC_KEY_NEW_BY_CURVE_NAME=1 -DHAVE_DH_GENERATE_PARAMETERS_EX=1 -DHAVE_DH_NEW=1 -DHAVE_PEM_READ_DHPARAMS=1 -DHAVE_DECL_OPENSSL_ADD_ALL_ALGORITHMS=1 -DHAVE_OPENSSL_ADD_ALL_ALGORITHMS=1 -DHAVE_DECL_SSL_SET_TLSEXT_HOST_NAME=1 -DHAVE_SSL_SET_TLSEXT_HOST_NAME=1 -DHAVE_LIBZ=1 -DHAVE_BACKTRACE=1 -DHAVE_PRCTL=1 -DHAVE_LIBC=1 -DUSE_SECCOMP=1 -DVERSION=\"$(VERSION)\" -DSYSCONFDIR=\"$(sysconfdir)\"
+OBJ=StrLenCache.o String.o Array.o List.o IPAddress.o Socket.o Server.o UnixSocket.o Stream.o IOPoll.o StreamAuth.o Errors.o Unicode.o TerminalKeys.o Terminal.o TerminalWidget.o TerminalMenu.o TerminalChoice.o TerminalBar.o TerminalProgress.o TerminalCalendar.o TerminalTheme.o FileSystem.o GeneralFunctions.o DataProcessing.o Pty.o Log.o HttpUtil.o HttpChunkedTransfer.o Http.o Gemini.o Smtp.o Inet.o Expect.o baseXX.o md5c.o sha2.o whirlpool.o jh_ref.o HashCRC32.o HashMD5.o HashSHA.o HashJH.o HashWhirlpool.o HashOpenSSL.o Hash.o HMAC.o Ssh.o Compression.o Encryption.o OAuth.o LibSettings.o AtExit.o Vars.o Time.o Markup.o SpawnPrograms.o Tokenizer.o StringList.o PatternMatch.o URL.o DataParser.o ConnectionChain.o OpenSSL.o Seccomp.o Process.o Container.o Encodings.o RawData.o SecureMem.o CommandLineParser.o SysInfo.o Entropy.o Users.o UnitsOfMeasure.o HttpServer.o WebSocket.o ContentType.o PasswordFile.o OTP.o CGI.o LineEdit.o Backtrace.o
 
 ifeq ($(LICENSE),GPLv3)
 	OBJ += crc32.o base64.o sha1.o
@@ -300,11 +300,14 @@ CGI.o: CGI.c CGI.h
 LineEdit.o: LineEdit.c LineEdit.h
 	$(CC) $(FLAGS) -c LineEdit.c
 
+Backtrace.o: Backtrace.c Backtrace.h
+	$(CC) $(FLAGS) -c Backtrace.c
 
-
-#No dependancies, must always be compiled
 LibSettings.o: LibSettings.h LibSettings.c
 	$(CC) $(FLAGS) -c LibSettings.c
+
+AtExit.o: AtExit.h AtExit.c
+	$(CC) $(FLAGS) -c AtExit.c
 
 
 clean:

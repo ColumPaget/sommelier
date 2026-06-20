@@ -14,7 +14,7 @@
 #include <glob.h>
 
 
-#define VERSION "10.7"
+#define VERSION "10.8"
 
 
 #define INSTALL_RUN          0
@@ -41,23 +41,34 @@
 #define ACT_REGEDIT         101
 #define ACT_FONTS           105
 
-#define FLAG_DEBUG            1
-#define FLAG_FORCE            2
+
+//these are flags usually set against each app within the '*.app' config files
+#define FLAG_INSTALLED        1
+#define FLAG_DOWNLOADED       2
 #define FLAG_DEPENDANCY       4
-#define FLAG_SYSTEM_INSTALL   8
-#define FLAG_INSTALLED       16
-#define FLAG_NO_XRANDR       32
+#define FLAG_BUNDLED          8
 #define FLAG_SANDBOX         64
 #define FLAG_NET            128
-#define FLAG_DOWNLOADED     256
-#define FLAG_KEEP_INSTALLER 512
-#define FLAG_HASH_DOWNLOAD 1024
+#define FLAG_NONET          256
 #define FLAG_ABORT         2048
-#define FLAG_BUNDLED       4096
 #define FLAG_NOEXEC        8192
 #define FLAG_DLC          16384
 #define FLAG_ALLOW_SU     32768
-#define FLAG_DENY_SU      65536
+
+
+//these are 'global flags' set using the command-line
+#define CONF_DEBUG            1
+#define CONF_VERBOSE          2
+#define CONF_FORCE            4
+#define CONF_KEEP_INSTALLER   8
+#define CONF_SYSTEM_INSTALL  16
+#define CONF_HASH_DOWNLOAD   32
+#define CONF_NO_XRANDR       64
+#define CONF_ALLOW_SU       128
+#define CONF_ALLOW_NET      512
+#define CONF_DENY_NET      1024
+
+
 
 typedef enum {FILETYPE_UNKNOWN, FILETYPE_MZ, FILETYPE_PE, FILETYPE_ZIP, FILETYPE_MSI, FILETYPE_RAR, FILETYPE_TGZ, FILETYPE_TBZ, FILETYPE_TXZ, FILETYPE_7ZIP, FILETYPE_DEB, FILETYPE_CAB} TEnumFileTypes;
 
@@ -81,6 +92,7 @@ typedef struct
     char *OSVersion;
     char *Parent;
     char *PostProcess;
+    char *Security;
     ListNode *Vars;
 } TAction;
 

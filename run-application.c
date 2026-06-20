@@ -139,7 +139,7 @@ pid_t RunSandboxed(TAction *Act)
     */
 
     Tempstr=CopyStr(Tempstr, Act->Exec);
-    if (! (Config->Flags & FLAG_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
+    if (! (Config->Flags & CONF_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
     pid=Spawn(Tempstr, SpawnConfig);
 
     Destroy(Tempstr);
@@ -154,13 +154,11 @@ pid_t RunSandboxed(TAction *Act)
 pid_t RunNormal(TAction *Act)
 {
     char *Cmd=NULL, *SpawnConfig=NULL, *Secure=NULL, *Tempstr=NULL;
-		TPlatform *Platform;
+    TPlatform *Platform;
     const char *ptr;
     pid_t pid=-1;
 
-		Platform=(TPlatform *) PlatformFind(Act->Platform);
-		printf("PLATFORM: %d [%s]\n", Platform, Act->Platform);
-
+    Platform=(TPlatform *) PlatformFind(Act->Platform);
     ptr=GetVar(Act->Vars, "saves-dir");
     if (StrValid(ptr))
     {
@@ -175,11 +173,10 @@ pid_t RunNormal(TAction *Act)
     }
 
     Cmd=GenerateApplicationCommandLine(Cmd, Act);
-		if (Platform) printf("PLATFORM: %d\n", Platform->Flags & PLATFORM_FLAG_NOSTDERR);
-		if (Platform && (Platform->Flags & PLATFORM_FLAG_NOSTDERR))
-		{
-    if (! (Config->Flags & FLAG_DEBUG)) Cmd=CatStr(Cmd, " >/dev/null");
-		}
+    if (Platform && (Platform->Flags & PLATFORM_FLAG_NOSTDERR))
+    {
+        if (! (Config->Flags & CONF_DEBUG)) Cmd=CatStr(Cmd, " >/dev/null");
+    }
 
     Tempstr=EmulatorGetHelp(Tempstr, Act);
     if (StrValid(Tempstr)) TerminalPutStr(Tempstr, NULL);
@@ -187,6 +184,12 @@ pid_t RunNormal(TAction *Act)
 
     Secure=SeccompSandboxGetLevel(Secure, Act);
     SpawnConfig=CopyStr(SpawnConfig, "+stderr");
+
+		if (! Config->Flags & CONF_ALLOW_NET)
+		{
+		if (Act->Flags & FLAG_NONET) Secure=CatStr(Secure, "+nonet");
+		}
+
     if (StrValid(Secure)) SpawnConfig=MCatStr(SpawnConfig, " security='", Secure, "'", NULL);
 
     if (StrValid(Secure)) Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), Secure);
@@ -241,7 +244,7 @@ void RunApplication(TAction *Act)
             if (IsAppImage(Act->Exec))
             {
                 TerminalPutStr("~yWARN: Application is an AppImage and therefore requires enhanced privileges to boot. no SU/Seccomp sandboxing active~0\n", NULL);
-                Config->Flags |= FLAG_ALLOW_SU;
+                Config->Flags |= CONF_ALLOW_SU;
             }
 
             if (! AppAllowSU(Act)) SetNoSU();
@@ -259,7 +262,7 @@ void RunApplication(TAction *Act)
                 if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
                 else pid=RunNormal(Act);
 
-                if ( ( ! (Config->Flags & FLAG_NO_XRANDR)) &&  (pid > 0) )
+                if ( ( ! (Config->Flags & CONF_NO_XRANDR)) &&  (pid > 0) )
                 {
                     //wait for the application to exit, and collect any other
                     //pids while we do so

@@ -1,3 +1,12 @@
+v10.8 (2026-05-21)
+    * Fix SEVERE bug introduced in previous release, which prevented finding app configs.
+    * Added 'verbose' mode
+    * added per-platform 'secure level'
+    * much work done on sandboxing
+    * seperated 'FLAGS' into per-app flags and global flags
+    * added more gog games: DontStarve, MountAndBlade, MountAndBladeWarband, MountAndBladeFireAndSteel, NowhereProphet, LazyGalaxy, DeadInVinland, Distrust, MitsurugiKamuiHikae
+    
+
 v10.7 (2026-03-15)
 		* added system of remote 'stores' from which apps can be listed and installed
     * added 'check apps' functionality to check for downloads that fail on 404 or hash mismatch

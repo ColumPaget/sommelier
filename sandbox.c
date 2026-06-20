@@ -29,6 +29,8 @@ int SetNoSU()
 
 
 
+
+
 //select a 'level' for the seccomp sandbox this will usually be one of 'minimal', 'user'
 char *SeccompSandboxGetLevel(char *RetStr, TAction *Act)
 {
@@ -36,19 +38,19 @@ char *SeccompSandboxGetLevel(char *RetStr, TAction *Act)
     const char *ptr="";
 
     Platform=CopyStr(Platform, GetVar(Act->Vars, "platform"));
-    if ( NativeBitWidth() == PlatformBitWidth(Platform) )
+    if (BitWidthMatches(Platform) )
     {
-        ptr=GetVar(Act->Vars, "security_level");
-        if (! StrValid(ptr))
-        {
-            //if either the app or the config has 'allow su' set, then we cannot use seccomp
-            //applications that have a google-chrome/chromium component need capset and bpf for their sandboxing
-            if (! AppAllowSU(Act)) ptr="syscall_allow=capset;bpf user";
-        }
-        else if (strcasecmp(ptr, "none")==0) ptr="";
-    }
+        if (! AppAllowSU(Act)) 
+				{
+	        ptr=Act->Security;
+ 	        if (CompareStrNoCase(ptr, "none")==0) ptr="";
 
-    RetStr=CopyStr(RetStr, ptr);
+				  RetStr=MCatStr(RetStr, "syscall_allow=capset;bpf;mmap ", ptr, NULL);
+				}
+    		else RetStr=CopyStr(RetStr, ptr);
+    }
+    else TerminalPutStr("~yBITWIDTH MISMATCH: Not applying seccomp/security rules to this application~0\n", NULL);
+
 
     Destroy(Platform);
 

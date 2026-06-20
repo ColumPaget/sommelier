@@ -52,11 +52,13 @@ typedef struct
     char *InstallerPattern;
     char *Args;
 		char *HelpFile;
+    char *Secure;
 } TPlatform;
 
 
 int NativeBitWidth();
 const char *PlatformDefault();
+int BitWidthMatches(const char *Platform);
 TPlatform *PlatformFindWithEmulator(const char *Name, const char *Emulator, int CheckAvailable);
 const char *PlatformUnAlias(const char *Alias);
 int PlatformType(const char *Platform);

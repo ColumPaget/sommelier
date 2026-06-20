@@ -1,0 +1,18 @@
+~eNestopia Controls~0
+  Up           -  Player 1 up
+  Down         -  Player 1 down
+  Left         -  Player one left
+  Right        -  Player one right
+  ,            -  Player one A
+  .            -  Player one B
+  1            -  Player one start
+  2            -  Player one select
+  Keypad_8     -  Player two up
+  Keypad_2     -  Player two down
+  Keypad_4     -  Player two left
+  Keypad_6     -  Player two right
+  Keypad_/     -  Player two A
+  Keypad_*     -  Player two B
+  Keypad_Enter -  Player two start
+  Keypad_+     -  Player two select
+  F1           -  Save movie

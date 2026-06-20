@@ -231,6 +231,9 @@ int SocketParseConfig(const char *Config, TSockSettings *Settings)
         ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
     }
 
+    if (LibUsefulFlags & LU_DONT_ROUTE)  Settings->Flags |= SOCK_DONTROUTE;
+
+
     Destroy(Name);
     Destroy(Value);
 
@@ -473,12 +476,13 @@ int GetHostARP(const char *IP, char **Device, char **MAC)
 /* to connect to before it got transparently proxied */
 int GetSockDestination(int sock, char **Host, int *Port)
 {
-    int salen;
-    struct sockaddr_storage sa;
     char *Tempstr=NULL;
     int result=FALSE;
 
 #ifdef SO_ORIGINAL_DST
+    int salen;
+    struct sockaddr_storage sa;
+
     salen=sizeof(struct sockaddr_in);
 
     if (getsockopt(sock, SOL_IP, SO_ORIGINAL_DST, (char *) &sa, (unsigned int *) &salen) ==0)
@@ -923,11 +927,11 @@ int STREAMIsConnected(STREAM *S)
             S->State |= LU_SS_CONNECTED;
             S->State &= (~LU_SS_CONNECTING);
         }
-		return(TRUE);
+        return(TRUE);
     }
 
-		//result can be SOCK_CONNECTING, or maybe other things
-		//return false for those
+    //result can be SOCK_CONNECTING, or maybe other things
+    //return false for those
     return(FALSE);
 }
 

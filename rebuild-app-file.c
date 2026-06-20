@@ -26,7 +26,7 @@ static int RebuildApp(TAction *Act)
 {
     const char *ptr;
 
-    if ((Act->Type==ACT_REBUILD_HASHES) && (! (Act->Flags & FLAG_FORCE)))
+    if ((Act->Type==ACT_REBUILD_HASHES) && (! (Config->Flags & CONF_FORCE)))
     {
         ptr=GetVar(Act->Vars, "actual-sha256");
         if (StrValid(ptr)) SetVar(Act->Vars, "sha256", ptr);
@@ -103,7 +103,7 @@ static void RebuildAppListFile(TAction *RebuildAct, const char *Path)
                 else if (RebuildApp(Act)) RebuildOutputApp(Act, IgnoreVars);
                 else printf("ERROR: Rebuild Failed: %s\n", Tempstr);
 
-                if (! (Config->Flags & FLAG_KEEP_INSTALLER)) unlink(Act->SrcPath);
+                if (! (Config->Flags & CONF_KEEP_INSTALLER)) unlink(Act->SrcPath);
                 ActionDestroy(Act);
             }
             else printf("%s\n", Tempstr);

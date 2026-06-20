@@ -1,0 +1,16 @@
+#These are public-domain/freeware roms, they should be legal to download and play.
+
+* platform=snes
+
+Asteroids url="https://github.com/undisbeliever/asteroids/releases/download/v1.03/Asteroids.v1.03.zip" sha256="3b8fde888ce802900e66bd89cb7bdbb0444691111f8a8ea7eb0c887fd2ca62dc" 
+Bomberworld url="https://github.com/1r3n33/bomberworld/releases/download/release-94-2020-05-21/bomberworld-94.zip" sha256="caf688feb59e44cb70c70ead203463239fac0746018d3931946b6df6c6d14ae2" 
+Columns url="https://www.zophar.net/download_file/11758" sha256="fc0d3b7515c01b0c318a7f0bcf856d7255cae560fe39ecc812baddc12f316c9f" 
+DynaMate url="https://www.zophar.net/download_file/11879" sha256="cc6f534af47260eb36f1c4984ef60847361f97651765ccf094af486271ef7eaa" 
+FrogNes url="https://www.zophar.net/download_file/11830" sha256="a3da1719c39f10222c0db38adac8ceffaf54012e9ebd8928c267e54509cb5777" 
+JetPilotRising url="https://snescentral.com/1/0/9/1091/jpr.zip,https://github.com/snesdev0815/SNES-JetPilotRising/releases/download/1.1/JetPilotRising.sfc" sha256="38437a036b23f4f83a3d9eb2cd031f43c609ae6de3508e5d7008444baebe538a" 
+Mazezam https://www.zophar.net/download_file/11890
+NWarpDiasakusen url="https://www.nesworld.com/snes/homebrew/nwarpdaisakusen_v11.zip" sha256="c4ecb1eea35138f2fad4f3a2dc685f0cf3c75abae768ea865760ee3fa9e5ec40" 
+PacMan url="https://www.zophar.net/download_file/11760" sha256="3a117036cf279edf484f7bb61df5fee44c5dfed8db405acd0a8f1aceff323ab2" 
+RockFall url="https://www.zophar.net/download_file/11762" sha256="b3c923ccf2adfc863a5441eda5de67c1793dd26b860df1ba4d451f3e487b5336" 
+SpaceRescueSquad url="https://github.com/undisbeliever/space-rescue-squad/releases/download/game-jam-v1.1/Space.Rescue.Squad.Demo.v1.1.zip" sha256="5bcc8ec49e0686d04fab5576ed5485f4204ab4dbf2cc0367b892f528dfe1f436" 
+TheLearningCurveDemo url="https://snescentral.com/1/0/6/1063/The_Learning_Curve.zip" sha256="88f489ef25197dff6f89f399c7ce03365f306994d741d9bcbe04d205fbdeb234" 

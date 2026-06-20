@@ -19,7 +19,7 @@ static void RunInstallerForPlatform(TAction *Act, const char *Path, const char *
 
     if (StrValid(Path))
     {
-        if (Config->Flags & FLAG_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
+        if (Config->Flags & CONF_DEBUG) CmdConfig=CopyStr(CmdConfig, "+stderr");
         else CmdConfig=CopyStr(CmdConfig, "outnull");
 
 
@@ -71,7 +71,7 @@ static void RunInstallers(TAction *Act)
         ptr=GetVar(Act->Vars, "installer-vdesk");
         if (StrValid(ptr))
         {
-            if (Config->Flags & FLAG_DEBUG) printf("Running installer in a virtual desktop\n");
+            if (Config->Flags & CONF_DEBUG) printf("Running installer in a virtual desktop\n");
             RegFlags |= REG_VDESK;
         }
 
@@ -211,7 +211,7 @@ static void PostProcessSetupDirVar(TAction *Act, const char *VarName)
     ptr=ResolveVar(Act->Vars, VarName);
     if (StrValid(ptr))
     {
-        if (Config->Flags & FLAG_DEBUG) printf("%s: [%s]\n", VarName, ptr);
+        if (Config->Flags & CONF_DEBUG) printf("%s: [%s]\n", VarName, ptr);
         MakeDirPath(ptr, 0770);
     }
 }
@@ -233,7 +233,7 @@ static void PostProcessDelete(TAction *Act, const char *PostProc)
             glob(Value, 0, 0, &Glob);
             for (i=0; i < Glob.gl_pathc; i++)
             {
-                if (Config->Flags & FLAG_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
+                if (Config->Flags & CONF_DEBUG) printf("DELETE: %s\n", Glob.gl_pathv[i]);
                 unlink(Glob.gl_pathv[i]);
             }
             ptr=GetToken(ptr, ",", &Value, GETTOKEN_QUOTES);
@@ -259,7 +259,7 @@ static void PostProcessCopyFilesFrom(TAction *Act, const char *PostProc)
         for (i=0; i < Glob.gl_pathc; i++)
         {
             ptr=Glob.gl_pathv[i];
-            if (Config->Flags & FLAG_DEBUG) printf("COPY: [%s] [%s]\n", ptr, GetBasename(ptr));
+            if (Config->Flags & CONF_DEBUG) printf("COPY: [%s] [%s]\n", ptr, GetBasename(ptr));
             FileCopy(ptr, GetBasename(ptr));
         }
     }
@@ -285,7 +285,7 @@ static void PostProcessCopyFilesTo(TAction *Act, const char *PostProc)
         To=CopyStr(To, ptr);
         To=SlashTerminateDirectoryPath(To);
 
-        if (Config->Flags & FLAG_DEBUG) printf("copyfiles-to: [%s] [%s]\n", From, To);
+        if (Config->Flags & CONF_DEBUG) printf("copyfiles-to: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
 
         glob(From, 0, 0, &Glob);
@@ -293,7 +293,7 @@ static void PostProcessCopyFilesTo(TAction *Act, const char *PostProc)
         {
             ptr=Glob.gl_pathv[i];
             Tempstr=MCopyStr(Tempstr, To, GetBasename(ptr), NULL);
-            if (Config->Flags & FLAG_DEBUG) printf("COPY: [%s] [%s]\n", ptr, Tempstr);
+            if (Config->Flags & CONF_DEBUG) printf("COPY: [%s] [%s]\n", ptr, Tempstr);
             FileCopy(ptr, Tempstr);
         }
     }
@@ -319,7 +319,7 @@ static void PostProcessMoveFilesFrom(TAction *Act, const char *PostProc)
         for (i=0; i < Glob.gl_pathc; i++)
         {
             ptr=Glob.gl_pathv[i];
-            if (Config->Flags & FLAG_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, GetBasename(ptr));
+            if (Config->Flags & CONF_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, GetBasename(ptr));
             rename(ptr, GetBasename(ptr));
         }
     }
@@ -347,8 +347,8 @@ static void PostProcessMoveFilesTo(TAction *Act, const char *PostProc)
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
         To=SlashTerminateDirectoryPath(To);
 
-				fprintf(stderr, "MFT: [%s] [%s] [%s]\n", GetVar(Act->Vars, "install-dir"), From, To);
-        if (Config->Flags & FLAG_DEBUG) printf("movefiles-to: [%s] [%s]\n", From, To);
+        fprintf(stderr, "MFT: [%s] [%s] [%s]\n", GetVar(Act->Vars, "install-dir"), From, To);
+        if (Config->Flags & CONF_DEBUG) printf("movefiles-to: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
 
         glob(From, 0, 0, &Glob);
@@ -356,7 +356,7 @@ static void PostProcessMoveFilesTo(TAction *Act, const char *PostProc)
         {
             ptr=Glob.gl_pathv[i];
             Tempstr=MCopyStr(Tempstr, To, GetBasename(ptr), NULL);
-            if (Config->Flags & FLAG_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, Tempstr);
+            if (Config->Flags & CONF_DEBUG) printf("MOVE: [%s] [%s]\n", ptr, Tempstr);
             rename(ptr, Tempstr);
         }
     }
@@ -381,14 +381,14 @@ static void PostProcessChExt(TAction *Act, const char *PostProc)
         From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
 
-        if (Config->Flags & FLAG_DEBUG) printf("chext: [%s] [%s]\n", From, To);
+        if (Config->Flags & CONF_DEBUG) printf("chext: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
 
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
             ptr=Glob.gl_pathv[i];
-            if (Config->Flags & FLAG_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
+            if (Config->Flags & CONF_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
             FileChangeExtension(ptr, To);
         }
     }
@@ -413,14 +413,14 @@ static void PostProcessLinkExt(TAction *Act, const char *PostProc)
         From=SubstituteVarsInString(From, Tempstr, Act->Vars, 0);
         To=SubstituteVarsInString(To, ptr, Act->Vars, 0);
 
-        if (Config->Flags & FLAG_DEBUG) printf("chext: [%s] [%s]\n", From, To);
+        if (Config->Flags & CONF_DEBUG) printf("chext: [%s] [%s]\n", From, To);
         MakeDirPath(To, 0766);
 
         glob(From, 0, 0, &Glob);
         for (i=0; i < Glob.gl_pathc; i++)
         {
             ptr=Glob.gl_pathv[i];
-            if (Config->Flags & FLAG_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
+            if (Config->Flags & CONF_DEBUG) printf("CHEXT: [%s] [%s]\n", ptr, To);
             link(ptr, To);
         }
     }
@@ -450,7 +450,7 @@ static void PostProcessRename(TAction *Act, const char *PostProc)
         To=UnQuoteStr(To, Value);
 
         result=rename(From, To);
-        if (Config->Flags & FLAG_DEBUG) printf("RENAME: [%s] -> [%s] result=%d\n", From, To, result);
+        if (Config->Flags & CONF_DEBUG) printf("RENAME: [%s] -> [%s] result=%d\n", From, To, result);
     }
 
     Destroy(Tempstr);
@@ -474,7 +474,7 @@ static void PostProcessLink(TAction *Act, const char *PostProc)
         From=UnQuoteStr(From, Value);
         To=UnQuoteStr(To, ptr);
 
-        if (Config->Flags & FLAG_DEBUG) printf("LINK: '%s' -> '%s'\n", From, To);
+        if (Config->Flags & CONF_DEBUG) printf("LINK: '%s' -> '%s'\n", From, To);
         //UninstallDir(Act, To);
         rmdir(To);
         unlink(To);
@@ -634,30 +634,30 @@ char *OffsetPathFromDir(char *Path, const char *Dir)
 
 static char *FinalizeInstallSetupWorkingDir(char *Path, TAction *Act)
 {
-char *Tempstr=NULL, *WorkDir=NULL;
+    char *Tempstr=NULL, *WorkDir=NULL;
 
-        //is a working dir set in the app config?
-        Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
+    //is a working dir set in the app config?
+    Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "working-dir"));
 
-        //if not set in the app config, is a working dir set in the platform config?
-        if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
+    //if not set in the app config, is a working dir set in the platform config?
+    if (! StrValid(Tempstr)) Tempstr=PlatformGetWorkingDir(Tempstr, Act->Platform);
 
-        //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
-        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
+    //if still no joy, then assume that the working dir is the 'exec dir' (where we found the executable)
+    if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "exec-dir"));
 
-        if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "install-dir"));
+    if (! StrValid(Tempstr)) Tempstr=CopyStr(Tempstr, GetVar(Act->Vars, "install-dir"));
 
-        if (StrValid(Tempstr))
-        {
-            WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
-            SetVar(Act->Vars, "working-dir", WorkDir);
-            if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
-        }
+    if (StrValid(Tempstr))
+    {
+        WorkDir=SubstituteVarsInString(WorkDir, Tempstr, Act->Vars, 0);
+        SetVar(Act->Vars, "working-dir", WorkDir);
+        if (Act->Flags & FLAG_NOEXEC) Path=CopyStr(Path, WorkDir);
+    }
 
-				Destroy(Tempstr);
-				Destroy(WorkDir);
+    Destroy(Tempstr);
+    Destroy(WorkDir);
 
-				return(Path);
+    return(Path);
 }
 
 
@@ -706,25 +706,25 @@ static int FinalizeExeInstall(TAction *Act)
 
 
     case PLATFORM_MAME:
-				//if we haven't been told the rom name, try to deduce it from the
-				//zip file name. This assumes the rom has been zipped up into a file that
-				//has the name that mame knows the rom by.
-				if (! StrValid(GetVar(Act->Vars, "rom")))
-				{
-        Tempstr=CopyStr(Tempstr, GetBasename(Act->SrcPath));
-				StrRTruncChar(Tempstr, '.');
-				SetVar(Act->Vars, "rom", Tempstr);
-				}
+        //if we haven't been told the rom name, try to deduce it from the
+        //zip file name. This assumes the rom has been zipped up into a file that
+        //has the name that mame knows the rom by.
+        if (! StrValid(GetVar(Act->Vars, "rom")))
+        {
+            Tempstr=CopyStr(Tempstr, GetBasename(Act->SrcPath));
+            StrRTruncChar(Tempstr, '.');
+            SetVar(Act->Vars, "rom", Tempstr);
+        }
 
-				Tempstr=MCopyStr(Tempstr, "*:", GetVar(Act->Vars, "install-dir"), "/", GetVar(Act->Vars, "rom"), "/", NULL);
+        Tempstr=MCopyStr(Tempstr, "*:", GetVar(Act->Vars, "install-dir"), "/", GetVar(Act->Vars, "rom"), "/", NULL);
         PostProcessMoveFilesTo(Act, Tempstr);
 
-				Path=FinalizeInstallSetupWorkingDir(Path, Act);
-				break;
+        Path=FinalizeInstallSetupWorkingDir(Path, Act);
+        break;
 
 
     default:
-				Path=FinalizeInstallSetupWorkingDir(Path, Act);
+        Path=FinalizeInstallSetupWorkingDir(Path, Act);
         break;
     }
 
@@ -846,7 +846,7 @@ static void InstallCleanUp(TAction *Act)
     char *Tempstr=NULL;
 
     if (
-        (! (Act->Flags & FLAG_KEEP_INSTALLER)) &&
+        (! (Config->Flags & CONF_KEEP_INSTALLER)) &&
         (Act->Flags & FLAG_DOWNLOADED)
     )
     {
@@ -890,7 +890,7 @@ static void InstallRunSubProcess(TAction *Act)
     {
         TerminalPutStr("~eValidating download~0\n", NULL);
 
-        if (Act->Flags & FLAG_FORCE) printf("install forced, not validating download\n");
+        if (Config->Flags & CONF_FORCE) printf("install forced, not validating download\n");
         else if (! CompareSha256(Act))
         {
             TerminalPutStr("~r~eERROR: Download Hash mismatch!~0\n", NULL);
@@ -903,7 +903,8 @@ static void InstallRunSubProcess(TAction *Act)
             InstallResult=InstallAppFromFile(Act, Act->SrcPath);
             if ( InstallResult && (! (Act->Flags & (FLAG_DEPENDANCY | FLAG_DLC))) )
             {
-                TerminalPutStr("~eFinding executables~0\n", NULL);
+								Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Act->SrcPath, "\n", NULL); 
+                TerminalPutStr(Tempstr, NULL);
                 FinalizeExeInstall(Act);
                 InstallBundledItems(Act);
             }
@@ -961,13 +962,13 @@ static int InstallDependancy(TAction *Parent, const char *Name)
         CopyVars(Dependancy->Vars, Parent->Vars);
         //do AppLoadConfig after copy vars, so vars set in dependancy config
         //override those inherited from calling app
-        if (AppLoadConfig(Dependancy)) 
-				{
-				SetVar(Dependancy->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
-				InstallSingleItem(Dependancy);
-				}
+        if (AppLoadConfig(Dependancy))
+        {
+            SetVar(Dependancy->Vars, "install-dir", GetVar(Parent->Vars, "install-dir"));
+            InstallSingleItem(Dependancy);
+        }
 
-printf("INSTALL: %s\n", GetVar(Dependancy->Vars, "install-dir"));
+        printf("INSTALL: %s\n", GetVar(Dependancy->Vars, "install-dir"));
         ActionDestroy(Dependancy);
     }
 
@@ -1180,7 +1181,9 @@ void InstallReconfigure(TAction *Act)
             Path=CopyStr(Path, GetVar(Act->Vars, "install-dir"));
 
             chdir(Path);
-            TerminalPutStr("~eFinding executables~0\n", NULL);
+
+						Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Path, "\n", NULL); 
+            TerminalPutStr(Tempstr, NULL);
 
             FinalizeExeInstall(Act);
             InstallBundledItems(Act);

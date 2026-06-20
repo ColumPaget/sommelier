@@ -1,0 +1,12 @@
+~eOSMOSE emulator default keys~0
+Up Arrow    - Pad1 UP 
+Down Arrow  - Pad1 DOWN 
+Left Arrow  - Pad1 LEFT left arrow
+Right Arrow - Pad1 RIGHT right arrow
+Z           - Pad1 Button A
+X           - Pad1 Button B
+P           - PAUSE/SELECT 
+S           - START (GameGear) 
+Ctrl-R      - Reset Game
+Ctrl-F      - Toggle fullscreen
+Ctrl-M      - Toggle menubar

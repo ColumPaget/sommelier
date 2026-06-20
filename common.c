@@ -132,7 +132,7 @@ TAction *ActionCreate(int Type, const char *Name)
     ptr=GetVar(Act->Vars, "sommelier_root");
     if (! StrValid(ptr))
     {
-        if (Config->Flags & FLAG_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
+        if (Config->Flags & CONF_SYSTEM_INSTALL) Path=SubstituteVarsInString(Path, "/opt/", Act->Vars, 0);
         else Path=SubstituteVarsInString(Path, "$(homedir)/.sommelier/", Act->Vars, 0);
         SetVar(Act->Vars, "sommelier_root", Path);
     }
@@ -219,7 +219,7 @@ int CompareSha256(TAction *Act)
     else
     {
         TerminalPutStr("~mNo expected hash value is configured for this download~0. This probably means that the source link is updated when a new version is released, but this means sommelier cannot confirm your download's integrity or security.\n", NULL);
-        if (Act->Flags & FLAG_HASH_DOWNLOAD)
+        if (Config->Flags & CONF_HASH_DOWNLOAD)
         {
             HashFile(&Hash, "sha256", Act->SrcPath, ENCODE_HEX);
             printf("    actual   sha256: [%s]\n", Hash);
@@ -249,7 +249,7 @@ void RunProgramAndConsumeOutput(const char *Cmd, const char *SpawnConfig)
         Tempstr=STREAMReadLine(Tempstr, S);
         while (Tempstr)
         {
-            if (Config->Flags & FLAG_DEBUG) printf("DBG: %s", Tempstr);
+            if (Config->Flags & CONF_DEBUG) printf("DBG: %s", Tempstr);
             Tempstr=STREAMReadLine(Tempstr, S);
         }
         STREAMClose(S);

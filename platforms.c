@@ -102,6 +102,21 @@ int PlatformBitWidth(const char *Platform)
 }
 
 
+int BitWidthMatches(const char *Platform)
+{
+int PBW;
+
+PBW=PlatformBitWidth(Platform);
+
+//assume a bit width of zero means an emulated binary
+//so we can apply seccomp rules to the emulator
+if (PBW == 0) return(TRUE);
+
+if (PBW == NativeBitWidth()) return(TRUE);
+
+return(FALSE);
+}
+
 
 
 static TPlatform *PlatformsParse(const char *Line)
@@ -118,23 +133,24 @@ static TPlatform *PlatformsParse(const char *Line)
         ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
         while (ptr)
         {
-            if (strcmp(Name, "platform")==0)
+            if (strcasecmp(Name, "platform")==0)
             {
                 Plt->Name=CopyStr(Plt->Name, Value);
                 Plt->ID=PlatformType(Value);
                 if (Plt->ID==PLATFORM_UNKNOWN) Plt->ID=PLATFORM_GENERIC;
             }
-            if (strcmp(Name, "emu")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
-            if (strcmp(Name, "emulator")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
-            if (strcmp(Name, "installer")==0) Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, Value);
-            if (strcmp(Name, "dir")==0) Plt->WorkingDir=CopyStr(Plt->WorkingDir, Value);
-            if (strcmp(Name, "unpack-dir")==0) Plt->UnpackDir=CopyStr(Plt->UnpackDir, Value);
-            if (strcmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
-            if (strcmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
-            if (strcmp(Name, "noexec")==0) Plt->Flags |= PLATFORM_FLAG_NOEXEC;
-            if (strcmp(Name, "nostderr")==0) Plt->Flags |= PLATFORM_FLAG_NOSTDERR;
-            if (strcmp(Name, "arg")==0) Plt->Args=MCatStr(Plt->Args, "'", Value, "' ", NULL);
-            if (strcmp(Name, "help")==0) Plt->HelpFile=MCatStr(Plt->HelpFile, "'", Value, "' ", NULL);
+            if (strcasecmp(Name, "emu")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
+            if (strcasecmp(Name, "emulator")==0) Plt->Emulators=MCatStr(Plt->Emulators, Value, ",", NULL);
+            if (strcasecmp(Name, "installer")==0) Plt->InstallerPattern=CopyStr(Plt->InstallerPattern, Value);
+            if (strcasecmp(Name, "dir")==0) Plt->WorkingDir=CopyStr(Plt->WorkingDir, Value);
+            if (strcasecmp(Name, "unpack-dir")==0) Plt->UnpackDir=CopyStr(Plt->UnpackDir, Value);
+            if (strcasecmp(Name, "exec")==0) Plt->ExeSearchPattern=CopyStr(Plt->ExeSearchPattern, Value);
+            if (strcasecmp(Name, "exec64")==0) Plt->Exe64SearchPattern=CopyStr(Plt->Exe64SearchPattern, Value);
+            if (strcasecmp(Name, "noexec")==0) Plt->Flags |= PLATFORM_FLAG_NOEXEC;
+            if (strcasecmp(Name, "nostderr")==0) Plt->Flags |= PLATFORM_FLAG_NOSTDERR;
+            if (strcasecmp(Name, "arg")==0) Plt->Args=MCatStr(Plt->Args, "'", Value, "' ", NULL);
+            if (strcasecmp(Name, "secure")==0) Plt->Secure=CopyStr(Plt->Secure, Value);
+            if (strcasecmp(Name, "help")==0) Plt->HelpFile=MCatStr(Plt->HelpFile, "'", Value, "' ", NULL);
             ptr=GetNameValuePair(ptr, "\\S", "=", &Name, &Value);
         }
 

@@ -221,7 +221,6 @@ static void OpenSSLSetupECDH(SSL_CTX *ctx)
 static void OpenSSLSetupDH(SSL_CTX *ctx)
 {
     char *Tempstr=NULL;
-    const char *ptr;
     DH *dh=NULL;
     FILE *paramfile;
 
@@ -301,7 +300,6 @@ static int INTERNAL_SSL_INIT()
 static const char *OpenSSLGetCertificateValue(STREAM *S, const char *ValName, X509_NAME *X509name)
 {
     char *Value=NULL;
-    const char *ptr;
     ListNode *Node;
 
 //Value is dynamically allocated by X509_NAME_oneline
@@ -813,9 +811,10 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
     int result=FALSE;
 #ifdef HAVE_LIBSSL
     const SSL_METHOD *Method;
-    const char *ptr;
     SSL_CTX *ctx;
     SSL *ssl;
+    int IsNonBlock=FALSE;
+    double StartTime=0;
 
     if (S)
     {
@@ -855,6 +854,10 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
 
                 SSL_set_accept_state(ssl);
 
+                IsNonBlock = S->Flags & SF_NONBLOCK;
+                STREAMSetFlags(S, SF_NONBLOCK, 0);
+                StartTime=GetTime(TIME_CENTISECS);
+
                 while (1)
                 {
                     result=SSL_accept(ssl);
@@ -879,8 +882,16 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
                         result=FALSE;
                         break;
                     }
+
                     if (result !=-1) break;
+
+                    if (S->Timeout > 0)
+                    {
+                        if (GetTime(TIME_CENTISECS) > (StartTime + S->Timeout)) break;
+                    }
                 }
+
+                if (! IsNonBlock) STREAMSetFlags(S, 0, SF_NONBLOCK);
             }
         }
     }
@@ -888,6 +899,7 @@ int DoSSLServerNegotiation(STREAM *S, int Flags)
 #else
     RaiseError(0, "DoSSLServerNegotiation", "ssl support not compiled into libUseful");
 #endif
+
     return(result);
 }
 
@@ -1029,7 +1041,7 @@ int OpenSSLAutoDetect(STREAM *S)
     val=S->Timeout;
     STREAMSetTimeout(S, 5);
 
-//we must not read any bytes into our stream, or else e'll be stealing them
+//we must not read any bytes into our stream, or else we'll be stealing them
 //from ssl, which only has access to the file descriptor
     result=FDSelect(S->in_fd, SELECT_READ, NULL);
     if (result > 0)

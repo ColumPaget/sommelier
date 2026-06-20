@@ -4,20 +4,20 @@
 static int RemoteStoreGetAppFile(TAction *Act, const char *URL)
 {
     char *Template=NULL, *Tempstr=NULL, *Path=NULL;
-		ListNode *Apps=NULL;
-		const char *ptr;
+    ListNode *Apps=NULL;
+    const char *ptr;
     STREAM *In, *Out;
     int RetVal=FALSE;
 
 
     In=STREAMOpen(URL, "r nostderr");
     if (In == NULL)
-		{
+    {
         Tempstr=FormatStr(Tempstr, "~rFAIL~0: cannot open url '%s'\n", URL);
         TerminalPutStr(Tempstr, NULL);
 
-				 return(FALSE);
-		}
+        return(FALSE);
+    }
 
     Tempstr=CopyStr(Tempstr, URL);
     strrep(Tempstr, '/','_');
@@ -36,16 +36,16 @@ static int RemoteStoreGetAppFile(TAction *Act, const char *URL)
         STREAMSendFile(In, Out, 0, SENDFILE_LOOP);
         STREAMClose(Out);
 
-				Apps=ListCreate();
-			  AppsLoadFromFile(Path, Apps);
+        Apps=ListCreate();
+        AppsLoadFromFile(Path, Apps);
         Tempstr=FormatStr(Tempstr, "~gOKAY~0: Apps File installed from '~e%s~0'. ~e%d~0 apps registered.\n", URL, ListSize(Apps));
         TerminalPutStr(Tempstr, NULL);
     }
-    else 
-		{
+    else
+    {
         Tempstr=FormatStr(Tempstr, "~rFAIL~0: cannot write to file '%s'\n", Path);
         TerminalPutStr(Tempstr, NULL);
-		}
+    }
 
     STREAMClose(In);
 
@@ -60,7 +60,7 @@ static int RemoteStoreGetAppFile(TAction *Act, const char *URL)
 int RemoteStoreAdd(TAction *Act)
 {
     char *URL=NULL;
-		const char *ptr;
+    const char *ptr;
 
     ptr=GetToken(Act->Args, "\\S", &URL, GETTOKEN_QUOTES);
     while (ptr)
@@ -76,27 +76,27 @@ int RemoteStoreAdd(TAction *Act)
 
 int RemoteStoresRefresh(TAction *Act)
 {
-ListNode *ServerPaths, *Curr;
-const char *ptr;
-TAction *App;
+    ListNode *ServerPaths, *Curr;
+    const char *ptr;
+    TAction *App;
 
-ServerPaths=ListCreate();
-Curr=ListGetNext(AppsGetList());
-while (Curr)
-{
-App=(TAction *) Curr->Item;
-ptr=GetVar(App->Vars, "server_apps_file");
-if (StrValid(ptr)) SetVar(ServerPaths, ptr, "");  
+    ServerPaths=ListCreate();
+    Curr=ListGetNext(AppsGetList());
+    while (Curr)
+    {
+        App=(TAction *) Curr->Item;
+        ptr=GetVar(App->Vars, "server_apps_file");
+        if (StrValid(ptr)) SetVar(ServerPaths, ptr, "");
 
-Curr=ListGetNext(Curr);
-}
+        Curr=ListGetNext(Curr);
+    }
 
-Curr=ListGetNext(ServerPaths);
-while (Curr)
-{
-RemoteStoreGetAppFile(Act, Curr->Tag);
-Curr=ListGetNext(Curr);
-}
+    Curr=ListGetNext(ServerPaths);
+    while (Curr)
+    {
+        RemoteStoreGetAppFile(Act, Curr->Tag);
+        Curr=ListGetNext(Curr);
+    }
 
-ListDestroy(ServerPaths, Destroy);
+    ListDestroy(ServerPaths, Destroy);
 }

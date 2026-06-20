@@ -23,12 +23,15 @@ extern "C" {
 
 
 //watch a file descriptor for activity. 'Flags' can be SELECT_READ, and/or SELECT_WRITE depending on what is being watched for
+//return value is the OR-ed values 'SELECT_READ' and 'SELECT_WRITE' if the file descriptor is ready for the one(s) we asked for
+//zero if the file descriptor is not ready and
+//STREAM_CLOSED if the file descriptor is closed or -1
 int FDSelect(int fd, int Flags, struct timeval *tv);
 
-//is file ready to recieve bytes?
+//is file ready to recieve bytes? TRUE if so, FALSE otherwise
 int FDIsWritable(int fd);
 
-//are bytes available to be read? 
+//are bytes available to be read? TRUE if so, FALSE otherwise
 int FDCheckForBytes(int fd);
 
 
@@ -62,12 +65,12 @@ void STREAMSelectsRemoveStream(STREAM *S);
 
 // STREAMSelect has a feature where, when a stream has been active, it is moved
 // to the bottom of the list so that constant activity on that stream does not
-// lock out other streams. 
+// lock out other streams.
 
 // If 'epoll' is supported by the OS, and libUseful was compiled with 'epoll' support
 // STREAMSelect will use 'epoll' if the list is greater than 5 items
 
-// If using 'select' STREAMSelect will refuse to add Streams when the list is 
+// If using 'select' STREAMSelect will refuse to add Streams when the list is
 // longer than FD_SETSIZE. However, it will move Streams not added to the
 // start of the 'Streams' list so they get their turn next time. Used in combination
 // with a short 'tv' timeval, this mitigates large select lists on platforms that

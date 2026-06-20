@@ -29,14 +29,14 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             {
                 STREAMWriteLine("\"Decorated\"=\"Y\"\r\n", S);
                 STREAMWriteLine("\"Managed\"=\"Y\"\r\n", S);
-                if (Config->Flags & FLAG_DEBUG) printf("Configure: Allow windowmanager to manage this app\n");
+                if (Config->Flags & CONF_DEBUG) printf("Configure: Allow windowmanager to manage this app\n");
             }
 
             if (Flags & REG_NO_WINMANAGER)
             {
                 STREAMWriteLine("\"Decorated\"=\"N\"\r\n", S);
                 STREAMWriteLine("\"Managed\"=\"N\"\r\n", S);
-                if (Config->Flags & FLAG_DEBUG) printf("Configure: Disallow windowmanager to manage this app\n");
+                if (Config->Flags & CONF_DEBUG) printf("Configure: Disallow windowmanager to manage this app\n");
             }
 
 
@@ -44,7 +44,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             {
                 STREAMWriteLine("\"GrabFullscreen\"=\"N\"\r\n", S);
                 STREAMWriteLine("\"GrabPointer\"=\"N\"\r\n", S);
-                if (Config->Flags & FLAG_DEBUG) printf("Configure: Disallow grabbing pointer or screen\n");
+                if (Config->Flags & CONF_DEBUG) printf("Configure: Disallow grabbing pointer or screen\n");
             }
         }
 
@@ -57,13 +57,13 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops]\r\n", S);
             Tempstr=MCopyStr(Tempstr, "\"Default\"=\"", Resolution, "\"\r\n", NULL);
             STREAMWriteLine(Tempstr, S);
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: Use virtual desktop, resolution %s\n", Resolution);
+            if (Config->Flags & CONF_DEBUG) printf("Configure: Use virtual desktop, resolution %s\n", Resolution);
         }
         else if (Flags & REG_NO_VDESK)
         {
             STREAMWriteLine("[HKEY_CURRENT_USER\\Software\\Wine\\Explorer]\r\n", S);
             STREAMWriteLine("\"Desktop\"=\"0\"\r\n", S);
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: DON'T use virtual desktop\n");
+            if (Config->Flags & CONF_DEBUG) printf("Configure: DON'T use virtual desktop\n");
         }
 
 
@@ -74,7 +74,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             STREAMWriteLine("\"FontSmoothingOrientation\"=dword:0000000\r\n", S);
             STREAMWriteLine("\"FontSmoothingType\"=dword:00000002\r\n", S);
             STREAMWriteLine("\"FontSmoothingGamma\"=dword:00000578\r\n", S);
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: Use smooth fonts\n");
+            if (Config->Flags & CONF_DEBUG) printf("Configure: Use smooth fonts\n");
         }
         else if (Flags & REG_NO_FONT_SMOOTH)
         {
@@ -82,7 +82,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             STREAMWriteLine("\"FontSmoothing\"=\"0\"\r\n", S);
             STREAMWriteLine("\"FontSmoothingOrientation\"=dword:0000000\r\n", S);
             STREAMWriteLine("\"FontSmoothingType\"=dword:00000000\r\n", S);
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: DON'T use smooth fonts\n");
+            if (Config->Flags & CONF_DEBUG) printf("Configure: DON'T use smooth fonts\n");
         }
 
         if (Flags & (REG_GDI3D | REG_OPENGL3D))
@@ -92,7 +92,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             if (Flags & REG_GDI3D)
             {
                 STREAMWriteLine("\"DirectDrawRenderer\"=\"gdi\"\r\n", S);
-                if (Config->Flags & FLAG_DEBUG) printf("Configure: DON'T use OpenGL for 3D\n");
+                if (Config->Flags & CONF_DEBUG) printf("Configure: DON'T use OpenGL for 3D\n");
             }
             else
             {
@@ -103,12 +103,12 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
                 if (Flags & REG_OPENGLSL)
                 {
                     STREAMWriteLine("\"UseGLSL\"=\"enabled\"\r\n", S);
-                    if (Config->Flags & FLAG_DEBUG) printf("Configure: Use OpenGL Shading Language\n");
+                    if (Config->Flags & CONF_DEBUG) printf("Configure: Use OpenGL Shading Language\n");
                 }
                 else
                 {
                     STREAMWriteLine("\"UseGLSL\"=\"disabled\"\r\n", S);
-                    if (Config->Flags & FLAG_DEBUG) printf("Configure: DON'T use OpenGL Shading Language\n");
+                    if (Config->Flags & CONF_DEBUG) printf("Configure: DON'T use OpenGL Shading Language\n");
                 }
             }
 
@@ -121,7 +121,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
 
             Tempstr=MCopyStr(Tempstr, "\"Version\"=\"", OSVersion, "\"\r\n", NULL);
             STREAMWriteLine(Tempstr, S);
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: OSVersion: %s\n", OSVersion);
+            if (Config->Flags & CONF_DEBUG) printf("Configure: OSVersion: %s\n", OSVersion);
         }
 
         if (StrValid(DLLOverrides))
@@ -136,7 +136,7 @@ void RegEdit(TAction *Act, int Flags, const char *OSVersion, const char *iResolu
             }
             STREAMWriteLine(Tempstr, S);
 
-            if (Config->Flags & FLAG_DEBUG) printf("Configure: DLLOverrides: %s\n", DLLOverrides);
+            if (Config->Flags & CONF_DEBUG) printf("Configure: DLLOverrides: %s\n", DLLOverrides);
         }
 
 
@@ -209,7 +209,7 @@ void RegEditApplySettings(TAction *Act)
     Curr=ListGetNext(Act->Vars);
     while (Curr)
     {
-        if (Config->Flags & FLAG_DEBUG) printf("configure: '%s' set to '%s'\n", Curr->Tag, (const char *) Curr->Item);
+        if (Config->Flags & CONF_DEBUG) printf("configure: '%s' set to '%s'\n", Curr->Tag, (const char *) Curr->Item);
         p_Value=(const char *) Curr->Item;
         if (StrValid(Curr->Tag))
         {

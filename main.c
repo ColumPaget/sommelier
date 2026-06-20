@@ -57,9 +57,18 @@ int main(int argc, char *argv[])
 
     Acts=ParseCommandLine(argc, argv);
 
+
+		//apply a level of security to anything we do
+		//mount/umount are needed for 
+    if (! AppsListAllowSU(Acts)) Tempstr=CopyStr(Tempstr, "nosu nopid security='syscall_deny=group:keyring minimal'");
+		if (Config->Flags & CONF_DENY_NET) Tempstr=CatStr(Tempstr, "nonet");
+
+		if (StrValid(Tempstr)) ProcessApplyConfig(Tempstr);
+
     PlatformsInit(Config->PlatformsPath);
     CategoriesLoad(Config->CategoriesPath);
     AppsLoad(Config->AppConfigPath);
+
 
     Curr=ListGetNext(Acts);
     while (Curr)
@@ -131,12 +140,12 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_WINECFG:
-                if (! (Config->Flags & FLAG_ALLOW_SU)) SetNoSU();
+                if (! (Config->Flags & CONF_ALLOW_SU)) SetNoSU();
                 RunWineUtility(Act, "winecfg");
                 break;
 
             case ACT_REGEDIT:
-                if (! (Config->Flags & FLAG_ALLOW_SU)) SetNoSU();
+                if (! (Config->Flags & CONF_ALLOW_SU)) SetNoSU();
                 RunWineUtility(Act, "regedit");
                 break;
 
@@ -146,12 +155,12 @@ int main(int argc, char *argv[])
                 break;
 
             case ACT_ADD_STORE:
-								RemoteStoreAdd(Act);
-								break;
+                RemoteStoreAdd(Act);
+                break;
 
-           case ACT_REFRESH:
-								RemoteStoresRefresh(Act);
-								break;
+            case ACT_REFRESH:
+                RemoteStoresRefresh(Act);
+                break;
 
             }
         }

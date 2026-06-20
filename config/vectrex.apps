@@ -24,7 +24,7 @@ RipOff url=https://archive.org/compress/vectrex-ripoff
 Scramble url=https://archive.org/compress/vectrex-scramble exec=Scramble-1982.vec 
 SolarQuest url=https://archive.org/compress/vectrex-solarquest 
 SpaceWars url=https://archive.org/compress/vectrex-spacewars 
-Spinball url=https://archive.org/compress/vectrex-spinball exec=Spinball-1983.vec category="Pinball;Vectrex" 
+Spinball url=https://archive.org/compress/vectrex-spinball exec=Spinball-1983.vec category="PinballGame;Vectrex" 
 StarCastle url=https://archive.org/compress/vectrex-starcastle 
 StarHawk url=https://archive.org/compress/vectrex-starhawk 
 StarSeige url=https://archive.org/compress/vectrex-starseige 

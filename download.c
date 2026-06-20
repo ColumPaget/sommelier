@@ -266,7 +266,7 @@ static char *ExtractURLFromHRef(char *RetStr, const char *Data)
     {
         if (strcasecmp(Key, "href")==0)
         {
-            if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found HREF: %s\n", Value);
+            if (Config->Flags & CONF_DEBUG) printf("DEBUG: Found HREF: %s\n", Value);
             RetStr=CopyStr(RetStr, Value);
             break;
         }
@@ -310,11 +310,11 @@ static char *ExtractURLFromWebsite(char *RetStr, const char *SrcURL)
     {
         if (strcasecmp(Tag, "a")==0)
         {
-            if (Config->Flags & FLAG_DEBUG) printf("DEBUG: extract url from 'a' tag: %s\n", Data);
+            if (Config->Flags & CONF_DEBUG) printf("DEBUG: extract url from 'a' tag: %s\n", Data);
             URL=ExtractURLFromHRef(URL, Data);
             if (StrValid(URL) && (fnmatch(Template, URL, 0)==0))
             {
-                if (Config->Flags & FLAG_DEBUG) printf("DEBUG: Found URL [%s] matching template [%s]\n", URL, Template);
+                if (Config->Flags & CONF_DEBUG) printf("DEBUG: Found URL [%s] matching template [%s]\n", URL, Template);
 
                 if (*URL=='/') RetStr=FormatStr(RetStr, "%s://%s:%s/%s", Proto, Host, Port, URL);
                 else if (strncmp(URL, "../", 3)==0)

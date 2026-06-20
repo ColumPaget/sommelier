@@ -44,7 +44,7 @@ static char *FindProgramGoFishing(char *RetStr, TAction *Act, int IgnoreBitWidth
     if (IgnoreBitWidth) FindItems(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, 0, Exes);
     else FindItems(GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns, BitWidth, Exes);
 
-    if (Config->Flags & FLAG_DEBUG) fprintf(stderr, "Find: [%s] [%s] [%s]\n", GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns);
+    if (Config->Flags & CONF_DEBUG) fprintf(stderr, "Find: [%s] [%s] [%s]\n", GetVar(Act->Vars, "drive_c"), SearchPatterns, IgnorePatterns);
 
     Curr=NULL;
     ptr=GetVar(Act->Vars, "exec");

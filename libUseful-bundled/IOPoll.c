@@ -131,8 +131,7 @@ static int EPOLLWait(TSelectSet *Set, struct timeval *tv)
     struct epoll_event event;
     int timeout=-1;
     uint64_t timeout64;
-    uint64_t start, diff;
-    int result;
+    uint64_t start;
     int fd, i;
     T_EPOLL_ITEMS *items;
 
@@ -176,7 +175,7 @@ static int EPOLLWait(TSelectSet *Set, struct timeval *tv)
 
 static int EPOLLCheck(TSelectSet *Set, int fd)
 {
-    int i, RetVal=0;
+    int i;
     T_EPOLL_ITEMS *items;
 
     items=(T_EPOLL_ITEMS *) Set->items;
@@ -204,15 +203,18 @@ static int SelectAddFD(TSelectSet *Set, int type, int fd)
 {
     struct pollfd *items;
 
-    Set->size++;
-    Set->items=realloc(Set->items, sizeof(struct pollfd) * Set->size);
+    if (fd > -1)
+    {
+        Set->size++;
+        Set->items=realloc(Set->items, sizeof(struct pollfd) * Set->size);
 
-    items=(struct pollfd *) Set->items;
-    items[Set->size-1].fd=fd;
-    items[Set->size-1].events=0;
-    items[Set->size-1].revents=0;
-    if (type & SELECT_READ) items[Set->size-1].events |= POLLIN;
-    if (type & SELECT_WRITE) items[Set->size-1].events |= POLLOUT;
+        items=(struct pollfd *) Set->items;
+        items[Set->size-1].fd=fd;
+        items[Set->size-1].events=0;
+        items[Set->size-1].revents=0;
+        if (type & SELECT_READ) items[Set->size-1].events |= POLLIN;
+        if (type & SELECT_WRITE) items[Set->size-1].events |= POLLOUT;
+    }
 
     return(TRUE);
 }
@@ -246,14 +248,17 @@ static int SelectCheck(TSelectSet *Set, int fd)
     int i, RetVal=0;
     struct pollfd *items;
 
-    items=(struct pollfd *) Set->items;
-    for (i=0; i < Set->size; i++)
+    if (fd > -1)
     {
-        if (items[i].fd==fd)
+        items=(struct pollfd *) Set->items;
+        for (i=0; i < Set->size; i++)
         {
-            if (items[i].revents & (POLLIN | POLLHUP)) RetVal |= SELECT_READ;
-            if (items[i].revents & POLLOUT) RetVal |= SELECT_WRITE;
-            break;
+            if (items[i].fd==fd)
+            {
+                if (items[i].revents & (POLLIN | POLLHUP)) RetVal |= SELECT_READ;
+                if (items[i].revents & POLLOUT) RetVal |= SELECT_WRITE;
+                break;
+            }
         }
     }
 
@@ -266,39 +271,46 @@ static int SelectCheck(TSelectSet *Set, int fd)
 
 static int SelectAddFD(TSelectSet *Set, int type, int fd)
 {
-int RetVal=TRUE;
+    int RetVal=TRUE;
 
-   if (type & SELECT_WRITE)
-   {
-    if (Set->wsize < FD_SETSIZE)
-		{
-      if (! Set->witems) Set->witems=calloc(1, sizeof(fd_set));
-      FD_SET(fd, (fd_set *) Set->witems);
-			Set->wsize++;
-		}
-		else 
-		{
-    RaiseError(ERRFLAG_ERRNO|ERRFLAG_DEBUG, "SelectAddFD", "File Descriptor '%d' is higher than FD_SETSIZE limit. Cannot add to select.", fd);
-		RetVal=FALSE;
-		}
-   }
+    if (fd  < 0)
+    {
+        RaiseError(ERRFLAG_DEBUG, "SelectAddFD", "File Descriptor '%d' is < 0.", fd);
+        return(FALSE);
+    }
 
-   if (type & SELECT_READ) 
-	 {
-    if (Set->size < FD_SETSIZE) 
-		{
-    if (! Set->items) Set->items=calloc(1, sizeof(fd_set));
-		FD_SET(fd, (fd_set *) Set->items);
-    Set->size++;
-		}
-		else 
-		{
-    RaiseError(ERRFLAG_ERRNO|ERRFLAG_DEBUG, "SelectAddFD", "File Descriptor '%d' is higher than FD_SETSIZE limit. Cannot add to select.", fd);
-		RetVal=FALSE;
-		}
-  }
 
-  if (fd > Set->high) Set->high=fd;
+    if (type & SELECT_WRITE)
+    {
+        if (Set->wsize < FD_SETSIZE)
+        {
+            if (! Set->witems) Set->witems=calloc(1, sizeof(fd_set));
+            FD_SET(fd, (fd_set *) Set->witems);
+            Set->wsize++;
+        }
+        else
+        {
+            RaiseError(ERRFLAG_DEBUG, "SelectAddFD", "File Descriptor '%d' is higher than FD_SETSIZE limit. Cannot add to select.", fd);
+            RetVal=FALSE;
+        }
+    }
+
+    if (type & SELECT_READ)
+    {
+        if (Set->size < FD_SETSIZE)
+        {
+            if (! Set->items) Set->items=calloc(1, sizeof(fd_set));
+            FD_SET(fd, (fd_set *) Set->items);
+            Set->size++;
+        }
+        else
+        {
+            RaiseError(ERRFLAG_DEBUG, "SelectAddFD", "File Descriptor '%d' is higher than FD_SETSIZE limit. Cannot add to select.", fd);
+            RetVal=FALSE;
+        }
+    }
+
+    if (fd > Set->high) Set->high=fd;
 
 
     return(RetVal);
@@ -314,8 +326,12 @@ static int SelectCheck(TSelectSet *Set, int fd)
 {
     int RetVal=0;
 
-    if (Set->items  && FD_ISSET(fd, (fd_set *) Set->items )) RetVal |= SELECT_READ;
-    if (Set->witems && FD_ISSET(fd, (fd_set *) Set->witems)) RetVal |= SELECT_WRITE;
+    if (FD > -1)
+    {
+        if (Set->items  && FD_ISSET(fd, (fd_set *) Set->items )) RetVal |= SELECT_READ;
+        if (Set->witems && FD_ISSET(fd, (fd_set *) Set->witems)) RetVal |= SELECT_WRITE;
+    }
+    else RaiseError(ERRFLAG_DEBUG, "SelectCheck", "File Descriptor '%d' is < 0.", fd);
 
     return(RetVal);
 }
@@ -337,16 +353,21 @@ static void SelectSetDestroy(TSelectSet *Set)
 int FDSelect(int fd, int type, struct timeval *tv)
 {
     TSelectSet *Set;
-    int result, RetVal=0;
+    int result, RetVal=STREAM_CLOSED;
 
-    Set=(TSelectSet *) calloc(1,sizeof(TSelectSet));
-    SelectAddFD(Set, type, fd);
-    result=SelectWait(Set, tv);
+    if (fd > -1)
+    {
+        Set=(TSelectSet *) calloc(1,sizeof(TSelectSet));
+        SelectAddFD(Set, type, fd);
+        result=SelectWait(Set, tv);
 
-    if ((result==-1) && (errno==EBADF)) RetVal=0;
-    else if (result  > 0) RetVal=SelectCheck(Set, fd);
+        if ((result==-1) && (errno==EBADF)) RetVal=STREAM_CLOSED;
+        else if (result  > 0) RetVal=SelectCheck(Set, fd);
+        else RetVal=0;
 
-    SelectSetDestroy(Set);
+        SelectSetDestroy(Set);
+    }
+    else RaiseError(ERRFLAG_DEBUG, "FDSelect", "File Descriptor '%d' is < 0.", fd);
 
     return(RetVal);
 }
@@ -355,6 +376,8 @@ int FDSelect(int fd, int type, struct timeval *tv)
 int FDIsWritable(int fd)
 {
     struct timeval tv;
+
+    if (fd < 0) return(FALSE);
 
     tv.tv_sec=0;
     tv.tv_usec=0;
@@ -368,9 +391,12 @@ int FDCheckForBytes(int fd)
 {
     struct timeval tv;
 
+    if (fd < 0) return(FALSE);
+
     tv.tv_sec=0;
     tv.tv_usec=0;
     if (FDSelect(fd, SELECT_READ, &tv) & SELECT_READ) return(TRUE);
+
     return(FALSE);
 }
 
@@ -425,9 +451,9 @@ static void STREAMSelectRemove(ListNode *Select, STREAM *S)
     {
         Head=ListGetHead(Select);
 
-				#ifdef HAVE_EPOLL
+#ifdef HAVE_EPOLL
         EPOLLRemoveFD((T_POLL_CTX *) Head->Item, S->in_fd);
-				#endif
+#endif
 
 //remove STREAM from list. STREAMSelect will ignore this entry
         Curr->Item=NULL;
@@ -502,11 +528,11 @@ static int STREAMSelectAddStream(TSelectSet *Set, ListNode *Curr, int UseEPOLL)
         else
 #endif
 
-						// if using 'select' for polling, we can encounter a situation where
-						// we have more than FD_SETSIZE items in the list. In that situation
-						// SelectAddFD will return FALSE for items over the FD_SETSIZE limit
-						// We re-thread those items in the hope they will 'get their turn'
-						// next time
+            // if using 'select' for polling, we can encounter a situation where
+            // we have more than FD_SETSIZE items in the list. In that situation
+            // SelectAddFD will return FALSE for items over the FD_SETSIZE limit
+            // We re-thread those items in the hope they will 'get their turn'
+            // next time
             if (! SelectAddFD(Set, SELECT_READ, S->in_fd)) return(SELECT_ADD_ERROR);
     }
 
@@ -518,27 +544,30 @@ static int STREAMSelectAddStream(TSelectSet *Set, ListNode *Curr, int UseEPOLL)
 STREAM *STREAMSelectAddStreams(TSelectSet *Set, ListNode *Streams, int UseEPOLL)
 {
     ListNode *Curr, *Next;
-		int result;
 
     Curr=ListGetNext(Streams);
     while (Curr)
     {
-				//as there are circumstances where we can move Curr
-				//in the list, get Next before we do anything
-				Next=ListGetNext(Curr);
+        //as there are circumstances where we can move Curr
+        //in the list, get Next before we do anything
+        Next=ListGetNext(Curr);
 
-				//if STREAMSelectAddStream returns TRUE then it means
-				//a stream has data buffered, and we must return that or
-				//risk the data sitting there forever, if all data has been
-				//read into the stream buffer
-				//if it returns SELECT_ADD_ERROR it means we couldn't add the stream
-				//and so we move it to the start of the list, giving it 'more priority'
-				//next time
+        //if STREAMSelectAddStream returns TRUE then it means
+        //a stream has data buffered, and we must return that or
+        //risk the data sitting there forever, if all data has been
+        //read into the stream buffer
+        //if it returns SELECT_ADD_ERROR it means we couldn't add the stream
+        //and so we move it to the start of the list, giving it 'more priority'
+        //next time
         switch (STREAMSelectAddStream(Set, Curr, UseEPOLL))
-				{
-					case TRUE: return( (STREAM *) Curr->Item ); break;
-					case SELECT_ADD_ERROR: ListMoveStart(Curr); break;
-				}
+        {
+        case TRUE:
+            return( (STREAM *) Curr->Item );
+            break;
+        case SELECT_ADD_ERROR:
+            ListMoveStart(Curr);
+            break;
+        }
 
         Curr=Next;
     }
@@ -588,31 +617,31 @@ STREAM *STREAMSelect(ListNode *Streams, struct timeval *tv)
 
     Set=STREAMSelectInit(Streams, UseEPOLL);
 
-		// if there's a stream with buffered data, then
-		// STREAMSelectAddStreams will return it, and
-		// we *must* useit, or risk that data lying in
-		// the buffer forever
+    // if there's a stream with buffered data, then
+    // STREAMSelectAddStreams will return it, and
+    // we *must* useit, or risk that data lying in
+    // the buffer forever
     S=STREAMSelectAddStreams(Set, Streams, UseEPOLL);
-	
-		//if there's no stream with buffered data, do the actual select	
-		if (! S)
-		{
-    result=STREAMSelectWait(Set, tv, UseEPOLL);
-    if (result > 0)
+
+    //if there's no stream with buffered data, do the actual select
+    if (! S)
     {
-        Curr=ListGetNext(Streams);
-        while (Curr)
+        result=STREAMSelectWait(Set, tv, UseEPOLL);
+        if (result > 0)
         {
-            if (STREAMSelectCheck(Set, (STREAM *) Curr->Item, UseEPOLL))
+            Curr=ListGetNext(Streams);
+            while (Curr)
             {
-                S=Curr->Item;
-								ListMoveEnd(Curr);
-                break;
+                if (STREAMSelectCheck(Set, (STREAM *) Curr->Item, UseEPOLL))
+                {
+                    S=Curr->Item;
+                    ListMoveEnd(Curr);
+                    break;
+                }
+                Curr=ListGetNext(Curr);
             }
-            Curr=ListGetNext(Curr);
         }
     }
-		}
 
     SelectSetDestroy(Set);
 

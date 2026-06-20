@@ -29,14 +29,14 @@ int UninstallDir(TAction *Act, const char *Dir)
             else
             {
                 unlink(p_Path);
-                if (Config->Flags & FLAG_DEBUG) printf("Deleted file: [%s]\n", p_Path);
+                if (Config->Flags & CONF_DEBUG) printf("Deleted file: [%s]\n", p_Path);
             }
         }
     }
 
     if (rmdir(Dir)==0)
     {
-        if (Config->Flags & FLAG_DEBUG) printf("Deleted directory: [%s]\n",Dir);
+        if (Config->Flags & CONF_DEBUG) printf("Deleted directory: [%s]\n",Dir);
         Destroy(Tempstr);
         return(TRUE);
     }

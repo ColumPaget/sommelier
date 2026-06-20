@@ -12,7 +12,7 @@ static char *DesktopFileMakeInstallPath(char *RetStr, TAction *Act, int Version)
 {
     char *Tempstr=NULL;
 
-    if (Config->Flags & FLAG_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
+    if (Config->Flags & CONF_SYSTEM_INSTALL) Tempstr=CopyStr(Tempstr, "/opt/share/applications/");
     else Tempstr=SubstituteVarsInString(Tempstr, "$(homedir)/.local/share/applications/", Act->Vars, 0);
 
     SetVar(Act->Vars, "desktop-path", Tempstr);
@@ -100,7 +100,7 @@ static void DesktopParseVar(TAction *Act, const char *Name, const char *Value, i
 
     Token=CopyStr(Token, Value);
     StripQuotes(Token);
-    SetVar(Act->Vars, Name, Token);
+    if (StrValid(Token)) SetVar(Act->Vars, Name, Token);
 
     Destroy(Token);
 }
@@ -146,16 +146,15 @@ int DesktopFileRead(const char *Path, TAction *Act)
             }
             else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_ld_library_path", ptr, FALSE);
             else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_64_ld_library_path", ptr, FALSE);
-            else if (strcasecmp(Name,"SommelierSecurityLevel")==0) DesktopParseVar(Act, "security_level", ptr, FALSE);
             else if (strcasecmp(Name,"SommelierRunWarn")==0) DesktopParseVar(Act, "runwarn", ptr, FALSE);
             else if (strcasecmp(Name,"Icon")==0) DesktopParseVar(Act, "icon", ptr, FALSE);
             else if (strcasecmp(Name,"Path")==0) DesktopParseVar(Act, "working-dir", ptr, FALSE);
-            else if (strcasecmp(Name,"Platform")==0) 
-						{
-						DesktopParseVar(Act, "platform", ptr, FALSE);
-						Act->Platform=CopyStr(Act->Platform, ptr);
-						StripQuotes(Act->Platform);
-						}
+            else if (strcasecmp(Name,"Platform")==0)
+            {
+                DesktopParseVar(Act, "platform", ptr, FALSE);
+                Act->Platform=CopyStr(Act->Platform, ptr);
+                StripQuotes(Act->Platform);
+            }
             else if (strcasecmp(Name,"Emulator")==0)
             {
                 //naughty reuse of name here
@@ -165,6 +164,11 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 GetToken(Name, "\\S", &Token, 0);
                 SetVar(Act->Vars, "required_emulator", GetBasename(Token));
             }
+            else if (strcasecmp(Name,"SommelierSecurityLevel")==0) 
+						{
+              Act->Security=CopyStr(Act->Security, ptr);
+              StripQuotes(Act->Security);
+						}
             Tempstr=STREAMReadLine(Tempstr, S);
         }
         STREAMClose(S);
@@ -371,6 +375,7 @@ void DesktopFileGenerate(TAction *Act)
         HashFile(&Hash, "sha256", GetVar(Act->Vars, "exec"), ENCODE_HEX);
         SetVar(Act->Vars, "exec-sha256", Hash);
         SetVar(Act->Vars, "platform", Act->Platform);
+        SetVar(Act->Vars, "security_level", Act->Security);
 
         //don't use AppAllowSU to check here,  because that checks if switch user/superuser is allowed
         //for the app, or for this run of sommelier. It must be explicitly set against the app.
