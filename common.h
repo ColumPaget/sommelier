@@ -14,7 +14,7 @@
 #include <glob.h>
 
 
-#define VERSION "10.8"
+#define VERSION "10.9"
 
 
 #define INSTALL_RUN          0
@@ -48,12 +48,15 @@
 #define FLAG_DEPENDANCY       4
 #define FLAG_BUNDLED          8
 #define FLAG_SANDBOX         64
-#define FLAG_NET            128
-#define FLAG_NONET          256
 #define FLAG_ABORT         2048
 #define FLAG_NOEXEC        8192
 #define FLAG_DLC          16384
 #define FLAG_ALLOW_SU     32768
+#define FLAG_ALLOW_NET    65536
+#define FLAG_DENY_NET    131072
+#define FLAG_ALLOW_PID   262144
+#define FLAG_DENY_PID    524288
+
 
 
 //these are 'global flags' set using the command-line
@@ -65,8 +68,12 @@
 #define CONF_HASH_DOWNLOAD   32
 #define CONF_NO_XRANDR       64
 #define CONF_ALLOW_SU       128
+#define CONF_DENY_SU        256
 #define CONF_ALLOW_NET      512
 #define CONF_DENY_NET      1024
+#define CONF_ALLOW_PID     2048
+#define CONF_DENY_PID      4096
+#define CONF_DENY_SERVER   8192
 
 
 
@@ -99,6 +106,7 @@ typedef struct
 
 extern char *CurrUserName;
 extern char *CurrUserHome;
+extern char *SommelierSecurity;
 
 void SetupCurrUser();
 const char *ResolveVar(ListNode *Vars, const char *VarName);

@@ -8,7 +8,6 @@ sommelier - installer for apps that run under wine or other emulators
 
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -16,7 +15,7 @@ sommelier addstore <url>                           add a remote store of apps at
 sommelier refresh                                  re\-download files registered with \(aqaddstore\(aq
 sommelier platforms                                print list of supported platforms
 sommelier categories                               print list of application categories
-sommelier list [options]                           print list of apps available for install. use \-platform option to display apps for a given platform
+sommelier list [options]                           print list of apps available for install. use \-platform option to display apps for a given platform, \-install to show those installed.
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
 sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re\-write desktop file)
@@ -27,6 +26,16 @@ sommelier regedit <name>                           run \(aqregedit\(aq for named
 sommelier download <name>                          just download installer/package to current directory
 sommelier set <setting string> <name> [<name>]     change settings of an installed application
 sommelier autostart                                run programs from \*(ti/.config/autostart
+.RE
+.EE
+.fi
+.in
+.ad b
+.nop  
+.nf
+.ft CW
+.RS
+.EX
 .RE
 .EE
 .fi
@@ -61,6 +70,14 @@ print debugging (there will be a lot!)
 .in +2
 
 .TP
+.B -verbose
+print EVEN MORE debugging (there will be a lot!)
+.in
+
+.PP
+.in +2
+
+.TP
 .B -c <config file>
 specify a config (list of apps) file, rather than using the default search path
 .in
@@ -87,6 +104,14 @@ force install even if expected sha256 doesn't match the download
 .TP
 .B -force
 force install even if expected sha256 doesn't match the download
+.in
+
+.PP
+.in +2
+
+.TP
+.B -n <name>
+Name that program will be installed under and called/run under
 .in
 
 .PP
@@ -150,7 +175,7 @@ category to use when displaying lists of apps
 
 .TP
 .B -installed
-display only installed app when displaying lists of apps
+display only installed apps when displaying lists of apps, or only platforms with emulators installed when displaying platform list
 .in
 
 .PP
@@ -213,14 +238,6 @@ set a value at install
 .in +2
 
 .TP
-.B -su
-on linux apps are blocked from switching to root superuser (e.g. using su or sudo), this switch allows an app to do that.
-.in
-
-.PP
-.in +2
-
-.TP
 .B -no-xrandr
 don't use xrandr to reset screen resolution after running and application
 .in
@@ -239,6 +256,94 @@ set user-agent to send when communicating over http
 .TP
 .B -ua <agent string>
 set user-agent to send when communicating over http
+.in
+
+.PP
+.in +2
+
+.TP
+.B -su
+allow programs to 'su' to root (default on linux is to prevent this using the 'NO_NEW_PRIVS' prctl, if supported). If this is used with 'install' then the program will be installed with 'allow SU' set. THIS ALSO DISABLES ALL 'SECCOMP' SECURITY
+.in
+
+.PP
+.in +2
+
+.TP
+.B -nosu
+prevent programs doing 'su' to root, even if they are configured with such support in config files. If this is used with 'install' then program will be installed with SU blocked.
+.in
+
+.PP
+.in +2
+
+.TP
+.B -pid
+use linux namespaces to deny access to other processes (e.g. via 'kill' to send signals)
+.in
+
+.PP
+.in +2
+
+.TP
+.B -nopid
+use linux namespaces to deny access to other processes (e.g. via 'kill' to send signals)
+.in
+
+.PP
+.in +2
+
+.TP
+.B +pid
+allow  access to other processes (e.g. via 'kill' to send signals)
+.in
+
+.PP
+.in +2
+
+.TP
+.B -net
+use linux namespaces to deny network access. If this is used with 'install' then the program will be installed with 'deny network'.
+.in
+
+.PP
+.in +2
+
+.TP
+.B +net
+allow network access. If this is used with 'install' then the program will be installed with 'allow network'.
+.in
+
+.PP
+.in +2
+
+.TP
+.B -nonet
+use linux namespaces to deny network access. If this is used with 'install' then the program will be installed with 'deny network'.
+.in
+
+.PP
+.in +2
+
+.TP
+.B -client
+use linux seccomp to prevent app running a TCP server.
+.in
+
+.PP
+.in +2
+
+.TP
+.B -secure <security string>
+Set libUseful 'ProcessApplyConfig' security level.
+.in
+
+.PP
+.in +2
+
+.TP
+.B -security <security string>
+Set libUseful \(aqProcessApplyConfig\(aq security level.
 .in
 
 .SH EXAMPLE USAGE
@@ -541,7 +646,6 @@ nintendo entertainment system games run under the dnes emulator
 The \(aq-proxy\(aq option is used with the \(aqdownload\(aq or \(aqinstall\(aq commands and accepts proxy urls of the form:
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -558,7 +662,6 @@ The \(aq-proxy\(aq option is used with the \(aqdownload\(aq or \(aqinstall\(aq c
 examples:
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -581,8 +684,32 @@ There are a number of settings that can be lastingly configured with the \(aqset
 .in +2
 
 .TP
-.B vdesk=y/n/<geometry>
-run program within a window/virtual desktop
+.B allow-su=y/n
+allow/deny application to raise priviledges to root user
+.in
+
+.PP
+.in +2
+
+.TP
+.B allow-net=y/n
+allow/deny application to access network (uses namespaces to deny)
+.in
+
+.PP
+.in +2
+
+.TP
+.B allow-pid=y/n
+allow/deny application to send signals or otherwise access other processes (uses namespaces to deny)
+.in
+
+.PP
+.in +2
+
+.TP
+.B vdesk=y/n/<resolution>
+run program within a window/virtual desktop, if a resolution like '1280x1024' is supplied, then run a virtual desktop in a window of that size.
 .in
 
 .PP
@@ -642,7 +769,7 @@ DOOM only: grab mouse, or not
 .in
 
 .PP
-For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style \(aqvdesk=600x300\(aq.
+For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style \(aqvdesk=600x300\(aq. \(aqfullscreen\(aq also works for doom and msdos apps.
 .SH ENVIRONMENT VARIABLES
 
 .PP
@@ -653,9 +780,7 @@ Sommelier looks for the variables \(aqSOMMELIER_CA_BUNDLE\(aq, \(aqCURL_CA_BUNDL
 Installable apps are specified using \(aqapps files\(aq. These are files that contain one-line configurations for each app that can be installed. Each line starts with an application name, followed by a list of name-value pairs that specify configuration variables. The only required variable is \(aqplatform\(aq which specifies the platform for the app, e.g. "linux32", "winxp", "zxspectrum", etc. \(aqurl\(aq is also usually provided, which specifies the url that the app package can be downloaded from, however this can be ommitted if the url is provided at install time using the 
 .na
 
-.nf
-.ft CW
-\-url
+.BR \-url
 .fi
 .ft P
 
@@ -665,7 +790,6 @@ Installable apps are specified using \(aqapps files\(aq. These are files that co
 There are some special types of line that can be put in the file. Instead of starting with an application name, they start with a single symbol. These symbols are:
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -682,7 +806,6 @@ There are some special types of line that can be put in the file. Instead of sta
 For example, here is a file the configures a few 3ds homebrew games. Note how \(aqplatform\(aq and \(aqcategory\(aq are set using a \(aq*\(aq line to prevent typing them over and over for each app.
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -979,13 +1102,20 @@ specify a comment that will be displayed against an app in the \(aqsommelier lis
 url to a webpage where one can donate to an app\(aqs project
 .in
 
+.PP
+.in +2
+
+.TP
+.B secure
+libUseful \(aqProcessApplyConfig\(aq security string, overriding default app security.
+.in
+
 .SH REMOTE STORES
 
 .PP
 sommelier supports \(aqremote stores\(aq, directories containing app list files that can be downloaded from an http, https or ssh server. These are registered using:
 .nf
 .ft CW
-
 .RS
 .EX
 
@@ -1002,7 +1132,6 @@ where the url points to an apps list file. App packages can be stored in the sam
 Installed apps files can be re-downloaded and updated using
 .nf
 .ft CW
-
 .RS
 .EX
 

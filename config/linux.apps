@@ -98,7 +98,6 @@ RClone platform=linux64 url=https://github.com/rclone/rclone/releases/download/v
 
 
 * category='InstantMessaging;Chat;Internet'
-Telegram platform=linux32 url=https://telegram.org/dl/desktop/linux32 download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger'  sha256='0779c5d46218ec53dc3caf450093c7537e40c06c876da77270c57667e5df6589' 
 Telegram platform=linux64 url=https://telegram.org/dl/desktop/linux download-type='tar.xz' exec='Telegram' category='Chat' comment='Telegram Messenger' 
 HexChat platform=linux32 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-i486-1.txz category=Chat exec=hexchat download-type='tar.xz' sha256=99154d43b1a997aa996fe5efd14eb5d66c88b5cd65f804b9df13bb42c31898a9
 HexChat platform=linux64 url=https://dl.hexchat.net/hexchat/slackware/hexchat-2.9.4-x86_64-1.txz category=Chat exec=hexchat download-type='tar.xz'

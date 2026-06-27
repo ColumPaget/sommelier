@@ -105,53 +105,8 @@ static char *GenerateApplicationCommandLine(char *CommandLine, TAction *Act)
 
 
 
-pid_t RunSandboxed(TAction *Act)
-{
-    char *SpawnConfig=NULL, *Tempstr=NULL;
-    pid_t pid;
 
-
-    seteuid(0);
-    SpawnConfig=FormatStr(SpawnConfig, "noshell +stderr container=/tmp/container/ uid=%d gid=%d dir='%s' ", getuid(), getgid(), GetVar(Act->Vars,"working-dir"));
-
-    if (Act->Flags & FLAG_NET) SpawnConfig=CatStr(SpawnConfig, "+net ");
-    else SpawnConfig=CatStr(SpawnConfig, "-net ");
-
-    SpawnConfig=MCatStr(SpawnConfig,"setenv='LD_LIBRARY_PATH=/lib:/usr/lib' ",NULL);
-
-    SetVar(Act->Vars,"path",getenv("PATH"));
-    SetVar(Act->Vars,"display",getenv("DISPLAY"));
-    Tempstr=SubstituteVarsInString(Tempstr, "setenv='WINEPREFIX=$(prefix)' setenv='DISPLAY=$(display)' setenv='PATH=$(path)'",Act->Vars, 0);
-    SpawnConfig=MCatStr(SpawnConfig, Tempstr," ",NULL);
-
-    Tempstr=SubstituteVarsInString(Tempstr, "mnt=/etc/,/bin,/lib,/usr,/opt/wine-3.5_GL wmnt=$(prefix),/dev",Act->Vars,0);
-    SpawnConfig=MCatStr(SpawnConfig, Tempstr," ",NULL);
-
-    SpawnConfig=MCatStr(SpawnConfig, "plink=/tmp/.X11-unix/X0", " ", NULL);
-    //SpawnConfig=MCatStr(SpawnConfig, "pclone=/dev/urandom,/dev/dsp,/dev/mixer", " ", NULL);
-
-    /*
-    if (Settings.Flags & FLAG_ISOCUBE) SpawnConfig=MCatStr(SpawnConfig, "isocube=",Settings.Dir," ",NULL);
-    else SpawnConfig=MCatStr(SpawnConfig, "container=",Settings.Dir," ",NULL);
-
-    if (StrValid(Settings.FileClones)) SpawnConfig=MCatStr(SpawnConfig, "pclone=",Settings.FileClones, " ", NULL);
-    if (StrValid(Settings.JailSetup)) SpawnConfig=MCatStr(SpawnConfig, "jailsetup=",Settings.JailSetup, " ",NULL);
-    */
-
-    Tempstr=CopyStr(Tempstr, Act->Exec);
-    if (! (Config->Flags & CONF_DEBUG)) Tempstr=CatStr(Tempstr, " >/dev/null");
-    pid=Spawn(Tempstr, SpawnConfig);
-
-    Destroy(Tempstr);
-    Destroy(SpawnConfig);
-
-    return(pid);
-}
-
-
-
-
-pid_t RunNormal(TAction *Act)
+pid_t LaunchApplication(TAction *Act)
 {
     char *Cmd=NULL, *SpawnConfig=NULL, *Secure=NULL, *Tempstr=NULL;
     TPlatform *Platform;
@@ -185,12 +140,24 @@ pid_t RunNormal(TAction *Act)
     Secure=SeccompSandboxGetLevel(Secure, Act);
     SpawnConfig=CopyStr(SpawnConfig, "+stderr");
 
-		if (! Config->Flags & CONF_ALLOW_NET)
-		{
-		if (Act->Flags & FLAG_NONET) Secure=CatStr(Secure, "+nonet");
-		}
+    if (StrValid(Secure)) SpawnConfig=MCatStr(SpawnConfig, " security='", Secure, "' ", NULL);
 
-    if (StrValid(Secure)) SpawnConfig=MCatStr(SpawnConfig, " security='", Secure, "'", NULL);
+    // if CONF_DENY_NET is set, we will already have done 'deny'
+    if (! (Config->Flags & CONF_DENY_NET))
+    {
+        if (! AppAllowNet(Act)) SpawnConfig=CatStr(SpawnConfig, "nonet ");
+    }
+
+    // if CONF_DENY_NET is set, we will already have done 'deny'
+    if (! (Config->Flags & CONF_DENY_PID))
+    {
+        if (! AppAllowPids(Act)) SpawnConfig=CatStr(SpawnConfig, "nopid ");
+    }
+
+
+    Tempstr=CopyStr(Tempstr, SommelierSecurity);
+    Tempstr=CatStr(Tempstr, Secure);
+    Secure=CopyStr(Secure, Tempstr);
 
     if (StrValid(Secure)) Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s' with security level ~e'%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"), Secure);
     else Tempstr=FormatStr(Tempstr, "~gRunning:~0 ~e'%s'~0 (%s) in dir '%s'~0\n", Act->Name, Act->Exec, GetVar(Act->Vars, "working-dir"));
@@ -259,8 +226,7 @@ void RunApplication(TAction *Act)
             if (fork()==0)
             {
                 XRandrGetResolution(&width, &height);
-                if (Act->Flags & FLAG_SANDBOX) RunSandboxed(Act);
-                else pid=RunNormal(Act);
+                pid=LaunchApplication(Act);
 
                 if ( ( ! (Config->Flags & CONF_NO_XRANDR)) &&  (pid > 0) )
                 {
@@ -303,7 +269,7 @@ void RunWineUtility(TAction *Act, const char *Utility)
     {
         Tempstr=AppFindInstalled(Tempstr,  Act);
         Act->Exec=CopyStr(Act->Exec, Utility);
-        RunNormal(Act);
+        LaunchApplication(Act);
     }
     else fprintf(stderr, "ERROR: Failed to open .desktop file for application\n");
 

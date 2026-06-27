@@ -144,6 +144,20 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 StripQuotes(Token);
                 if (strtobool(Token)) Act->Flags |= FLAG_ALLOW_SU;
             }
+            else if (strcasecmp(Name,"SommelierAllowNet")==0)
+            {
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                if (strtobool(Token)) Act->Flags |= FLAG_ALLOW_NET;
+                else Act->Flags |= FLAG_DENY_NET;
+            }
+            else if (strcasecmp(Name,"SommelierAllowPids")==0)
+            {
+                Token=CopyStr(Token, ptr);
+                StripQuotes(Token);
+                if (strtobool(Token)) Act->Flags |= FLAG_ALLOW_PID;
+                else Act->Flags |= FLAG_DENY_PID;
+            }
             else if (strcasecmp(Name,"Sommelier_X86_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_ld_library_path", ptr, FALSE);
             else if (strcasecmp(Name,"Sommelier_X86_64_LD_LIBRARY_PATH")==0) DesktopParseVar(Act, "x86_64_ld_library_path", ptr, FALSE);
             else if (strcasecmp(Name,"SommelierRunWarn")==0) DesktopParseVar(Act, "runwarn", ptr, FALSE);
@@ -164,11 +178,11 @@ int DesktopFileRead(const char *Path, TAction *Act)
                 GetToken(Name, "\\S", &Token, 0);
                 SetVar(Act->Vars, "required_emulator", GetBasename(Token));
             }
-            else if (strcasecmp(Name,"SommelierSecurityLevel")==0) 
-						{
-              Act->Security=CopyStr(Act->Security, ptr);
-              StripQuotes(Act->Security);
-						}
+            else if (strcasecmp(Name,"SommelierSecurityLevel")==0)
+            {
+                Act->Security=CopyStr(Act->Security, ptr);
+                StripQuotes(Act->Security);
+            }
             Tempstr=STREAMReadLine(Tempstr, S);
         }
         STREAMClose(S);
@@ -380,6 +394,11 @@ void DesktopFileGenerate(TAction *Act)
         //don't use AppAllowSU to check here,  because that checks if switch user/superuser is allowed
         //for the app, or for this run of sommelier. It must be explicitly set against the app.
         if (AppAllowSU(Act)) SetVar(Act->Vars, "allow-su", "Y");
+        else SetVar(Act->Vars, "allow-su", "N");
+        if (AppAllowNet(Act)) SetVar(Act->Vars, "allow-net", "Y");
+        else SetVar(Act->Vars, "allow-net", "N");
+        if (AppAllowPids(Act)) SetVar(Act->Vars, "allow-pids", "Y");
+        else SetVar(Act->Vars, "allow-pids", "N");
 
 //did we download or otherwise obtain an application icon? If not, then consider the 'icon' setting
 //which may point to an icon for this app on local disk
@@ -395,7 +414,7 @@ void DesktopFileGenerate(TAction *Act)
         }
 
 
-        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelierInstallPath=$(invoke-dir)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierAllowSU=$(allow-su)\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
+        Tempstr=SubstituteVarsInString(Tempstr, "[Desktop Entry]\nName=$(name)\nType=Application\nTerminal=false\nPlatform=$(platform)\nEmulator=$(emulator)\nComment=$(comment)\nSHA256=$(exec-sha256)\nPath=$(invoke-dir)\nExec=sommelier run $(name)\nSommelierExec=$(invocation)\nSommelierInstallPath=$(invoke-dir)\nSommelier_X86_LD_LIBRARY_PATH='$(x86_ld_library_path)'\nSommelier_X86_64_LD_LIBRARY_PATH='$(x86_64_ld_library_path)'\nSommelierAllowSU=$(allow-su)\nSommelierAllowNet=$(allow-net)\nSommelierAllowPids=$(allow-pids)\nSommelierSecurityLevel=$(security_level)\nSommelierRunWarn=$(runwarn)\nIcon=$(app-icon)\nPlatform=$(platform)\nRunsWith=$(runswith)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);
         Tempstr=SubstituteVarsInString(Tempstr, "Categories=$(category)\nCategory=$(category)\n",Act->Vars, 0);
         STREAMWriteLine(Tempstr, S);

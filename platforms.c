@@ -104,17 +104,17 @@ int PlatformBitWidth(const char *Platform)
 
 int BitWidthMatches(const char *Platform)
 {
-int PBW;
+    int PBW;
 
-PBW=PlatformBitWidth(Platform);
+    PBW=PlatformBitWidth(Platform);
 
 //assume a bit width of zero means an emulated binary
 //so we can apply seccomp rules to the emulator
-if (PBW == 0) return(TRUE);
+    if (PBW == 0) return(TRUE);
 
-if (PBW == NativeBitWidth()) return(TRUE);
+    if (PBW == NativeBitWidth()) return(TRUE);
 
-return(FALSE);
+    return(FALSE);
 }
 
 

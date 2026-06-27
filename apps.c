@@ -125,20 +125,21 @@ void LoadAppConfigToAct(TAction *Act, const char *Config)
             else if (strcasecmp(Name, "locale")==0) SetVar(Act->Vars, "locale_template", Value);
             else if (strcasecmp(Name, "server_path")==0) SetVar(Act->Vars, "server_path", Value);
             else if (strcasecmp(Name, "server_apps_file")==0) SetVar(Act->Vars, "server_apps_file", Value);
-            else if (strcasecmp(Name,"dlc")==0) Act->Flags |= FLAG_DLC;
-            else if (strcasecmp(Name,"su")==0) Act->Flags |= FLAG_ALLOW_SU;
-            else if (strcasecmp(Name,"allow-su")==0) Act->Flags |= FLAG_ALLOW_SU;
-            else if (strcasecmp(Name,"copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"movefiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"chext")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=", Value, " ", NULL);
-            else if (strcasecmp(Name,"delete")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"rename")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"link")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"zip")==0) Act->PostProcess=MCatStr(Act->PostProcess, Name, "=\"", Value, "\" ", NULL);
-            else if (strcasecmp(Name,"security")==0) Act->Security=CopyStr(Act->Security, Value);
-            else if (strcasecmp(Name,"category")==0)
+            else if (strcasecmp(Name, "dlc")==0) Act->Flags |= FLAG_DLC;
+            else if (strcasecmp(Name, "su")==0) Act->Flags |= FLAG_ALLOW_SU;
+            else if (strcasecmp(Name, "allow-su")==0) Act->Flags |= FLAG_ALLOW_SU;
+            else if (strcasecmp(Name, "copyfiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "copyfiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "movefiles-from")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "movefiles-to")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "chext")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=",  Value,  " ",  NULL);
+            else if (strcasecmp(Name, "delete")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "rename")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "link")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "zip")==0) Act->PostProcess=MCatStr(Act->PostProcess,  Name,  "=\"",  Value,  "\" ",  NULL);
+            else if (strcasecmp(Name, "secure")==0) Act->Security=CopyStr(Act->Security,  Value);
+            else if (strcasecmp(Name, "security")==0) Act->Security=CopyStr(Act->Security,  Value);
+            else if (strcasecmp(Name, "category")==0)
             {
                 Tempstr=CategoriesExpand(Tempstr, Value);
                 SetVar(Act->Vars, "category", Tempstr);
@@ -202,6 +203,7 @@ static TAction *AppConfigure(const char *Name, const char *Settings, ListNode *F
     if (Config->Flags & CONF_VERBOSE) fprintf(stderr, "Loading App: %s Config=%s\n", Name, AppConfig);
 
     LoadAppConfigToAct(Act, AppConfig);
+
     Destroy(AppConfig);
 
     return(Act);
@@ -486,6 +488,7 @@ int AppFindConfig(TAction *App, const char *Platforms)
                 App->Parent=CopyStr(App->Parent, AppConfig->Parent);
                 App->PlatformID=AppConfig->PlatformID;
                 App->PostProcess=CopyStr(App->PostProcess, AppConfig->PostProcess);
+                App->Security=CopyStr(App->Security, AppConfig->Security);
                 if (! StrValid(App->URL)) App->URL=CopyStr(App->URL, AppConfig->URL);
                 CopyVars(App->Vars, AppConfig->Vars);
                 result=TRUE;
@@ -595,27 +598,31 @@ int AppsOutputList(TAction *Template)
 }
 
 
-int AppAllowSU(TAction *App)
+int AppAllowDeny(TAction *App, int ConfAllow, int ConfDeny, int AppAllow, int AppDeny, int Default)
 {
-    if (Config->Flags & CONF_ALLOW_SU) return(TRUE);
-    if (App && (App->Flags & FLAG_ALLOW_SU)) return(TRUE);
-    return(FALSE);
+    if ((ConfDeny > 0) && (Config->Flags & ConfDeny)) return(FALSE);
+    if ((ConfAllow > 0) && (Config->Flags & ConfAllow)) return(TRUE);
+    if (App && (AppAllow > 0) && (App->Flags & AppAllow)) return(TRUE);
+
+    return(Default);
 }
 
 
 int AppsListAllowSU(ListNode *Apps)
 {
-ListNode *Curr;
-TAction *App=NULL;
+    ListNode *Curr;
+    TAction *App=NULL;
 
-if (Config->Flags & CONF_ALLOW_SU) return(TRUE);
-Curr=ListGetNext(Apps);
-while (Curr)
-{
-App=(TAction *) Curr->Item;
-if (App->Flags & FLAG_ALLOW_SU) return(TRUE);
-Curr=ListGetNext(Curr);
-}
+    if (Config->Flags & CONF_DENY_SU) return(FALSE);
+    if (Config->Flags & CONF_ALLOW_SU) return(TRUE);
 
-return(FALSE);
+    Curr=ListGetNext(Apps);
+    while (Curr)
+    {
+        App=(TAction *) Curr->Item;
+        if (App->Flags & FLAG_ALLOW_SU) return(TRUE);
+        Curr=ListGetNext(Curr);
+    }
+
+    return(FALSE);
 }

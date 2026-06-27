@@ -1,3 +1,7 @@
+v10.9 (2026-06-27)
+    * added -pid,-nopid,+pid,-net,-nonet,+net,-client and -secure command-line options
+    * update documentation
+
 v10.8 (2026-05-21)
     * Fix SEVERE bug introduced in previous release, which prevented finding app configs.
     * Added 'verbose' mode
@@ -17,7 +21,7 @@ v10.7 (2026-03-15)
     * Fix 'reconfigure' for apps that install as 'plain exectuable mode'
     * 'platforms' listing now highlights which platforms have required emulators to run
     * '-installed' command-line option now effects platform listing, showing only platforms that have required emulators to run
-		* handle the same app being configured multiple times or in multiple .apps files, only output it once in 'sommelier list'
+    * handle the same app being configured multiple times or in multiple .apps files, only output it once in 'sommelier list'
 
 v10.6 (2025-11-11)
     * added 'emulator help text' (so far only for dosbox and mednafen)

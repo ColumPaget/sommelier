@@ -17,7 +17,7 @@ sommelier addstore <url>                           add a remote store of apps at
 sommelier refresh                                  re-download files registered with 'addstore'
 sommelier platforms                                print list of supported platforms
 sommelier categories                               print list of application categories
-sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform
+sommelier list [options]                           print list of apps available for install. use -platform option to display apps for a given platform, -install to show those installed.
 sommelier install <name> [<name>] [options]        install an application by name
 sommelier uninstall <name> [<name>]                uninstall an application by name
 sommelier reconfig <name> [<name>]                 reconfigure an installed application (seek for executables, re-write desktop file)
@@ -29,6 +29,10 @@ sommelier download <name>                          just download installer/packa
 sommelier set <setting string> <name> [<name>]     change settings of an installed application
 sommelier autostart                                run programs from ~/.config/autostart
 ```
+
+
+
+    
 
 DESCRIPTION
 ===========
@@ -47,6 +51,9 @@ OPTIONS
 -debug
  : print debugging (there will be a lot!)
 
+-verbose
+ : print EVEN MORE debugging (there will be a lot!)
+
 -c <config file>
  : specify a config (list of apps) file, rather than using the default search path
 
@@ -58,6 +65,9 @@ OPTIONS
 
 -force
  : force install even if expected sha256 doesn't match the download
+
+-n <name>
+ : Name that program will be installed under and called/run under
 
 -install-name <name>
  : Name that program will be installed under and called/run under
@@ -81,7 +91,7 @@ OPTIONS
  : category to use when displaying lists of apps
 
 -installed
- : display only installed app when displaying lists of apps
+ : display only installed apps when displaying lists of apps, or only platforms with emulators installed when displaying platform list
 
 -k
  : keep installer or .zip file instead of deleting it after install
@@ -104,10 +114,6 @@ OPTIONS
 -set
  : set a value at install
 
--su 
- : on linux apps are blocked from switching to root superuser (e.g. using su or sudo), this switch allows an app to do that.
-
-
 -no-xrandr
  : don't use xrandr to reset screen resolution after running and application
 
@@ -117,6 +123,38 @@ OPTIONS
 -ua <agent string>
  : set user-agent to send when communicating over http
 
+-su
+ : allow programs to 'su' to root (default on linux is to prevent this using the 'NO_NEW_PRIVS' prctl, if supported). If this is used with 'install' then the program will be installed with 'allow SU' set. THIS ALSO DISABLES ALL 'SECCOMP' SECURITY
+
+-nosu
+ : prevent programs doing 'su' to root, even if they are configured with such support in config files. If this is used with 'install' then program will be installed with SU blocked.
+
+-pid
+ : use linux namespaces to deny access to other processes (e.g. via 'kill' to send signals)
+
+-nopid
+ : use linux namespaces to deny access to other processes (e.g. via 'kill' to send signals)
+
++pid
+ : allow  access to other processes (e.g. via 'kill' to send signals)
+
+-net
+ : use linux namespaces to deny network access. If this is used with 'install' then the program will be installed with 'deny network'.
+
++net
+ : allow network access. If this is used with 'install' then the program will be installed with 'allow network'.
+
+-nonet
+ : use linux namespaces to deny network access. If this is used with 'install' then the program will be installed with 'deny network'.
+
+-client
+ : use linux seccomp to prevent app running a TCP server.
+
+-secure <security string>
+ : Set libUseful 'ProcessApplyConfig' security level.
+
+-security <security string>
+ : Set libUseful 'ProcessApplyConfig' security level.
 
 
 
@@ -270,8 +308,17 @@ SETTINGS
 
 There are a number of settings that can be lastingly configured with the 'set' command or using the '-set' option when installing an application. Currently these settings only relate to programs run under wine, or doom wads run under chocolate-doom or crispy-doom.
 
-vdesk=y/n/<geometry>
- : run program within a window/virtual desktop
+allow-su=y/n
+ : allow/deny application to raise priviledges to root user
+
+allow-net=y/n
+ : allow/deny application to access network (uses namespaces to deny)
+
+allow-pid=y/n
+ : allow/deny application to send signals or otherwise access other processes (uses namespaces to deny)
+
+vdesk=y/n/<resolution>
+ : run program within a window/virtual desktop, if a resolution like '1280x1024' is supplied, then run a virtual desktop in a window of that size.
 
 fullscreen=y/n
  : run program at fullscreen, or else within a virtual desktop
@@ -295,7 +342,7 @@ grab=y/n
  : DOOM only: grab mouse, or not
 
 
-For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style 'vdesk=600x300'.
+For both DOOM and Wine you can set the size of the window using the vdesk setting, in the style 'vdesk=600x300'. 'fullscreen' also works for doom and msdos apps.
 
 
 ENVIRONMENT VARIABLES
@@ -440,7 +487,8 @@ comment
 donate
 : url to a webpage where one can donate to an app's project
 
-
+secure
+: libUseful 'ProcessApplyConfig' security string, overriding default app security.
 
 
 

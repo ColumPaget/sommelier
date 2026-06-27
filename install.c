@@ -903,7 +903,7 @@ static void InstallRunSubProcess(TAction *Act)
             InstallResult=InstallAppFromFile(Act, Act->SrcPath);
             if ( InstallResult && (! (Act->Flags & (FLAG_DEPENDANCY | FLAG_DLC))) )
             {
-								Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Act->SrcPath, "\n", NULL); 
+                Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Act->SrcPath, "\n", NULL);
                 TerminalPutStr(Tempstr, NULL);
                 FinalizeExeInstall(Act);
                 InstallBundledItems(Act);
@@ -1182,7 +1182,7 @@ void InstallReconfigure(TAction *Act)
 
             chdir(Path);
 
-						Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Path, "\n", NULL); 
+            Tempstr=MCopyStr(Tempstr, "~eFinding executables:~0 src_path=", Path, "\n", NULL);
             TerminalPutStr(Tempstr, NULL);
 
             FinalizeExeInstall(Act);

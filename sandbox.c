@@ -34,24 +34,38 @@ int SetNoSU()
 //select a 'level' for the seccomp sandbox this will usually be one of 'minimal', 'user'
 char *SeccompSandboxGetLevel(char *RetStr, TAction *Act)
 {
-    char *Platform=NULL;
+    char *Platform=NULL, *Tempstr=NULL;
     const char *ptr="";
 
     Platform=CopyStr(Platform, GetVar(Act->Vars, "platform"));
     if (BitWidthMatches(Platform) )
     {
-        if (! AppAllowSU(Act)) 
-				{
-	        ptr=Act->Security;
- 	        if (CompareStrNoCase(ptr, "none")==0) ptr="";
+        if (! AppAllowSU(Act))
+        {
+            ptr=Act->Security;
+            if (CompareStrNoCase(ptr, "none")==0) ptr="";
 
-				  RetStr=MCatStr(RetStr, "syscall_allow=capset;bpf;mmap ", ptr, NULL);
-				}
-    		else RetStr=CopyStr(RetStr, ptr);
+            if (StrValid(ptr))
+            {
+                RetStr=CatStr(RetStr, "syscall_allow=capset;bpf;mmap ");
+                ptr=GetToken(ptr, "\\S|+", &Tempstr, GETTOKEN_MULTI_SEP);
+                while (ptr)
+                {
+                    if (InStringList(Tempstr, "nopid,pidns", ",") && (! AppAllowNet(Act))) RetStr=MCatStr(RetStr, "+", Tempstr, NULL);
+                    if (InStringList(Tempstr, "nonet,netns", ",") && (! AppAllowPids(Act))) RetStr=MCatStr(RetStr, "+", Tempstr, NULL);
+                    ptr=GetToken(ptr, "\\S|+", &Tempstr, GETTOKEN_MULTI_SEP);
+                }
+            }
+
+
+        }
+        else RetStr=CopyStr(RetStr, ptr);
     }
     else TerminalPutStr("~yBITWIDTH MISMATCH: Not applying seccomp/security rules to this application~0\n", NULL);
 
 
+
+    Destroy(Tempstr);
     Destroy(Platform);
 
     return(RetStr);

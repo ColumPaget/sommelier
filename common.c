@@ -6,7 +6,7 @@
 
 char *CurrUserName=NULL;
 char *CurrUserHome=NULL;
-
+char *SommelierSecurity=NULL;
 
 void SetupCurrUser()
 {

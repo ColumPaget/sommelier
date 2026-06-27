@@ -46,6 +46,29 @@ void ActionPrepare(TAction *Act)
 
 
 
+//setup default security that applies to sommelier and anything it runs
+void SetupDefaultSecurity(ListNode *Acts)
+{
+    //apply a level of security to anything we do
+    //mount/umount are needed for
+    if (! AppsListAllowSU(Acts))
+    {
+        SommelierSecurity=CopyStr(SommelierSecurity, "nosu security='syscall_deny=ptrace;group:keyring minimal");
+        if (Config->Flags & CONF_DENY_NET) SommelierSecurity=CatStr(SommelierSecurity, "+nonet ");
+        if (Config->Flags & CONF_DENY_PID) SommelierSecurity=CatStr(SommelierSecurity, "+nopid ");
+        if (Config->Flags & CONF_DENY_SERVER) SommelierSecurity=CatStr(SommelierSecurity, "+client ");
+        SommelierSecurity=CatStr(SommelierSecurity, "' ");
+    }
+    else //if we are allowing switch-user/privesc, and so aren't using seccomp, apply some security using namespaces
+    {
+        if (Config->Flags & CONF_DENY_NET) SommelierSecurity=CatStr(SommelierSecurity, "nonet ");
+        if (Config->Flags & CONF_DENY_PID) SommelierSecurity=CatStr(SommelierSecurity, "nopid ");
+    }
+
+    if (StrValid(SommelierSecurity)) ProcessApplyConfig(SommelierSecurity);
+}
+
+
 int main(int argc, char *argv[])
 {
     ListNode *Acts, *Curr;
@@ -57,14 +80,7 @@ int main(int argc, char *argv[])
 
     Acts=ParseCommandLine(argc, argv);
 
-
-		//apply a level of security to anything we do
-		//mount/umount are needed for 
-    if (! AppsListAllowSU(Acts)) Tempstr=CopyStr(Tempstr, "nosu nopid security='syscall_deny=group:keyring minimal'");
-		if (Config->Flags & CONF_DENY_NET) Tempstr=CatStr(Tempstr, "nonet");
-
-		if (StrValid(Tempstr)) ProcessApplyConfig(Tempstr);
-
+    SetupDefaultSecurity(Acts);
     PlatformsInit(Config->PlatformsPath);
     CategoriesLoad(Config->CategoriesPath);
     AppsLoad(Config->AppConfigPath);
